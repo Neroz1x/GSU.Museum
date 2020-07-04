@@ -2,7 +2,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ## Table of contents
 * [Project description](#project-description)
-* [Features](#features)
 * [Components and technologies](#components-and-technologies)
 * [Getting started](#getting-started)
 * [Contributing](#contributing)
