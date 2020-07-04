@@ -4,8 +4,6 @@
 * [Project description](#project-description)
 * [Features](#features)
 * [Components and technologies](#components-and-technologies)
-* [How it works](#how-it-works)
-* [Release history](#release-history)
 * [Getting started](#getting-started)
 * [Contributing](#contributing)
 * [Available languages](#available-languages)
@@ -54,8 +52,6 @@ The web site for managing database. It allows to view all the records, add new, 
 1. Set up API backend
 2. Start mobile app
 
-### Options
-TODO
 
 ## Contributing
 Contributions are always welcome! 
