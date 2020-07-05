@@ -8,6 +8,10 @@ using Microsoft.Extensions.Configuration;
 using GSU.Museum.API.Data;
 using GSU.Museum.API.Data.Repositories;
 using GSU.Museum.API.Services;
+using System.Reflection;
+using System.IO;
+using System;
+using Microsoft.OpenApi.Models;
 
 namespace GSU.Museum.API
 {
@@ -37,6 +41,39 @@ namespace GSU.Museum.API
             services.AddSingleton<IHallsService, HallsService>();
             services.AddSingleton<IStandsService, StandsService>();
             services.AddSingleton<IExhibitsService, ExhibitsService>();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "GSU.Museum API", Version = "v1" });
+                c.AddSecurityDefinition("X-API-KEY", new OpenApiSecurityScheme
+                {
+                    Description = "Api key needed to access the endpoints. X-API-KEY: U3VwZXJTZWNyZXRBcGlLZXkxMjM",
+                    In = ParameterLocation.Header,
+                    Name = "X-API-KEY",
+                    Type = SecuritySchemeType.ApiKey
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Name = "X-API-KEY",
+                            Type = SecuritySchemeType.ApiKey,
+                            In = ParameterLocation.Header,
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "X-API-KEY"
+                            },
+                        },
+                        new string[] {}
+                    }
+                });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -47,6 +84,13 @@ namespace GSU.Museum.API
             }
 
             app.UseRouting();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "GSU.Museum API V1");
+            });
 
             app.UseEndpoints(endpoints =>
             {
