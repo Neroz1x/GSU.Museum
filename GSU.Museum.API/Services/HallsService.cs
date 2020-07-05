@@ -67,7 +67,7 @@ namespace GSU.Museum.API.Services
                 }
                 var mapper = new Mapper(mapperConfiguration);
                 hallsDTO = mapper.Map<List<HallDTO>>(halls);
-                if (hallsDTO.First(el => string.IsNullOrEmpty(el.Title)) != null)
+                if (hallsDTO.FirstOrDefault(el => string.IsNullOrEmpty(el.Title)) != null)
                 {
                     throw new Error(Errors.Not_found, $"There is no title in {language} language");
                 }

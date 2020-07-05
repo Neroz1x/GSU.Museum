@@ -78,11 +78,11 @@ namespace GSU.Museum.API.Services
                 }
                 var mapper = new Mapper(mapperConfiguration);
                 standsDTO = mapper.Map<List<StandDTO>>(stands);
-                if (standsDTO.First(el => el.Text?.Count == 0 || el.Text == null) != null)
+                if (standsDTO.FirstOrDefault(el => el.Text?.Count == 0 || el.Text == null) != null)
                 {
                     throw new Error(Errors.Not_found, $"There is no text in {language} language");
                 }
-                if (standsDTO.First(el => string.IsNullOrEmpty(el.Title)) != null)
+                if (standsDTO.FirstOrDefault(el => string.IsNullOrEmpty(el.Title)) != null)
                 {
                     throw new Error(Errors.Not_found, $"There is no title in {language} language");
                 }

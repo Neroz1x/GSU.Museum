@@ -74,11 +74,11 @@ namespace GSU.Museum.API.Services
                 }
                 var mapper = new Mapper(mapperConfiguration);
                 exhibitsDTO = mapper.Map<List<ExhibitDTO>>(exhibis);
-                if (exhibitsDTO.First(el => string.IsNullOrEmpty(el.Text)) != null)
+                if (exhibitsDTO.FirstOrDefault(el => string.IsNullOrEmpty(el.Text)) != null)
                 {
                     throw new Error(Errors.Not_found, $"There is no text in {language} language");
                 }
-                if (exhibitsDTO.First(el => string.IsNullOrEmpty(el.Title)) != null)
+                if (exhibitsDTO.FirstOrDefault(el => string.IsNullOrEmpty(el.Title)) != null)
                 {
                     throw new Error(Errors.Not_found, $"There is no title in {language} language");
                 }
