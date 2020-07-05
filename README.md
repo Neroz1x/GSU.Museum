@@ -90,7 +90,7 @@ The web site for managing database. It allows to view all the records, add new, 
 Contributions are always welcome! 
 
 Please read the [contribution guidelines](https://github.com/Neroz1x/GSU.Museum/blob/master/contributing.md) first.
-If you want to add a huge update in the project, make an issure before where we can discuss it. Otherwise, follow next steps:
+If you want to add a huge update in the project, make an issure before where we can discuss it. Issure template for [bug](https://github.com/Neroz1x/GSU.Museum/blob/master/.github/ISSUE_TEMPLATE/bug_report.md) and [new feature](https://github.com/Neroz1x/GSU.Museum/blob/master/.github/ISSUE_TEMPLATE/feature_request.md). Otherwise, follow next steps:
 1) Fork repository.
 2) Create your feature branch: ```git checkout -b my-new-feature.```
 3) Commit your changes: ```git commit -am 'Add some feature'.```
