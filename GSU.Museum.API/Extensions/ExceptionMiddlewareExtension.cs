@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using Serilog;
 using System.Net;
 
 namespace GSU.Museum.API.Extensions
@@ -28,10 +29,12 @@ namespace GSU.Museum.API.Extensions
                         if (contextFeature.Error.GetType() == typeof(Error))
                         {
                             Error error = contextFeature.Error as Error;
+                            Log.Error($"Exception: {contextFeature.Error}");
                             await context.Response.WriteAsync(JsonConvert.SerializeObject(error));
                         }
                         else
                         {
+                            Log.Fatal($"Exception: {contextFeature.Error}");
                             await context.Response.WriteAsync(new Error() { ErrorCode = Errors.Unhandled_exception, Info = contextFeature.Error.Message }.ToString());
                         }
                     }

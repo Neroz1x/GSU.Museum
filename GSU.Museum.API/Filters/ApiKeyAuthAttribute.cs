@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Serilog;
 using System;
 using System.Threading.Tasks;
 
@@ -20,7 +21,9 @@ namespace GSU.Museum.API.Filters
             {
                 context.HttpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
                 context.HttpContext.Response.ContentType = "application/json";
-                await context.HttpContext.Response.WriteAsync(JsonConvert.SerializeObject((new Error(Errors.Unauthorized, "No api key in header"))));
+                var error = new Error(Errors.Unauthorized, "No api key in header");
+                Log.Error($"Exception: {error}");
+                await context.HttpContext.Response.WriteAsync(JsonConvert.SerializeObject(error));
                 return;
             }
 
@@ -31,7 +34,9 @@ namespace GSU.Museum.API.Filters
             {
                 context.HttpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
                 context.HttpContext.Response.ContentType = "application/json";
-                await context.HttpContext.Response.WriteAsync(JsonConvert.SerializeObject((new Error(Errors.Unauthorized, "Incorrect api key"))));
+                var error = new Error(Errors.Unauthorized, "Incorrect api key");
+                Log.Error($"Exception: {error}");
+                await context.HttpContext.Response.WriteAsync(JsonConvert.SerializeObject(error));
                 return;
             }
 

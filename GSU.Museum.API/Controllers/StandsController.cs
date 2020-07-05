@@ -34,7 +34,10 @@ namespace GSU.Museum.API.Controllers
         /// <returns>All stands without nested exhibits</returns>
         [HttpGet]
         public async Task<List<StandDTO>> GetAll(string hallId)
-        {   Request.Headers.TryGetValue("Language", out var recievedLanguage);
+        {   if(!Request.Headers.TryGetValue("Language", out var recievedLanguage))
+            {
+                recievedLanguage = "En";
+            }
             return await _standsService.GetAllAsync(recievedLanguage, hallId);
         }
 
@@ -53,7 +56,10 @@ namespace GSU.Museum.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(string hallId, string id)
         {
-            Request.Headers.TryGetValue("Language", out var recievedLanguage);
+            if (!Request.Headers.TryGetValue("Language", out var recievedLanguage))
+            {
+                recievedLanguage = "En";
+            }
             if (id.Length < 24)
             {
                 throw new Error(Errors.Invalid_input, "Incorrect id length");
