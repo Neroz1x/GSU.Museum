@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using GSU.Museum.API.Data.Enums;
 using GSU.Museum.API.Data.Models;
+using GSU.Museum.API.Filters;
 using GSU.Museum.API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GSU.Museum.API.Controllers
 {
+    [ApiKeyAuth]
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
