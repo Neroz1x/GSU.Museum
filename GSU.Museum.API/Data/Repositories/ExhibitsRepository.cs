@@ -1,5 +1,6 @@
 ﻿using GSU.Museum.API.Data.Models;
 using GSU.Museum.API.Interfaces;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -24,28 +25,41 @@ namespace GSU.Museum.API.Data.Repositories
             var filter = Builders<Hall>.Filter.And(
             Builders<Hall>.Filter.Where(hall => hall.Id.Equals(hallId)),
             Builders<Hall>.Filter.Eq("Stands.Id", standId));
+            entity.Id = ObjectId.GenerateNewId().ToString();
             var update = Builders<Hall>.Update.Push("Stands.$.Exhibits", entity);
             await _halls.FindOneAndUpdateAsync(filter, update);
         }
 
-        public Task<List<Exhibit>> GetAllAsync(string hallId, string standId)
+        public async Task<List<Exhibit>> GetAllAsync(string hallId, string standId)
         {
-            throw new NotImplementedException();
+            var hall = await _halls.Find(h => h.Id.Equals(hallId)).FirstOrDefaultAsync();
+            return hall.Stands.FirstOrDefault(s => s.Id.Equals(standId))?.Exhibits?.ToList();
         }
 
-        public Task<Exhibit> GetAsync(string hallId, string standId, string id)
+        public async Task<Exhibit> GetAsync(string hallId, string standId, string id)
         {
-            throw new NotImplementedException();
+            var hall = await _halls.Find(h => h.Id.Equals(hallId)).FirstOrDefaultAsync();
+            return hall?.Stands?.FirstOrDefault(s => s.Id.Equals(standId))?.Exhibits?.FirstOrDefault(e => e.Id.Equals(id));
         }
 
-        public Task RemoveAsync(string hallId, string standId, string id)
+        public async Task RemoveAsync(string hallId, string standId, string id)
         {
-            throw new NotImplementedException();
+            var filter = Builders<Hall>.Filter.Eq(hall => hall.Id, hallId);
+            var update = Builders<Hall>.Update.PullFilter("Stands.$[].Exhibits",
+                                        Builders<Exhibit>.Filter.Eq(x => x.Id, id));
+
+            var result = await _halls
+                .FindOneAndUpdateAsync(filter, update);
         }
 
-        public Task UpdateAsync(string hallId, string standId, string id, Exhibit entity)
+        public async Task UpdateAsync(string hallId, string standId, string id, Exhibit entity)
         {
-            throw new NotImplementedException();
+            var arrayFilter = Builders<Hall>.Filter.And(
+                Builders<Hall>.Filter.Where(hall => hall.Id.Equals(hallId)),
+                Builders<Hall>.Filter.Eq("Stands.Exhibits.Id", id));
+            var update = Builders<Hall>.Update.Set("Stands.$.Exhibits", entity);
+
+            await _halls.UpdateOneAsync(arrayFilter, update);
         }
     }
 }
