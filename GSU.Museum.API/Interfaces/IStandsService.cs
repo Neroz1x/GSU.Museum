@@ -1,4 +1,5 @@
 ﻿using GSU.Museum.API.Data.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,17 +14,17 @@ namespace GSU.Museum.API.Interfaces
         /// <summary>
         /// Returns list of stands without nested exhibits
         /// </summary>
-        /// <param name="language">Language from header</param>
+        /// <param name="request">Http request</param>
         /// <param name="hallId">Hall id</param>
         /// <returns></returns>
-        public Task<List<StandDTO>> GetAllAsync(StringValues language, string hallId);
+        public Task<List<StandDTO>> GetAllAsync(HttpRequest request, string hallId);
         /// <summary>
         /// Retrieve stand by id with exhibits titles
         /// </summary>
-        /// <param name="language">Language from header</param>
+        /// <param name="request">Http request</param>
         /// <param name="hallId">Hall id</param>
         /// <param name="id">Stand id</param>
         /// <returns></returns>
-        public Task<StandDTO> GetAsync(StringValues language, string hallId, string id);
+        public Task<StandDTO> GetAsync(HttpRequest request, string hallId, string id);
     }
 }
