@@ -36,11 +36,7 @@ namespace GSU.Museum.API.Controllers
         [HttpGet]
         public async Task<List<ExhibitDTO>> GetAll(string hallId, string standId)
         {
-            if (!Request.Headers.TryGetValue("Language", out var recievedLanguage))
-            {
-                recievedLanguage = "En";
-            }
-            return await _exhibitsService.GetAllAsync(recievedLanguage, hallId, standId);
+            return await _exhibitsService.GetAllAsync(Request, hallId, standId);
         }
 
 
@@ -63,16 +59,12 @@ namespace GSU.Museum.API.Controllers
             {
                 throw new Error(Errors.Invalid_input, "Incorrect id length");
             }
-            if (!Request.Headers.TryGetValue("Language", out var recievedLanguage))
-            {
-                recievedLanguage = "En";
-            }
-            var stand = await _exhibitsService.GetAsync(recievedLanguage, hallId, standId, id);
-            if (stand == null)
+            var exhibit = await _exhibitsService.GetAsync(Request, hallId, standId, id);
+            if (exhibit == null)
             {
                 return NotFound();
             }
-            return Ok(stand);
+            return Ok(exhibit);
         }
 
         /// <summary>
@@ -80,21 +72,20 @@ namespace GSU.Museum.API.Controllers
         /// </summary>
         /// <param name="hallId">Id of the hall</param>
         /// <param name="standId">Id of the stand</param>
-        /// <param name="stand">Record to add</param>
+        /// <param name="exhibit">Record to add</param>
         /// <returns>Result of the operation</returns>
         // POST: api/Exhibits
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(string hallId, string standId, Exhibit stand)
+        public async Task<IActionResult> CreateAsync(string hallId, string standId, Exhibit exhibit)
         {
             try
             {
-                await _exhibitsRepository.CreateAsync(hallId, standId, stand);
+                await _exhibitsRepository.CreateAsync(hallId, standId, exhibit);
                 return Ok();
             }
             catch (Exception)
             {
-                throw new Exception();
-                throw new Error(Errors.Create_error, $"Can not add record {stand}");
+                throw new Error(Errors.Create_error, $"Can not add record {exhibit}");
             }
         }
 
@@ -114,9 +105,9 @@ namespace GSU.Museum.API.Controllers
                 throw new Error(Errors.Invalid_input, "Incorrect id length");
             }
 
-            var stand = await _exhibitsRepository.GetAsync(hallId, standId, exhibitIn.Id);
+            var exhibit = await _exhibitsRepository.GetAsync(hallId, standId, exhibitIn.Id);
 
-            if (stand == null)
+            if (exhibit == null)
             {
                 return NotFound();
             }
@@ -127,7 +118,7 @@ namespace GSU.Museum.API.Controllers
             }
             catch (Exception)
             {
-                throw new Error(Errors.Update_error, $"Can not update record {stand}");
+                throw new Error(Errors.Update_error, $"Can not update record {exhibit}");
             }
             return NoContent();
         }
@@ -148,14 +139,14 @@ namespace GSU.Museum.API.Controllers
                 throw new Error(Errors.Invalid_input, "Incorrect id length");
             }
 
-            var stand = await _exhibitsRepository.GetAsync(hallId, standId, id);
+            var exhibit = await _exhibitsRepository.GetAsync(hallId, standId, id);
 
-            if (stand == null)
+            if (exhibit == null)
             {
                 return NotFound();
             }
 
-            await _exhibitsRepository.RemoveAsync(hallId, standId, stand.Id);
+            await _exhibitsRepository.RemoveAsync(hallId, standId, exhibit.Id);
             return NoContent();
         }
     }
