@@ -2,6 +2,7 @@
 using GSU.Museum.API.Data.Enums;
 using GSU.Museum.API.Data.Models;
 using GSU.Museum.API.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +19,24 @@ namespace GSU.Museum.API.Services
             _exhibitsRepository = exhibitsRepository;
         }
 
-        public async Task<List<ExhibitDTO>> GetAllAsync(StringValues language, string hallId, string standId)
+        public async Task<List<ExhibitDTO>> GetAllAsync(HttpRequest request, string hallId, string standId)
         {
-            var exhibis = await _exhibitsRepository.GetAllAsync(hallId, standId);
+            StringValues language = "";
+            if(request != null)
+            {
+                if (!request.Headers.TryGetValue("Language", out language))
+                {
+                    language = "En";
+                }
+            }
+            else
+            {
+                language = "En";
+            }
+            var exhibits = await _exhibitsRepository.GetAllAsync(hallId, standId);
             MapperConfiguration mapperConfiguration = null;
             List<ExhibitDTO> exhibitsDTO = new List<ExhibitDTO>();
-            if (exhibis != null)
+            if (exhibits != null)
             {
                 switch (language)
                 {
@@ -73,11 +86,7 @@ namespace GSU.Museum.API.Services
                         break;
                 }
                 var mapper = new Mapper(mapperConfiguration);
-                exhibitsDTO = mapper.Map<List<ExhibitDTO>>(exhibis);
-                if (exhibitsDTO.FirstOrDefault(el => string.IsNullOrEmpty(el.Text)) != null)
-                {
-                    throw new Error(Errors.Not_found, $"There is no text in {language} language");
-                }
+                exhibitsDTO = mapper.Map<List<ExhibitDTO>>(exhibits);
                 if (exhibitsDTO.FirstOrDefault(el => string.IsNullOrEmpty(el.Title)) != null)
                 {
                     throw new Error(Errors.Not_found, $"There is no title in {language} language");
@@ -86,11 +95,23 @@ namespace GSU.Museum.API.Services
             return exhibitsDTO;
         }
 
-        public async Task<ExhibitDTO> GetAsync(StringValues language, string hallId, string standId, string id)
+        public async Task<ExhibitDTO> GetAsync(HttpRequest request, string hallId, string standId, string id)
         {
+            StringValues language = "";
+            if (request != null)
+            {
+                if (!request.Headers.TryGetValue("Language", out language))
+                {
+                    language = "En";
+                }
+            }
+            else
+            {
+                language = "En";
+            }
             var exhibit = await _exhibitsRepository.GetAsync(hallId, standId, id);
             MapperConfiguration mapperConfiguration = null;
-            ExhibitDTO exhibitDTO = new ExhibitDTO();
+            ExhibitDTO exhibitDTO = null;
             if (exhibit != null)
             {
                 switch (language)
@@ -109,10 +130,10 @@ namespace GSU.Museum.API.Services
                         mapperConfiguration = new MapperConfiguration(cfg => cfg.CreateMap<Exhibit, ExhibitDTO>()
                         .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
-                            source => source.TitleBe))
+                            source => source.TitleEn))
                         .ForMember(destination => destination.Text,
                                 map => map.MapFrom(
-                            source => source.TextBe))
+                            source => source.TextEn))
                         );
                         break;
                     case "Be":
@@ -129,10 +150,10 @@ namespace GSU.Museum.API.Services
                         mapperConfiguration = new MapperConfiguration(cfg => cfg.CreateMap<Exhibit, ExhibitDTO>()
                         .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
-                            source => source.TitleBe))
+                            source => source.TitleEn))
                         .ForMember(destination => destination.Text,
                                 map => map.MapFrom(
-                            source => source.TextBe))
+                            source => source.TextEn))
                         );
                         break;
                 }
