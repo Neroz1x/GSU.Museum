@@ -1,5 +1,6 @@
 ﻿using GSU.Museum.API.Data.Models;
 using GSU.Museum.API.Interfaces;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace GSU.Museum.API.Data.Repositories
 
         public async Task CreateAsync(string hallId, Stand entity)
         {
+            entity.Id = ObjectId.GenerateNewId().ToString();
             var filter = Builders<Hall>.Filter.Eq("Id", hallId);
             var update = Builders<Hall>.Update.Push("Stands", entity);
 
