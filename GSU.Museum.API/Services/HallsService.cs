@@ -2,6 +2,7 @@
 using GSU.Museum.API.Data.Enums;
 using GSU.Museum.API.Data.Models;
 using GSU.Museum.API.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +20,20 @@ namespace GSU.Museum.API.Services
             _standsService = standsService;
         }
 
-        public async Task<List<HallDTO>> GetAllAsync(StringValues language)
+        public async Task<List<HallDTO>> GetAllAsync(HttpRequest request)
         {
+            StringValues language = "";
+            if (request != null)
+            {
+                if (!request.Headers.TryGetValue("Language", out language))
+                {
+                    language = "En";
+                }
+            }
+            else
+            {
+                language = "En";
+            }
             var halls = await _hallsRepository.GetAllAsync();
             MapperConfiguration mapperConfiguration = null;
             List<HallDTO> hallsDTO = new List<HallDTO>();
@@ -75,11 +88,23 @@ namespace GSU.Museum.API.Services
             return hallsDTO;
         }
 
-        public async Task<HallDTO> GetAsync(StringValues language, string id)
+        public async Task<HallDTO> GetAsync(HttpRequest request, string id)
         {
+            StringValues language = "";
+            if (request != null)
+            {
+                if (!request.Headers.TryGetValue("Language", out language))
+                {
+                    language = "En";
+                }
+            }
+            else
+            {
+                language = "En";
+            }
             var hall = await _hallsRepository.GetAsync(id);
             MapperConfiguration mapperConfiguration = null;
-            HallDTO hallDTO = new HallDTO();
+            HallDTO hallDTO = null;
             if (hall != null)
             {
                 switch (language)
@@ -124,7 +149,7 @@ namespace GSU.Museum.API.Services
                 var mapper = new Mapper(mapperConfiguration);
                 hallDTO = mapper.Map<HallDTO>(hall);
 
-                var stands = await _standsService.GetAllAsync(language, id);
+                var stands = await _standsService.GetAllAsync(request, id);
                 hallDTO.Stands = stands;
                 if (string.IsNullOrEmpty(hallDTO.Title))
                 {

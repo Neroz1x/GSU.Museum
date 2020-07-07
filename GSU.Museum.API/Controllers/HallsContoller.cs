@@ -35,11 +35,7 @@ namespace GSU.Museum.API.Controllers
         [HttpGet]
         public async Task<List<HallDTO>> GetAll()
         {
-            if (!Request.Headers.TryGetValue("Language", out var recievedLanguage))
-            {
-                recievedLanguage = "En";
-            }
-            return await _hallsService.GetAllAsync(recievedLanguage);
+            return await _hallsService.GetAllAsync(Request);
         }
 
 
@@ -60,11 +56,7 @@ namespace GSU.Museum.API.Controllers
                 throw new Error(Errors.Invalid_input, "Incorrect id length");
             }
 
-            if (!Request.Headers.TryGetValue("Language", out var recievedLanguage))
-            {
-                recievedLanguage = "En";
-            }
-            var hall = await _hallsService.GetAsync(recievedLanguage, id);
+            var hall = await _hallsService.GetAsync(Request, id);
             if (hall == null)
             {
                 return NotFound();
