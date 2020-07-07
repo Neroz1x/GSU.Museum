@@ -5,7 +5,6 @@
 ![GitHub top language](https://img.shields.io/github/languages/top/Neroz1x/GSU.Museum)
 ![Framework: ASP.NET Core](https://img.shields.io/badge/Framework-ASP.NET%20Core-blue)
 ![Framework: Xamarin.Forms](https://img.shields.io/badge/Framework-Xamarin.Forms-blue)
-![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/Neroz1x/GSU.Museum)
 [![GitHub issues](https://img.shields.io/github/issues-raw/Neroz1x/GSU.Museum)](https://github.com/Neroz1x/GSU.Museum/issues)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Neroz1x/GSU.Museum)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
