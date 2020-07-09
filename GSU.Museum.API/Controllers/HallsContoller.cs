@@ -69,7 +69,7 @@ namespace GSU.Museum.API.Controllers
         /// </summary>
         /// <param name="hall">Record to add</param>
         /// <returns>Result of the operation</returns>
-        // POST: api/Halla
+        // POST: api/Hall
         [HttpPost]
         public async Task<IActionResult> CreateAsync(Hall hall)
         {
@@ -86,7 +86,7 @@ namespace GSU.Museum.API.Controllers
         }
 
         /// <summary>
-        /// Updates specific reord
+        /// Updates specific record
         /// </summary>
         /// <param name="hallIn">New record</param>
         /// <returns>Result of operation</returns>

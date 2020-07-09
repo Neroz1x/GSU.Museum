@@ -44,13 +44,13 @@ namespace GSU.Museum.API.Controllers
         /// </summary>
         /// /// <remarks>
         /// Sample request:
-        ///     GET: api/Exhibits/123456789012345678901234
+        ///     GET: api/Stands/123456789012345678901234
         /// </remarks>
         /// <param name="hallId">Id of the hall</param>
         /// <param name="id">Id of the record</param>
         /// <returns>Record or not found</returns>
         // GET: api/Stands/5
-        [HttpGet("{id}")]
+        [HttpGet("{hallId}/{id}")]
         public async Task<IActionResult> GetAsync(string hallId, string id)
         {
             if (id.Length < 24)
@@ -88,7 +88,7 @@ namespace GSU.Museum.API.Controllers
         }
 
         /// <summary>
-        /// Updates specific reord
+        /// Updates specific record
         /// </summary>
         /// <param name="hallId">Id of the hall</param>
         /// <param name="standIn">New record</param>
