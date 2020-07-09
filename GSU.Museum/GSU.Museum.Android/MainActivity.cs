@@ -7,6 +7,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using System.Net;
+using Xamarin.Forms;
 
 namespace GSU.Museum.Droid
 {
@@ -17,8 +18,10 @@ namespace GSU.Museum.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
-
             base.OnCreate(savedInstanceState);
+
+            Forms.SetFlags("IndicatorView_Experimental");
+
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
