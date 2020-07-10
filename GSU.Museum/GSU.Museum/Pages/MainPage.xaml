@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             mc:Ignorable="d"
+             x:Class="GSU.Museum.MainPage"
+             Appearing="ContentPage_Appearing"
+             Title="GSU Museum"
+             >
+    <Grid>
+        <StackLayout IsVisible="{Binding ContentVisibility}" Padding="10">
+            <CollectionView x:Name="HallsCollectionView" SelectionMode="Single" ItemsSource="{Binding Halls}"
+                    SelectionChangedCommand="{Binding SelectHallCommand}"
+                    SelectionChangedCommandParameter="{Binding SelectedItem.Id, Source={x:Reference HallsCollectionView}}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="10" Orientation="Vertical"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame 
+                        HeightRequest="150"
+                        Visual="Material"
+                        BackgroundColor="LightBlue"
+                        Padding="0"
+                        Margin="20, 10"
+                        HasShadow="True"
+                        IsClippedToBounds="True">
+                            <Label HorizontalOptions="Center" 
+                                TextColor="Black" 
+                                VerticalOptions="Center" 
+                                FontSize="Medium" 
+                                Text="{Binding Title}"/>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+        <Button Text="Reload" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding ReloadButtonVisibility}" Command="{Binding GetHallsCommand}"/>
+        <ActivityIndicator IsVisible="{Binding IsBusy}" 
+                           IsRunning="True" 
+                           Color="HotPink" 
+                           VerticalOptions="CenterAndExpand"/>
+    </Grid>
+</ContentPage>
