@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:Controls="clr-namespace:GSU.Museum.Shared.Controls"
+             mc:Ignorable="d"
+             x:Class="GSU.Museum.Shared.Pages.ExhibitsArticle"
+             Appearing="ContentPage_Appearing"
+             Title="{Binding Title}">
+    <ContentPage.Content>
+        <ScrollView VerticalScrollBarVisibility="Always">
+            <StackLayout Orientation="Vertical" Margin="5">
+                <StackLayout IsVisible="{Binding Visibility}">
+                    <CarouselView
+                        ItemsSource="{Binding Photos}"
+                                  Margin="5, 0"
+                                  IndicatorView="indicator"
+                                  Style="{StaticResource DefaultCarouselView}" >
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <ImageButton Aspect="AspectFit" BackgroundColor="Transparent" Source="{Binding }">
+                                </ImageButton>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                    <IndicatorView
+                        x:Name="indicator"
+                        Style="{StaticResource DefaultIndicator}" IndicatorsShape="Square">
+                    </IndicatorView>
+                </StackLayout>
+
+                <Controls:JustifiedLabel Text="{Binding Text}" Style="{StaticResource DefaultLabel}"/>
+                <Button Text="Main menu" HorizontalOptions="Start" Command="{Binding NavigateToMainMenuCommand}"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
