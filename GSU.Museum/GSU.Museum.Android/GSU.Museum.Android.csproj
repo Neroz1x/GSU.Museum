@@ -72,6 +72,10 @@
     <Compile Include="Services\HTTPClientHandlerCreationService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="NLog.config" />
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />

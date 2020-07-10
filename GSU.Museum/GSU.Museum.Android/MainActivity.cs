@@ -1,13 +1,12 @@
-﻿using System;
-
+﻿
 using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
-using System.Net;
 using Xamarin.Forms;
+using System.Reflection;
+using GSU.Museum.Shared.Services;
+using Android;
 
 namespace GSU.Museum.Droid
 {
@@ -24,6 +23,9 @@ namespace GSU.Museum.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            
+            InitializeNLog();
+
             LoadApplication(new App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -32,5 +34,13 @@ namespace GSU.Museum.Droid
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+
+        private void InitializeNLog()
+        {
+            Assembly assembly = this.GetType().Assembly;
+            string assemblyName = assembly.GetName().Name;
+            new LogService().Initialize(assembly, assemblyName);
+        }
+
     }
 }

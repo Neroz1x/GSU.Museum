@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
+﻿using System.Reflection;
 using Foundation;
+using GSU.Museum.Shared.Services;
 using UIKit;
 
 namespace GSU.Museum.iOS
@@ -23,9 +21,19 @@ namespace GSU.Museum.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+
+            InitializeNLog();
+
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
+        }
+
+        private void InitializeNLog()
+        {
+            Assembly assembly = this.GetType().Assembly;
+            string assemblyName = assembly.GetName().Name;
+            new LogService().Initialize(assembly, assemblyName);
         }
     }
 }
