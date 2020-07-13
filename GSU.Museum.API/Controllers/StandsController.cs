@@ -16,11 +16,13 @@ namespace GSU.Museum.API.Controllers
     {
         private readonly IStandsRepository _standsRepository;
         private readonly IStandsService _standsService;
+        private readonly ICompareService _compareService;
 
-        public StandsController(IStandsRepository exhibitRepository, IStandsService standsService)
+        public StandsController(IStandsRepository exhibitRepository, IStandsService standsService, ICompareService compareService)
         {
             _standsRepository = exhibitRepository;
             _standsService = standsService;
+            _compareService = compareService;
         }
 
         /// <summary>
@@ -36,6 +38,7 @@ namespace GSU.Museum.API.Controllers
         public async Task<List<StandDTO>> GetAll(string hallId)
         {
             return await _standsService.GetAllAsync(Request, hallId);
+
         }
 
 
@@ -48,10 +51,11 @@ namespace GSU.Museum.API.Controllers
         /// </remarks>
         /// <param name="hallId">Id of the hall</param>
         /// <param name="id">Id of the record</param>
+        /// <param name="hash">Hash from client</param>
         /// <returns>Record or not found</returns>
         // GET: api/Stands/5
         [HttpGet("{hallId}/{id}")]
-        public async Task<IActionResult> GetAsync(string hallId, string id)
+        public async Task<IActionResult> GetAsync(string hallId, string id, int? hash)
         {
             if (id.Length < 24)
             {
@@ -62,6 +66,13 @@ namespace GSU.Museum.API.Controllers
             if (stand == null)
             {
                 return NotFound();
+            }
+            if (hash != null)
+            {
+                if (_compareService.IsEquals(hash.GetValueOrDefault(), stand))
+                {
+                    return NoContent();
+                }
             }
             return Ok(stand);
         }

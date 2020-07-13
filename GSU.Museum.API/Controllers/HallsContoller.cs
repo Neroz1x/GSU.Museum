@@ -17,11 +17,13 @@ namespace GSU.Museum.API.Controllers
     {
         private readonly IHallsRepository _hallsRepository;
         private readonly IHallsService _hallsService;
+        private readonly ICompareService _compareService;
 
-        public HallsController(IHallsRepository exhibitRepository, IHallsService hallsService)
+        public HallsController(IHallsRepository exhibitRepository, IHallsService hallsService, ICompareService compareService)
         {
             _hallsRepository = exhibitRepository;
             _hallsService = hallsService;
+            _compareService = compareService;
         }
 
         /// <summary>
@@ -33,9 +35,17 @@ namespace GSU.Museum.API.Controllers
         /// </remarks>
         /// <returns>Halls without nested stands</returns>
         [HttpGet]
-        public async Task<List<HallDTO>> GetAll()
+        public async Task<IActionResult> GetAll(int? hash)
         {
-            return await _hallsService.GetAllAsync(Request);
+            var halls = await _hallsService.GetAllAsync(Request);
+            if (hash != null)
+            {
+                if(_compareService.IsListEquals(hash.GetValueOrDefault(), halls))
+                {
+                    return NoContent();
+                }
+            }
+            return Ok(halls);
         }
 
 
@@ -47,9 +57,10 @@ namespace GSU.Museum.API.Controllers
         ///     GET: api/Halls/123456789012345678901234
         /// </remarks>
         /// <param name="id">Id of the record</param>
+        /// <param name="hash">Hash from client</param>
         /// <returns>Record or not found</returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAsync(string id)
+        public async Task<IActionResult> GetAsync(string id, int? hash)
         {
             if (id.Length < 24)
             {
@@ -60,6 +71,13 @@ namespace GSU.Museum.API.Controllers
             if (hall == null)
             {
                 return NotFound();
+            }
+            if (hash != null)
+            {
+                if (_compareService.IsEquals(hash.GetValueOrDefault(), hall))
+                {
+                    return NoContent();
+                }
             }
             return Ok(hall);
         }

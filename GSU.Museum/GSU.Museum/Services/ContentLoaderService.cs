@@ -9,6 +9,7 @@ using System.Net;
 using Xamarin.Forms;
 using Newtonsoft.Json;
 using GSU.Museum.Shared.Services;
+using Akavache;
 
 [assembly: Dependency(typeof(ContentLoaderService))]
 namespace GSU.Museum.Shared.Services
@@ -17,29 +18,24 @@ namespace GSU.Museum.Shared.Services
     {
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 
-        private string _language;
-
-        public ContentLoaderService()
+        public HttpClient GetHttpClient()
         {
+            string language;
             switch (Thread.CurrentThread.CurrentUICulture.Name)
             {
                 case "ru-RU":
-                    _language = "Ru";
+                    language = "Ru";
                     break;
                 case "en-US":
-                    _language = "En";
+                    language = "En";
                     break;
                 case "be-BY":
-                    _language = "Be";
+                    language = "Be";
                     break;
                 default:
-                    _language = "En";
+                    language = "En";
                     break;
             }
-        }
-
-        public HttpClient GetHttpClient()
-        {
             HttpClient httpClient;
 
             switch (Device.RuntimePlatform)
@@ -53,41 +49,9 @@ namespace GSU.Museum.Shared.Services
                     break;
             }
 
-            httpClient.DefaultRequestHeaders.Add("Language", _language);
+            httpClient.DefaultRequestHeaders.Add("Language", language);
             httpClient.DefaultRequestHeaders.Add("X-API-KEY", "U3VwZXJTZWNyZXRBcGlLZXkxMjM");
             return httpClient;
-        }
-
-        public async Task<Exhibit> LoadExhibit(string hallId, string standId, string id)
-        {
-            _logger.Info($"Loading exhibit with id {id}");
-            string content = await Load(new Uri($"https://{App.UriBase}/api/Exhibits/{hallId}/{standId}/{id}"));
-            Exhibit exhibit = JsonConvert.DeserializeObject<Exhibit>(content);
-            return exhibit;
-        }
-
-        public async Task<Hall> LoadHall(string id)
-        {
-            _logger.Info($"Loading hallwith id {id}");
-            string content = await Load(new Uri($"https://{App.UriBase}/api/Halls/{id}"));
-            Hall hall = JsonConvert.DeserializeObject<Hall>(content);
-            return hall;
-        }
-
-        public async Task<List<Hall>> LoadHalls()
-        {
-            _logger.Info($"Loading halls");
-            string content = await Load(new Uri($"https://{App.UriBase}/api/Halls"));
-            List<Hall> halls = JsonConvert.DeserializeObject<List<Hall>>(content);
-            return halls;
-        }
-
-        public async Task<Stand> LoadStand(string hallId, string id)
-        {
-            _logger.Info($"Loading stand with id {id}");
-            string content = await Load(new Uri($"https://{App.UriBase}/api/Stands/{hallId}/{id}"));
-            Stand stand = JsonConvert.DeserializeObject<Stand>(content);
-            return stand;
         }
 
         public async Task<string> Load(Uri uri)
@@ -120,6 +84,115 @@ namespace GSU.Museum.Shared.Services
             {
                 _logger.Error($"Error while sending request: {ex.Message}");
                 throw ex;
+            }
+        }
+
+        public async Task<Exhibit> LoadExhibit(string hallId, string standId, string id)
+        {
+            _logger.Info($"Loading exhibit with id {id}");
+            var exhibitCached = await DependencyService.Get<CachingService>().ReadExhibitAsync(id);
+            if (exhibitCached != null)
+            {
+                string content = await Load(new Uri($"https://{App.UriBase}/api/Exhibits/{hallId}/{standId}/{id}?hash={exhibitCached.GetHashCode()}"));
+                if (string.IsNullOrEmpty(content))
+                {
+                    return exhibitCached;
+                }
+                Exhibit exhibit = JsonConvert.DeserializeObject<Exhibit>(content);
+                await DependencyService.Get<CachingService>().WriteExhibitAsync(exhibit);
+                return exhibit;
+            }
+            else
+            {
+                string content = await Load(new Uri($"https://{App.UriBase}/api/Exhibits/{hallId}/{standId}/{id}"));
+                Exhibit exhibit = JsonConvert.DeserializeObject<Exhibit>(content);
+                await DependencyService.Get<CachingService>().WriteExhibitAsync(exhibit);
+                return exhibit;
+            }
+        }
+
+        public async Task<Hall> LoadHall(string id)
+        {
+            _logger.Info($"Loading hall with id {id}");
+            var hallCached = await DependencyService.Get<CachingService>().ReadHallAsync(id);
+            if (hallCached != null)
+            {
+                string content = await Load(new Uri($"https://{App.UriBase}/api/Halls/{id}?hash={hallCached.GetHashCode()}"));
+                if (string.IsNullOrEmpty(content))
+                {
+                    return hallCached;
+                }
+                Hall hall = JsonConvert.DeserializeObject<Hall>(content);
+                await DependencyService.Get<CachingService>().WriteHallAsync(hall);
+                return hall;
+            }
+            else
+            {
+                string content = await Load(new Uri($"https://{App.UriBase}/api/Halls/{id}"));
+                Hall hall = JsonConvert.DeserializeObject<Hall>(content);
+                await DependencyService.Get<CachingService>().WriteHallAsync(hall);
+                return hall;
+            }
+        }
+
+        public async Task<List<Hall>> LoadHalls()
+        {
+            _logger.Info($"Loading halls");
+            var hallsCached = await DependencyService.Get<CachingService>().ReadHallsAsync();
+            if (hallsCached != null)
+            {
+                string content = await Load(new Uri($"https://{App.UriBase}/api/Halls?hash={GetHash(hallsCached)}"));
+                if (string.IsNullOrEmpty(content))
+                {
+                    return hallsCached;
+                }
+                List<Hall> halls = JsonConvert.DeserializeObject<List<Hall>>(content);
+                await DependencyService.Get<CachingService>().WriteHallsAsync(halls);
+                return halls;
+            }
+            else
+            {
+                string content = await Load(new Uri($"https://{App.UriBase}/api/Halls"));
+                List<Hall> halls = JsonConvert.DeserializeObject<List<Hall>>(content);
+                await DependencyService.Get<CachingService>().WriteHallsAsync(halls);
+                return halls;
+            }
+        }
+
+        public async Task<Stand> LoadStand(string hallId, string id)
+        {
+            _logger.Info($"Loading stand with id {id}");
+            var standCached = await DependencyService.Get<CachingService>().ReadStandAsync(id);
+            if (standCached != null)
+            {
+                string content = await Load(new Uri($"https://{App.UriBase}/api/Stands/{hallId}/{id}?hash={standCached.GetHashCode()}"));
+                if (string.IsNullOrEmpty(content))
+                {
+                    return standCached;
+                }
+                Stand stand = JsonConvert.DeserializeObject<Stand>(content);
+                await DependencyService.Get<CachingService>().WriteStandAsync(stand);
+                return stand;
+            }
+            else
+            {
+                string content = await Load(new Uri($"https://{App.UriBase}/api/Stands/{hallId}/{id}"));
+                Stand stand = JsonConvert.DeserializeObject<Stand>(content); 
+                await DependencyService.Get<CachingService>().WriteStandAsync(stand);
+                return stand;
+            }
+        }
+
+        public int GetHash(List<Hall> hallsCached)
+        {
+            unchecked
+            {
+                int hash = (int)2166136261;
+                foreach (var hallCached in hallsCached)
+                {
+                    hash = (hash * 16777619) ^ (hallCached?.GetHashCode() ?? 1);
+                }
+                return hash;
             }
         }
     }

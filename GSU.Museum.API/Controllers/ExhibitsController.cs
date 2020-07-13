@@ -16,11 +16,13 @@ namespace GSU.Museum.API.Controllers
     {
         private readonly IExhibitsRepository _exhibitsRepository;
         private readonly IExhibitsService _exhibitsService;
+        private readonly ICompareService _compareService;
 
-        public ExhibitsController(IExhibitsRepository exhibitRepository, IExhibitsService exhibitsService)
+        public ExhibitsController(IExhibitsRepository exhibitRepository, IExhibitsService exhibitsService, ICompareService compareService)
         {
             _exhibitsRepository = exhibitRepository;
             _exhibitsService = exhibitsService;
+            _compareService = compareService;
         }
 
         /// <summary>
@@ -50,10 +52,11 @@ namespace GSU.Museum.API.Controllers
         ///     GET: api/Exhibits/123456789012345678901234
         /// </remarks>
         /// <param name="id">Id of the record</param>
+        /// <param name="hash">Hash from client</param>
         /// <returns>Record or not found</returns>
         // GET: api/Exhibits/5
         [HttpGet("{hallId}/{standId}/{id}")]
-        public async Task<IActionResult> GetAsync(string hallId, string standId, string id)
+        public async Task<IActionResult> GetAsync(string hallId, string standId, string id, int? hash)
         {
             if (id.Length < 24)
             {
@@ -63,6 +66,13 @@ namespace GSU.Museum.API.Controllers
             if (exhibit == null)
             {
                 return NotFound();
+            }
+            if (hash != null)
+            {
+                if (_compareService.IsEquals(hash.GetValueOrDefault(), exhibit))
+                {
+                    return NoContent();
+                }
             }
             return Ok(exhibit);
         }

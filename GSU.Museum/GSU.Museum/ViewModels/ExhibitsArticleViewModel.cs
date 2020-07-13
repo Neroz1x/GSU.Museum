@@ -11,7 +11,7 @@ namespace GSU.Museum.Shared.ViewModels
         #region Fields
         public INavigation Navigation;
         public Command NavigateToMainMenuCommand { get; }
-        ObservableCollection<ImageSource> Photos { get; }
+        public ObservableCollection<ImageSource> Photos { get; }
         
         public Exhibit Exhibit;
 
