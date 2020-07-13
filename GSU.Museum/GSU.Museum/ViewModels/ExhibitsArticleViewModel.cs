@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
+
 namespace GSU.Museum.Shared.ViewModels
 {
     public class ExhibitsArticleViewModel : BaseViewModel
@@ -16,21 +17,21 @@ namespace GSU.Museum.Shared.ViewModels
         public Exhibit Exhibit;
 
         // Visibility of photo
-        private bool _visibility = false;
-        public bool Visibility
+        private bool _carouselVisibility = false;
+        public bool CarouselVisibility
         {
             get
             {
-                return _visibility;
+                return _carouselVisibility;
             }
 
             set
             {
-                if (value != _visibility)
+                if (value != _carouselVisibility)
                 {
-                    _visibility = value;
+                    _carouselVisibility = value;
                 }
-                OnPropertyChanged(nameof(Visibility));
+                OnPropertyChanged(nameof(CarouselVisibility));
             }
         }
         // Title of the page
@@ -92,11 +93,11 @@ namespace GSU.Museum.Shared.ViewModels
                     {
                         Photos.Add(ImageSource.FromStream(() => new MemoryStream(photo)));
                     }
-                    Visibility = true;
+                    CarouselVisibility = true;
                 }
                 else
                 {
-                    Visibility = false;
+                    CarouselVisibility = false;
                 }
             });
             Title = Exhibit.Title;
