@@ -7,8 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using Xamarin.Forms;
+using System.Threading.Tasks;
+
 
 [assembly: Dependency(typeof(CachingService))]
 namespace GSU.Museum.Shared.Services

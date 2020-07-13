@@ -9,7 +9,6 @@ using System.Net;
 using Xamarin.Forms;
 using Newtonsoft.Json;
 using GSU.Museum.Shared.Services;
-using Akavache;
 
 [assembly: Dependency(typeof(ContentLoaderService))]
 namespace GSU.Museum.Shared.Services
