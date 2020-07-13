@@ -41,48 +41,60 @@ namespace GSU.Museum.API.Services
                 switch (language)
                 {
                     case "Ru":
-                        mapperConfiguration = new MapperConfiguration(cfg => cfg.CreateMap<Exhibit, ExhibitDTO>()
-                        .ForMember(destination => destination.Title,
+                        mapperConfiguration = new MapperConfiguration(cfg => 
+                        {
+                            cfg.CreateMap<Exhibit, ExhibitDTO>()
+                            .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
                             source => source.TitleRu))
-                        .ForMember(destination => destination.Text,
+                            .ForMember(destination => destination.Text,
                                map => map.Ignore())
-                        .ForMember(destination => destination.Photos,
-                            map => map.Ignore())
-                        );
+                            .ForMember(destination => destination.Photos,
+                            map => map.Ignore());
+                            cfg.AllowNullCollections = true;
+                        });
                         break;
                     case "En":
-                        mapperConfiguration = new MapperConfiguration(cfg => cfg.CreateMap<Exhibit, ExhibitDTO>()
-                        .ForMember(destination => destination.Title,
+                        mapperConfiguration = new MapperConfiguration(cfg => 
+                        {
+                            cfg.CreateMap<Exhibit, ExhibitDTO>()
+                            .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
                             source => source.TitleEn))
-                        .ForMember(destination => destination.Text,
+                            .ForMember(destination => destination.Text,
                                map => map.Ignore())
-                        .ForMember(destination => destination.Photos,
-                            map => map.Ignore())
-                        );
+                            .ForMember(destination => destination.Photos,
+                            map => map.Ignore());
+                            cfg.AllowNullCollections = true;
+                        });
                         break;
                     case "Be":
-                        mapperConfiguration = new MapperConfiguration(cfg => cfg.CreateMap<Exhibit, ExhibitDTO>()
-                        .ForMember(destination => destination.Title,
+                        mapperConfiguration = new MapperConfiguration(cfg => 
+                        {
+                            cfg.CreateMap<Exhibit, ExhibitDTO>()
+                            .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
                             source => source.TitleBe))
-                        .ForMember(destination => destination.Text,
+                            .ForMember(destination => destination.Text,
                                map => map.Ignore())
-                        .ForMember(destination => destination.Photos,
-                            map => map.Ignore())
-                        );
+                            .ForMember(destination => destination.Photos,
+                            map => map.Ignore());
+                            cfg.AllowNullCollections = true;
+                        });
                         break;
                     default:
-                        mapperConfiguration = new MapperConfiguration(cfg => cfg.CreateMap<Exhibit, ExhibitDTO>()
-                        .ForMember(destination => destination.Title,
+                        mapperConfiguration = new MapperConfiguration(cfg =>
+                        {
+                            cfg.CreateMap<Exhibit, ExhibitDTO>()
+                            .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
                             source => source.TitleEn))
-                        .ForMember(destination => destination.Text,
+                            .ForMember(destination => destination.Text,
                                map => map.Ignore())
-                        .ForMember(destination => destination.Photos,
-                            map => map.Ignore())
-                        );
+                            .ForMember(destination => destination.Photos,
+                            map => map.Ignore());
+                            cfg.AllowNullCollections = true;
+                        });
                         break;
                 }
                 var mapper = new Mapper(mapperConfiguration);
@@ -117,44 +129,57 @@ namespace GSU.Museum.API.Services
                 switch (language)
                 {
                     case "Ru":
-                        mapperConfiguration = new MapperConfiguration(cfg => cfg.CreateMap<Exhibit, ExhibitDTO>()
-                        .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                            source => source.TitleRu))
-                        .ForMember(destination => destination.Text,
-                                map => map.MapFrom(
-                            source => source.TextRu))
+                        mapperConfiguration = new MapperConfiguration(cfg => 
+                        {
+                            cfg.CreateMap<Exhibit, ExhibitDTO>()
+                            .ForMember(destination => destination.Title,
+                                    map => map.MapFrom(
+                                source => source.TitleRu))
+                            .ForMember(destination => destination.Text,
+                                    map => map.MapFrom(
+                                source => source.TextRu));
+                            cfg.AllowNullCollections = true;
+                        }
                         );
                         break;
                     case "En":
-                        mapperConfiguration = new MapperConfiguration(cfg => cfg.CreateMap<Exhibit, ExhibitDTO>()
-                        .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                            source => source.TitleEn))
-                        .ForMember(destination => destination.Text,
-                                map => map.MapFrom(
-                            source => source.TextEn))
-                        );
+                        mapperConfiguration = new MapperConfiguration(cfg => 
+                        {
+                            cfg.CreateMap<Exhibit, ExhibitDTO>()
+                           .ForMember(destination => destination.Title,
+                                   map => map.MapFrom(
+                               source => source.TitleEn))
+                           .ForMember(destination => destination.Text,
+                                   map => map.MapFrom(
+                               source => source.TextEn));
+                            cfg.AllowNullCollections = true;
+                        });
                         break;
                     case "Be":
-                        mapperConfiguration = new MapperConfiguration(cfg => cfg.CreateMap<Exhibit, ExhibitDTO>()
-                        .ForMember(destination => destination.Title,
+                        mapperConfiguration = new MapperConfiguration(cfg =>
+                        {
+                            cfg.CreateMap<Exhibit, ExhibitDTO>()
+                            .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
                             source => source.TitleBe))
-                        .ForMember(destination => destination.Text,
+                            .ForMember(destination => destination.Text,
                                 map => map.MapFrom(
-                            source => source.TextBe))
-                        );
+                            source => source.TextBe));
+                            cfg.AllowNullCollections = true;
+                        });
                         break;
                     default:
-                        mapperConfiguration = new MapperConfiguration(cfg => cfg.CreateMap<Exhibit, ExhibitDTO>()
-                        .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                            source => source.TitleEn))
-                        .ForMember(destination => destination.Text,
-                                map => map.MapFrom(
-                            source => source.TextEn))
-                        );
+                        mapperConfiguration = new MapperConfiguration(cfg =>
+                        {
+                            cfg.CreateMap<Exhibit, ExhibitDTO>()
+                           .ForMember(destination => destination.Title,
+                                   map => map.MapFrom(
+                               source => source.TitleEn))
+                           .ForMember(destination => destination.Text,
+                                   map => map.MapFrom(
+                               source => source.TextEn));
+                            cfg.AllowNullCollections = true;
+                        });
                         break;
                 }
                 var mapper = new Mapper(mapperConfiguration);
