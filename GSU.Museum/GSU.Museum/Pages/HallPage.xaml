@@ -6,7 +6,10 @@
              mc:Ignorable="d"
              x:Class="GSU.Museum.Shared.Pages.HallPage"
              Appearing="ContentPage_Appearing"
-             Title="{Binding Title}">
+             >
+    <NavigationPage.TitleView>
+        <Label Text="{Binding Title}" FontSize="Large" TextColor="White" />
+    </NavigationPage.TitleView>
     <StackLayout Padding="10">
         <CollectionView x:Name="StandsCollectionView" SelectionMode="Single" ItemsSource="{Binding Stands}"
                         SelectionChangedCommand="{Binding SelectStandCommand}"

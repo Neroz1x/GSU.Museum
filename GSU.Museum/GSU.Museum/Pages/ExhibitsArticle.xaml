@@ -7,7 +7,10 @@
              mc:Ignorable="d"
              x:Class="GSU.Museum.Shared.Pages.ExhibitsArticle"
              Appearing="ContentPage_Appearing"
-             Title="{Binding Title}">
+             >
+    <NavigationPage.TitleView>
+        <Label Text="{Binding Title}" FontSize="Large" TextColor="White" />
+    </NavigationPage.TitleView>
     <ContentPage.Content>
         <ScrollView VerticalScrollBarVisibility="Always">
             <StackLayout Orientation="Vertical" Margin="5">
