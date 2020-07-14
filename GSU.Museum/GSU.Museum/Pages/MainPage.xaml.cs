@@ -1,4 +1,5 @@
-﻿using GSU.Museum.Shared.ViewModels;
+﻿using GSU.Museum.Shared.Services;
+using GSU.Museum.Shared.ViewModels;
 using System;
 using System.ComponentModel;
 using Xamarin.Forms;
@@ -18,6 +19,8 @@ namespace GSU.Museum
 
         async void ContentPage_Appearing(object sender, EventArgs e)
         {
+            App.Settings = await DependencyService.Get<CachingService>().ReadSettings();
+            DependencyService.Get<LocalizationService>().Localize();
             var viewModel = BindingContext as MainPageViewModel;
             await viewModel.GetHalls();
         }
