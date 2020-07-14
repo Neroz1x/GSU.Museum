@@ -1,5 +1,6 @@
 ﻿using GSU.Museum.Shared.Data.Models;
 using GSU.Museum.Shared.Pages;
+using GSU.Museum.Shared.Resources;
 using GSU.Museum.Shared.Services;
 using System;
 using System.Collections.ObjectModel;
@@ -13,6 +14,7 @@ namespace GSU.Museum.Shared.ViewModels
 #region Fields 
         public INavigation Navigation;
         public Command GetHallsCommand { get; }
+        public Command NavigateToOptionsPageCommand { get; }
         public Command SelectHallCommand { get; }
         public ObservableCollection<Hall> Halls { get; }
 
@@ -72,6 +74,44 @@ namespace GSU.Museum.Shared.ViewModels
                 OnPropertyChanged(nameof(ContentVisibility));
             }
         }
+
+        // Title of the page
+        private string _title;
+        public string Title
+        {
+            get
+            {
+                return _title;
+            }
+
+            set
+            {
+                if (value != _title)
+                {
+                    _title = value;
+                }
+                OnPropertyChanged(nameof(Title));
+            }
+        }
+
+        // Title of the page
+        private string _optionsToolBar;
+        public string OptionsToolBar
+        {
+            get
+            {
+                return _optionsToolBar;
+            }
+
+            set
+            {
+                if (value != _optionsToolBar)
+                {
+                    _optionsToolBar = value;
+                }
+                OnPropertyChanged(nameof(OptionsToolBar));
+            }
+        }
         #endregion
 
         public MainPageViewModel(INavigation navigation)
@@ -79,6 +119,7 @@ namespace GSU.Museum.Shared.ViewModels
             Navigation = navigation;
             Halls = new ObservableCollection<Hall>();
             GetHallsCommand = new Command(async () => await GetHalls());
+            NavigateToOptionsPageCommand = new Command(async () => await NavigateToOptionsPage());
             SelectHallCommand = new Command(async Id => await SelectHall((string)Id));
         }
 
@@ -88,6 +129,9 @@ namespace GSU.Museum.Shared.ViewModels
             ReloadButtonVisibility = false;
             ContentVisibility = true;
             IsBusy = true;
+            Title = AppResources.MainPage_Title;
+            OptionsToolBar = AppResources.MainPage_ToolBar_Options;
+
             try
             {
                 var halls = await DependencyService.Get<ContentLoaderService>().LoadHalls();
@@ -119,6 +163,11 @@ namespace GSU.Museum.Shared.ViewModels
         public async Task SelectHall(string id)
         {
             await Navigation.PushAsync(new HallPage(id));
+        }
+        
+        public async Task NavigateToOptionsPage()
+        {
+            await Navigation.PushAsync(new OptionsPage());
         }
         #endregion
     }
