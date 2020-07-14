@@ -1,13 +1,19 @@
-﻿using System;
+﻿using GSU.Museum.Shared.Data.Models;
+using GSU.Museum.Shared.Pages;
+using GSU.Museum.Shared.Services;
+using System.Threading;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace GSU.Museum
 {
     public partial class App : Application
     {
         public const string UriBase = "10.0.2.2:5001";
+
+        public static Settings Settings { get; set; }
+
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
+        
         public App()
         {
             InitializeComponent();
@@ -30,5 +36,6 @@ namespace GSU.Museum
         protected override void OnResume()
         {
         }
+
     }
 }
