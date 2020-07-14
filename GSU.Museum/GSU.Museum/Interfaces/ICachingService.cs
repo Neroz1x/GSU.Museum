@@ -38,6 +38,11 @@ namespace GSU.Museum.Shared.Interfaces
         Task<Exhibit> ReadExhibitAsync(string id);
 
         /// <summary>
+        /// Read user settings from cache
+        /// </summary>
+        /// <returns>If null - returns default settings</returns>
+        Task<Settings> ReadSettings();
+        /// <summary>
         /// Write list of halls
         /// </summary>
         /// <param name="halls">Hals to cache</param>
@@ -60,5 +65,11 @@ namespace GSU.Museum.Shared.Interfaces
         /// </summary>
         /// <param name="exhibit">Exhibit to cache</param>
         Task WriteExhibitAsync(Exhibit exhibit);
+
+        /// <summary>
+        /// Write user settings to cahce
+        /// </summary>
+        /// <returns></returns>
+        Task WriteSettings();
     }
 }

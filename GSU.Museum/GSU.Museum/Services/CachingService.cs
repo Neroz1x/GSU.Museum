@@ -56,6 +56,17 @@ namespace GSU.Museum.Shared.Services
             return null;
         }
 
+        public async Task<Settings> ReadSettings()
+        {
+            var keys = await BlobCache.LocalMachine.GetAllKeys();
+            if (keys.Contains("settings"))
+            {
+                Settings settings = await BlobCache.LocalMachine.GetObject<Settings>("settings");
+                return settings;
+            }
+            return new Settings();
+        }
+
         public async Task<Stand> ReadStandAsync(string id)
         {
             string language = Thread.CurrentThread.CurrentUICulture.Name;
@@ -96,6 +107,11 @@ namespace GSU.Museum.Shared.Services
             string language = Thread.CurrentThread.CurrentUICulture.Name;
 
             await BlobCache.LocalMachine.InsertObject($"{language}halls", halls);
+        }
+
+        public async Task WriteSettings()
+        {
+            await BlobCache.LocalMachine.InsertObject("settings", App.Settings);
         }
 
         public async Task WriteStandAsync(Stand stand)
