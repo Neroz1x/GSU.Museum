@@ -36,9 +36,9 @@ namespace GSU.Museum.API.Controllers
         /// </remarks>
         /// <returns>All exhibits</returns>
         [HttpGet]
-        public async Task<List<ExhibitDTO>> GetAll(string hallId, string standId)
+        public Task<List<ExhibitDTO>> GetAll(string hallId, string standId)
         {
-            return await _exhibitsService.GetAllAsync(Request, hallId, standId);
+            return _exhibitsService.GetAllAsync(Request, hallId, standId);
         }
 
 
