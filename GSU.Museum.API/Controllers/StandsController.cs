@@ -35,10 +35,9 @@ namespace GSU.Museum.API.Controllers
         /// </remarks>
         /// <returns>All stands without nested exhibits</returns>
         [HttpGet]
-        public async Task<List<StandDTO>> GetAll(string hallId)
+        public Task<List<StandDTO>> GetAll(string hallId)
         {
-            return await _standsService.GetAllAsync(Request, hallId);
-
+            return _standsService.GetAllAsync(Request, hallId);
         }
 
 

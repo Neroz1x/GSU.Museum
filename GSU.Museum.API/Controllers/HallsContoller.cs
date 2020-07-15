@@ -35,7 +35,7 @@ namespace GSU.Museum.API.Controllers
         /// </remarks>
         /// <returns>Halls without nested stands</returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll(int? hash)
+        public async Task<IActionResult> GetAllAsync(int? hash)
         {
             var halls = await _hallsService.GetAllAsync(Request);
             if (hash != null)
