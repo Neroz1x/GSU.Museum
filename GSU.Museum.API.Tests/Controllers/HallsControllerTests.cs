@@ -211,35 +211,62 @@ namespace GSU.Museum.API.Tests.Controllers
             _exhibitsService = new ExhibitsService(mockRepoExhibit.Object);
             _standsService = new StandsService(mockRepoStands.Object, _exhibitsService);
             _service = new HallsService(mockRepo.Object, _standsService);
-            _hallsController = new HallsController(mockRepo.Object, _service);
+            _hallsController = new HallsController(mockRepo.Object, _service, new CompareService());
 
             _exhibitsServiceEmptyRepo = new ExhibitsService(mockRepoEmptyExhibits.Object);
             _standsServiceEmptyRepo = new StandsService(mockRepoEmptyStands.Object, _exhibitsServiceEmptyRepo);
             _serviceEmptyRepo = new HallsService(mockRepoEmpty.Object, _standsServiceEmptyRepo);
-            _hallsController2 = new HallsController(mockRepoEmpty.Object, _serviceEmptyRepo);
+            _hallsController2 = new HallsController(mockRepoEmpty.Object, _serviceEmptyRepo, new CompareService());
         }
 
         [Fact]
-        public async void GetAll_RepositoryConsistsOf2Records_ShouldReturnListOf2Records()
+        public async void GetAllAsync_RepositoryConsistsOf2Records_ShouldReturnListOf2Records()
         {
             // Arrange
             const int expected = 2;
 
             // Act
-            var list = await _hallsController.GetAll();
+            var list = await _hallsController.GetAllAsync(null) as OkObjectResult;
 
             // Assert
-            Assert.Equal(expected, list.Count);
+            Assert.Equal(expected, (list.Value as List<HallDTO>).Count);
         }
 
         [Fact]
-        public async void GetAll_RepositoryIsEmpty_ShouldReturnEmptyList()
+        public async void GetAllAsync_HashEqualsWithRetrievedRecords_ShouldReturnNoContent()
         {
+            // Arrange
+            var statusCode = StatusCodes.Status204NoContent;
+            var halls = await _hallsController.GetAllAsync(null) as OkObjectResult;
+
             // Act
-            var list = await _hallsController2.GetAll();
+            var objectResult = await _hallsController.GetAllAsync(GetHash(halls.Value as List<HallDTO>)) as NoContentResult;
 
             // Assert
-            Assert.Empty(list);
+            Assert.Equal(statusCode, objectResult.StatusCode);
+        }
+
+        [Fact]
+        public async void GetAllAsync_HashDoesNotEqualWithRetrievedRecords_ShouldReturn200Ok()
+        {
+            // Arrange
+            var statusCode = StatusCodes.Status200OK;
+
+            // Act
+            var objectResult = await _hallsController.GetAllAsync(1) as OkObjectResult;
+
+            // Assert
+            Assert.Equal(statusCode, objectResult.StatusCode);
+        }
+
+        [Fact]
+        public async void GetAllAsync_RepositoryIsEmpty_ShouldReturnEmptyList()
+        {
+            // Act
+            var list = await _hallsController2.GetAllAsync(null) as OkObjectResult;
+
+            // Assert
+            Assert.Empty((list.Value as List<HallDTO>));
         }
 
         [Fact]
@@ -260,7 +287,7 @@ namespace GSU.Museum.API.Tests.Controllers
             var expected = mapper.Map<HallDTO>(hall);
 
             // Act
-            var actual = await _hallsController.GetAsync(expected.Id) as OkObjectResult;
+            var actual = await _hallsController.GetAsync(expected.Id, null) as OkObjectResult;
 
             // Assert
             Assert.Equal(StatusCodes.Status200OK, actual.StatusCode);
@@ -276,7 +303,7 @@ namespace GSU.Museum.API.Tests.Controllers
             // Act
             try
             {
-                StatusCodeResult actual = await _hallsController.GetAsync("1") as StatusCodeResult;
+                StatusCodeResult actual = await _hallsController.GetAsync("1", null) as StatusCodeResult;
             }
             catch (Error err)
             {
@@ -295,7 +322,7 @@ namespace GSU.Museum.API.Tests.Controllers
             const int statusCode = StatusCodes.Status404NotFound;
 
             // Act
-            StatusCodeResult actual = await _hallsController.GetAsync(id) as StatusCodeResult;
+            StatusCodeResult actual = await _hallsController.GetAsync(id, null) as StatusCodeResult;
 
             // Assert
             Assert.Equal(statusCode, actual.StatusCode);
@@ -313,7 +340,7 @@ namespace GSU.Museum.API.Tests.Controllers
             // Act
             try
             {
-                StatusCodeResult actual = await _hallsController.GetAsync(id) as StatusCodeResult;
+                StatusCodeResult actual = await _hallsController.GetAsync(id, null) as StatusCodeResult;
             }
             catch (Error err)
             {
@@ -335,7 +362,7 @@ namespace GSU.Museum.API.Tests.Controllers
             // Act
             try
             {
-                StatusCodeResult actual = await _hallsController.GetAsync(id) as StatusCodeResult;
+                StatusCodeResult actual = await _hallsController.GetAsync(id, null) as StatusCodeResult;
             }
             catch (Error err)
             {
@@ -357,7 +384,7 @@ namespace GSU.Museum.API.Tests.Controllers
             // Act
             try
             {
-                StatusCodeResult actual = await _hallsController.GetAsync(id) as StatusCodeResult;
+                StatusCodeResult actual = await _hallsController.GetAsync(id, null) as StatusCodeResult;
             }
             catch (Error err)
             {
@@ -379,7 +406,7 @@ namespace GSU.Museum.API.Tests.Controllers
             // Act
             try
             {
-                StatusCodeResult actual = await _hallsController.GetAsync(id) as StatusCodeResult;
+                StatusCodeResult actual = await _hallsController.GetAsync(id, null) as StatusCodeResult;
             }
             catch (Error err)
             {
@@ -387,6 +414,33 @@ namespace GSU.Museum.API.Tests.Controllers
                 Assert.Equal(errorCodeExpected, err.ErrorCode);
                 Assert.Equal(messageExpected, err.Info);
             }
+        }
+
+        [Fact]
+        public async void GetAsync_HashEqualsWithRetrievedRecord_ShouldReturnNoContent()
+        {
+            // Arrange
+            var statusCode = StatusCodes.Status204NoContent;
+            var hall = await _hallsController.GetAsync("123456789012345678901234", null) as OkObjectResult;
+
+            // Act
+            var objectResult = await _hallsController.GetAsync("123456789012345678901234", (hall.Value as HallDTO).GetHashCode()) as NoContentResult;
+
+            // Assert
+            Assert.Equal(statusCode, objectResult.StatusCode);
+        }
+
+        [Fact]
+        public async void GetAsync_HashDoesNotEqualWithRetrievedRecord_ShouldReturn200Ok()
+        {
+            // Arrange
+            var statusCode = StatusCodes.Status200OK;
+
+            // Act
+            var objectResult = await _hallsController.GetAsync("123456789012345678901234", 1) as OkObjectResult;
+
+            // Assert
+            Assert.Equal(statusCode, objectResult.StatusCode);
         }
 
         [Fact]
@@ -518,6 +572,19 @@ namespace GSU.Museum.API.Tests.Controllers
                 // Assert
                 Assert.Equal(errorCodeExpected, err.ErrorCode);
                 Assert.Equal(messageExpected, err.Info);
+            }
+        }
+
+        public int GetHash(List<HallDTO> halls)
+        {
+            unchecked
+            {
+                int hash = (int)2166136261;
+                foreach (var hall in halls)
+                {
+                    hash = (hash * 16777619) ^ (hall?.GetHashCode() ?? 1);
+                }
+                return hash;
             }
         }
     }

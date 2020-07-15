@@ -198,11 +198,11 @@ namespace GSU.Museum.API.Tests.Controllers
 
             _exhibitsService = new ExhibitsService(mockRepoExhibit.Object);
             _service = new StandsService(mockRepo.Object, _exhibitsService);
-            _standsController = new StandsController(mockRepo.Object, _service);
+            _standsController = new StandsController(mockRepo.Object, _service, new CompareService());
 
             _exhibitsServiceEmptyRepo = new ExhibitsService(mockRepoEmptyExhibits.Object);
             _serviceEmptyRepo = new StandsService(mockRepoEmpty.Object, _exhibitsServiceEmptyRepo);
-            _standsController2 = new StandsController(mockRepoEmpty.Object, _serviceEmptyRepo);
+            _standsController2 = new StandsController(mockRepoEmpty.Object, _serviceEmptyRepo, new CompareService());
         }
 
         [Fact]
@@ -269,7 +269,7 @@ namespace GSU.Museum.API.Tests.Controllers
             var expected = mapper.Map<StandDTO>(stand);
 
             // Act
-            var actual = await _standsController.GetAsync(HallId, expected.Id) as OkObjectResult;
+            var actual = await _standsController.GetAsync(HallId, expected.Id, null) as OkObjectResult;
 
             // Assert
             Assert.Equal(StatusCodes.Status200OK, actual.StatusCode);
@@ -285,7 +285,7 @@ namespace GSU.Museum.API.Tests.Controllers
             // Act
             try
             {
-                StatusCodeResult actual = await _standsController.GetAsync(HallId, "1") as StatusCodeResult;
+                StatusCodeResult actual = await _standsController.GetAsync(HallId, "1", null) as StatusCodeResult;
             }
             catch (Error err)
             {
@@ -304,7 +304,7 @@ namespace GSU.Museum.API.Tests.Controllers
             const int statusCode = StatusCodes.Status404NotFound;
 
             // Act
-            StatusCodeResult actual = await _standsController.GetAsync(HallId,  id) as StatusCodeResult;
+            StatusCodeResult actual = await _standsController.GetAsync(HallId,  id, null) as StatusCodeResult;
 
             // Assert
             Assert.Equal(statusCode, actual.StatusCode);
@@ -322,7 +322,7 @@ namespace GSU.Museum.API.Tests.Controllers
             // Act
             try
             {
-                StatusCodeResult actual = await _standsController.GetAsync(HallId, id) as StatusCodeResult;
+                StatusCodeResult actual = await _standsController.GetAsync(HallId, id, null) as StatusCodeResult;
             }
             catch (Error err)
             {
@@ -344,7 +344,7 @@ namespace GSU.Museum.API.Tests.Controllers
             // Act
             try
             {
-                StatusCodeResult actual = await _standsController.GetAsync(HallId, id) as StatusCodeResult;
+                StatusCodeResult actual = await _standsController.GetAsync(HallId, id, null) as StatusCodeResult;
             }
             catch (Error err)
             {
@@ -366,7 +366,7 @@ namespace GSU.Museum.API.Tests.Controllers
             // Act
             try
             {
-                StatusCodeResult actual = await _standsController.GetAsync(HallId, id) as StatusCodeResult;
+                StatusCodeResult actual = await _standsController.GetAsync(HallId, id, null) as StatusCodeResult;
             }
             catch (Error err)
             {
@@ -377,13 +377,40 @@ namespace GSU.Museum.API.Tests.Controllers
         }
 
         [Fact]
+        public async void GetAsync_HashEqualsWithRetrievedRecord_ShouldReturnNoContent()
+        {
+            // Arrange
+            var statusCode = StatusCodes.Status204NoContent;
+            var stand = await _standsController.GetAsync("123456789012345678901234", "123456789012345678901111", null) as OkObjectResult;
+
+            // Act
+            var objectResult = await _standsController.GetAsync("123456789012345678901234", "123456789012345678901111", (stand.Value as StandDTO).GetHashCode()) as NoContentResult;
+
+            // Assert
+            Assert.Equal(statusCode, objectResult.StatusCode);
+        }
+
+        [Fact]
+        public async void GetAsync_HashDoesNotEqualWithRetrievedRecord_ShouldReturn200Ok()
+        {
+            // Arrange
+            var statusCode = StatusCodes.Status200OK;
+
+            // Act
+            var objectResult = await _standsController.GetAsync("123456789012345678901234", "123456789012345678901111", 1) as OkObjectResult;
+
+            // Assert
+            Assert.Equal(statusCode, objectResult.StatusCode);
+        }
+
+        [Fact]
         public async void CreateAsync_NewValidRecord_ShouldAddTheRecord()
         {
             // Arrange
             Stand expected = new Stand()
             {
                 Id = "211111111111111111111111",
-                Photos = new byte[] { 1, 2 },
+                Photo = new byte[] { 1, 2 },
                 TextBe = new List<string>() { "Be", "Be2" },
                 TextEn = new List<string>() { "En", "En2" },
                 TextRu = new List<string>() { "Ru", "Ru2" },
