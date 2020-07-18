@@ -1,26 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using GSU.Museum.Web.Models;
+using GSU.Museum.Web.Interfaces;
 
 namespace GSU.Museum.Web.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IHomeService _homeService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IHomeService homeService)
         {
+            _homeService = homeService;
             _logger = logger;
         }
 
         public IActionResult Index()
         {
             return View();
+        }
+
+        public async Task<IActionResult> MuseumManagement()
+        {
+            return View(await _homeService.GetAllAsync());
         }
 
         public IActionResult Privacy()
