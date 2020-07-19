@@ -26,7 +26,10 @@ namespace GSU.Museum.API.Data.Models
                     }
                 }
                 hash = (hash * 16777619) ^ State.GetHashCode();
-                hash = (hash * 16777619) ^ GetByteHashCode(Photo.Photo);
+                if(Photo != null)
+                {
+                    hash = (hash * 16777619) ^ GetByteHashCode(Photo.Photo);
+                }
                 if (Exhibits != null)
                 {
                     foreach (var exhibit in Exhibits)

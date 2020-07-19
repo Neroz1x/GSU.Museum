@@ -18,7 +18,10 @@ namespace GSU.Museum.API.Data.Models
                 hash = (hash * 16777619) ^ GetStringHashCode(Id);
                 hash = (hash * 16777619) ^ GetStringHashCode(Title);
                 hash = (hash * 16777619) ^ State.GetHashCode();
-                hash = (hash * 16777619) ^ GetByteHashCode(Photo.Photo);
+                if(Photo != null)
+                {
+                    hash = (hash * 16777619) ^ GetByteHashCode(Photo.Photo);
+                }
                 if (Stands != null)
                 {
                     foreach (var stand in Stands)

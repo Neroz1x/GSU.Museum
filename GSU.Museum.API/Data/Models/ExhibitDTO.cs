@@ -23,7 +23,10 @@ namespace GSU.Museum.API.Data.Models
                 {
                     foreach (var photo in Photos)
                     {
-                        hash = (hash * 16777619) ^ GetByteHashCode(photo.Photo);
+                        if (photo != null)
+                        {
+                            hash = (hash * 16777619) ^ GetByteHashCode(photo.Photo);
+                        }
                     }
                 }
                 return hash;
