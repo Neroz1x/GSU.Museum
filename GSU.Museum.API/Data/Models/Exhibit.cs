@@ -17,6 +17,11 @@ namespace GSU.Museum.API.Data.Models
         public string TextBe { get; set; }
         public bool State { get; set; }
         
-        public List<byte[]> Photos { get; set; }
+        public List<PhotoInfo> Photos { get; set; }
+
+        public Exhibit()
+        {
+            Photos = new List<PhotoInfo>();
+        }
     }
 }

@@ -7,7 +7,7 @@ namespace GSU.Museum.API.Data.Models
         public string Id { get; set; }
         public string Title { get; set; }
         public bool State { get; set; }
-        public byte[] Photo { get; set; }
+        public PhotoInfoDTO Photo { get; set; }
         public List<StandDTO> Stands { get; set; }
 
         public override int GetHashCode()
@@ -18,7 +18,7 @@ namespace GSU.Museum.API.Data.Models
                 hash = (hash * 16777619) ^ GetStringHashCode(Id);
                 hash = (hash * 16777619) ^ GetStringHashCode(Title);
                 hash = (hash * 16777619) ^ State.GetHashCode();
-                hash = (hash * 16777619) ^ GetByteHashCode(Photo);
+                hash = (hash * 16777619) ^ GetByteHashCode(Photo.Photo);
                 if (Stands != null)
                 {
                     foreach (var stand in Stands)

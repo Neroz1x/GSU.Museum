@@ -8,7 +8,7 @@ namespace GSU.Museum.API.Data.Models
         public string Title { get; set; }
         public string Text { get; set; }
         public bool State { get; set; }
-        public List<byte[]> Photos { get; set; }
+        public List<PhotoInfoDTO> Photos { get; set; }
 
         public override int GetHashCode()
         {
@@ -23,7 +23,7 @@ namespace GSU.Museum.API.Data.Models
                 {
                     foreach (var photo in Photos)
                     {
-                        hash = (hash * 16777619) ^ GetByteHashCode(photo);
+                        hash = (hash * 16777619) ^ GetByteHashCode(photo.Photo);
                     }
                 }
                 return hash;

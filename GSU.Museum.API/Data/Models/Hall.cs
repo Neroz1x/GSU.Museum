@@ -13,7 +13,13 @@ namespace GSU.Museum.API.Data.Models
         public string TitleEn { get; set; }
         public string TitleBe { get; set; }
         public bool State { get; set; }
-        public byte[] Photo { get; set; }
+        public PhotoInfo Photo { get; set; }
         public List<Stand> Stands { get; set; }
+
+        public Hall()
+        {
+            Photo = new PhotoInfo();
+            Stands = new List<Stand>();
+        }
     }
 }
