@@ -41,6 +41,7 @@ namespace GSU.Museum.API.Tests.Services
                     TitleBe = "Be",
                     TitleEn = "En",
                     TitleRu = "Ru",
+                    Photo = new PhotoInfo(),
                     Stands = new List<Stand>()
                     {
                         new Stand()
@@ -53,6 +54,7 @@ namespace GSU.Museum.API.Tests.Services
                             TextBe = new List<string>(){ "Be1", "Be2" },
                             TextEn = new List<string>(){ "En", "En2" },
                             TextRu = new List<string>(){ "Ru1", "Ru2" },
+                            Photo = new PhotoInfo(),
                             Exhibits = new List<Exhibit>()
                             {
                                 new Exhibit()
@@ -65,6 +67,7 @@ namespace GSU.Museum.API.Tests.Services
                                     TextBe = "Be1",
                                     TextEn = "En1",
                                     TextRu = "Ru1",
+                                    Photos = new List<PhotoInfo>()
                                 },
                                 new Exhibit()
                                 {
@@ -76,6 +79,7 @@ namespace GSU.Museum.API.Tests.Services
                                     TextBe = "Be12",
                                     TextEn = "En2",
                                     TextRu = "Ru12",
+                                    Photos = new List<PhotoInfo>()
                                 }
                             }
                         },
@@ -89,6 +93,7 @@ namespace GSU.Museum.API.Tests.Services
                             TextBe = new List<string>(){ "Be1", "Be2" },
                             TextEn = new List<string>(){ "En", "En2" },
                             TextRu = new List<string>(){ "Ru1", "Ru2" },
+                            Photo = new PhotoInfo(),
                             Exhibits = new List<Exhibit>()
                             {
                                 new Exhibit()
@@ -100,6 +105,7 @@ namespace GSU.Museum.API.Tests.Services
                                     TextBe = "Be13",
                                     TextEn = "En13",
                                     TextRu = "Ru13",
+                                    Photos = new List<PhotoInfo>()
                                 }
                             }
                         },
@@ -113,6 +119,7 @@ namespace GSU.Museum.API.Tests.Services
                             TextBe = new List<string>(){ "Be1", "Be2" },
                             TextEn = new List<string>(){ "En", "En2" },
                             TextRu = new List<string>(){ "Ru1", "Ru2" },
+                            Photo = new PhotoInfo(),
                             Exhibits = new List<Exhibit>()
                             {
                                 new Exhibit()
@@ -124,6 +131,7 @@ namespace GSU.Museum.API.Tests.Services
                                     TitleBe = "TitleBe24",
                                     TextBe = "Be124",
                                     TextRu = "Ru124",
+                                    Photos = new List<PhotoInfo>()
                                 }
                             }
                         },
@@ -136,6 +144,7 @@ namespace GSU.Museum.API.Tests.Services
                     TitleBe = "Be",
                     TitleEn = "En",
                     TitleRu = "Ru",
+                    Photo = new PhotoInfo(),
                     Stands = new List<Stand>()
                 }
             };
@@ -229,9 +238,22 @@ namespace GSU.Museum.API.Tests.Services
                 source => source.TitleEn))
             .ForMember(destination => destination.Stands,
                 map => map.Ignore())
+            .ForMember(destination => destination.Photo,
+                map => map.Ignore())
             );
+            MapperConfiguration mapperConfigurationPhoto = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
+                .ForMember(destination => destination.Description,
+                    map => map.MapFrom(
+                        source => source.DescriptionRu));
+            });
             var mapper = new Mapper(mapperConfiguration);
             var expected = mapper.Map<HallDTO>(hall);
+
+            mapper = new Mapper(mapperConfigurationPhoto);
+            var photoInfoDTO = mapper.Map<PhotoInfoDTO>(hall.Photo);
+            expected.Photo = photoInfoDTO;
 
             // Act
             var actual = await _service.GetAsync(httpRequest, expected.Id);

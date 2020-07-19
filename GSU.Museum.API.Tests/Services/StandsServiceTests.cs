@@ -262,10 +262,22 @@ namespace GSU.Museum.API.Tests.Services
                 source => source.TextEn))
             .ForMember(destination => destination.Exhibits,
                 map => map.Ignore())
-            );
+            .ForMember(destination => destination.Photo,
+                                map => map.Ignore()));
+
+            MapperConfiguration mapperConfigurationPhoto = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
+                .ForMember(destination => destination.Description,
+                    map => map.MapFrom(
+                        source => source.DescriptionEn));
+            });
+
             var mapper = new Mapper(mapperConfiguration);
             var expected = mapper.Map<StandDTO>(stand);
-
+            mapper = new Mapper(mapperConfigurationPhoto);
+            var photoInfoDTO = mapper.Map<PhotoInfoDTO>(stand.Photo);
+            expected.Photo = photoInfoDTO;
             // Act
             var actual = await _service.GetAsync(httpRequest, HallId, expected.Id);
 

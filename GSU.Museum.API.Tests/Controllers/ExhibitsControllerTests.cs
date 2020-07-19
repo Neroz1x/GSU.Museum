@@ -366,7 +366,7 @@ namespace GSU.Museum.API.Tests.Controllers
             Exhibit expected = new Exhibit()
             {
                 Id = "211111111111111111111111",
-                Photos = new List<byte[]>() { new byte[] { 1, 2 }, new byte[] { 2, 3 } },
+                Photos = new List<PhotoInfo>(),
                 TextBe = "3Bel",
                 TextEn = "3En",
                 TextRu = "3Ru"
