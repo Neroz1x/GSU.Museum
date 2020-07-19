@@ -47,9 +47,11 @@ namespace GSU.Museum.API.Services
                             cfg.CreateMap<Hall, HallDTO>()
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
-                                source => source.TitleRu))
+                                    source => source.TitleRu))
                             .ForMember(destination => destination.Stands,
-                                map => map.Ignore()); 
+                                map => map.Ignore())
+                            .ForMember(destination => destination.Photo,
+                                map => map.Ignore());
                             cfg.AllowNullCollections = true;
                         });
                         break;
@@ -59,9 +61,11 @@ namespace GSU.Museum.API.Services
                             cfg.CreateMap<Hall, HallDTO>()
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
-                            source => source.TitleEn))
+                                source => source.TitleEn))
                             .ForMember(destination => destination.Stands,
-                            map => map.Ignore());
+                                map => map.Ignore())
+                            .ForMember(destination => destination.Photo,
+                                map => map.Ignore());
                             cfg.AllowNullCollections = true;
                         });
                         break;
@@ -71,8 +75,10 @@ namespace GSU.Museum.API.Services
                             cfg.CreateMap<Hall, HallDTO>()
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
-                            source => source.TitleBe))
+                                    source => source.TitleBe))
                             .ForMember(destination => destination.Stands,
+                                map => map.Ignore())
+                            .ForMember(destination => destination.Photo,
                                 map => map.Ignore());
                             cfg.AllowNullCollections = true;
                         });
@@ -83,9 +89,11 @@ namespace GSU.Museum.API.Services
                             cfg.CreateMap<Hall, HallDTO>()
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
-                            source => source.TitleEn))
+                                    source => source.TitleEn))
                             .ForMember(destination => destination.Stands,
-                            map => map.Ignore());
+                                map => map.Ignore())
+                            .ForMember(destination => destination.Photo,
+                                map => map.Ignore());
                             cfg.AllowNullCollections = true;
                         });
                         break;
@@ -116,6 +124,7 @@ namespace GSU.Museum.API.Services
             }
             var hall = await _hallsRepository.GetAsync(id);
             MapperConfiguration mapperConfiguration = null;
+            MapperConfiguration mapperConfigurationPhoto = null;
             HallDTO hallDTO = null;
             if (hall != null)
             {
@@ -126,11 +135,20 @@ namespace GSU.Museum.API.Services
                         {
                             cfg.CreateMap<Hall, HallDTO>()
                             .ForMember(destination => destination.Title,
-                                    map => map.MapFrom(
-                            source => source.TitleRu))
+                                map => map.MapFrom(
+                                    source => source.TitleRu))
                             .ForMember(destination => destination.Stands,
-                            map => map.Ignore());
+                                map => map.Ignore())
+                            .ForMember(destination => destination.Photo,
+                                map => map.Ignore());
                             cfg.AllowNullCollections = true;
+                        });
+                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
+                        {
+                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                                    source => source.DescriptionRu));
                         });
                         break;
                     case "En":
@@ -139,10 +157,19 @@ namespace GSU.Museum.API.Services
                             cfg.CreateMap<Hall, HallDTO>()
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
-                            source => source.TitleEn))
+                                    source => source.TitleEn))
                             .ForMember(destination => destination.Stands,
-                            map => map.Ignore());
+                                map => map.Ignore())
+                            .ForMember(destination => destination.Photo,
+                                map => map.Ignore());
                             cfg.AllowNullCollections = true;
+                        });
+                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
+                        {
+                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                                    source => source.DescriptionEn));
                         });
                         break;
                     case "Be":
@@ -151,10 +178,19 @@ namespace GSU.Museum.API.Services
                             cfg.CreateMap<Hall, HallDTO>()
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
-                            source => source.TitleBe))
+                                    source => source.TitleBe))
                             .ForMember(destination => destination.Stands,
-                            map => map.Ignore());
+                                map => map.Ignore())
+                            .ForMember(destination => destination.Photo,
+                                map => map.Ignore());
                             cfg.AllowNullCollections = true;
+                        });
+                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
+                        {
+                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                                    source => source.DescriptionBe));
                         });
                         break;
                     default:
@@ -163,18 +199,32 @@ namespace GSU.Museum.API.Services
                             cfg.CreateMap<Hall, HallDTO>()
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
-                            source => source.TitleEn))
+                                source => source.TitleEn))
                             .ForMember(destination => destination.Stands,
-                            map => map.Ignore());
+                                map => map.Ignore())
+                            .ForMember(destination => destination.Photo,
+                                map => map.Ignore());
                             cfg.AllowNullCollections = true;
+                        });
+                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
+                        {
+                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                                    source => source.DescriptionEn));
                         });
                         break;
                 }
                 var mapper = new Mapper(mapperConfiguration);
                 hallDTO = mapper.Map<HallDTO>(hall);
-
+                
+                mapper = new Mapper(mapperConfigurationPhoto);
+                var photoInfoDTO = mapper.Map<PhotoInfoDTO>(hall.Photo);
+                hallDTO.Photo = photoInfoDTO;
+                
                 var stands = await _standsService.GetAllAsync(request, id);
                 hallDTO.Stands = stands;
+                
                 if (string.IsNullOrEmpty(hallDTO.Title))
                 {
                     throw new Error(Errors.Not_found, $"There is no title in {language} language");

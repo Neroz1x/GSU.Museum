@@ -123,6 +123,8 @@ namespace GSU.Museum.API.Services
             }
             var exhibit = await _exhibitsRepository.GetAsync(hallId, standId, id);
             MapperConfiguration mapperConfiguration = null;
+            MapperConfiguration mapperConfigurationPhoto = null;
+
             ExhibitDTO exhibitDTO = null;
             if (exhibit != null)
             {
@@ -133,26 +135,43 @@ namespace GSU.Museum.API.Services
                         {
                             cfg.CreateMap<Exhibit, ExhibitDTO>()
                             .ForMember(destination => destination.Title,
-                                    map => map.MapFrom(
-                                source => source.TitleRu))
+                                map => map.MapFrom(
+                                    source => source.TitleRu))
                             .ForMember(destination => destination.Text,
-                                    map => map.MapFrom(
-                                source => source.TextRu));
+                                map => map.MapFrom(
+                                    source => source.TextRu))
+                            .ForMember(destenation => destenation.Photos,
+                                map => map.Ignore());
                             cfg.AllowNullCollections = true;
-                        }
-                        );
+                        });
+                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
+                        {
+                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                                    source => source.DescriptionRu));
+                        });
                         break;
                     case "En":
                         mapperConfiguration = new MapperConfiguration(cfg => 
                         {
                             cfg.CreateMap<Exhibit, ExhibitDTO>()
                            .ForMember(destination => destination.Title,
-                                   map => map.MapFrom(
-                               source => source.TitleEn))
+                                map => map.MapFrom(
+                                    source => source.TitleEn))
                            .ForMember(destination => destination.Text,
-                                   map => map.MapFrom(
-                               source => source.TextEn));
+                                map => map.MapFrom(
+                                    source => source.TextEn))
+                           .ForMember(destenation => destenation.Photos,
+                                map => map.Ignore());
                             cfg.AllowNullCollections = true;
+                        });
+                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
+                        {
+                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                                    source => source.DescriptionEn));
                         });
                         break;
                     case "Be":
@@ -161,11 +180,20 @@ namespace GSU.Museum.API.Services
                             cfg.CreateMap<Exhibit, ExhibitDTO>()
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
-                            source => source.TitleBe))
+                                    source => source.TitleBe))
                             .ForMember(destination => destination.Text,
                                 map => map.MapFrom(
-                            source => source.TextBe));
+                                    source => source.TextBe))
+                            .ForMember(destenation => destenation.Photos,
+                                map => map.Ignore());
                             cfg.AllowNullCollections = true;
+                        });
+                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
+                        {
+                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                                    source => source.DescriptionBe));
                         });
                         break;
                     default:
@@ -173,17 +201,30 @@ namespace GSU.Museum.API.Services
                         {
                             cfg.CreateMap<Exhibit, ExhibitDTO>()
                            .ForMember(destination => destination.Title,
-                                   map => map.MapFrom(
-                               source => source.TitleEn))
+                                map => map.MapFrom(
+                                    source => source.TitleEn))
                            .ForMember(destination => destination.Text,
-                                   map => map.MapFrom(
-                               source => source.TextEn));
+                                map => map.MapFrom(
+                                    source => source.TextEn))
+                           .ForMember(destenation => destenation.Photos,
+                                map => map.Ignore());
                             cfg.AllowNullCollections = true;
+                        });
+                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
+                        {
+                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                                    source => source.DescriptionEn));
                         });
                         break;
                 }
                 var mapper = new Mapper(mapperConfiguration);
                 exhibitDTO = mapper.Map<ExhibitDTO>(exhibit);
+
+                mapper = new Mapper(mapperConfigurationPhoto);
+                var photoInfoDTO = mapper.Map<List<PhotoInfoDTO>>(exhibit.Photos);
+                exhibitDTO.Photos = photoInfoDTO;
 
                 if (string.IsNullOrEmpty(exhibitDTO.Text))
                 {
