@@ -1,6 +1,9 @@
 ﻿using GSU.Museum.API.Data.Models;
 using GSU.Museum.API.Interfaces;
+using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Driver.GridFS;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,65 +12,79 @@ namespace GSU.Museum.API.Data.Repositories
     public class HallsRepository : IHallsRepository
     {
         private readonly IMongoCollection<Hall> _halls;
+        private readonly IGridFSBucket _gridFS;
 
         public HallsRepository(DatabaseSettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
             _halls = database.GetCollection<Hall>(settings.CollectionName);
+            _gridFS = new GridFSBucket(database);
         }
 
         public async Task<List<Hall>> GetAllAsync()
         {
-            return await _halls.Find(exhibit => true).ToListAsync();
+            var halls = await _halls.Find(hall => true).ToListAsync();
+            foreach(var hall in halls)
+            {
+                if (!string.IsNullOrEmpty(hall.Photo.Id))
+                {
+                    hall.Photo.Photo = await _gridFS.DownloadAsBytesAsync(ObjectId.Parse(hall.Photo.Id));
+                }
+            }
+            return halls;
         }
 
         public async Task<Hall> GetAsync(string id)
         {
-            return await _halls.Find(exhibit => exhibit.Id.Equals(id)).FirstOrDefaultAsync();
+            var hall = await _halls.Find(hall => hall.Id.Equals(id)).FirstOrDefaultAsync();
+            if (!string.IsNullOrEmpty(hall.Photo.Id))
+            {
+                hall.Photo.Photo = await _gridFS.DownloadAsBytesAsync(ObjectId.Parse(hall.Photo.Id));
+            }
+            return hall;
         }
 
-
-        /// <summary>
-        /// Add record
-        /// </summary>
-        /// <param name="exhibit">Hall to add</param>
-        /// <returns></returns>
-        public async Task CreateAsync(Hall exhibit)
+        public async Task CreateAsync(Hall hall)
         {
-            await _halls.InsertOneAsync(exhibit);
+            if(hall.Photo.Photo != null)
+            {
+                ObjectId id = await _gridFS.UploadFromBytesAsync(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), hall.Photo.Photo);
+                hall.Photo.Id = id.ToString();
+            }
+            hall.Photo.Photo = null;
+            await _halls.InsertOneAsync(hall);
         }
 
-        /// <summary>
-        /// Update record
-        /// </summary>
-        /// <param name="id">Id of the record to update</param>
-        /// <param name="exhibitIn">New record</param>
-        /// <returns></returns>
-        public async Task UpdateAsync(string id, Hall exhibitIn)
+        public async Task UpdateAsync(string id, Hall hallIn)
         {
-            exhibitIn.Id = id;
-            await _halls.ReplaceOneAsync(exhibit => exhibit.Id.Equals(id), exhibitIn);
+            hallIn.Id = id;
+            if (hallIn.Photo.Id != null)
+            {
+                await _gridFS.DeleteAsync(ObjectId.Parse(hallIn.Photo.Id));
+            }
+            if (hallIn.Photo.Photo != null)
+            {
+                ObjectId photoId = await _gridFS.UploadFromBytesAsync(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), hallIn.Photo.Photo);
+                hallIn.Photo.Id = photoId.ToString();
+            }
+            hallIn.Photo.Photo = null;
+            await _halls.ReplaceOneAsync(hall => hall.Id.Equals(id), hallIn);
         }
 
-        /// <summary>
-        /// Remove record
-        /// </summary>
-        /// <param name="exhibitIn">Recod to remove</param>
-        /// <returns></returns>
-        public async Task RemoveAsync(Hall exhibitIn)
+        public async Task RemoveAsync(Hall hallIn)
         {
-            await _halls.DeleteOneAsync(exhibit => exhibit.Id.Equals(exhibitIn.Id));
+            if(hallIn.Photo.Id != null)
+            {
+                await _gridFS.DeleteAsync(ObjectId.Parse(hallIn.Photo.Id));
+            }
+            await _halls.DeleteOneAsync(hall => hall.Id.Equals(hallIn.Id));
         }
 
-        /// <summary>
-        /// Remove record
-        /// </summary>
-        /// <param name="id">Id of the recrod to remove</param>
-        /// <returns></returns>
         public async Task RemoveAsync(string id)
         {
-            await _halls.DeleteOneAsync(exhibit => exhibit.Id.Equals(id));
+            var hall = await GetAsync(id);
+            await RemoveAsync(hall);
         }
     }
 }

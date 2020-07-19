@@ -2,6 +2,7 @@
 using GSU.Museum.API.Interfaces;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Driver.GridFS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,37 +13,68 @@ namespace GSU.Museum.API.Data.Repositories
     public class StandsRepository : IStandsRepository
     {
         private readonly IMongoCollection<Hall> _halls;
+        private readonly IGridFSBucket _gridFS;
 
         public StandsRepository(DatabaseSettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
             _halls = database.GetCollection<Hall>(settings.CollectionName);
+            _gridFS = new GridFSBucket(database);
         }
 
         public async Task CreateAsync(string hallId, Stand entity)
         {
+            if (entity.Photo.Photo != null)
+            {
+                ObjectId id = await _gridFS.UploadFromBytesAsync(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), entity.Photo.Photo);
+                entity.Photo.Id = id.ToString();
+            }
+            entity.Photo.Photo = null;
+
             entity.Id = ObjectId.GenerateNewId().ToString();
             var filter = Builders<Hall>.Filter.Eq("Id", hallId);
             var update = Builders<Hall>.Update.Push("Stands", entity);
-
             await _halls.UpdateOneAsync(filter, update);
         }
 
         public async Task<List<Stand>> GetAllAsync(string hallId)
         {
             var hall = await _halls.Find(hall => hall.Id.Equals(hallId)).FirstOrDefaultAsync();
+            if(hall != null)
+            {
+                foreach (var stand in hall.Stands)
+                {
+                    if (!string.IsNullOrEmpty(stand.Photo.Id))
+                    {
+                        stand.Photo.Photo = await _gridFS.DownloadAsBytesAsync(ObjectId.Parse(stand.Photo.Id));
+                    }
+                }
+            }
             return hall?.Stands.ToList();
         }
 
         public async Task<Stand> GetAsync(string hallId, string id)
         {
             var hall = await _halls.Find(hall => hall.Id.Equals(hallId)).FirstOrDefaultAsync();
-            return hall?.Stands.FirstOrDefault(stand => stand.Id.Equals(id));
+            var stand = hall?.Stands.FirstOrDefault(stand => stand.Id.Equals(id));
+            if(stand != null)
+            {
+                if (!string.IsNullOrEmpty(stand.Photo.Id))
+                {
+                    stand.Photo.Photo = await _gridFS.DownloadAsBytesAsync(ObjectId.Parse(hall.Photo.Id));
+                }
+            }
+            return stand;
         }
 
         public async Task RemoveAsync(string hallId, string id)
         {
+            var stand = await GetAsync(hallId, id);
+            if (stand.Photo.Id != null)
+            {
+                await _gridFS.DeleteAsync(ObjectId.Parse(stand.Photo.Id));
+            }
             var update = Builders<Hall>.Update.PullFilter(hall => hall.Stands,
                                                 stand => stand.Id.Equals(id));
             var result = await _halls
@@ -51,7 +83,17 @@ namespace GSU.Museum.API.Data.Repositories
 
         public async Task UpdateAsync(string hallId, string id, Stand entity)
         {
-            var arrayFilter = Builders<Hall>.Filter.And(//"Id", hallId)
+            if (entity.Photo.Id != null)
+            {
+                await _gridFS.DeleteAsync(ObjectId.Parse(entity.Photo.Id));
+            }
+            if (entity.Photo.Photo != null)
+            {
+                ObjectId photoId = await _gridFS.UploadFromBytesAsync(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), entity.Photo.Photo);
+                entity.Photo.Id = photoId.ToString();
+            }
+            entity.Photo.Photo = null;
+            var arrayFilter = Builders<Hall>.Filter.And(
                 Builders<Hall>.Filter.Where(hall => hall.Id.Equals(hallId)),
                 Builders<Hall>.Filter.Eq("Stands.Id", id));
             var update = Builders<Hall>.Update.Set("Stands.$", entity);
