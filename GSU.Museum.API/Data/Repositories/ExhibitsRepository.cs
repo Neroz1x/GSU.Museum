@@ -12,7 +12,7 @@ namespace GSU.Museum.API.Data.Repositories
 {
     public class ExhibitsRepository : IExhibitsRepository
     {
-        private readonly IMongoCollection<Hall> _halls; 
+        private readonly IMongoCollection<Hall> _halls;
         private readonly IGridFSBucket _gridFS;
 
         public ExhibitsRepository(DatabaseSettings settings)
@@ -27,12 +27,16 @@ namespace GSU.Museum.API.Data.Repositories
         {
             if (entity.Photos != null)
             {
-                foreach(var photo in entity.Photos)
+                foreach (var photo in entity.Photos)
                 {
-                    ObjectId id = await _gridFS.UploadFromBytesAsync(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), photo.Photo);
+                    ObjectId id = await _gridFS.UploadFromBytesAsync(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), photo?.Photo);
                     photo.Id = id.ToString();
                     photo.Photo = null;
                 }
+            }
+            else
+            {
+                entity.Photos = new List<PhotoInfo>();
             }
 
             var filter = Builders<Hall>.Filter.And(
@@ -51,11 +55,11 @@ namespace GSU.Museum.API.Data.Repositories
             {
                 foreach (var exhibit in exhibits)
                 {
-                    if (exhibit.Photos != null)
+                    if (exhibit?.Photos != null)
                     {
-                        foreach(var photo in exhibit.Photos)
+                        foreach (var photo in exhibit.Photos)
                         {
-                            if (!string.IsNullOrEmpty(photo.Id))
+                            if (!string.IsNullOrEmpty(photo?.Id))
                             {
                                 photo.Photo = await _gridFS.DownloadAsBytesAsync(ObjectId.Parse(photo.Id));
                             }
@@ -70,16 +74,13 @@ namespace GSU.Museum.API.Data.Repositories
         {
             var hall = await _halls.Find(h => h.Id.Equals(hallId)).FirstOrDefaultAsync();
             var exhibit = hall?.Stands?.FirstOrDefault(s => s.Id.Equals(standId))?.Exhibits?.FirstOrDefault(e => e.Id.Equals(id));
-            if(exhibit != null)
+            if (exhibit?.Photos != null)
             {
-                if(exhibit.Photos != null)
+                foreach (var photo in exhibit.Photos)
                 {
-                    foreach (var photo in exhibit.Photos)
+                    if (!string.IsNullOrEmpty(photo?.Id))
                     {
-                        if (!string.IsNullOrEmpty(photo.Id))
-                        {
-                            photo.Photo = await _gridFS.DownloadAsBytesAsync(ObjectId.Parse(photo.Id));
-                        }
+                        photo.Photo = await _gridFS.DownloadAsBytesAsync(ObjectId.Parse(photo.Id));
                     }
                 }
             }
@@ -89,11 +90,11 @@ namespace GSU.Museum.API.Data.Repositories
         public async Task RemoveAsync(string hallId, string standId, string id)
         {
             var exhibit = await GetAsync(hallId, standId, id);
-            if (exhibit != null && exhibit?.Photos != null)
+            if (exhibit?.Photos != null)
             {
                 foreach (var photo in exhibit.Photos)
                 {
-                    if (!string.IsNullOrEmpty(photo.Id))
+                    if (!string.IsNullOrEmpty(photo?.Id))
                     {
                         await _gridFS.DeleteAsync(ObjectId.Parse(photo.Id));
                     }
@@ -110,24 +111,30 @@ namespace GSU.Museum.API.Data.Repositories
 
         public async Task UpdateAsync(string hallId, string standId, string id, Exhibit entity)
         {
-            foreach (var photo in entity.Photos)
+            for (int i = 0; i < entity.Photos?.Count; i++)
             {
-                if (string.IsNullOrEmpty(photo.Id))
+                if (!string.IsNullOrEmpty(entity.Photos[i]?.Id))
                 {
-                    await _gridFS.DeleteAsync(ObjectId.Parse(photo.Id));
+                    await _gridFS.DeleteAsync(ObjectId.Parse(entity.Photos[i].Id));
                 }
-                if (photo.Photo != null)
+                if (entity.Photos[i]?.Photo != null)
                 {
-                    ObjectId photoId = await _gridFS.UploadFromBytesAsync(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), photo.Photo);
-                    photo.Id = photoId.ToString();
+                    ObjectId photoId = await _gridFS.UploadFromBytesAsync(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), entity.Photos[i].Photo);
+                    entity.Photos[i].Id = photoId.ToString();
+                    entity.Photos[i].Photo = null;
                 }
-                photo.Photo = null;
+                else
+                {
+                    entity.Photos.RemoveAt(i);
+                }
             }
-            
+
             var arrayFilter = Builders<Hall>.Filter.And(
                 Builders<Hall>.Filter.Where(hall => hall.Id.Equals(hallId)),
+                Builders<Hall>.Filter.Eq("Stands.Id", standId),
                 Builders<Hall>.Filter.Eq("Stands.Exhibits.Id", id));
-            var update = Builders<Hall>.Update.Set("Stands.$.Exhibits", entity);
+
+            var update = Builders<Hall>.Update.Set("Stands.$[].Exhibits.$", entity);
 
             await _halls.UpdateOneAsync(arrayFilter, update);
         }

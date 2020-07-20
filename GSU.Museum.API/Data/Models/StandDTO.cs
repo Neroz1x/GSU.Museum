@@ -28,7 +28,7 @@ namespace GSU.Museum.API.Data.Models
                 hash = (hash * 16777619) ^ State.GetHashCode();
                 if(Photo != null)
                 {
-                    hash = (hash * 16777619) ^ GetByteHashCode(Photo.Photo);
+                    hash = (hash * 16777619) ^ Photo.GetHashCode();
                 }
                 if (Exhibits != null)
                 {
@@ -61,29 +61,6 @@ namespace GSU.Museum.API.Data.Models
                     }
 
                     return hash1 + (hash2 * 1566083941);
-                }
-            }
-            return 1;
-        }
-
-        private int GetByteHashCode(byte[] byteArray)
-        {
-            if (byteArray != null)
-            {
-                unchecked
-                {
-                    const int p = 16777619;
-                    int hash = (int)2166136261;
-
-                    for (int i = 0; i < byteArray.Length; i++)
-                        hash = (hash ^ byteArray[i]) * p;
-
-                    hash += hash << 13;
-                    hash ^= hash >> 7;
-                    hash += hash << 3;
-                    hash ^= hash >> 17;
-                    hash += hash << 5;
-                    return hash;
                 }
             }
             return 1;

@@ -25,9 +25,9 @@ namespace GSU.Museum.API.Data.Repositories
         public async Task<List<Hall>> GetAllAsync()
         {
             var halls = await _halls.Find(hall => true).ToListAsync();
-            foreach(var hall in halls)
+            foreach (var hall in halls)
             {
-                if (!string.IsNullOrEmpty(hall.Photo.Id))
+                if (!string.IsNullOrEmpty(hall.Photo?.Id))
                 {
                     hall.Photo.Photo = await _gridFS.DownloadAsBytesAsync(ObjectId.Parse(hall.Photo.Id));
                 }
@@ -38,7 +38,7 @@ namespace GSU.Museum.API.Data.Repositories
         public async Task<Hall> GetAsync(string id)
         {
             var hall = await _halls.Find(hall => hall.Id.Equals(id)).FirstOrDefaultAsync();
-            if (!string.IsNullOrEmpty(hall.Photo.Id))
+            if (!string.IsNullOrEmpty(hall.Photo?.Id))
             {
                 hall.Photo.Photo = await _gridFS.DownloadAsBytesAsync(ObjectId.Parse(hall.Photo.Id));
             }
@@ -47,34 +47,39 @@ namespace GSU.Museum.API.Data.Repositories
 
         public async Task CreateAsync(Hall hall)
         {
-            if(hall.Photo.Photo != null)
+            if (hall.Photo?.Photo != null)
             {
                 ObjectId id = await _gridFS.UploadFromBytesAsync(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), hall.Photo.Photo);
                 hall.Photo.Id = id.ToString();
+                hall.Photo.Photo = null;
             }
-            hall.Photo.Photo = null;
+
             await _halls.InsertOneAsync(hall);
         }
 
         public async Task UpdateAsync(string id, Hall hallIn)
         {
             hallIn.Id = id;
-            if (hallIn.Photo.Id != null)
+            if (!string.IsNullOrEmpty(hallIn.Photo?.Id))
             {
                 await _gridFS.DeleteAsync(ObjectId.Parse(hallIn.Photo.Id));
             }
-            if (hallIn.Photo.Photo != null)
+            if (hallIn.Photo?.Photo != null)
             {
                 ObjectId photoId = await _gridFS.UploadFromBytesAsync(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), hallIn.Photo.Photo);
                 hallIn.Photo.Id = photoId.ToString();
+                hallIn.Photo.Photo = null;
             }
-            hallIn.Photo.Photo = null;
+            else
+            {
+                hallIn.Photo = null;
+            }
             await _halls.ReplaceOneAsync(hall => hall.Id.Equals(id), hallIn);
         }
 
         public async Task RemoveAsync(Hall hallIn)
         {
-            if(hallIn.Photo.Id != null)
+            if (hallIn.Photo.Id != null)
             {
                 await _gridFS.DeleteAsync(ObjectId.Parse(hallIn.Photo.Id));
             }

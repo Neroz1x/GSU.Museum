@@ -23,29 +23,29 @@ namespace GSU.Museum.API.Data.Repositories
             _gridFS = new GridFSBucket(database);
         }
 
-        public async Task CreateAsync(string hallId, Stand entity)
+        public async Task CreateAsync(string hallId, Stand stand)
         {
-            if (entity.Photo.Photo != null)
+            if (stand.Photo?.Photo != null)
             {
-                ObjectId id = await _gridFS.UploadFromBytesAsync(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), entity.Photo.Photo);
-                entity.Photo.Id = id.ToString();
+                ObjectId id = await _gridFS.UploadFromBytesAsync(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), stand.Photo.Photo);
+                stand.Photo.Id = id.ToString();
+                stand.Photo.Photo = null;
             }
-            entity.Photo.Photo = null;
 
-            entity.Id = ObjectId.GenerateNewId().ToString();
+            stand.Id = ObjectId.GenerateNewId().ToString();
             var filter = Builders<Hall>.Filter.Eq("Id", hallId);
-            var update = Builders<Hall>.Update.Push("Stands", entity);
+            var update = Builders<Hall>.Update.Push("Stands", stand);
             await _halls.UpdateOneAsync(filter, update);
         }
 
         public async Task<List<Stand>> GetAllAsync(string hallId)
         {
             var hall = await _halls.Find(hall => hall.Id.Equals(hallId)).FirstOrDefaultAsync();
-            if(hall != null)
+            if (hall != null)
             {
                 foreach (var stand in hall.Stands)
                 {
-                    if (!string.IsNullOrEmpty(stand.Photo.Id))
+                    if (!string.IsNullOrEmpty(stand.Photo?.Id))
                     {
                         stand.Photo.Photo = await _gridFS.DownloadAsBytesAsync(ObjectId.Parse(stand.Photo.Id));
                     }
@@ -58,11 +58,11 @@ namespace GSU.Museum.API.Data.Repositories
         {
             var hall = await _halls.Find(hall => hall.Id.Equals(hallId)).FirstOrDefaultAsync();
             var stand = hall?.Stands.FirstOrDefault(stand => stand.Id.Equals(id));
-            if(stand != null)
+            if (stand != null)
             {
-                if (!string.IsNullOrEmpty(stand.Photo.Id))
+                if (!string.IsNullOrEmpty(stand.Photo?.Id))
                 {
-                    stand.Photo.Photo = await _gridFS.DownloadAsBytesAsync(ObjectId.Parse(hall.Photo.Id));
+                    stand.Photo.Photo = await _gridFS.DownloadAsBytesAsync(ObjectId.Parse(stand.Photo.Id));
                 }
             }
             return stand;
@@ -71,7 +71,7 @@ namespace GSU.Museum.API.Data.Repositories
         public async Task RemoveAsync(string hallId, string id)
         {
             var stand = await GetAsync(hallId, id);
-            if (stand.Photo.Id != null)
+            if (stand.Photo?.Id != null)
             {
                 await _gridFS.DeleteAsync(ObjectId.Parse(stand.Photo.Id));
             }
@@ -81,22 +81,27 @@ namespace GSU.Museum.API.Data.Repositories
                 .FindOneAndUpdateAsync(hall => hall.Id.Equals(hallId), update);
         }
 
-        public async Task UpdateAsync(string hallId, string id, Stand entity)
+        public async Task UpdateAsync(string hallId, string id, Stand stand)
         {
-            if (entity.Photo.Id != null)
+            if (!string.IsNullOrEmpty(stand.Photo?.Id))
             {
-                await _gridFS.DeleteAsync(ObjectId.Parse(entity.Photo.Id));
+                await _gridFS.DeleteAsync(ObjectId.Parse(stand.Photo.Id));
             }
-            if (entity.Photo.Photo != null)
+            if (stand.Photo?.Photo != null)
             {
-                ObjectId photoId = await _gridFS.UploadFromBytesAsync(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), entity.Photo.Photo);
-                entity.Photo.Id = photoId.ToString();
+                ObjectId photoId = await _gridFS.UploadFromBytesAsync(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), stand.Photo.Photo);
+                stand.Photo.Id = photoId.ToString();
+                stand.Photo.Photo = null;
             }
-            entity.Photo.Photo = null;
+            else
+            {
+                stand.Photo = null;
+            }
+
             var arrayFilter = Builders<Hall>.Filter.And(
                 Builders<Hall>.Filter.Where(hall => hall.Id.Equals(hallId)),
                 Builders<Hall>.Filter.Eq("Stands.Id", id));
-            var update = Builders<Hall>.Update.Set("Stands.$", entity);
+            var update = Builders<Hall>.Update.Set("Stands.$", stand);
 
             await _halls.UpdateOneAsync(arrayFilter, update);
         }
