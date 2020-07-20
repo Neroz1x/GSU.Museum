@@ -8,7 +8,7 @@ namespace GSU.Museum.Shared.Data.Models
         public string Title { get; set; }
         public List<string> Text { get; set; }
         public bool State { get; set; }
-        public byte[] Photo { get; set; }
+        public PhotoInfo Photo { get; set; }
         public List<Exhibit> Exhibits { get; set; }
 
         public override int GetHashCode()
@@ -18,7 +18,7 @@ namespace GSU.Museum.Shared.Data.Models
                 int hash = (int)2166136261;
                 hash = (hash * 16777619) ^ GetStringHashCode(Id);
                 hash = (hash * 16777619) ^ GetStringHashCode(Title);
-                if(Text != null)
+                if (Text != null)
                 {
                     foreach (var str in Text)
                     {
@@ -26,7 +26,10 @@ namespace GSU.Museum.Shared.Data.Models
                     }
                 }
                 hash = (hash * 16777619) ^ State.GetHashCode();
-                hash = (hash * 16777619) ^ GetByteHashCode(Photo);
+                if (Photo != null)
+                {
+                    hash = (hash * 16777619) ^ Photo.GetHashCode();
+                }
                 if (Exhibits != null)
                 {
                     foreach (var exhibit in Exhibits)
@@ -58,29 +61,6 @@ namespace GSU.Museum.Shared.Data.Models
                     }
 
                     return hash1 + (hash2 * 1566083941);
-                }
-            }
-            return 1;
-        }
-
-        private int GetByteHashCode(byte[] byteArray)
-        {
-            if (byteArray != null)
-            {
-                unchecked
-                {
-                    const int p = 16777619;
-                    int hash = (int)2166136261;
-
-                    for (int i = 0; i < byteArray.Length; i++)
-                        hash = (hash ^ byteArray[i]) * p;
-
-                    hash += hash << 13;
-                    hash ^= hash >> 7;
-                    hash += hash << 3;
-                    hash ^= hash >> 17;
-                    hash += hash << 5;
-                    return hash;
                 }
             }
             return 1;
