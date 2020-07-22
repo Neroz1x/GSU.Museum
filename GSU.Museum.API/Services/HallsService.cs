@@ -98,13 +98,9 @@ namespace GSU.Museum.API.Services
                         });
                         break;
                 }
-                var mapper = new Mapper(mapperConfiguration);
-                hallsDTO = mapper.Map<List<HallDTO>>(halls);
-                if (hallsDTO.FirstOrDefault(el => string.IsNullOrEmpty(el.Title)) != null)
-                {
-                    throw new Error(Errors.Not_found, $"There is no title in {language} language");
-                }
             }
+            var mapper = new Mapper(mapperConfiguration);
+            hallsDTO = mapper.Map<List<HallDTO>>(halls);
             return hallsDTO;
         }
 
@@ -224,11 +220,6 @@ namespace GSU.Museum.API.Services
                 
                 var stands = await _standsService.GetAllAsync(request, id);
                 hallDTO.Stands = stands;
-                
-                if (string.IsNullOrEmpty(hallDTO.Title))
-                {
-                    throw new Error(Errors.Not_found, $"There is no title in {language} language");
-                }
             }
             return hallDTO;
         }

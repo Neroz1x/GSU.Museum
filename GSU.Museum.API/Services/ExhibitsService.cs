@@ -4,6 +4,7 @@ using GSU.Museum.API.Data.Models;
 using GSU.Museum.API.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
+using Serilog.Core;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -48,7 +49,8 @@ namespace GSU.Museum.API.Services
                                 map => map.MapFrom(
                             source => source.TitleRu))
                             .ForMember(destination => destination.Text,
-                               map => map.Ignore())
+                               map => map.MapFrom(
+                                   source => source.TextRu))
                             .ForMember(destination => destination.Photos,
                             map => map.Ignore());
                             cfg.AllowNullCollections = true;
@@ -62,7 +64,8 @@ namespace GSU.Museum.API.Services
                                 map => map.MapFrom(
                             source => source.TitleEn))
                             .ForMember(destination => destination.Text,
-                               map => map.Ignore())
+                               map => map.MapFrom(
+                                   source => source.TextEn))
                             .ForMember(destination => destination.Photos,
                             map => map.Ignore());
                             cfg.AllowNullCollections = true;
@@ -76,7 +79,8 @@ namespace GSU.Museum.API.Services
                                 map => map.MapFrom(
                             source => source.TitleBe))
                             .ForMember(destination => destination.Text,
-                               map => map.Ignore())
+                               map => map.MapFrom(
+                                   source => source.TextBe))
                             .ForMember(destination => destination.Photos,
                             map => map.Ignore());
                             cfg.AllowNullCollections = true;
@@ -90,7 +94,8 @@ namespace GSU.Museum.API.Services
                                 map => map.MapFrom(
                             source => source.TitleEn))
                             .ForMember(destination => destination.Text,
-                               map => map.Ignore())
+                               map => map.MapFrom(
+                                   source => source.TextEn))
                             .ForMember(destination => destination.Photos,
                             map => map.Ignore());
                             cfg.AllowNullCollections = true;
@@ -99,10 +104,6 @@ namespace GSU.Museum.API.Services
                 }
                 var mapper = new Mapper(mapperConfiguration);
                 exhibitsDTO = mapper.Map<List<ExhibitDTO>>(exhibits);
-                if (exhibitsDTO.FirstOrDefault(el => string.IsNullOrEmpty(el.Title)) != null)
-                {
-                    throw new Error(Errors.Not_found, $"There is no title in {language} language");
-                }
             }
             return exhibitsDTO;
         }
@@ -225,15 +226,6 @@ namespace GSU.Museum.API.Services
                 mapper = new Mapper(mapperConfigurationPhoto);
                 var photoInfoDTO = mapper.Map<List<PhotoInfoDTO>>(exhibit.Photos);
                 exhibitDTO.Photos = photoInfoDTO;
-
-                if (string.IsNullOrEmpty(exhibitDTO.Text))
-                {
-                    throw new Error(Errors.Not_found, $"There is no text in {language} language");
-                }
-                if (string.IsNullOrEmpty(exhibitDTO.Title))
-                {
-                    throw new Error(Errors.Not_found, $"There is no title in {language} language");
-                }
             }
             return exhibitDTO;
         }

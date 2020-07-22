@@ -48,8 +48,9 @@ namespace GSU.Museum.API.Services
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
                                     source => source.TitleRu))
-                            .ForMember(destination => destination.Text,
-                                map => map.Ignore())
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                                    source => source.DescriptionRu))
                             .ForMember(destination => destination.Exhibits,
                                 map => map.Ignore())
                             .ForMember(destination => destination.Photo,
@@ -64,8 +65,9 @@ namespace GSU.Museum.API.Services
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
                             source => source.TitleEn))
-                            .ForMember(destination => destination.Text,
-                               map => map.Ignore())
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                                    source => source.DescriptionEn))
                             .ForMember(destination => destination.Exhibits,
                                 map => map.Ignore())
                             .ForMember(destination => destination.Photo,
@@ -80,8 +82,9 @@ namespace GSU.Museum.API.Services
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
                                     source => source.TitleBe))
-                            .ForMember(destination => destination.Text,
-                               map => map.Ignore())
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                                    source => source.DescriptionBe))
                             .ForMember(destination => destination.Exhibits,
                                 map => map.Ignore())
                             .ForMember(destination => destination.Photo,
@@ -96,8 +99,9 @@ namespace GSU.Museum.API.Services
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
                                     source => source.TitleEn))
-                            .ForMember(destination => destination.Text,
-                               map => map.Ignore())
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                                    source => source.DescriptionEn))
                             .ForMember(destination => destination.Exhibits,
                                 map => map.Ignore())
                             .ForMember(destination => destination.Photo,
@@ -108,10 +112,6 @@ namespace GSU.Museum.API.Services
                 }
                 var mapper = new Mapper(mapperConfiguration);
                 standsDTO = mapper.Map<List<StandDTO>>(stands);
-                if (standsDTO.FirstOrDefault(el => string.IsNullOrEmpty(el.Title)) != null)
-                {
-                    throw new Error(Errors.Not_found, $"There is no title in {language} language");
-                }
             }
             return standsDTO;
         }
@@ -145,9 +145,9 @@ namespace GSU.Museum.API.Services
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
                                     source => source.TitleRu))
-                            .ForMember(destination => destination.Text,
+                            .ForMember(destination => destination.Description,
                                 map => map.MapFrom(
-                                    source => source.TextRu))
+                                    source => source.DescriptionRu))
                             .ForMember(destination => destination.Exhibits,
                                 map => map.Ignore())
                             .ForMember(destination => destination.Photo,
@@ -169,9 +169,9 @@ namespace GSU.Museum.API.Services
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
                                     source => source.TitleEn))
-                            .ForMember(destination => destination.Text,
+                            .ForMember(destination => destination.Description,
                                 map => map.MapFrom(
-                                    source => source.TextEn))
+                                    source => source.DescriptionEn))
                             .ForMember(destination => destination.Exhibits,
                                 map => map.Ignore())
                             .ForMember(destination => destination.Photo,
@@ -193,9 +193,9 @@ namespace GSU.Museum.API.Services
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
                                     source => source.TitleBe))
-                            .ForMember(destination => destination.Text,
+                            .ForMember(destination => destination.Description,
                                 map => map.MapFrom(
-                                    source => source.TextBe))
+                                    source => source.DescriptionBe))
                             .ForMember(destination => destination.Exhibits,
                                 map => map.Ignore())
                             .ForMember(destination => destination.Photo,
@@ -217,9 +217,9 @@ namespace GSU.Museum.API.Services
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
                                     source => source.TitleEn))
-                            .ForMember(destination => destination.Text,
+                            .ForMember(destination => destination.Description,
                                 map => map.MapFrom(
-                                    source => source.TextEn))
+                                    source => source.DescriptionEn))
                             .ForMember(destination => destination.Exhibits,
                                 map => map.Ignore())
                             .ForMember(destination => destination.Photo,
@@ -244,14 +244,6 @@ namespace GSU.Museum.API.Services
 
                 var exhibits = await _exhibitsService.GetAllAsync(request, hallId, id);
                 standDTO.Exhibits = exhibits;
-                if (standDTO?.Text.Count == 0 || standDTO.Text == null)
-                {
-                    throw new Error(Errors.Not_found, $"There is no text in {language} language");
-                }
-                if (string.IsNullOrEmpty(standDTO.Title))
-                {
-                    throw new Error(Errors.Not_found, $"There is no title in {language} language");
-                }
             }
             return standDTO;
         }
