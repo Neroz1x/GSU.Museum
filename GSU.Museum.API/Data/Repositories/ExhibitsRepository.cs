@@ -125,18 +125,35 @@ namespace GSU.Museum.API.Data.Repositories
                 }
                 else
                 {
-                    entity.Photos.RemoveAt(i);
+                    entity.Photos.RemoveAt(i--);
                 }
             }
 
-            var arrayFilter = Builders<Hall>.Filter.And(
-                Builders<Hall>.Filter.Where(hall => hall.Id.Equals(hallId)),
-                Builders<Hall>.Filter.Eq("Stands.Id", standId),
-                Builders<Hall>.Filter.Eq("Stands.Exhibits.Id", id));
+            int index1 = 0, index2 = 0;
+            var hall = await _halls.Find(hall => hall.Id.Equals(hallId)).FirstOrDefaultAsync();
+            for (int i = 0; i < hall.Stands.Count; i++)
+            {
+                if (hall.Stands[i].Id == standId)
+                {
+                    index1 = i;
+                    break;
+                }
+            }
 
-            var update = Builders<Hall>.Update.Set("Stands.$[].Exhibits.$", entity);
+            for (int i = 0; i < hall.Stands[index1].Exhibits.Count; i++)
+            {
+                if (hall.Stands[index1].Exhibits[i].Id == id)
+                {
+                    index2 = i;
+                    break;
+                }
+            }
 
-            await _halls.UpdateOneAsync(arrayFilter, update);
+            var arrayFilter = Builders<Hall>.Filter.Where(hall => hall.Id.Equals(hallId));
+
+            var update = Builders<Hall>.Update.Set($"Stands.{index1}.Exhibits.{index2}", entity);
+
+            await _halls.FindOneAndUpdateAsync(arrayFilter, update);
         }
     }
 }
