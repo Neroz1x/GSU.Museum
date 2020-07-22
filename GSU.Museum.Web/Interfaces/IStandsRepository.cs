@@ -28,6 +28,7 @@ namespace GSU.Museum.Web.Interfaces
         /// <summary>
         /// Add new record
         /// </summary>
+        /// <param name="hallId">Hall id</param>
         /// <param name="entity">New record to add</param>
         /// <returns></returns>
         Task CreateAsync(string hallId, StandViewModel entity);
@@ -35,6 +36,7 @@ namespace GSU.Museum.Web.Interfaces
         /// <summary>
         /// Update existing record
         /// </summary>
+        /// <param name="hallId">Hall id</param>
         /// <param name="id">Record id</param>
         /// <param name="entity">New record to update</param>
         /// <returns></returns>
@@ -43,6 +45,7 @@ namespace GSU.Museum.Web.Interfaces
         /// <summary>
         /// Delete record from database
         /// </summary>
+        /// <param name="hallId">Hall id</param>
         /// <param name="id">Id of the record</param>
         /// <returns></returns>
         Task RemoveAsync(string hallId, string id);
