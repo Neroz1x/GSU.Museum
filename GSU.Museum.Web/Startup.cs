@@ -1,13 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using GSU.Museum.Web.Interfaces;
+using GSU.Museum.Web.Models;
+using GSU.Museum.Web.Repositories;
+using GSU.Museum.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace GSU.Museum.Web
 {
@@ -23,6 +23,19 @@ namespace GSU.Museum.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<DatabaseSettings>(
+                Configuration.GetSection(nameof(DatabaseSettings)));
+
+            services.AddSingleton(sp =>
+                sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
+
+            services.AddSingleton<IHallsRepository, HallsRepository>();
+            services.AddSingleton<IStandsRepository, StandsRepository>();
+            services.AddSingleton<IExhibitsRepository, ExhibitsRepository>();
+
+            services.AddSingleton<IHomeService, HomeService>();
+            services.AddSingleton<IFormFileToByteConverterService, FormFileToByteConverterService>();
+
             services.AddControllersWithViews();
         }
 
