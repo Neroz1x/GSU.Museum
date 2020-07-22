@@ -12,6 +12,7 @@ using System.Reflection;
 using System.IO;
 using System;
 using Microsoft.OpenApi.Models;
+using GSU.Museum.API.Extensions;
 
 namespace GSU.Museum.API
 {
@@ -83,6 +84,8 @@ namespace GSU.Museum.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.ConfigureExceptionHandler();
 
             app.UseRouting();
 
