@@ -24,8 +24,9 @@ namespace GSU.Museum.Shared.Services
             var keys = await BlobCache.LocalMachine.GetAllKeys();
             if (keys.Contains($"{language}{id}"))
             {
+                _logger.Info($"Read from cache exhibit {language}-{id}");
                 Exhibit exhibit = await BlobCache.LocalMachine.GetObject<Exhibit>($"{language}{id}");
-                exhibit.Photos = await BlobCache.LocalMachine.GetObject<List<byte[]>>(id);
+                exhibit.Photos = await BlobCache.LocalMachine.GetObject<List<PhotoInfo>>(id);
                 return exhibit;
             }
             return null;
@@ -37,8 +38,9 @@ namespace GSU.Museum.Shared.Services
             var keys = await BlobCache.LocalMachine.GetAllKeys();
             if (keys.Contains($"{language}{id}"))
             {
+                _logger.Info($"Read from cache hall {language}-{id}");
                 Hall hall = await BlobCache.LocalMachine.GetObject<Hall>($"{language}{id}");
-                hall.Photo = await BlobCache.LocalMachine.GetObject<byte[]>(id);
+                hall.Photo = await BlobCache.LocalMachine.GetObject<PhotoInfo>(id);
                 return hall;
             }
             return null;
@@ -50,6 +52,7 @@ namespace GSU.Museum.Shared.Services
             var keys = await BlobCache.LocalMachine.GetAllKeys();
             if (keys.Contains($"{language}halls"))
             {
+                _logger.Info($"Read from halls");
                 List<Hall> halls = await BlobCache.LocalMachine.GetObject<List<Hall>>($"{language}halls");
                 return halls;
             }
@@ -61,6 +64,7 @@ namespace GSU.Museum.Shared.Services
             var keys = await BlobCache.LocalMachine.GetAllKeys();
             if (keys.Contains("settings"))
             {
+                _logger.Info($"Read from cache settings");
                 Settings settings = await BlobCache.LocalMachine.GetObject<Settings>("settings");
                 return settings;
             }
@@ -73,8 +77,9 @@ namespace GSU.Museum.Shared.Services
             var keys = await BlobCache.LocalMachine.GetAllKeys();
             if (keys.Contains($"{language}{id}"))
             {
+                _logger.Info($"Read from cache stand {language}-{id}");
                 Stand stand = await BlobCache.LocalMachine.GetObject<Stand>($"{language}{id}");
-                stand.Photo = await BlobCache.LocalMachine.GetObject<byte[]>(id);
+                stand.Photo = await BlobCache.LocalMachine.GetObject<PhotoInfo>(id);
                 return stand;
             }
             return null;
@@ -84,8 +89,10 @@ namespace GSU.Museum.Shared.Services
         {
             string language = Thread.CurrentThread.CurrentUICulture.Name;
 
+            _logger.Info($"Write to cache Exhibit {language}-{exhibit.Id}");
+
             await BlobCache.LocalMachine.InsertObject(exhibit.Id, exhibit.Photos);
-            List<byte[]> photos = exhibit.Photos;
+            List<PhotoInfo> photos = exhibit.Photos;
             exhibit.Photos = null;
             await BlobCache.LocalMachine.InsertObject($"{language}{exhibit.Id}", exhibit);
             exhibit.Photos = photos;
@@ -95,8 +102,10 @@ namespace GSU.Museum.Shared.Services
         {
             string language = Thread.CurrentThread.CurrentUICulture.Name;
 
+            _logger.Info($"Write to cache Hall {language}-{hall.Id}");
+
             await BlobCache.LocalMachine.InsertObject(hall.Id, hall.Photo);
-            byte[] photo = hall.Photo;
+            PhotoInfo photo = hall.Photo;
             hall.Photo = null;
             await BlobCache.LocalMachine.InsertObject($"{language}{hall.Id}", hall);
             hall.Photo = photo;
@@ -106,11 +115,14 @@ namespace GSU.Museum.Shared.Services
         {
             string language = Thread.CurrentThread.CurrentUICulture.Name;
 
+            _logger.Info($"Write to cache halls");
+
             await BlobCache.LocalMachine.InsertObject($"{language}halls", halls);
         }
 
         public async Task WriteSettings()
         {
+            _logger.Info($"Write to cache settings");
             await BlobCache.LocalMachine.InsertObject("settings", App.Settings);
         }
 
@@ -118,8 +130,10 @@ namespace GSU.Museum.Shared.Services
         {
             string language = Thread.CurrentThread.CurrentUICulture.Name;
 
+            _logger.Info($"Write to cache Stand {language}-{stand.Id}");
+
             await BlobCache.LocalMachine.InsertObject(stand.Id, stand.Photo);
-            byte[] photo = stand.Photo;
+            PhotoInfo photo = stand.Photo;
             stand.Photo = null;
             await BlobCache.LocalMachine.InsertObject($"{language}{stand.Id}", stand);
             stand.Photo = photo;
