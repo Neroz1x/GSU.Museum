@@ -6,7 +6,7 @@ namespace GSU.Museum.API.Data.Models
     {
         public string Id { get; set; }
         public string Title { get; set; }
-        public List<string> Text { get; set; }
+        public string Description { get; set; }
         public bool State { get; set; }
         public PhotoInfoDTO Photo { get; set; }
         public List<ExhibitDTO> Exhibits { get; set; }
@@ -18,13 +18,7 @@ namespace GSU.Museum.API.Data.Models
                 int hash = (int)2166136261;
                 hash = (hash * 16777619) ^ GetStringHashCode(Id);
                 hash = (hash * 16777619) ^ GetStringHashCode(Title);
-                if (Text != null)
-                {
-                    foreach (var str in Text)
-                    {
-                        hash = (hash * 16777619) ^ GetStringHashCode(str);
-                    }
-                }
+                hash = (hash * 16777619) ^ GetStringHashCode(Description);
                 hash = (hash * 16777619) ^ State.GetHashCode();
                 if(Photo != null)
                 {

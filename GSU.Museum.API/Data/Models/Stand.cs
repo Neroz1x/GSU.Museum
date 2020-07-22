@@ -12,9 +12,9 @@ namespace GSU.Museum.API.Data.Models
         public string TitleRu { get; set; }
         public string TitleEn { get; set; }
         public string TitleBe { get; set; }
-        public List<string> TextRu { get; set; }
-        public List<string> TextEn { get; set; }
-        public List<string> TextBe { get; set; }
+        public string DescriptionRu { get; set; }
+        public string DescriptionEn { get; set; }
+        public string DescriptionBe { get; set; }
         public bool State { get; set; }
         public PhotoInfo Photo { get; set; }
         public List<Exhibit> Exhibits { get; set; }
