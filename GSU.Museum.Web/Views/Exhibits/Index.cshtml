@@ -1,0 +1,86 @@
+﻿@model GSU.Museum.Web.Models.ExhibitViewModel
+@{
+    ViewData["Title"] = "Exhibit";
+}
+
+@{
+    var state = Model.State == true ? "active" : "in progress";
+    <div class="flex-column">
+        <div class="form-group">
+            <h5>Belarusian title</h5>
+            <p>@Model.TitleBe</p>
+        </div>
+        <div class="form-group">
+            <h5>Russian title</h5>
+            <p>@Model.TitleRu</p>
+        </div>
+        <div class="form-group">
+            <h5>English title</h5>
+            <p>@Model.TitleEn</p>
+        </div>
+        <div class="form-group">
+            <h5>Belarusian text</h5>
+            @if (!string.IsNullOrEmpty(Model.TextBe))
+            {
+                <p>@Model.TextBe</p>
+            }
+            else
+            {
+                <p>No text</p>
+            }
+        </div>
+        <div class="form-group">
+            <h5>Russian text</h5>
+            @if (!string.IsNullOrEmpty(Model.TextRu))
+            {
+                <p>@Model.TextRu</p>
+            }
+            else
+            {
+                <p>No text</p>
+            }
+        </div>
+        <div class="form-group">
+            <h5>English text</h5>
+            @if (!string.IsNullOrEmpty(Model.TextEn))
+            {
+                <p>@Model.TextEn</p>
+
+            }
+            else
+            {
+                <p>No text</p>
+            }
+        </div>
+        <div class="form-group">
+            <h5>State</h5>
+            <p>@state</p>
+        </div>
+        <div class="form-group">
+            <h5>Photo</h5>
+            <div>
+
+            </div>
+            @if (Model.Photos != null)
+            {
+                <div id="image" class="flex-row flex-wrap">
+                    @for (int i = 0; i < Model.Photos.Count; i++)
+                    {
+                        var base64 = Convert.ToBase64String(Model.Photos[i].Photo);
+                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                        <img class='img-thumbnail small-image img-small-loaded' src="@imgSrc" />
+                    }
+                </div>
+            }
+            else
+            {
+                <label>No photo</label>
+            }
+        </div>
+        <a class="a-btn" asp-controller="Exhibits" asp-action="Edit" asp-route-standId="@ViewBag.StandId" asp-route-hallId="@ViewBag.HallId" asp-route-id="@Model.Id">Edit</a>
+        <a class="a-btn" asp-controller="Exhibits" asp-action="Delete" asp-route-standId="@ViewBag.StandId" asp-route-hallId="@ViewBag.HallId" asp-route-id="@Model.Id">Delete</a>
+    </div>
+}
+
+

@@ -1,0 +1,65 @@
+﻿@model GSU.Museum.Web.Models.ExhibitViewModel
+@{
+    ViewData["Title"] = "EditExhibit";
+}
+
+@{
+    <form method="post" asp-action="Edit" asp-route-hallId="@ViewBag.HallId" asp-route-standId="@ViewBag.StandId" asp-controller="Exhibits" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="titleBe">Belarusian title</label>
+            <input type="text" name="titleBe" class="form-control" value="@Model?.TitleBe" />
+        </div>
+        <div class="form-group">
+            <label for="titleRu">Russian title</label>
+            <input type="text" name="titleRu" class="form-control" value="@Model?.TitleRu" />
+        </div>
+        <div class="form-group">
+            <label for="titleEn">English title</label>
+            <input type="text" name="titleEn" class="form-control" value="@Model?.TitleEn" />
+        </div>
+        <div class="form-group">
+            <label for="textBe">Belarusian text</label>
+            <textarea style="resize:none" type="text" name="textBe" class="form-control" rows="5">@Model?.TextBe</textarea>
+        </div>
+        <div class="form-group">
+            <label for="textRu">Russian text</label>
+            <textarea style="resize:none" type="text" name="textRu" class="form-control" rows="5">@Model?.TextRu</textarea>
+        </div>
+        <div class="form-group">
+            <label for="textEn">English text</label>
+            <textarea style="resize:none" type="text" name="textEn" class="form-control" rows="5">@Model?.TextEn</textarea>
+        </div>
+        <div class="form-group">
+            <label for="state">State</label>
+            <input type="checkbox" id="state" name="state" value="true" checked="@Model.State" class="form-check-inline" />
+            <input type="hidden" id="state" name="state" value="false" />
+        </div>
+        <div class="form-group">
+            <input type="button" onclick="LoadFile('#inputFile')" value="Upload" class="btn btn-outline-secondary" />
+            <input id="inputFile" style="visibility: hidden" type="file" name="files" multiple />
+        </div>
+        <div id="imageBlock" class="d-flex flex-row flex-wrap form-group">
+        </div>
+        <div class="d-flex flex-row form-group">
+            @if (Model.Photos != null)
+            {
+                @for (int i = 0; i < Model.Photos.Count; i++)
+                {
+                    <div class="d-flex flex-row flex-wrap" style="margin: 0px 5px" >
+                        @{
+                            <input type="hidden" value="@Model.Photos[i].Id" name="ids" />
+                            var base64 = Convert.ToBase64String(Model.Photos[i].Photo);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                            <img class='img-thumbnail small-image img-small-loaded' src="@imgSrc" />
+                            <input type="button" class="btn-outline-secondary btn-close" onclick="RemoveBlock(this)" value="x" />
+                        }
+                    </div>
+                }
+            }
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-outline-secondary" />
+        </div>
+    </form>
+}

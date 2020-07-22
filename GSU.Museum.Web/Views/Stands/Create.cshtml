@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Add Stand";
+}
+
+@{
+    <form method="post" asp-action="Create" asp-controller="Stands" asp-route-hallId="@ViewBag.HallId" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="titleBe">Belarusian title</label>
+            <input type="text" name="titleBe" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="titleRu">Russian title</label>
+            <input type="text" name="titleRu" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="titleEn">English title</label>
+            <input type="text" name="titleEn" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label for="descriptionBe">Stand description (Be)</label>
+            <textarea name="descriptionBe" class="form-control textarea-static" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="descriptionRu">Stand description (Ru)</label>
+            <textarea name="descriptionRu" class="form-control textarea-static" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="descriptionEn">Stand description (En)</label>
+            <textarea name="descriptionEn" class="form-control textarea-static" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="state">State</label>
+            <input type="checkbox" id="state" name="state" value="true" class="form-check-inline" />
+            <input type="hidden" id="state" name="state" value="false" />
+        </div>
+        <div class="form-group">
+            <input type="button" onclick="LoadFile('#inputFile')" value="Upload" class="btn btn-outline-secondary" />
+            <input id="inputFile" style="visibility: hidden" type="file" name="file" />
+        </div>
+        <div id="imageBlock" class="form-group">
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-outline-secondary" />
+        </div>
+    </form>
+}

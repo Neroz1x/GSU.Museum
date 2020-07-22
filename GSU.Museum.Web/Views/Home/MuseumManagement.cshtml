@@ -1,0 +1,55 @@
+﻿@model IEnumerable<GSU.Museum.Web.Models.HallViewModel>
+@{
+    ViewData["Title"] = "Test";
+}
+
+@{
+    <a class="a-btn" asp-controller="Halls" asp-action="Create">Add hall</a>
+    <div class="flex-column">
+        @foreach (var hall in Model)
+        {
+            <div style="margin-top: 10px;" class="flex-row">
+                <button class="btn btn-link collapsed" data-toggle="collapse"
+                        data-target="#id@{@hall.Id}"
+                        aria-expanded="false"
+                        aria-controls="id@{@hall.Id}"
+                        style="margin-bottom:3px;padding:2px;">
+                    <i class="fa" aria-hidden="false"></i>
+                </button>
+                <a class="a-header" asp-controller="Halls" asp-action="Index" asp-route-id="@hall.Id">@hall.TitleEn</a>
+                <a class="a-btn" asp-controller="Halls" asp-action="Edit" asp-route-id="@hall.Id">Edit</a>
+                <a class="a-btn" asp-controller="Halls" asp-action="Delete" asp-route-id="@hall.Id">Delete</a>
+            </div>
+            <div class="collapse" id="id@{@hall.Id}" style="margin-left: 50px">
+                <a class="a-btn" asp-controller="Stands" asp-action="Create" asp-route-hallId="@hall.Id">Add stand</a>
+                @foreach (var stand in hall.Stands)
+                {
+                    <div style="margin-top: 10px;" class="flex-row">
+                        <button class="btn btn-link collapsed" data-toggle="collapse"
+                                data-target="#id@{@stand.Id}"
+                                aria-expanded="false"
+                                aria-controls="id@{@stand.Id}"
+                                style="margin-bottom:3px;padding:2px;">
+                            <i class="fa" aria-hidden="false"></i>
+                        </button>
+                        <a class="a-header" asp-controller="Stands" asp-action="Index" asp-route-id="@stand.Id" asp-route-hallId="@hall.Id">@stand.TitleEn</a>
+                        <a class="a-btn" asp-controller="Stands" asp-action="Edit" asp-route-id="@stand.Id" asp-route-hallId="@hall.Id">Edit</a>
+                        <a class="a-btn" asp-controller="Stands" asp-action="Delete" asp-route-id="@stand.Id" asp-route-hallId="@hall.Id">Delete</a>
+                    </div>
+                    <div class="collapse" id="id@{@stand.Id}" style="margin-left: 50px">
+                        <a class="a-btn" asp-controller="Exhibits" asp-route-hallId="@hall.Id" asp-route-standId="@stand.Id" asp-action="Create">Add exhibit</a>
+                        @foreach (var exhibit in stand.Exhibits)
+                        {
+                            <div style="margin-top: 10px;" class="flex-row">
+                                <a class="a-header" asp-controller="Exhibits" asp-action="Index" asp-route-standId="@stand.Id" asp-route-hallId="@hall.Id" asp-route-id="@exhibit.Id">@exhibit.TitleEn</a>
+                                <a class="a-btn" asp-controller="Exhibits" asp-action="Edit" asp-route-standId="@stand.Id" asp-route-hallId="@hall.Id" asp-route-id="@exhibit.Id">Edit</a>
+                                <a class="a-btn" asp-controller="Exhibits" asp-action="Delete" asp-route-standId="@stand.Id" asp-route-hallId="@hall.Id" asp-route-id="@exhibit.Id">Delete</a>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </div>
+}
+

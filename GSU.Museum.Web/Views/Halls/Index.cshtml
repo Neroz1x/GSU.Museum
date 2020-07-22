@@ -1,0 +1,59 @@
+﻿@model GSU.Museum.Web.Models.HallViewModel
+@{
+    var state = Model.State == true ? "active" : "in progress";
+    <div class="flex-column">
+        <div class="form-group">
+            <h5>Belarusian title</h5>
+            @if (!string.IsNullOrEmpty(@Model.TitleBe))
+            {
+                <p>@Model.TitleBe</p>
+            }
+            else
+            {
+                <p>No title</p>
+            }
+        </div>
+        <div class="form-group">
+            <h5>Russian title</h5>
+            @if (!string.IsNullOrEmpty(@Model.TitleRu))
+            {
+                <p>@Model.TitleBe</p>
+            }
+            else
+            {
+                <p>No title</p>
+            }
+        </div>
+        <div class="form-group">
+            <h5>English title</h5>
+            @if (!string.IsNullOrEmpty(@Model.TitleEn))
+            {
+                <p>@Model.TitleBe</p>
+            }
+            else
+            {
+                <p>No title</p>
+            }
+        </div>
+        <div class="form-group">
+            <h5>State</h5>
+            <p>@state</p>
+        </div>
+        <div class="form-group">
+            <h5>Photo</h5>
+            @if (Model.Photo != null)
+            {
+                var base64 = Convert.ToBase64String(Model.Photo.Photo);
+                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                <img class='img-thumbnail small-image img-small-loaded' src="@imgSrc" />
+            }
+            else
+            {
+                <label>No photo</label>
+            }
+        </div>
+        <a class="a-btn" asp-controller="Halls" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+        <a class="a-btn" asp-controller="Halls" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+    </div>
+}
