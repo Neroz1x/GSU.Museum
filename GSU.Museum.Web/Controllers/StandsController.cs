@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using GSU.Museum.Web.Interfaces;
 using GSU.Museum.Web.Models;
@@ -52,14 +53,29 @@ namespace GSU.Museum.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string hallId, StandViewModel stand, IFormFile file)
+        public async Task<IActionResult> Edit(string hallId, StandViewModel stand, IFormFile file, IEnumerable<string> exhibits, byte[] photo)
         {
+            var initialStand = await _standsRepository.GetAsync(hallId, stand.Id);
+            stand.Exhibits = new List<ExhibitViewModel>();
+            foreach(var id in exhibits)
+            {
+                stand.Exhibits.Add(initialStand.Exhibits.First(e => e.Id.Equals(id)));
+            }
+
+            if (initialStand.Photo != null)
+            {
+                stand.Photo = initialStand.Photo;
+                if (photo == null)
+                {
+                    stand.Photo.Photo = null;
+                }
+            }
+
             if (file != null)
             {
                 await _formFileToByteConverterService.ConvertAsync(file, stand);
             }
-            var initialStand = await _standsRepository.GetAsync(hallId, stand.Id);
-            stand.Exhibits = initialStand.Exhibits;
+            
             await _standsRepository.UpdateAsync(hallId, stand.Id, stand);
             return RedirectToAction("MuseumManagement", "Home");
         }

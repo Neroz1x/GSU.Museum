@@ -49,14 +49,25 @@ namespace GSU.Museum.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(HallViewModel hall, IFormFile file)
+        public async Task<IActionResult> Edit(HallViewModel hall, byte[] photo, IFormFile file)
         {
+            var initialHall = await _hallsRepository.GetAsync(hall.Id);
+            hall.Stands = initialHall.Stands;
+
+            if (initialHall.Photo != null)
+            {
+                hall.Photo = initialHall.Photo;
+                if (photo == null)
+                {
+                    hall.Photo.Photo = null;
+                }
+            }
+
             if (file != null)
             {
                 await _formFileToByteConverterService.ConvertAsync(file, hall);
             }
-            var initialHall = await _hallsRepository.GetAsync(hall.Id);
-            hall.Stands = initialHall.Stands;
+            
             await _hallsRepository.UpdateAsync(hall.Id, hall);
             return RedirectToAction("MuseumManagement", "Home");
         }

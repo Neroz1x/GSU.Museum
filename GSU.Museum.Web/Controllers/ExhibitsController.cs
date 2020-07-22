@@ -54,12 +54,27 @@ namespace GSU.Museum.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string hallId, string standId, ExhibitViewModel exhibit, IEnumerable<IFormFile> files)
+        public async Task<IActionResult> Edit(string hallId, string standId, ExhibitViewModel exhibit, IEnumerable<IFormFile> files, IEnumerable<string> ids)
         {
+            var initialExhibit = await _exhibitsRepository.GetAsync(hallId, standId, exhibit.Id);
+
+            if (initialExhibit.Photos != null)
+            {
+                exhibit.Photos = initialExhibit.Photos;
+                foreach(var photo in exhibit.Photos)
+                {
+                    if(!ids.Contains(photo?.Id))
+                    {
+                        photo.Photo = null;
+                    }
+                }
+            }
+
             if (files.Count() != 0)
             {
                 await _formFileToByteConverterService.ConvertAsync(files, exhibit);
             }
+
             await _exhibitsRepository.UpdateAsync(hallId, standId, exhibit.Id, exhibit);
             return RedirectToAction("MuseumManagement", "Home");
         }
