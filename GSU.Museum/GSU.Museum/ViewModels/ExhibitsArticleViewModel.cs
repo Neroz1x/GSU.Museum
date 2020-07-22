@@ -82,24 +82,24 @@ namespace GSU.Museum.Shared.ViewModels
         }
 
         #region Methods
-        public async Task FillPage()
+        public void FillPage()
         {
-            await Task.Factory.StartNew(() => 
+            if(Exhibit.Photos?.Count != 0)
             {
-                if(Exhibit.Photos != null && Exhibit.Photos?.Count != 0)
+                Photos.Clear();
+                foreach (var photo in Exhibit.Photos)
                 {
-                    Photos.Clear();
-                    foreach (var photo in Exhibit.Photos)
+                    if(photo?.Photo != null)
                     {
-                        Photos.Add(ImageSource.FromStream(() => new MemoryStream(photo)));
+                        Photos.Add(ImageSource.FromStream(() => new MemoryStream(photo.Photo)));
                     }
-                    CarouselVisibility = true;
                 }
-                else
-                {
-                    CarouselVisibility = false;
-                }
-            });
+                CarouselVisibility = true;
+            }
+            else
+            {
+                CarouselVisibility = false;
+            }
             Title = Exhibit.Title;
             Text = Exhibit.Text;
         }

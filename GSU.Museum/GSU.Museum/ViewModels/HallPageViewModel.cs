@@ -77,6 +77,10 @@ namespace GSU.Museum.Shared.ViewModels
                 Stands.Clear();
                 foreach (var stand in hall.Stands)
                 {
+                    if(string.IsNullOrEmpty(stand.Title) || string.IsNullOrEmpty(stand.Description) || stand.State == false)
+                    {
+                        continue;
+                    }
                     Stands.Add(stand);
                 }
             }
@@ -96,6 +100,11 @@ namespace GSU.Museum.Shared.ViewModels
             finally
             {
                 IsBusy = false;
+            }
+            if (Stands.Count == 0)
+            {
+                await Application.Current.MainPage.DisplayAlert("Alert", "Still in progress", "Ok");
+                await Navigation.PopAsync();
             }
         }
 

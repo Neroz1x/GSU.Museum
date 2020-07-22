@@ -138,7 +138,15 @@ namespace GSU.Museum.Shared.ViewModels
                 Halls.Clear();
                 foreach (var hall in halls)
                 {
+                    if(string.IsNullOrEmpty(hall.Title) || hall.State == false)
+                    {
+                        continue;
+                    }
                     Halls.Add(hall);
+                }
+                if(halls.Count == 0)
+                {
+                    ReloadButtonVisibility = true;
                 }
             }
             catch(Exception ex)

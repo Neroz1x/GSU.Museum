@@ -118,11 +118,15 @@ namespace GSU.Museum.Shared.ViewModels
                 Exhibits.Clear();
                 foreach (var exhibit in stand.Exhibits)
                 {
+                    if(string.IsNullOrEmpty(exhibit.Text) || string.IsNullOrEmpty(exhibit.Title) || exhibit.State == false)
+                    {
+                        continue;
+                    }
                     Exhibits.Add(exhibit);
                 }
-                if(stand.Photo != null)
+                if(stand.Photo?.Photo != null)
                 {
-                    Photo = ImageSource.FromStream(() => new MemoryStream(stand.Photo));
+                    Photo = ImageSource.FromStream(() => new MemoryStream(stand.Photo.Photo));
                     PhotoVisibility = true;
                 }
                 else
@@ -146,6 +150,11 @@ namespace GSU.Museum.Shared.ViewModels
             finally
             {
                 IsBusy = false;
+            }
+            if(Exhibits.Count == 0)
+            {
+                await Application.Current.MainPage.DisplayAlert("Alert", "Still in progress", "Ok");
+                await Navigation.PopAsync();
             }
         }
 
