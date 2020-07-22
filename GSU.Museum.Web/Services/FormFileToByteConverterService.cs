@@ -16,16 +16,24 @@ namespace GSU.Museum.Web.Services
             using (var memoryStream = new MemoryStream())
             {
                 await file.CopyToAsync(memoryStream);
-                stand.Photo = memoryStream.ToArray();
+                if(stand.Photo == null)
+                {
+                    stand.Photo = new PhotoInfo();
+                }
+                stand.Photo.Photo = memoryStream.ToArray();
             }
         }
 
-        public async Task ConvertAsync(IFormFile file, HallViewModel stand)
+        public async Task ConvertAsync(IFormFile file, HallViewModel hall)
         {
             using (var memoryStream = new MemoryStream())
             {
                 await file.CopyToAsync(memoryStream);
-                stand.Photo = memoryStream.ToArray();
+                if (hall.Photo == null)
+                {
+                    hall.Photo = new PhotoInfo();
+                }
+                hall.Photo.Photo = memoryStream.ToArray();
             }
         }
 
@@ -33,7 +41,7 @@ namespace GSU.Museum.Web.Services
         {
             if(exhibit.Photos == null)
             {
-                exhibit.Photos = new List<byte[]>();
+                exhibit.Photos = new List<PhotoInfo>();
             }
             
             foreach (var photo in files)
@@ -43,7 +51,7 @@ namespace GSU.Museum.Web.Services
                     using (var memoryStream = new MemoryStream())
                     {
                         await photo.CopyToAsync(memoryStream);
-                        exhibit.Photos.Add(memoryStream.ToArray());
+                        exhibit.Photos.Add(new PhotoInfo() { Photo = memoryStream.ToArray() });
                     }
                 }
             }
