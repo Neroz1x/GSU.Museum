@@ -20,15 +20,12 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame 
-                            HeightRequest="150"
-                            Visual="Material"
-                            BackgroundColor="LightBlue"
-                            Padding="0"
-                            Margin="20, 10"
-                            HasShadow="True"
-                            IsClippedToBounds="True">
-                        <Label HorizontalOptions="Center" TextColor="Black" VerticalOptions="Center" FontSize="Medium" Text="{Binding Title}"></Label>
-                    </Frame>
+                            Style="{StaticResource DefaultMenuItem}">
+                        <StackLayout VerticalOptions="Fill">
+                            <Label Style="{StaticResource DefaultMenuItemHeader}" Text="{Binding Title}"></Label>
+                            <Label Style="{StaticResource DefaultMenuItemBody}" Text="{Binding Description}"></Label>
+                        </StackLayout>
+                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

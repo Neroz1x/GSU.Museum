@@ -14,10 +14,10 @@ namespace GSU.Museum.Shared.Pages
             BindingContext = new ExhibitsArticleViewModel(exhibit, Navigation);
         }
 
-        private async void ContentPage_Appearing(object sender, System.EventArgs e)
+        private void ContentPage_Appearing(object sender, System.EventArgs e)
         {
             var viewModel = BindingContext as ExhibitsArticleViewModel;
-            await viewModel.FillPage();
+            viewModel.FillPage();
         }
     }
 }
