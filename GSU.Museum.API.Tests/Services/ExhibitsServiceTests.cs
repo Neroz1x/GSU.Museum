@@ -18,7 +18,7 @@ namespace GSU.Museum.API.Tests.Services
         private readonly List<Hall> _halls;
         private const string HallId = "123456789012345678901234";
         private const string StandId = "123456789012345678901111";
-        private HttpRequest HttpRequest;
+        private HttpRequest httpRequest;
         public ExhibitsServiceTests()
         {
             var mockRepo = new Mock<IExhibitsRepository>();
@@ -41,9 +41,9 @@ namespace GSU.Museum.API.Tests.Services
                             TitleRu = "TitleRu",
                             TitleEn = "TitleEn",
                             TitleBe = "TitleBe",
-                            TextBe = new List<string>(){ "Be1", "Be2" },
-                            TextEn = new List<string>(){ "En", "En2" },
-                            TextRu = new List<string>(){ "Ru1", "Ru2" },
+                            DescriptionBe = "Be1",
+                            DescriptionEn = "En",
+                            DescriptionRu = "Ru1",
                             Exhibits = new List<Exhibit>()
                         }
                     }
@@ -67,9 +67,9 @@ namespace GSU.Museum.API.Tests.Services
                             TitleRu = "TitleRu",
                             TitleEn = "TitleEn",
                             TitleBe = "TitleBe",
-                            TextBe = new List<string>(){ "Be1", "Be2" },
-                            TextEn = new List<string>(){ "En", "En2" },
-                            TextRu = new List<string>(){ "Ru1", "Ru2" },
+                            DescriptionBe = "Be1",
+                            DescriptionEn = "En",
+                            DescriptionRu = "Ru1",
                             Exhibits = new List<Exhibit>()
                             {
                                 new Exhibit()
@@ -103,9 +103,9 @@ namespace GSU.Museum.API.Tests.Services
                             TitleRu = "TitleRu",
                             TitleEn = "TitleEn",
                             TitleBe = "TitleBe",
-                            TextBe = new List<string>(){ "Be1", "Be2" },
-                            TextEn = new List<string>(){ "En", "En2" },
-                            TextRu = new List<string>(){ "Ru1", "Ru2" },
+                            DescriptionBe = "Be1",
+                            DescriptionEn = "En",
+                            DescriptionRu = "Ru1",
                             Exhibits = new List<Exhibit>()
                             {
                                 new Exhibit()
@@ -160,37 +160,17 @@ namespace GSU.Museum.API.Tests.Services
             const int expected = 2;
 
             // Act
-            var list = await _service.GetAllAsync(HttpRequest, HallId, StandId);
+            var list = await _service.GetAllAsync(httpRequest, HallId, StandId);
 
             // Assert
             Assert.Equal(expected, list.Count);
         }
 
         [Fact]
-        public async void GetAll_RecordDoesNotContainLocalizedTitle_ShouldReturnNotFounError()
-        {
-            // Arrange
-            const Errors errorCodeExpected = Errors.Not_found;
-            string messageExpected = "There is no title in En language";
-
-            // Act
-            try
-            {
-                var actual = await _service.GetAllAsync(HttpRequest, HallId, "123456789012345678901112");
-            }
-            catch (Error err)
-            {
-                // Assert
-                Assert.Equal(errorCodeExpected, err.ErrorCode);
-                Assert.Equal(messageExpected, err.Info);
-            }
-        }
-
-        [Fact]
         public async void GetAll_RepositoryIsEmpty_ShouldReturnEmptyList()
         {
             // Act
-            var list = await _serviceEmptyRepo.GetAllAsync(HttpRequest, HallId, StandId);
+            var list = await _serviceEmptyRepo.GetAllAsync(httpRequest, HallId, StandId);
 
             // Assert
             Assert.Empty(list);
@@ -214,7 +194,7 @@ namespace GSU.Museum.API.Tests.Services
             var expected = mapper.Map<ExhibitDTO>(exhibit);
 
             // Act
-            var actual = await _service.GetAsync(HttpRequest, HallId, StandId, "123456789012345678901212");
+            var actual = await _service.GetAsync(httpRequest, HallId, StandId, "123456789012345678901212");
 
             // Assert
             Assert.NotNull(actual);
@@ -231,7 +211,7 @@ namespace GSU.Museum.API.Tests.Services
             // Act
             try
             {
-                var actual = await _service.GetAsync(HttpRequest, HallId, StandId, "1");
+                var actual = await _service.GetAsync(httpRequest, HallId, StandId, "1");
             }
             catch (Error err)
             {
@@ -250,54 +230,10 @@ namespace GSU.Museum.API.Tests.Services
             ExhibitDTO expected = null;
 
             // Act
-            var actual = await _service.GetAsync(HttpRequest, HallId, StandId, id);
+            var actual = await _service.GetAsync(httpRequest, HallId, StandId, id);
 
             // Assert
             Assert.Equal(expected, actual);
-        }
-
-        [Fact]
-        public async void GetAsync_RecordDoesNotContainLocalizedText_ShouldReturnNotFounError()
-        {
-            const string id = "123456789012345678901415";
-
-            // Arrange
-            const Errors errorCodeExpected = Errors.Not_found;
-            string messageExpected = "There is no text in En language";
-
-            // Act
-            try
-            {
-                var actual = await _service.GetAsync(HttpRequest, HallId, "123456789012345678901112", id) ;
-            }
-            catch (Error err)
-            {
-                // Assert
-                Assert.Equal(errorCodeExpected, err.ErrorCode);
-                Assert.Equal(messageExpected, err.Info);
-            }
-        }
-
-        [Fact]
-        public async void GetAsync_RecordDoesNotContainLocalizedTitle_ShouldReturnNotFounError()
-        {
-            const string id = "123456789012345678901313";
-
-            // Arrange
-            const Errors errorCodeExpected = Errors.Not_found;
-            string messageExpected = "There is no title in En language";
-
-            // Act
-            try
-            {
-                var actual = await _service.GetAsync(HttpRequest, HallId, "123456789012345678901112", id);
-            }
-            catch (Error err)
-            {
-                // Assert
-                Assert.Equal(errorCodeExpected, err.ErrorCode);
-                Assert.Equal(messageExpected, err.Info);
-            }
         }
     }
 }

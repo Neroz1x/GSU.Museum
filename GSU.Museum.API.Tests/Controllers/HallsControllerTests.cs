@@ -51,9 +51,9 @@ namespace GSU.Museum.API.Tests.Controllers
                             TitleRu = "TitleRu",
                             TitleEn = "TitleEn",
                             TitleBe = "TitleBe",
-                            TextBe = new List<string>(){ "Be1", "Be2" },
-                            TextEn = new List<string>(){ "En", "En2" },
-                            TextRu = new List<string>(){ "Ru1", "Ru2" },
+                            DescriptionBe = "Be1",
+                            DescriptionEn = "En",
+                            DescriptionRu = "Ru1",
                             Photo = new PhotoInfo(),
                             Exhibits = new List<Exhibit>()
                             {
@@ -90,9 +90,9 @@ namespace GSU.Museum.API.Tests.Controllers
                             TitleRu = "TitleRu",
                             TitleEn = "TitleEn",
                             TitleBe = "TitleBe",
-                            TextBe = new List<string>(){ "Be1", "Be2" },
-                            TextEn = new List<string>(){ "En", "En2" },
-                            TextRu = new List<string>(){ "Ru1", "Ru2" },
+                            DescriptionBe = "Be1",
+                            DescriptionEn = "En",
+                            DescriptionRu = "Ru1",
                             Photo = new PhotoInfo(),
                             Exhibits = new List<Exhibit>()
                             {
@@ -116,9 +116,9 @@ namespace GSU.Museum.API.Tests.Controllers
                             TitleRu = "TitleRu",
                             TitleEn = "TitleEn",
                             TitleBe = "TitleBe",
-                            TextBe = new List<string>(){ "Be1", "Be2" },
-                            TextEn = new List<string>(){ "En", "En2" },
-                            TextRu = new List<string>(){ "Ru1", "Ru2" },
+                            DescriptionBe = "Be1",
+                            DescriptionEn = "En",
+                            DescriptionRu = "Ru1",
                             Photo = new PhotoInfo(),
                             Exhibits = new List<Exhibit>()
                             {
@@ -348,94 +348,6 @@ namespace GSU.Museum.API.Tests.Controllers
 
             // Assert
             Assert.Equal(statusCode, actual.StatusCode);
-        }
-
-        [Fact]
-        public async void GetAsync_DoubleNestedRecordDoesNotContainLocalizedTextInEnligh_ShouldReturnNotFounError()
-        {
-            const string id = "123456789012345678903111";
-
-            // Arrange
-            const Errors errorCodeExpected = Errors.Not_found;
-            string messageExpected = "There is no text in En language";
-
-            // Act
-            try
-            {
-                StatusCodeResult actual = await _hallsController.GetAsync(id, null) as StatusCodeResult;
-            }
-            catch (Error err)
-            {
-                // Assert
-                Assert.Equal(errorCodeExpected, err.ErrorCode);
-                Assert.Equal(messageExpected, err.Info);
-            }
-        }
-
-        [Fact]
-        public async void GetAsync_DoubleNestedRecordDoesNotContainLocalizedTitleInEnligh_ShouldReturnNotFounError()
-        {
-            const string id = "123456789012345678901111";
-
-            // Arrange
-            const Errors errorCodeExpected = Errors.Not_found;
-            string messageExpected = "There is no title in En language";
-
-            // Act
-            try
-            {
-                StatusCodeResult actual = await _hallsController.GetAsync(id, null) as StatusCodeResult;
-            }
-            catch (Error err)
-            {
-                // Assert
-                Assert.Equal(errorCodeExpected, err.ErrorCode);
-                Assert.Equal(messageExpected, err.Info);
-            }
-        }
-        
-        [Fact]
-        public async void GetAsync_NestedRecordDoesNotContainLocalizedTitleInEnligh_ShouldReturnNotFounError()
-        {
-            const string id = "123456789012345678901112";
-
-            // Arrange
-            const Errors errorCodeExpected = Errors.Not_found;
-            string messageExpected = "There is no title in En language";
-
-            // Act
-            try
-            {
-                StatusCodeResult actual = await _hallsController.GetAsync(id, null) as StatusCodeResult;
-            }
-            catch (Error err)
-            {
-                // Assert
-                Assert.Equal(errorCodeExpected, err.ErrorCode);
-                Assert.Equal(messageExpected, err.Info);
-            }
-        }
-
-        [Fact]
-        public async void GetAsync_RecordDoesNotContainLocalizedTitleInEnligh_ShouldReturnNotFounError()
-        {
-            const string id = "123456789012345678901234";
-
-            // Arrange
-            const Errors errorCodeExpected = Errors.Not_found;
-            string messageExpected = "There is no title in En language";
-
-            // Act
-            try
-            {
-                StatusCodeResult actual = await _hallsController.GetAsync(id, null) as StatusCodeResult;
-            }
-            catch (Error err)
-            {
-                // Assert
-                Assert.Equal(errorCodeExpected, err.ErrorCode);
-                Assert.Equal(messageExpected, err.Info);
-            }
         }
 
         [Fact]
