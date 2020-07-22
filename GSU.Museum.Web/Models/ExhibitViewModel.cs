@@ -17,6 +17,6 @@ namespace GSU.Museum.Web.Models
         public string TextBe { get; set; }
         public bool State { get; set; }
         
-        public List<byte[]> Photos { get; set; }
+        public List<PhotoInfo> Photos { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace GSU.Museum.Web.Models
         public string TitleEn { get; set; }
         public string TitleBe { get; set; }
         public bool State { get; set; }
-        public byte[] Photo { get; set; }
+        public PhotoInfo Photo { get; set; }
         public List<StandViewModel> Stands { get; set; }
     }
 }
