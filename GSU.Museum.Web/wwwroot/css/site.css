@@ -69,3 +69,62 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+
+[data-toggle="collapse"] .fa:before {
+    content: "\f139";
+}
+
+[data-toggle="collapse"].collapsed .fa:before {
+    content: "\f13a";
+}
+
+
+.a-header {
+    font-size: large;
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+}
+
+.a-header:hover {
+    font-size: large;
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+}
+
+.a-btn {
+    font-size: medium;
+    color: black;
+    text-decoration: none;
+}
+
+.a-btn:hover {
+    font-size: medium;
+    color: black;
+    text-decoration: none;
+}
+
+.img-small-loaded{
+    width: 100px;
+    height: 100px;
+}
+
+.textarea-static{
+    resize: none;
+}
+
+.btn-close {
+    background-color: ivory;
+    width: 20px;
+    height: 25px;
+    vertical-align: top;
+    margin-left: -15px;
+    border-radius: 5px;
+    box-shadow: none;
+    text-align: center;
+    border: 1px solid #6c757d;
+    line-height: 14px;
+    font: -webkit-control;
+}
