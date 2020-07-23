@@ -34,6 +34,26 @@ namespace GSU.Museum.Shared.ViewModels
                 OnPropertyChanged(nameof(CarouselVisibility));
             }
         }
+        
+        // Visibility of IndivatorView
+        private bool _indicatorVisibility = true;
+        public bool IndicatorVisibility
+        {
+            get
+            {
+                return _indicatorVisibility;
+            }
+
+            set
+            {
+                if (value != _indicatorVisibility)
+                {
+                    _indicatorVisibility = value;
+                }
+                OnPropertyChanged(nameof(IndicatorVisibility));
+            }
+        }
+
         // Title of the page
         private string _title;
         public string Title
@@ -95,6 +115,14 @@ namespace GSU.Museum.Shared.ViewModels
                     }
                 }
                 CarouselVisibility = true;
+                if(Photos.Count == 1)
+                {
+                    IndicatorVisibility = false;
+                }
+                else
+                {
+                    IndicatorVisibility = true;
+                }
             }
             else
             {

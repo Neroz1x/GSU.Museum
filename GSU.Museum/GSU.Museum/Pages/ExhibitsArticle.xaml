@@ -28,6 +28,7 @@
                         </CarouselView.ItemTemplate>
                     </CarouselView>
                     <IndicatorView
+                        IsVisible="{Binding IndicatorVisibility}"
                         x:Name="indicator"
                         Style="{StaticResource DefaultIndicator}" IndicatorsShape="Square">
                     </IndicatorView>
