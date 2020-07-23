@@ -1,5 +1,6 @@
 ﻿using GSU.Museum.Shared.Interfaces;
 using GSU.Museum.Shared.Services;
+using System.Globalization;
 using System.Threading;
 using Xamarin.Forms;
 
@@ -15,29 +16,37 @@ namespace GSU.Museum.Shared.Services
                 case "ru-RU":
                     if (!Thread.CurrentThread.CurrentUICulture.Name.Equals("ru-RU"))
                     {
-                        Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("ru-RU");
-                        Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("ru-RU");
+                        CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("ru-RU");
+                        CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("ru-RU");
+                        Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
+                        Thread.CurrentThread.CurrentUICulture = new CultureInfo("ru-RU");
                     }
                     break;
                 case "en-US":
                     if (!Thread.CurrentThread.CurrentUICulture.Name.Equals("en-US"))
                     {
-                        Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
-                        Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
+                        CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
+                        CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US");
+                        Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                        Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
                     }
                     break;
                 case "be-BY":
                     if (!Thread.CurrentThread.CurrentUICulture.Name.Equals("be-BY"))
                     {
-                        Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("be-BY");
-                        Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("be-BY");
+                        CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("be-BY");
+                        CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("be-BY");
+                        Thread.CurrentThread.CurrentCulture = new CultureInfo("be-BY");
+                        Thread.CurrentThread.CurrentUICulture = new CultureInfo("be-BY");
                     }
                     break;
                 default:
                     if (!Thread.CurrentThread.CurrentUICulture.Name.Equals("en-US"))
                     {
-                        Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
-                        Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
+                        CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
+                        CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US");
+                        Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                        Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
                     }
                     break;
             }
