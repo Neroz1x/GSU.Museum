@@ -22,7 +22,10 @@
                     <DataTemplate>
                         <Frame 
                             Style="{StaticResource DefaultMenuItem}">
-                            <Label Style="{StaticResource DefaultMenuItemHeader}" Text="{Binding Title}"></Label>
+                            <StackLayout VerticalOptions="Fill">
+                                <Label Style="{StaticResource DefaultMenuItemHeader}" Text="{Binding Title}"></Label>
+                                <Label Style="{StaticResource DefaultMenuItemBody}" Text="{Binding Description}"></Label>
+                            </StackLayout>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
