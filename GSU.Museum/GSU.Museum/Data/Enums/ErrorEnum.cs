@@ -7,6 +7,7 @@
         Create_error,
         Update_error,
         Unauthorized,
-        Unhandled_exception
+        Unhandled_exception,
+        Failed_Connection
     }
 }
