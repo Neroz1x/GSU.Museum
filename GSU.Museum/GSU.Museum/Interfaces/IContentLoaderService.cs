@@ -14,14 +14,14 @@ namespace GSU.Museum.Shared.Interfaces
         /// Send request to api/Halls
         /// </summary>
         /// <returns>List of halls without nested stands</returns>
-        Task<List<Hall>> LoadHalls();
+        Task<List<Hall>> LoadHallsAsync();
 
         /// <summary>
         /// Send request to api/Halls/ID
         /// </summary>
         /// <param name="id">Id of the hall</param>
         /// <returns>Hall and nested list of stands in this hall</returns>
-        Task<Hall> LoadHall(string id);
+        Task<Hall> LoadHallAsync(string id);
 
         /// <summary>
         /// Send request to api/Stands/hallId/id
@@ -29,7 +29,7 @@ namespace GSU.Museum.Shared.Interfaces
         /// <param name="hallId">Id of the hall</param>
         /// <param name="id">Id of the stand</param>
         /// <returns>Stand</returns>
-        Task<Stand> LoadStand(string hallId, string id);
+        Task<Stand> LoadStandAsync(string hallId, string id);
 
         /// <summary>
         /// Send request to api/Stands/hallId/standId/id
@@ -38,12 +38,6 @@ namespace GSU.Museum.Shared.Interfaces
         /// <param name="standId">Id of the stand</param>
         /// <param name="id">Id of the exhibit</param>
         /// <returns>Exhibit</returns>
-        Task<Exhibit> LoadExhibit(string hallId, string standId, string id);
-
-        /// <summary>
-        /// Create HttpClient with ApiKey
-        /// </summary>
-        /// <returns>HttpClient with sertificate</returns>
-        HttpClient GetHttpClient();
+        Task<Exhibit> LoadExhibitAsync(string hallId, string standId, string id);
     }
 }
