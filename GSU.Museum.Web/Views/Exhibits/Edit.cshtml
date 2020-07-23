@@ -7,27 +7,39 @@
     <form method="post" asp-action="Edit" asp-route-hallId="@ViewBag.HallId" asp-route-standId="@ViewBag.StandId" asp-controller="Exhibits" enctype="multipart/form-data">
         <div class="form-group">
             <label for="titleBe">Belarusian title</label>
-            <input type="text" name="titleBe" class="form-control" value="@Model?.TitleBe" />
+            <input type="text" name="titleBe" class="form-control" value="@Model.TitleBe" />
         </div>
         <div class="form-group">
             <label for="titleRu">Russian title</label>
-            <input type="text" name="titleRu" class="form-control" value="@Model?.TitleRu" />
+            <input type="text" name="titleRu" class="form-control" value="@Model.TitleRu" />
         </div>
         <div class="form-group">
             <label for="titleEn">English title</label>
-            <input type="text" name="titleEn" class="form-control" value="@Model?.TitleEn" />
+            <input type="text" name="titleEn" class="form-control" value="@Model.TitleEn" />
+        </div>
+        <div class="form-group">
+            <label for="descriptionBe">Belarusian description</label>
+            <input type="text" name="descriptionBe" class="form-control" value="@Model.DescriptionBe"/>
+        </div>
+        <div class="form-group">
+            <label for="descriptionRu">Russian description</label>
+            <input type="text" name="descriptionRu" class="form-control" value="@Model.DescriptionRu"/>
+        </div>
+        <div class="form-group">
+            <label for="descriptionEn">English description</label>
+            <input type="text" name="descriptionEn" class="form-control" value="@Model.DescriptionEn"/>
         </div>
         <div class="form-group">
             <label for="textBe">Belarusian text</label>
-            <textarea style="resize:none" type="text" name="textBe" class="form-control" rows="5">@Model?.TextBe</textarea>
+            <textarea style="resize:none" type="text" name="textBe" class="form-control" rows="5">@Model.TextBe</textarea>
         </div>
         <div class="form-group">
             <label for="textRu">Russian text</label>
-            <textarea style="resize:none" type="text" name="textRu" class="form-control" rows="5">@Model?.TextRu</textarea>
+            <textarea style="resize:none" type="text" name="textRu" class="form-control" rows="5">@Model.TextRu</textarea>
         </div>
         <div class="form-group">
             <label for="textEn">English text</label>
-            <textarea style="resize:none" type="text" name="textEn" class="form-control" rows="5">@Model?.TextEn</textarea>
+            <textarea style="resize:none" type="text" name="textEn" class="form-control" rows="5">@Model.TextEn</textarea>
         </div>
         <div class="form-group">
             <label for="state">State</label>
@@ -45,7 +57,7 @@
             {
                 @for (int i = 0; i < Model.Photos.Count; i++)
                 {
-                    <div class="d-flex flex-row flex-wrap" style="margin: 0px 5px" >
+                    <div class="d-flex flex-row flex-wrap" style="margin: 0px 5px">
                         @{
                             <input type="hidden" value="@Model.Photos[i].Id" name="ids" />
                             var base64 = Convert.ToBase64String(Model.Photos[i].Photo);

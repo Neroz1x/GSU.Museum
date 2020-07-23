@@ -12,6 +12,9 @@ namespace GSU.Museum.Web.Models
         public string TitleRu { get; set; }
         public string TitleEn { get; set; }
         public string TitleBe { get; set; }
+        public string DescriptionRu { get; set; }
+        public string DescriptionEn { get; set; }
+        public string DescriptionBe { get; set; }
         public string TextRu { get; set; }
         public string TextEn { get; set; }
         public string TextBe { get; set; }
