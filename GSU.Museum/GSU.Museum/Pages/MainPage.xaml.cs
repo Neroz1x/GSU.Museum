@@ -19,8 +19,11 @@ namespace GSU.Museum
 
         async void ContentPage_Appearing(object sender, EventArgs e)
         {
-            App.Settings = await DependencyService.Get<CachingService>().ReadSettings();
-            DependencyService.Get<LocalizationService>().Localize();
+            if(App.Settings == null)
+            {
+                App.Settings = await DependencyService.Get<CachingService>().ReadSettings();
+                DependencyService.Get<LocalizationService>().Localize();
+            }
             var viewModel = BindingContext as MainPageViewModel;
             await viewModel.GetHalls();
         }

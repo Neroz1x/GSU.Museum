@@ -4,6 +4,8 @@ using GSU.Museum.Shared.Resources;
 using GSU.Museum.Shared.Services;
 using System;
 using System.Collections.ObjectModel;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -126,6 +128,7 @@ namespace GSU.Museum.Shared.ViewModels
         #region Methods
         public async Task GetHalls()
         {
+            Halls.Clear();
             ReloadButtonVisibility = false;
             ContentVisibility = true;
             IsBusy = true;
@@ -134,7 +137,7 @@ namespace GSU.Museum.Shared.ViewModels
 
             try
             {
-                var halls = await DependencyService.Get<ContentLoaderService>().LoadHalls();
+                var halls = await DependencyService.Get<ContentLoaderService>().LoadHallsAsync();
                 Halls.Clear();
                 foreach (var hall in halls)
                 {
@@ -153,11 +156,15 @@ namespace GSU.Museum.Shared.ViewModels
             {
                 if (ex is Error error)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alert", error.Info, "Ok");
+                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, error.Info, AppResources.MessageBox_ButtonOk);
+                }
+                else if (ex is HttpRequestException || ex is WebException)
+                {
+                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, AppResources.ErrorMessage_ServerIsNotResponse, AppResources.MessageBox_ButtonOk);
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alert", ex.Message, "Ok");
+                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, ex.Message, AppResources.MessageBox_ButtonOk);
                 }
                 ContentVisibility = false;
                 ReloadButtonVisibility = true;

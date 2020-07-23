@@ -1,9 +1,12 @@
 ﻿using GSU.Museum.Shared.Data.Models;
 using GSU.Museum.Shared.Pages;
+using GSU.Museum.Shared.Resources;
 using GSU.Museum.Shared.Services;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -113,7 +116,7 @@ namespace GSU.Museum.Shared.ViewModels
             IsBusy = true;
             try
             {
-                var stand = await DependencyService.Get<ContentLoaderService>().LoadStand(_hallId, _standId);
+                var stand = await DependencyService.Get<ContentLoaderService>().LoadStandAsync(_hallId, _standId);
                 Title = stand.Title;
                 Exhibits.Clear();
                 foreach (var exhibit in stand.Exhibits)
@@ -133,28 +136,33 @@ namespace GSU.Museum.Shared.ViewModels
                 {
                     PhotoVisibility = false;
                 }
+                if (Exhibits.Count == 0)
+                {
+                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, AppResources.ErrorMessage_InProgress, AppResources.MessageBox_ButtonOk);
+                    await Navigation.PopAsync();
+                }
             }
             catch (Exception ex)
             {
                 if (ex is Error error)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alert", error.Info, "Ok");
+                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, error.Info, AppResources.MessageBox_ButtonOk);
+                    await Navigation.PopAsync();
+                }
+                else if (ex is HttpRequestException || ex is WebException)
+                {
+                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, AppResources.ErrorMessage_ServerIsNotResponse, AppResources.MessageBox_ButtonOk);
                     await Navigation.PopAsync();
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alert", ex.Message, "Ok");
+                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, ex.Message, AppResources.MessageBox_ButtonOk);
                     await Navigation.PopAsync();
                 }
             }
             finally
             {
                 IsBusy = false;
-            }
-            if(Exhibits.Count == 0)
-            {
-                await Application.Current.MainPage.DisplayAlert("Alert", "Still in progress", "Ok");
-                await Navigation.PopAsync();
             }
         }
 
@@ -163,18 +171,22 @@ namespace GSU.Museum.Shared.ViewModels
             try
             {
                 IsBusy = true;
-                var exhibit = await DependencyService.Get<ContentLoaderService>().LoadExhibit(_hallId, _standId, id);
+                var exhibit = await DependencyService.Get<ContentLoaderService>().LoadExhibitAsync(_hallId, _standId, id);
                 await Navigation.PushAsync(new ExhibitsArticle(exhibit));
             }
             catch(Exception ex)
             {
                 if (ex is Error error)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alert", error.Info, "Ok");
+                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, error.Info, AppResources.MessageBox_ButtonOk);
+                }
+                else if (ex is HttpRequestException || ex is WebException)
+                {
+                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, AppResources.ErrorMessage_ServerIsNotResponse, AppResources.MessageBox_ButtonOk);
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alert", ex.Message, "Ok");
+                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, ex.Message, AppResources.MessageBox_ButtonOk);
                 }
             }
             finally

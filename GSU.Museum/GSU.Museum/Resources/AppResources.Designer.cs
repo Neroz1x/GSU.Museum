@@ -61,6 +61,33 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This page is unavailable now. Try later please.
+        /// </summary>
+        public static string ErrorMessage_InProgress {
+            get {
+                return ResourceManager.GetString("ErrorMessage_InProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can not load page. Check Internet connection and caching settings.
+        /// </summary>
+        public static string ErrorMessage_LoadingFaild {
+            get {
+                return ResourceManager.GetString("ErrorMessage_LoadingFaild", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can not connect to the server.
+        /// </summary>
+        public static string ErrorMessage_ServerIsNotResponse {
+            get {
+                return ResourceManager.GetString("ErrorMessage_ServerIsNotResponse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to F. Scorina GSU Museum.
         /// </summary>
         public static string MainPage_Title {
@@ -75,6 +102,24 @@ namespace GSU.Museum.Shared.Resources {
         public static string MainPage_ToolBar_Options {
             get {
                 return ResourceManager.GetString("MainPage_ToolBar_Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string MessageBox_ButtonOk {
+            get {
+                return ResourceManager.GetString("MessageBox_ButtonOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alert.
+        /// </summary>
+        public static string MessageBox_TitleAlert {
+            get {
+                return ResourceManager.GetString("MessageBox_TitleAlert", resourceCulture);
             }
         }
         

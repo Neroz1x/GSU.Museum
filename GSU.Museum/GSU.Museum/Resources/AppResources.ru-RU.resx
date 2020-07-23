@@ -117,11 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ErrorMessage_InProgress" xml:space="preserve">
+    <value>Данная страница недоступна сейчас. Попробуйте, пожалуйста, позже</value>
+  </data>
+  <data name="ErrorMessage_LoadingFaild" xml:space="preserve">
+    <value>Не удалось загрузить страницу. Проверьте подключение к интернету и настройки кеширования</value>
+  </data>
+  <data name="ErrorMessage_ServerIsNotResponse" xml:space="preserve">
+    <value>Не удалось подключиться к серверу</value>
+  </data>
   <data name="MainPage_Title" xml:space="preserve">
     <value>Музей ГГУ им. Ф. Скорины</value>
   </data>
   <data name="MainPage_ToolBar_Options" xml:space="preserve">
     <value>Настройки</value>
+  </data>
+  <data name="MessageBox_ButtonOk" xml:space="preserve">
+    <value>Ок</value>
+  </data>
+  <data name="MessageBox_TitleAlert" xml:space="preserve">
+    <value>Предупреждение</value>
   </data>
   <data name="OptionsPage_Language" xml:space="preserve">
     <value>Язык</value>

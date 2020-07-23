@@ -1,8 +1,11 @@
 ﻿using GSU.Museum.Shared.Data.Models;
 using GSU.Museum.Shared.Pages;
+using GSU.Museum.Shared.Resources;
 using GSU.Museum.Shared.Services;
 using System;
 using System.Collections.ObjectModel;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -72,7 +75,7 @@ namespace GSU.Museum.Shared.ViewModels
             try
             {
                 IsBusy = true;
-                var hall = await DependencyService.Get<ContentLoaderService>().LoadHall(_hallId);
+                var hall = await DependencyService.Get<ContentLoaderService>().LoadHallAsync(_hallId);
                 Title = hall.Title;
                 Stands.Clear();
                 foreach (var stand in hall.Stands)
@@ -83,28 +86,33 @@ namespace GSU.Museum.Shared.ViewModels
                     }
                     Stands.Add(stand);
                 }
+                if (Stands.Count == 0)
+                {
+                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, AppResources.ErrorMessage_InProgress, AppResources.MessageBox_ButtonOk);
+                    await Navigation.PopAsync();
+                }
             }
             catch (Exception ex)
             {
                 if (ex is Error error)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alert", error.Info, "Ok");
+                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, error.Info, AppResources.MessageBox_ButtonOk);
+                    await Navigation.PopAsync();
+                }
+                else if(ex is HttpRequestException || ex is WebException)
+                {
+                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, AppResources.ErrorMessage_ServerIsNotResponse, AppResources.MessageBox_ButtonOk);
                     await Navigation.PopAsync();
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Alert", ex.Message, "Ok");
+                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, ex.Message, AppResources.MessageBox_ButtonOk);
                     await Navigation.PopAsync();
                 }
             }
             finally
             {
                 IsBusy = false;
-            }
-            if (Stands.Count == 0)
-            {
-                await Application.Current.MainPage.DisplayAlert("Alert", "Still in progress", "Ok");
-                await Navigation.PopAsync();
             }
         }
 
