@@ -48,6 +48,9 @@ namespace GSU.Museum.API.Services
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
                             source => source.TitleRu))
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                            source => source.DescriptionRu))
                             .ForMember(destination => destination.Text,
                                map => map.MapFrom(
                                    source => source.TextRu))
@@ -63,6 +66,9 @@ namespace GSU.Museum.API.Services
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
                             source => source.TitleEn))
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                            source => source.DescriptionEn))
                             .ForMember(destination => destination.Text,
                                map => map.MapFrom(
                                    source => source.TextEn))
@@ -78,6 +84,9 @@ namespace GSU.Museum.API.Services
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
                             source => source.TitleBe))
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                            source => source.DescriptionBe))
                             .ForMember(destination => destination.Text,
                                map => map.MapFrom(
                                    source => source.TextBe))
@@ -93,6 +102,9 @@ namespace GSU.Museum.API.Services
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
                             source => source.TitleEn))
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                            source => source.DescriptionEn))
                             .ForMember(destination => destination.Text,
                                map => map.MapFrom(
                                    source => source.TextEn))
@@ -138,6 +150,9 @@ namespace GSU.Museum.API.Services
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
                                     source => source.TitleRu))
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                            source => source.DescriptionRu))
                             .ForMember(destination => destination.Text,
                                 map => map.MapFrom(
                                     source => source.TextRu))
@@ -160,6 +175,9 @@ namespace GSU.Museum.API.Services
                            .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
                                     source => source.TitleEn))
+                           .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                            source => source.DescriptionEn))
                            .ForMember(destination => destination.Text,
                                 map => map.MapFrom(
                                     source => source.TextEn))
@@ -182,6 +200,9 @@ namespace GSU.Museum.API.Services
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
                                     source => source.TitleBe))
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                            source => source.DescriptionBe))
                             .ForMember(destination => destination.Text,
                                 map => map.MapFrom(
                                     source => source.TextBe))
@@ -204,6 +225,9 @@ namespace GSU.Museum.API.Services
                            .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
                                     source => source.TitleEn))
+                           .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                            source => source.DescriptionEn))
                            .ForMember(destination => destination.Text,
                                 map => map.MapFrom(
                                     source => source.TextEn))
