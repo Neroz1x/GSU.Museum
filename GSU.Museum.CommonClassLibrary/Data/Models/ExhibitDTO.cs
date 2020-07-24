@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 
-namespace GSU.Museum.Shared.Data.Models
+namespace GSU.Museum.CommonClassLibrary.Models
 {
-    public class Stand
+    public class ExhibitDTO
     {
         public string Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public string Text { get; set; }
         public bool State { get; set; }
-        public PhotoInfo Photo { get; set; }
-        public List<Exhibit> Exhibits { get; set; }
+        public List<PhotoInfoDTO> Photos { get; set; }
 
         public override int GetHashCode()
         {
@@ -19,16 +19,16 @@ namespace GSU.Museum.Shared.Data.Models
                 hash = (hash * 16777619) ^ GetStringHashCode(Id);
                 hash = (hash * 16777619) ^ GetStringHashCode(Title);
                 hash = (hash * 16777619) ^ GetStringHashCode(Description);
+                hash = (hash * 16777619) ^ GetStringHashCode(Text);
                 hash = (hash * 16777619) ^ State.GetHashCode();
-                if (Photo != null)
+                if (Photos != null)
                 {
-                    hash = (hash * 16777619) ^ Photo.GetHashCode();
-                }
-                if (Exhibits != null)
-                {
-                    foreach (var exhibit in Exhibits)
+                    foreach (var photo in Photos)
                     {
-                        hash = (hash * 16777619) ^ (exhibit?.GetHashCode() ?? 1);
+                        if (photo != null)
+                        {
+                            hash = (hash * 16777619) ^ photo.GetHashCode();
+                        }
                     }
                 }
                 return hash;
@@ -37,7 +37,7 @@ namespace GSU.Museum.Shared.Data.Models
 
         private int GetStringHashCode(string str)
         {
-            if(str != null)
+            if (str != null)
             {
                 unchecked
                 {

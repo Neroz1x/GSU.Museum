@@ -3,7 +3,6 @@ using GSU.Museum.Shared.Resources;
 using GSU.Museum.Shared.Services;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading;
 using Xamarin.Forms;
 
 namespace GSU.Museum.Shared.ViewModels

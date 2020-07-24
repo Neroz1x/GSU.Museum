@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace GSU.Museum.API.Data.Models
+namespace GSU.Museum.CommonClassLibrary.Models
 {
     public class PhotoInfoDTO
     {

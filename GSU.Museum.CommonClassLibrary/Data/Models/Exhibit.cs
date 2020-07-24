@@ -2,9 +2,9 @@
 using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 
-namespace GSU.Museum.API.Data.Models
+namespace GSU.Museum.CommonClassLibrary.Models
 {
-    public class Stand
+    public class Exhibit
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
@@ -15,14 +15,16 @@ namespace GSU.Museum.API.Data.Models
         public string DescriptionRu { get; set; }
         public string DescriptionEn { get; set; }
         public string DescriptionBe { get; set; }
+        public string TextRu { get; set; }
+        public string TextEn { get; set; }
+        public string TextBe { get; set; }
         public bool State { get; set; }
-        public PhotoInfo Photo { get; set; }
-        public List<Exhibit> Exhibits { get; set; }
+        
+        public List<PhotoInfo> Photos { get; set; }
 
-        public Stand()
+        public Exhibit()
         {
-            Photo = new PhotoInfo();
-            Exhibits = new List<Exhibit>();
+            Photos = new List<PhotoInfo>();
         }
     }
 }

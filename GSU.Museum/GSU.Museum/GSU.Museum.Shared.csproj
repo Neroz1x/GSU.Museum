@@ -20,6 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\GSU.Museum.CommonClassLibrary\GSU.Museum.CommonClassLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Pages\HallPage.xaml.cs">
       <DependentUpon>HallPage.xaml</DependentUpon>
     </Compile>

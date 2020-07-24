@@ -1,6 +1,7 @@
-﻿using GSU.Museum.Shared.Data.Models;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Collections.Generic;
+using GSU.Museum.CommonClassLibrary.Models;
+using GSU.Museum.Shared.Data.Models;
 
 namespace GSU.Museum.Shared.Interfaces
 {
@@ -14,28 +15,28 @@ namespace GSU.Museum.Shared.Interfaces
         /// </summary>
         /// <param name="halls">Halls from cahce</param>
         /// <returns>List of halls if exists; else - null</returns>
-        Task<List<Hall>> ReadHallsAsync();
+        Task<List<HallDTO>> ReadHallsAsync();
 
         /// <summary>
         /// Check if hall exists in chache and retrieve it in current language
         /// </summary>
         /// <param name="id">Id of the hall</param>
-        /// <returns>Hall if exists; else - null</returns>
-        Task<Hall> ReadHallAsync(string id);
+        /// <returns>HallDTO if exists; else - null</returns>
+        Task<HallDTO> ReadHallAsync(string id);
 
         /// <summary>
         /// Check if stand exists in chache and retrieve it in current language
         /// </summary>
         /// <param name="id">Id of the stand</param>
-        /// <returns>Stand if exists; else - null</returns>
-        Task<Stand> ReadStandAsync(string id);
+        /// <returns>StandDTO if exists; else - null</returns>
+        Task<StandDTO> ReadStandAsync(string id);
 
         /// <summary>
         /// Check if exhibit exists in chache and retrieve it in current language
         /// </summary>
         /// <param name="id">Id of the exhibit</param>
-        /// <returns>Exhibit if exists; else - null</returns>
-        Task<Exhibit> ReadExhibitAsync(string id);
+        /// <returns>ExhibitDTO if exists; else - null</returns>
+        Task<ExhibitDTO> ReadExhibitAsync(string id);
 
         /// <summary>
         /// Read user settings from cache
@@ -46,25 +47,25 @@ namespace GSU.Museum.Shared.Interfaces
         /// Write list of halls
         /// </summary>
         /// <param name="halls">Hals to cache</param>
-        Task WriteHallsAsync(List<Hall> halls);
+        Task WriteHallsAsync(List<HallDTO> halls);
 
         /// <summary>
         /// Write hall to cache
         /// </summary>
-        /// <param name="hall">Hall to cache</param>
-        Task WriteHallAsync(Hall hall);
+        /// <param name="hall">HallDTO to cache</param>
+        Task WriteHallAsync(HallDTO hall);
 
         /// <summary>
         /// Write stand to cache
         /// </summary>
-        /// <param name="stand">Stand to cache</param>
-        Task WriteStandAsync(Stand stand);
+        /// <param name="stand">StandDTO to cache</param>
+        Task WriteStandAsync(StandDTO stand);
 
         /// <summary>
         /// Write exhibit to cache
         /// </summary>
-        /// <param name="exhibit">Exhibit to cache</param>
-        Task WriteExhibitAsync(Exhibit exhibit);
+        /// <param name="exhibit">ExhibitDTO to cache</param>
+        Task WriteExhibitAsync(ExhibitDTO exhibit);
 
         /// <summary>
         /// Write user settings to cahce

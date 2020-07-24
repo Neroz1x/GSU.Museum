@@ -21,4 +21,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.5.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GSU.Museum.CommonClassLibrary\GSU.Museum.CommonClassLibrary.csproj" />
+  </ItemGroup>
+
 </Project>

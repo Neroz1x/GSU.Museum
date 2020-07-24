@@ -1,6 +1,5 @@
-﻿using GSU.Museum.API.Data.Models;
+﻿using GSU.Museum.CommonClassLibrary.Models;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

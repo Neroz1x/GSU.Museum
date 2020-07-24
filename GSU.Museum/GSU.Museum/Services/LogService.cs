@@ -2,10 +2,8 @@
 using NLog;
 using NLog.Config;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Text;
 using Xamarin.Forms;
 
 namespace GSU.Museum.Shared.Services

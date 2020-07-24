@@ -1,5 +1,5 @@
-﻿using GSU.Museum.API.Data.Enums;
-using GSU.Museum.API.Data.Models;
+﻿using GSU.Museum.CommonClassLibrary.Enums;
+using GSU.Museum.CommonClassLibrary.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;

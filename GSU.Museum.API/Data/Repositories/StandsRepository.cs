@@ -1,5 +1,5 @@
-﻿using GSU.Museum.API.Data.Models;
-using GSU.Museum.API.Interfaces;
+﻿using GSU.Museum.API.Interfaces;
+using GSU.Museum.CommonClassLibrary.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.GridFS;

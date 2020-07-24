@@ -1,6 +1,6 @@
-﻿using GSU.Museum.API.Interfaces;
+﻿using GSU.Museum.CommonClassLibrary.Interfaces;
 
-namespace GSU.Museum.API.Data
+namespace GSU.Museum.CommonClassLibrary.Models
 {
     ///<inheritdoc/>
     public class DatabaseSettings : IDatabaseSettings

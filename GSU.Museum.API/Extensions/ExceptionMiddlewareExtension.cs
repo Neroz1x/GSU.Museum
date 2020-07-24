@@ -1,5 +1,5 @@
-﻿using GSU.Museum.API.Data.Enums;
-using GSU.Museum.API.Data.Models;
+﻿using GSU.Museum.CommonClassLibrary.Enums;
+using GSU.Museum.CommonClassLibrary.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;

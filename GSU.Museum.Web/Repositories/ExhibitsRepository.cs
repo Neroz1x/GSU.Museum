@@ -1,4 +1,5 @@
-﻿using GSU.Museum.Web.Interfaces;
+﻿using GSU.Museum.CommonClassLibrary.Models;
+using GSU.Museum.Web.Interfaces;
 using GSU.Museum.Web.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PhotoInfo = GSU.Museum.Web.Models.PhotoInfo;
 
 namespace GSU.Museum.Web.Repositories
 {

@@ -1,9 +1,9 @@
-﻿using GSU.Museum.Shared.Data.Enums;
+﻿using GSU.Museum.CommonClassLibrary.Enums;
 using Newtonsoft.Json;
 using System;
 using System.Runtime.Serialization;
 
-namespace GSU.Museum.Shared.Data.Models
+namespace GSU.Museum.CommonClassLibrary.Models
 {
 
     [DataContract(IsReference = false)]

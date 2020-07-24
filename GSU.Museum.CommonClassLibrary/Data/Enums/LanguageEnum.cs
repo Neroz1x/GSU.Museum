@@ -1,4 +1,4 @@
-﻿namespace GSU.Museum.Shared.Data.Enums
+﻿namespace GSU.Museum.CommonClassLibrary.Enums
 {
     public enum Languages
     {

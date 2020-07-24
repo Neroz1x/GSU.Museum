@@ -1,4 +1,5 @@
-﻿using GSU.Museum.Web.Interfaces;
+﻿using GSU.Museum.CommonClassLibrary.Models;
+using GSU.Museum.Web.Interfaces;
 using GSU.Museum.Web.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;

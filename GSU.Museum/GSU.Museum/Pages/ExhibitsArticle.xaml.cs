@@ -1,4 +1,4 @@
-﻿using GSU.Museum.Shared.Data.Models;
+﻿using GSU.Museum.CommonClassLibrary.Models;
 using GSU.Museum.Shared.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -8,7 +8,7 @@ namespace GSU.Museum.Shared.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ExhibitsArticle : ContentPage
     {
-        public ExhibitsArticle(Exhibit exhibit)
+        public ExhibitsArticle(ExhibitDTO exhibit)
         {
             InitializeComponent();
             BindingContext = new ExhibitsArticleViewModel(exhibit, Navigation);

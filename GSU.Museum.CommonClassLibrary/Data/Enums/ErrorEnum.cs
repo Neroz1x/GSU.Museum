@@ -1,4 +1,4 @@
-﻿namespace GSU.Museum.API.Data.Enums
+﻿namespace GSU.Museum.CommonClassLibrary.Enums
 {
     public enum Errors
     {
@@ -7,6 +7,7 @@
         Create_error,
         Update_error,
         Unauthorized,
-        Unhandled_exception
+        Unhandled_exception,
+        Failed_Connection
     }
 }

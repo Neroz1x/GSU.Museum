@@ -1,4 +1,4 @@
-﻿using GSU.Museum.Shared.Data.Models;
+﻿using GSU.Museum.CommonClassLibrary.Models;
 using GSU.Museum.Shared.Pages;
 using GSU.Museum.Shared.Resources;
 using GSU.Museum.Shared.Services;
@@ -18,7 +18,7 @@ namespace GSU.Museum.Shared.ViewModels
         public Command GetHallsCommand { get; }
         public Command NavigateToOptionsPageCommand { get; }
         public Command SelectHallCommand { get; }
-        public ObservableCollection<Hall> Halls { get; }
+        public ObservableCollection<HallDTO> Halls { get; }
 
         // Status of LoadingIndicator
         private bool _isBusy = false;
@@ -119,7 +119,7 @@ namespace GSU.Museum.Shared.ViewModels
         public MainPageViewModel(INavigation navigation)
         {
             Navigation = navigation;
-            Halls = new ObservableCollection<Hall>();
+            Halls = new ObservableCollection<HallDTO>();
             GetHallsCommand = new Command(async () => await GetHalls());
             NavigateToOptionsPageCommand = new Command(async () => await NavigateToOptionsPage());
             SelectHallCommand = new Command(async Id => await SelectHall((string)Id));

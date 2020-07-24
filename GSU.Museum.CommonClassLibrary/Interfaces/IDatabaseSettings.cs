@@ -1,4 +1,4 @@
-﻿namespace GSU.Museum.Web.Interfaces
+﻿namespace GSU.Museum.CommonClassLibrary.Interfaces
 {
     /// <summary>
     /// Contains database settings

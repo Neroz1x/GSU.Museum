@@ -1,5 +1,5 @@
-﻿using GSU.Museum.API.Data.Models;
-using GSU.Museum.API.Interfaces;
+﻿using GSU.Museum.API.Interfaces;
+using GSU.Museum.CommonClassLibrary.Models;
 using System.Collections.Generic;
 
 namespace GSU.Museum.API.Services

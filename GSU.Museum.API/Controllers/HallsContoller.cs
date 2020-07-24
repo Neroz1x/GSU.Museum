@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using GSU.Museum.API.Data.Enums;
-using GSU.Museum.API.Data.Models;
 using GSU.Museum.API.Filters;
 using GSU.Museum.API.Interfaces;
+using GSU.Museum.CommonClassLibrary.Enums;
+using GSU.Museum.CommonClassLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GSU.Museum.API.Controllers

@@ -1,5 +1,5 @@
+using GSU.Museum.CommonClassLibrary.Models;
 using GSU.Museum.Web.Interfaces;
-using GSU.Museum.Web.Models;
 using GSU.Museum.Web.Repositories;
 using GSU.Museum.Web.Services;
 using Microsoft.AspNetCore.Builder;

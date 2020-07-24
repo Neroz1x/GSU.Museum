@@ -1,4 +1,4 @@
-﻿using GSU.Museum.API.Data.Models;
+﻿using GSU.Museum.CommonClassLibrary.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

@@ -2,7 +2,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 
-namespace GSU.Museum.API.Data.Models
+namespace GSU.Museum.CommonClassLibrary.Models
 {
     public class Hall
     {

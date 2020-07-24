@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
-using GSU.Museum.API.Data;
 using GSU.Museum.API.Data.Repositories;
 using GSU.Museum.API.Services;
 using System.Reflection;
@@ -13,6 +12,7 @@ using System.IO;
 using System;
 using Microsoft.OpenApi.Models;
 using GSU.Museum.API.Extensions;
+using GSU.Museum.CommonClassLibrary.Models;
 
 namespace GSU.Museum.API
 {

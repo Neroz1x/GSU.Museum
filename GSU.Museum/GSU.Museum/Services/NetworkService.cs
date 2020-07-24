@@ -1,5 +1,5 @@
-﻿using GSU.Museum.Shared.Data.Enums;
-using GSU.Museum.Shared.Data.Models;
+﻿using GSU.Museum.CommonClassLibrary.Enums;
+using GSU.Museum.CommonClassLibrary.Models;
 using GSU.Museum.Shared.Interfaces;
 using GSU.Museum.Shared.Resources;
 using GSU.Museum.Shared.Services;
@@ -102,19 +102,19 @@ namespace GSU.Museum.Shared.Services
             }
         }
 
-        public async Task<Exhibit> LoadExhibitAsync(string hallId, string standId, string id)
+        public async Task<ExhibitDTO> LoadExhibitAsync(string hallId, string standId, string id)
         {
             if (CheckConnection())
             {
                 string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Exhibits/{hallId}/{standId}/{id}"));
-                Exhibit exhibit = JsonConvert.DeserializeObject<Exhibit>(content);
+                ExhibitDTO exhibit = JsonConvert.DeserializeObject<ExhibitDTO>(content);
                 await DependencyService.Get<CachingService>().WriteExhibitAsync(exhibit);
                 return exhibit;
             }
             throw new Error() { ErrorCode = Errors.Failed_Connection, Info = AppResources.ErrorMessage_LoadingFaild};
         }
 
-        public async Task<Exhibit> LoadExhibitAsync(string hallId, string standId, string id, Exhibit exhibitCached)
+        public async Task<ExhibitDTO> LoadExhibitAsync(string hallId, string standId, string id, ExhibitDTO exhibitCached)
         {
             if (CheckConnection())
             {
@@ -125,7 +125,7 @@ namespace GSU.Museum.Shared.Services
                     {
                         return exhibitCached;
                     }
-                    Exhibit exhibit = JsonConvert.DeserializeObject<Exhibit>(content);
+                    ExhibitDTO exhibit = JsonConvert.DeserializeObject<ExhibitDTO>(content);
                     await DependencyService.Get<CachingService>().WriteExhibitAsync(exhibit);
                     return exhibit;
                 }
@@ -140,19 +140,19 @@ namespace GSU.Museum.Shared.Services
             return exhibitCached;
         }
 
-        public async Task<Hall> LoadHallAsync(string id)
+        public async Task<HallDTO> LoadHallAsync(string id)
         {
             if (CheckConnection())
             {
                 string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Halls/{id}"));
-                Hall hall = JsonConvert.DeserializeObject<Hall>(content);
+                HallDTO hall = JsonConvert.DeserializeObject<HallDTO>(content);
                 await DependencyService.Get<CachingService>().WriteHallAsync(hall);
                 return hall;
             }
             throw new Error() { ErrorCode = Errors.Failed_Connection, Info = AppResources.ErrorMessage_LoadingFaild };
         }
 
-        public async Task<Hall> LoadHallAsync(string id, Hall hallCached)
+        public async Task<HallDTO> LoadHallAsync(string id, HallDTO hallCached)
         {
             if (CheckConnection())
             {
@@ -163,7 +163,7 @@ namespace GSU.Museum.Shared.Services
                     {
                         return hallCached;
                     }
-                    Hall hall = JsonConvert.DeserializeObject<Hall>(content);
+                    HallDTO hall = JsonConvert.DeserializeObject<HallDTO>(content);
                     await DependencyService.Get<CachingService>().WriteHallAsync(hall);
                     return hall;
                 }
@@ -178,19 +178,19 @@ namespace GSU.Museum.Shared.Services
             return hallCached;
         }
 
-        public async Task<List<Hall>> LoadHallsAsync()
+        public async Task<List<HallDTO>> LoadHallsAsync()
         {
             if (CheckConnection())
             {
                 string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Halls"));
-                List<Hall> halls = JsonConvert.DeserializeObject<List<Hall>>(content);
+                List<HallDTO> halls = JsonConvert.DeserializeObject<List<HallDTO>>(content);
                 await DependencyService.Get<CachingService>().WriteHallsAsync(halls);
                 return halls;
             }
             throw new Error() { ErrorCode = Errors.Failed_Connection, Info = AppResources.ErrorMessage_LoadingFaild };
         }
 
-        public async Task<List<Hall>> LoadHallsAsync(List<Hall> hallsCached)
+        public async Task<List<HallDTO>> LoadHallsAsync(List<HallDTO> hallsCached)
         {
             if (CheckConnection())
             {
@@ -201,7 +201,7 @@ namespace GSU.Museum.Shared.Services
                     {
                         return hallsCached;
                     }
-                    List<Hall> halls = JsonConvert.DeserializeObject<IEnumerable<Hall>>(content).ToList();
+                    List<HallDTO> halls = JsonConvert.DeserializeObject<IEnumerable<HallDTO>>(content).ToList();
                     await DependencyService.Get<CachingService>().WriteHallsAsync(halls);
                     return halls;
                 }
@@ -216,19 +216,19 @@ namespace GSU.Museum.Shared.Services
             return hallsCached;
         }
 
-        public async Task<Stand> LoadStandAsync(string hallId, string id)
+        public async Task<StandDTO> LoadStandAsync(string hallId, string id)
         {
             if (CheckConnection())
             {
                 string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Stands/{hallId}/{id}"));
-                Stand stand = JsonConvert.DeserializeObject<Stand>(content);
+                StandDTO stand = JsonConvert.DeserializeObject<StandDTO>(content);
                 await DependencyService.Get<CachingService>().WriteStandAsync(stand);
                 return stand;
             }
             throw new Error() { ErrorCode = Errors.Failed_Connection, Info = AppResources.ErrorMessage_LoadingFaild };
         }
 
-        public async Task<Stand> LoadStandAsync(string hallId, string id, Stand standCached)
+        public async Task<StandDTO> LoadStandAsync(string hallId, string id, StandDTO standCached)
         {
             if (CheckConnection())
             {
@@ -239,7 +239,7 @@ namespace GSU.Museum.Shared.Services
                     {
                         return standCached;
                     }
-                    Stand stand = JsonConvert.DeserializeObject<Stand>(content);
+                    StandDTO stand = JsonConvert.DeserializeObject<StandDTO>(content);
                     await DependencyService.Get<CachingService>().WriteStandAsync(stand);
                     return stand;
                 }
@@ -255,7 +255,7 @@ namespace GSU.Museum.Shared.Services
             
         }
 
-        public int GetHash(List<Hall> hallsCached)
+        public int GetHash(List<HallDTO> hallsCached)
         {
             unchecked
             {

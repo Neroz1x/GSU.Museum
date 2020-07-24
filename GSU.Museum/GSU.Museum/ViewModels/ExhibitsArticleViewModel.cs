@@ -1,4 +1,4 @@
-﻿using GSU.Museum.Shared.Data.Models;
+﻿using GSU.Museum.CommonClassLibrary.Models;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
@@ -14,7 +14,7 @@ namespace GSU.Museum.Shared.ViewModels
         public Command NavigateToMainMenuCommand { get; }
         public ObservableCollection<ImageSource> Photos { get; }
         
-        public Exhibit Exhibit;
+        public ExhibitDTO Exhibit;
 
         // Visibility of photo
         private bool _carouselVisibility = false;
@@ -93,7 +93,7 @@ namespace GSU.Museum.Shared.ViewModels
         }
         #endregion
 
-        public ExhibitsArticleViewModel(Exhibit exhibit, INavigation navigation)
+        public ExhibitsArticleViewModel(ExhibitDTO exhibit, INavigation navigation)
         {
             Navigation = navigation;
             Exhibit = exhibit;

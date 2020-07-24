@@ -1,4 +1,4 @@
-﻿using GSU.Museum.Shared.Data.Models;
+﻿using GSU.Museum.CommonClassLibrary.Models;
 using GSU.Museum.Shared.Pages;
 using GSU.Museum.Shared.Resources;
 using GSU.Museum.Shared.Services;
@@ -17,7 +17,7 @@ namespace GSU.Museum.Shared.ViewModels
         public INavigation Navigation;
         public Command GetStandsCommand { get; }
         public Command SelectStandCommand { get; }
-        public ObservableCollection<Stand> Stands { get; }
+        public ObservableCollection<StandDTO> Stands { get; }
 
         // Status of LoadingIndicator
         private bool _isBusy;
@@ -64,7 +64,7 @@ namespace GSU.Museum.Shared.ViewModels
         {
             Navigation = navigation;
             _hallId = hallId;
-            Stands = new ObservableCollection<Stand>();
+            Stands = new ObservableCollection<StandDTO>();
             GetStandsCommand = new Command(async () => await GetStands());
             SelectStandCommand = new Command(async id => await SelectStand(id.ToString()));
         }

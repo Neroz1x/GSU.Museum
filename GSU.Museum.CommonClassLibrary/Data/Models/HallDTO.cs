@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 
-namespace GSU.Museum.Shared.Data.Models
+namespace GSU.Museum.CommonClassLibrary.Models
 {
-    public class Hall
+    public class HallDTO
     {
         public string Id { get; set; }
         public string Title { get; set; }
         public bool State { get; set; }
-        public PhotoInfo Photo { get; set; }
-        public List<Stand> Stands { get; set; }
+        public PhotoInfoDTO Photo { get; set; }
+        public List<StandDTO> Stands { get; set; }
 
         public override int GetHashCode()
         {
@@ -18,7 +18,7 @@ namespace GSU.Museum.Shared.Data.Models
                 hash = (hash * 16777619) ^ GetStringHashCode(Id);
                 hash = (hash * 16777619) ^ GetStringHashCode(Title);
                 hash = (hash * 16777619) ^ State.GetHashCode();
-                if (Photo != null)
+                if(Photo != null)
                 {
                     hash = (hash * 16777619) ^ Photo.GetHashCode();
                 }

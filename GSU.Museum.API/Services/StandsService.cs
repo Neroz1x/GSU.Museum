@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
-using GSU.Museum.API.Data.Enums;
-using GSU.Museum.API.Data.Models;
 using GSU.Museum.API.Interfaces;
+using GSU.Museum.CommonClassLibrary.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace GSU.Museum.API.Services
