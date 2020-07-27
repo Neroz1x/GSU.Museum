@@ -16,6 +16,16 @@
             <Setter Property="IsClippedToBounds" Value="True"></Setter>
         </Style>
 
+        <Style TargetType="Button" x:Key="HomePageMenuItem">
+            <Setter Property="Margin" Value="0, 10"></Setter>
+            <Setter Property="BackgroundColor" Value="LightBlue"></Setter>
+            <Setter Property="FontSize" Value="Medium"></Setter>
+            <Setter Property="WidthRequest">
+                <OnIdiom x:TypeArguments="x:Double" Phone="300" Tablet="500"></OnIdiom>
+            </Setter>
+            <Setter Property="HorizontalOptions" Value="Center"></Setter>
+        </Style>
+        
         <Style TargetType="Label" x:Key="DefaultMenuItemHeader">
             <Setter Property="HorizontalOptions" Value="Center"></Setter>
             <Setter Property="TextColor" Value="Black"></Setter>
