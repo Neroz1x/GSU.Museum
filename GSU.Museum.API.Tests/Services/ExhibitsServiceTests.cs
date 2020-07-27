@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using GSU.Museum.API.Data.Enums;
-using GSU.Museum.API.Data.Models;
 using GSU.Museum.API.Interfaces;
 using GSU.Museum.API.Services;
+using GSU.Museum.CommonClassLibrary.Enums;
+using GSU.Museum.CommonClassLibrary.Models;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using System.Collections.Generic;
