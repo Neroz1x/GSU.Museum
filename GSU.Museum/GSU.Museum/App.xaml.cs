@@ -1,7 +1,5 @@
 ﻿using GSU.Museum.Shared.Data.Models;
 using GSU.Museum.Shared.Pages;
-using GSU.Museum.Shared.Services;
-using System.Threading;
 using Xamarin.Forms;
 
 namespace GSU.Museum
@@ -19,7 +17,7 @@ namespace GSU.Museum
             InitializeComponent();
 
             Akavache.Registrations.Start("GSU.Museum");
-            MainPage = new NavigationPage(new MainPage());
+            MainPage = new NavigationPage(new LoadingPage());
         }
 
         protected override void OnStart()
