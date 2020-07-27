@@ -23,7 +23,7 @@ namespace GSU.Museum.Shared.Pages
         async Task OnPageExit()
         {
             await DependencyService.Get<CachingService>().WriteSettings();
-            Application.Current.MainPage = new NavigationPage(new MainPage());
+            Application.Current.MainPage = new NavigationPage(new HomePage());
         }
     }
 }
