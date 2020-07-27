@@ -9,11 +9,8 @@
              xmlns:resources="clr-namespace:GSU.Museum.Shared.Resources"
              >
     <NavigationPage.TitleView>
-        <Label Text="{Binding Title}" FontSize="Large" TextColor="White" />
+        <Label Text="{x:Static resources:AppResources.MainPage_Title}" FontSize="Large" TextColor="White" />
     </NavigationPage.TitleView>
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Order="Primary" Text="{Binding OptionsToolBar}" Command="{Binding NavigateToOptionsPageCommand}" Priority="0" />
-    </ContentPage.ToolbarItems>
     <Grid>
         <StackLayout IsVisible="{Binding ContentVisibility}" Padding="10">
             <CollectionView x:Name="HallsCollectionView" SelectionMode="Single" ItemsSource="{Binding Halls}"

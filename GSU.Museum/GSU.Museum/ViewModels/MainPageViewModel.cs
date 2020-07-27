@@ -77,43 +77,6 @@ namespace GSU.Museum.Shared.ViewModels
             }
         }
 
-        // Title of the page
-        private string _title;
-        public string Title
-        {
-            get
-            {
-                return _title;
-            }
-
-            set
-            {
-                if (value != _title)
-                {
-                    _title = value;
-                }
-                OnPropertyChanged(nameof(Title));
-            }
-        }
-
-        // Title of the page
-        private string _optionsToolBar;
-        public string OptionsToolBar
-        {
-            get
-            {
-                return _optionsToolBar;
-            }
-
-            set
-            {
-                if (value != _optionsToolBar)
-                {
-                    _optionsToolBar = value;
-                }
-                OnPropertyChanged(nameof(OptionsToolBar));
-            }
-        }
         #endregion
 
         public MainPageViewModel(INavigation navigation)
@@ -132,8 +95,6 @@ namespace GSU.Museum.Shared.ViewModels
             ReloadButtonVisibility = false;
             ContentVisibility = true;
             IsBusy = true;
-            Title = AppResources.MainPage_Title;
-            OptionsToolBar = AppResources.MainPage_ToolBar_Options;
 
             try
             {
