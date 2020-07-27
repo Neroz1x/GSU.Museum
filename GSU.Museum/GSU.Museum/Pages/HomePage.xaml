@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="GSU.Museum.Shared.Pages.HomePage"
+             xmlns:resources="clr-namespace:GSU.Museum.Shared.Resources"
+             Appearing="ContentPage_Appearing"
+             Disappearing="ContentPage_Disappearing"
+             >
+    <NavigationPage.TitleView>
+        <Label Text="{x:Static resources:AppResources.HomePage_PageTitle}" FontSize="Large" TextColor="White" />
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <Label Style="{StaticResource DefaultMenuItemHeader}" 
+                       Text="{x:Static resources:AppResources.HomePage_Title}"/>
+                <Label Style="{StaticResource DefaultMenuItemBody}" 
+                       Text="{x:Static resources:AppResources.HomePage_MainText}"/>
+                <CarouselView PeekAreaInsets="50" ItemsSource="{Binding Images}" x:Name="Carousel" HeightRequest="100">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <Image WidthRequest="300" Source="{Binding .}"></Image>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+                <Button Text="{x:Static resources:AppResources.HomePage_MenuItem_MainPage}" 
+                        Command="{Binding NavigateToMainPageCommand}"
+                        Style="{StaticResource HomePageMenuItem}"/>
+                <Button Text="{x:Static resources:AppResources.HomePage_MenuItem_Options}" 
+                        Command="{Binding NavigateToOptionsPageCommand}"
+                        Style="{StaticResource HomePageMenuItem}"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
