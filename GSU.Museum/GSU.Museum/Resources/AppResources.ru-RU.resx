@@ -126,8 +126,23 @@
   <data name="ErrorMessage_ServerIsNotResponse" xml:space="preserve">
     <value>Не удалось подключиться к серверу</value>
   </data>
-  <data name="MainPage_Title" xml:space="preserve">
+  <data name="HomePage_MainText" xml:space="preserve">
+    <value>Данное приложение позволяет посетить Музей ГГУ им. Ф. Скорины. Оно содержит информацию обо всех стендах и экспонатах музея</value>
+  </data>
+  <data name="HomePage_MenuItem_MainPage" xml:space="preserve">
+    <value>Выбор холла</value>
+  </data>
+  <data name="HomePage_MenuItem_Options" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="HomePage_PageTitle" xml:space="preserve">
+    <value>GSU Museum</value>
+  </data>
+  <data name="HomePage_Title" xml:space="preserve">
     <value>Музей ГГУ им. Ф. Скорины</value>
+  </data>
+  <data name="MainPage_Title" xml:space="preserve">
+    <value>Выбор холла</value>
   </data>
   <data name="MainPage_ToolBar_Options" xml:space="preserve">
     <value>Настройки</value>

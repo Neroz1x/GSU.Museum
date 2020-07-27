@@ -88,20 +88,56 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to F. Scorina GSU Museum.
+        ///   Looks up a localized string similar to This application helps to visit F. Scorina GSU Museum. It contains information about stands and exhibits..
         /// </summary>
-        public static string MainPage_Title {
+        public static string HomePage_MainText {
             get {
-                return ResourceManager.GetString("MainPage_Title", resourceCulture);
+                return ResourceManager.GetString("HomePage_MainText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Settings.
+        ///   Looks up a localized string similar to Hall selection.
         /// </summary>
-        public static string MainPage_ToolBar_Options {
+        public static string HomePage_MenuItem_MainPage {
             get {
-                return ResourceManager.GetString("MainPage_ToolBar_Options", resourceCulture);
+                return ResourceManager.GetString("HomePage_MenuItem_MainPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        public static string HomePage_MenuItem_Options {
+            get {
+                return ResourceManager.GetString("HomePage_MenuItem_Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GSU Museum.
+        /// </summary>
+        public static string HomePage_PageTitle {
+            get {
+                return ResourceManager.GetString("HomePage_PageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to F. Scorina GSU Museum.
+        /// </summary>
+        public static string HomePage_Title {
+            get {
+                return ResourceManager.GetString("HomePage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hall selection.
+        /// </summary>
+        public static string MainPage_Title {
+            get {
+                return ResourceManager.GetString("MainPage_Title", resourceCulture);
             }
         }
         
