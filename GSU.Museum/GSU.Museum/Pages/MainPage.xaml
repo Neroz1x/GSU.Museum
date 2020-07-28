@@ -6,25 +6,30 @@
              mc:Ignorable="d"
              x:Class="GSU.Museum.MainPage"
              Appearing="ContentPage_Appearing"
-             xmlns:resources="clr-namespace:GSU.Museum.Shared.Resources"
-             >
+             xmlns:resources="clr-namespace:GSU.Museum.Shared.Resources">
     <NavigationPage.TitleView>
-        <Label Text="{x:Static resources:AppResources.MainPage_Title}" FontSize="Large" TextColor="White" />
+        <Label Text="{x:Static resources:AppResources.MainPage_Title}" Style="{StaticResource PageTitle}" />
     </NavigationPage.TitleView>
     <Grid>
         <StackLayout IsVisible="{Binding ContentVisibility}" Padding="10">
+            <Label Style="{StaticResource DefaultMenuItemHeader}" 
+                   Text="{x:Static resources:AppResources.MainPage_MenuDescription}"/>
             <CollectionView x:Name="HallsCollectionView" SelectionMode="Single" ItemsSource="{Binding Halls}"
                     SelectionChangedCommand="{Binding SelectHallCommand}"
                     SelectionChangedCommandParameter="{Binding SelectedItem.Id, Source={x:Reference HallsCollectionView}}">
                 <CollectionView.ItemsLayout>
-                    <LinearItemsLayout ItemSpacing="10" Orientation="Vertical"/>
+                    <LinearItemsLayout ItemSpacing="20" Orientation="Vertical"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Frame 
-                        Style="{StaticResource DefaultMenuItem}">
-                            <Label Style="{StaticResource DefaultMenuItemHeader}"
-                                Text="{Binding Title}"/>
+                            Style="{StaticResource TransparentMenuItem}">
+                            <Grid>
+                                <Image Style="{StaticResource MenuImage}" 
+                                       Source="{Binding Photo.Photo, Converter={StaticResource ByteArrayToImage}}" />
+                                <Label Style="{StaticResource WhiteMenuItemHeader}"
+                                    Text="{Binding Title}"/>
+                            </Grid>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

@@ -10,7 +10,7 @@
              Disappearing="ContentPage_Disappearing"
              >
     <NavigationPage.TitleView>
-        <Label Text="{x:Static resources:AppResources.HomePage_PageTitle}" FontSize="Large" TextColor="White" />
+        <Label Text="{x:Static resources:AppResources.HomePage_PageTitle}" Style="{StaticResource PageTitle}" />
     </NavigationPage.TitleView>
     <ContentPage.Content>
         <ScrollView>
@@ -28,9 +28,11 @@
                 </CarouselView>
                 <Button Text="{x:Static resources:AppResources.HomePage_MenuItem_MainPage}" 
                         Command="{Binding NavigateToMainPageCommand}"
+                        TextColor="White"
                         Style="{StaticResource HomePageMenuItem}"/>
                 <Button Text="{x:Static resources:AppResources.HomePage_MenuItem_Options}" 
                         Command="{Binding NavigateToOptionsPageCommand}"
+                        TextColor="White"
                         Style="{StaticResource HomePageMenuItem}"/>
             </StackLayout>
         </ScrollView>

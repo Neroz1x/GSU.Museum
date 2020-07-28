@@ -6,28 +6,39 @@
              mc:Ignorable="d"
              x:Class="GSU.Museum.Shared.Pages.HallPage"
              Appearing="ContentPage_Appearing"
-             >
+             xmlns:resources="clr-namespace:GSU.Museum.Shared.Resources">
     <NavigationPage.TitleView>
-        <Label Text="{Binding Title}" FontSize="Large" TextColor="White" />
+        <Label Text="{Binding Title}" Style="{StaticResource PageTitle}" />
     </NavigationPage.TitleView>
-    <StackLayout Padding="10">
-        <CollectionView x:Name="StandsCollectionView" SelectionMode="Single" ItemsSource="{Binding Stands}"
+    <Grid>
+        <StackLayout Padding="10" IsVisible="{Binding ContentVisibility}">
+            <Label Style="{StaticResource DefaultMenuItemHeader}" 
+                   Text="{x:Static resources:AppResources.HallPage_MenuDescription}"/>
+            <CollectionView x:Name="StandsCollectionView" SelectionMode="Single" ItemsSource="{Binding Stands}"
                         SelectionChangedCommand="{Binding SelectStandCommand}"
                         SelectionChangedCommandParameter="{Binding SelectedItem.Id, Source={x:Reference StandsCollectionView}}">
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout ItemSpacing="10" Orientation="Vertical"/>
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame 
-                            Style="{StaticResource DefaultMenuItem}">
-                        <StackLayout VerticalOptions="Fill">
-                            <Label Style="{StaticResource DefaultMenuItemHeader}" Text="{Binding Title}"></Label>
-                            <Label Style="{StaticResource DefaultMenuItemBody}" Text="{Binding Description}"></Label>
-                        </StackLayout>
-                     </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </StackLayout>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="20" Orientation="Vertical"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame 
+                            Style="{StaticResource TransparentMenuItem}">
+                            <Grid >
+                                <Image Style="{StaticResource MenuImage}"
+                                       Source="{Binding Photo.Photo, Converter={StaticResource ByteArrayToImage}}" />
+                                <Label Style="{StaticResource WhiteMenuItemHeader}" Text="{Binding Title}"></Label>
+                                <Label Style="{StaticResource WhiteMenuItemBody}" Text="{Binding Description}"></Label>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+        <ActivityIndicator IsVisible="{Binding IsBusy}" 
+                           IsRunning="True" 
+                           Color="HotPink" 
+                           VerticalOptions="CenterAndExpand"/>
+    </Grid>
+    
 </ContentPage>

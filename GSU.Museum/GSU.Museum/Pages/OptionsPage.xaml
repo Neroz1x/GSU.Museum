@@ -8,7 +8,7 @@
              Disappearing="ContentPage_Disappearing"
              >
     <NavigationPage.TitleView>
-        <Label Text="{Binding Title}" FontSize="Large" TextColor="White" />
+        <Label Text="{Binding Title}" Style="{StaticResource PageTitle}" />
     </NavigationPage.TitleView>
     <ContentPage.Content>
         <ScrollView >

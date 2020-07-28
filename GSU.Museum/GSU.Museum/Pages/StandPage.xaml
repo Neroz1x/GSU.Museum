@@ -7,24 +7,23 @@
              x:Class="GSU.Museum.Shared.Pages.StandPage"
              Appearing="ContentPage_Appearing">
     <NavigationPage.TitleView>
-        <Label Text="{Binding Title}" FontSize="Large" TextColor="White" />
+        <Label Text="{Binding Title}" Style="{StaticResource PageTitle}" />
     </NavigationPage.TitleView>
     <Grid>
-        <StackLayout Padding="10">
-            <Image HeightRequest="100" Source="{Binding Photo}" IsVisible="{Binding PhotoVisibility}"></Image>
+        <StackLayout Padding="10" IsVisible="{Binding ContentVisibility}">
             <CollectionView x:Name="ExhibitsCollectionView" SelectionMode="Single" ItemsSource="{Binding Exhibits}"
                         SelectionChangedCommand="{Binding SelectExhibitCommand}"
                         SelectionChangedCommandParameter="{Binding SelectedItem.Id, Source={x:Reference ExhibitsCollectionView}}">
                 <CollectionView.ItemsLayout>
-                    <LinearItemsLayout ItemSpacing="10" Orientation="Vertical"/>
+                    <LinearItemsLayout ItemSpacing="20" Orientation="Vertical"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Frame 
                             Style="{StaticResource DefaultMenuItem}">
                             <StackLayout VerticalOptions="Fill">
-                                <Label Style="{StaticResource DefaultMenuItemHeader}" Text="{Binding Title}"></Label>
-                                <Label Style="{StaticResource DefaultMenuItemBody}" Text="{Binding Description}"></Label>
+                                <Label Style="{StaticResource WhiteTransparentMenuItemHeader}" Text="{Binding Title}"></Label>
+                                <Label Style="{StaticResource WhiteTransparentMenuItemBody}" Text="{Binding Description}"></Label>
                             </StackLayout>
                         </Frame>
                     </DataTemplate>

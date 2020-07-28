@@ -9,7 +9,7 @@
              Appearing="ContentPage_Appearing"
              >
     <NavigationPage.TitleView>
-        <Label Text="{Binding Title}" FontSize="Large" TextColor="White" />
+        <Label Text="{Binding Title}" Style="{StaticResource PageTitle}" />
     </NavigationPage.TitleView>
     <ContentPage.Content>
         <ScrollView VerticalScrollBarVisibility="Always">
@@ -34,8 +34,10 @@
                     </IndicatorView>
                 </StackLayout>
 
-                <Controls:JustifiedLabel Text="{Binding Text}" Style="{StaticResource DefaultLabel}"/>
-                <Button Text="Main menu" HorizontalOptions="Start" Command="{Binding NavigateToMainMenuCommand}"/>
+                <Controls:JustifiedLabel Text="{Binding Text}" 
+                                         Style="{StaticResource DefaultLabel}"/>
+                <Button Text="Main menu" Style="{StaticResource DefaultButton}" 
+                        Command="{Binding NavigateToMainMenuCommand}"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
