@@ -19,6 +19,25 @@ namespace GSU.Museum.Shared.ViewModels
         public Command SelectStandCommand { get; }
         public ObservableCollection<StandDTO> Stands { get; }
 
+        // Visibility of page content
+        private bool _contentVisibility = true;
+        public bool ContentVisibility
+        {
+            get
+            {
+                return _contentVisibility;
+            }
+
+            set
+            {
+                if (value != _contentVisibility)
+                {
+                    _contentVisibility = value;
+                }
+                OnPropertyChanged(nameof(ContentVisibility));
+            }
+        }
+
         // Status of LoadingIndicator
         private bool _isBusy;
         public bool IsBusy
@@ -74,9 +93,10 @@ namespace GSU.Museum.Shared.ViewModels
         {
             try
             {
+                ContentVisibility = false;
                 IsBusy = true;
                 var hall = await DependencyService.Get<ContentLoaderService>().LoadHallAsync(_hallId);
-                Title = hall.Title;
+                Title = $"{hall.Title} - {AppResources.HallPage_Title}";
                 Stands.Clear();
                 foreach (var stand in hall.Stands)
                 {
@@ -90,6 +110,10 @@ namespace GSU.Museum.Shared.ViewModels
                 {
                     await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, AppResources.ErrorMessage_InProgress, AppResources.MessageBox_ButtonOk);
                     await Navigation.PopAsync();
+                }
+                else
+                {
+                    ContentVisibility = true;
                 }
             }
             catch (Exception ex)

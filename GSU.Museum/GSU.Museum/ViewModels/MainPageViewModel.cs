@@ -93,7 +93,7 @@ namespace GSU.Museum.Shared.ViewModels
         {
             Halls.Clear();
             ReloadButtonVisibility = false;
-            ContentVisibility = true;
+            ContentVisibility = false;
             IsBusy = true;
 
             try
@@ -111,6 +111,10 @@ namespace GSU.Museum.Shared.ViewModels
                 if(halls.Count == 0)
                 {
                     ReloadButtonVisibility = true;
+                }
+                else
+                {
+                    ContentVisibility = true;
                 }
             }
             catch(Exception ex)

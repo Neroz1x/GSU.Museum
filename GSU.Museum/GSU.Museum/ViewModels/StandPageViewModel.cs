@@ -20,6 +20,25 @@ namespace GSU.Museum.Shared.ViewModels
         public Command SelectExhibitCommand { get; }
         public ObservableCollection<ExhibitDTO> Exhibits { get; }
 
+        // Visibility of page content
+        private bool _contentVisibility = true;
+        public bool ContentVisibility
+        {
+            get
+            {
+                return _contentVisibility;
+            }
+
+            set
+            {
+                if (value != _contentVisibility)
+                {
+                    _contentVisibility = value;
+                }
+                OnPropertyChanged(nameof(ContentVisibility));
+            }
+        }
+
         // Status of LoadingIndicator
         private bool _isBusy;
         public bool IsBusy
@@ -36,44 +55,6 @@ namespace GSU.Museum.Shared.ViewModels
                     _isBusy = value;
                 }
                 OnPropertyChanged(nameof(IsBusy));
-            }
-        }
-
-        // Visibility of photo
-        private bool _visibility = false;
-        public bool PhotoVisibility
-        {
-            get
-            {
-                return _visibility;
-            }
-
-            set
-            {
-                if (value != _visibility)
-                {
-                    _visibility = value;
-                }
-                OnPropertyChanged(nameof(PhotoVisibility));
-            }
-        }
-
-        // Photo of stand
-        private ImageSource _photo;
-        public ImageSource Photo
-        {
-            get
-            {
-                return _photo;
-            }
-
-            set
-            {
-                if (value != _photo)
-                {
-                    _photo = value;
-                }
-                OnPropertyChanged(nameof(Photo));
             }
         }
 
@@ -113,11 +94,12 @@ namespace GSU.Museum.Shared.ViewModels
         #region Methods
         public async Task GetExhibits()
         {
+            ContentVisibility = false;
             IsBusy = true;
             try
             {
                 var stand = await DependencyService.Get<ContentLoaderService>().LoadStandAsync(_hallId, _standId);
-                Title = stand.Title;
+                Title = $"{stand.Title} - {AppResources.StandPage_Title}";
                 Exhibits.Clear();
                 foreach (var exhibit in stand.Exhibits)
                 {
@@ -127,19 +109,14 @@ namespace GSU.Museum.Shared.ViewModels
                     }
                     Exhibits.Add(exhibit);
                 }
-                if(stand.Photo?.Photo != null)
-                {
-                    Photo = ImageSource.FromStream(() => new MemoryStream(stand.Photo.Photo));
-                    PhotoVisibility = true;
-                }
-                else
-                {
-                    PhotoVisibility = false;
-                }
                 if (Exhibits.Count == 0)
                 {
                     await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, AppResources.ErrorMessage_InProgress, AppResources.MessageBox_ButtonOk);
                     await Navigation.PopAsync();
+                }
+                else
+                {
+                    ContentVisibility = true;
                 }
             }
             catch (Exception ex)
