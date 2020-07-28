@@ -2,12 +2,21 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:converters="clr-namespace:GSU.Museum.Shared.Converters"
              mc:Ignorable="d"
              x:Class="GSU.Museum.App">
     <Application.Resources>
+        <ResourceDictionary>
+            <converters:ByteToImageSourceConverter x:Key="ByteArrayToImage" />
+        </ResourceDictionary>
+
+        <Style TargetType="Label" x:Key="PageTitle">
+            <Setter Property="FontSize" Value="Large"></Setter>
+            <Setter Property="TextColor" Value="White"></Setter>
+        </Style>
+        
         <Style TargetType="Frame" x:Key="DefaultMenuItem">
-            <Setter Property="HeightRequest" Value="150"></Setter>
             <Setter Property="Visual" Value="Material"></Setter>
             <Setter Property="Padding" Value="0"></Setter>
             <Setter Property="Margin" Value="20, 10"></Setter>
@@ -16,6 +25,19 @@
             <Setter Property="IsClippedToBounds" Value="True"></Setter>
         </Style>
 
+        <Style TargetType="Image" x:Key="MenuImage">
+            <Setter Property="Aspect" Value="AspectFill"></Setter>
+        </Style>
+
+        <Style TargetType="Frame" x:Key="TransparentMenuItem">
+            <Setter Property="Visual" Value="Material"></Setter>
+            <Setter Property="Padding" Value="0"></Setter>
+            <Setter Property="Margin" Value="20, 10"></Setter>
+            <Setter Property="BackgroundColor" Value="White"></Setter>
+            <Setter Property="HasShadow" Value="True"></Setter>
+            <Setter Property="IsClippedToBounds" Value="True"></Setter>
+        </Style>
+        
         <Style TargetType="Button" x:Key="HomePageMenuItem">
             <Setter Property="Margin" Value="0, 10"></Setter>
             <Setter Property="BackgroundColor" Value="LightBlue"></Setter>
@@ -33,14 +55,53 @@
             <Setter Property="FontSize" Value="Large"></Setter>
         </Style>
 
+        <Style TargetType="Label" x:Key="WhiteMenuItemHeader">
+            <Setter Property="BackgroundColor" Value="#aac0c0c0"></Setter>
+            <Setter Property="HorizontalOptions" Value="Center"></Setter>
+            <Setter Property="TextColor" Value="White"></Setter>
+            <Setter Property="VerticalOptions" Value="Start"></Setter>
+            <Setter Property="FontSize" Value="Large"></Setter>
+            <Setter Property="Margin" Value="0, 5, 0, 0"></Setter>
+        </Style>
+
+        <Style TargetType="Label" x:Key="WhiteTransparentMenuItemHeader">
+            <Setter Property="BackgroundColor" Value="##00000000"></Setter>
+            <Setter Property="HorizontalOptions" Value="Center"></Setter>
+            <Setter Property="TextColor" Value="White"></Setter>
+            <Setter Property="VerticalOptions" Value="Start"></Setter>
+            <Setter Property="FontSize" Value="Large"></Setter>
+            <Setter Property="Margin" Value="0, 5, 0, 0"></Setter>
+        </Style>
+
         <Style TargetType="Label" x:Key="DefaultMenuItemBody">
             <Setter Property="HorizontalOptions" Value="Center"></Setter>
             <Setter Property="TextColor" Value="Black"></Setter>
-            <Setter Property="Margin" Value="10, 0"></Setter>
+            <Setter Property="Margin" Value="15, 0"></Setter>
+            <Setter Property="Padding" Value="10, 0"></Setter>
             <Setter Property="VerticalOptions" Value="Center"></Setter>
             <Setter Property="FontSize" Value="Medium"></Setter>
         </Style>
 
+        <Style TargetType="Label" x:Key="WhiteTransparentMenuItemBody">
+            <Setter Property="HorizontalOptions" Value="Center"></Setter>
+            <Setter Property="BackgroundColor" Value="##00000000"></Setter>
+            <Setter Property="TextColor" Value="White"></Setter>
+            <Setter Property="Margin" Value="15, 0"></Setter>
+            <Setter Property="Padding" Value="10, 0"></Setter>
+            <Setter Property="VerticalOptions" Value="Center"></Setter>
+            <Setter Property="FontSize" Value="Medium"></Setter>
+        </Style>
+        
+        <Style TargetType="Label" x:Key="WhiteMenuItemBody">
+            <Setter Property="BackgroundColor" Value="#aac0c0c0"></Setter>
+            <Setter Property="HorizontalOptions" Value="Center"></Setter>
+            <Setter Property="TextColor" Value="White"></Setter>
+            <Setter Property="Margin" Value="15, 0"></Setter>
+            <Setter Property="Padding" Value="10, 0"></Setter>
+            <Setter Property="VerticalOptions" Value="Center"></Setter>
+            <Setter Property="FontSize" Value="Medium"></Setter>
+        </Style>
+        
         <Style TargetType="Label" x:Key="DefaultLabel">
             <Setter Property="FontSize">
                 <OnIdiom x:TypeArguments="x:Double" Phone="16" Tablet="20"></OnIdiom>
@@ -61,6 +122,14 @@
             <Setter Property="HeightRequest">
                 <OnIdiom x:TypeArguments="x:Double" Phone="400" Tablet="600"></OnIdiom>
             </Setter>
+        </Style>
+
+        <Style TargetType="Button" x:Key="DefaultButton">
+            <Setter Property="Margin" Value="10, 10, 0, 0"></Setter>
+            <Setter Property="BackgroundColor" Value="LightBlue"></Setter>
+            <Setter Property="FontSize" Value="Medium"></Setter>
+            <Setter Property="HorizontalOptions" Value="Start"></Setter>
+            <Setter Property="TextColor" Value="White"></Setter>
         </Style>
     </Application.Resources>
 </Application>
