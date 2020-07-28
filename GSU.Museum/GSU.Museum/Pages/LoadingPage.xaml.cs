@@ -1,6 +1,5 @@
 ﻿using GSU.Museum.Shared.Services;
 using System;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,7 +19,6 @@ namespace GSU.Museum.Shared.Pages
             {
                 App.Settings = await Xamarin.Forms.DependencyService.Get<CachingService>().ReadSettings();
                 Xamarin.Forms.DependencyService.Get<LocalizationService>().Localize();
-                await Task.Delay(1000);
             }
             App.Current.MainPage = new NavigationPage(new HomePage());
         }
