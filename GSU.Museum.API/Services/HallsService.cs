@@ -34,6 +34,7 @@ namespace GSU.Museum.API.Services
             }
             var halls = await _hallsRepository.GetAllAsync();
             MapperConfiguration mapperConfiguration = null;
+            MapperConfiguration mapperConfigurationPhoto = null;
             List<HallDTO> hallsDTO = new List<HallDTO>();
             if (halls != null)
             {
@@ -41,91 +42,6 @@ namespace GSU.Museum.API.Services
                 {
                     case "Ru":
                         mapperConfiguration = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<Hall, HallDTO>()
-                            .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                                    source => source.TitleRu))
-                            .ForMember(destination => destination.Stands,
-                                map => map.Ignore())
-                            .ForMember(destination => destination.Photo,
-                                map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
-                        break;
-                    case "En":
-                        mapperConfiguration = new MapperConfiguration(cfg => 
-                        {
-                            cfg.CreateMap<Hall, HallDTO>()
-                            .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                                source => source.TitleEn))
-                            .ForMember(destination => destination.Stands,
-                                map => map.Ignore())
-                            .ForMember(destination => destination.Photo,
-                                map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
-                        break;
-                    case "Be":
-                        mapperConfiguration = new MapperConfiguration(cfg => 
-                        {
-                            cfg.CreateMap<Hall, HallDTO>()
-                            .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                                    source => source.TitleBe))
-                            .ForMember(destination => destination.Stands,
-                                map => map.Ignore())
-                            .ForMember(destination => destination.Photo,
-                                map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
-                        break;
-                    default:
-                        mapperConfiguration = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<Hall, HallDTO>()
-                            .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                                    source => source.TitleEn))
-                            .ForMember(destination => destination.Stands,
-                                map => map.Ignore())
-                            .ForMember(destination => destination.Photo,
-                                map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
-                        break;
-                }
-            }
-            var mapper = new Mapper(mapperConfiguration);
-            hallsDTO = mapper.Map<List<HallDTO>>(halls);
-            return hallsDTO;
-        }
-
-        public async Task<HallDTO> GetAsync(HttpRequest request, string id)
-        {
-            StringValues language = "";
-            if (request != null)
-            {
-                if (!request.Headers.TryGetValue("Language", out language))
-                {
-                    language = "En";
-                }
-            }
-            else
-            {
-                language = "En";
-            }
-            var hall = await _hallsRepository.GetAsync(id);
-            MapperConfiguration mapperConfiguration = null;
-            MapperConfiguration mapperConfigurationPhoto = null;
-            HallDTO hallDTO = null;
-            if (hall != null)
-            {
-                switch (language)
-                {
-                    case "Ru":
-                        mapperConfiguration = new MapperConfiguration(cfg => 
                         {
                             cfg.CreateMap<Hall, HallDTO>()
                             .ForMember(destination => destination.Title,
@@ -151,7 +67,7 @@ namespace GSU.Museum.API.Services
                             cfg.CreateMap<Hall, HallDTO>()
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
-                                    source => source.TitleEn))
+                                source => source.TitleEn))
                             .ForMember(destination => destination.Stands,
                                 map => map.Ignore())
                             .ForMember(destination => destination.Photo,
@@ -193,7 +109,7 @@ namespace GSU.Museum.API.Services
                             cfg.CreateMap<Hall, HallDTO>()
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
-                                source => source.TitleEn))
+                                    source => source.TitleEn))
                             .ForMember(destination => destination.Stands,
                                 map => map.Ignore())
                             .ForMember(destination => destination.Photo,
@@ -209,12 +125,100 @@ namespace GSU.Museum.API.Services
                         });
                         break;
                 }
+            }
+            var mapper = new Mapper(mapperConfiguration);
+            hallsDTO = mapper.Map<List<HallDTO>>(halls);
+
+            mapper = new Mapper(mapperConfigurationPhoto);
+            for (int i = 0; i < halls.Count; i++)
+            {
+                var photoInfoDTO = mapper.Map<PhotoInfoDTO>(halls[i].Photo);
+                hallsDTO[i].Photo = photoInfoDTO;
+            }
+            
+            return hallsDTO;
+        }
+
+        public async Task<HallDTO> GetAsync(HttpRequest request, string id)
+        {
+            StringValues language = "";
+            if (request != null)
+            {
+                if (!request.Headers.TryGetValue("Language", out language))
+                {
+                    language = "En";
+                }
+            }
+            else
+            {
+                language = "En";
+            }
+            var hall = await _hallsRepository.GetAsync(id);
+            MapperConfiguration mapperConfiguration = null;
+            HallDTO hallDTO = null;
+            if (hall != null)
+            {
+                switch (language)
+                {
+                    case "Ru":
+                        mapperConfiguration = new MapperConfiguration(cfg => 
+                        {
+                            cfg.CreateMap<Hall, HallDTO>()
+                            .ForMember(destination => destination.Title,
+                                map => map.MapFrom(
+                                    source => source.TitleRu))
+                            .ForMember(destination => destination.Stands,
+                                map => map.Ignore())
+                            .ForMember(destination => destination.Photo,
+                                map => map.Ignore());
+                            cfg.AllowNullCollections = true;
+                        });
+                        break;
+                    case "En":
+                        mapperConfiguration = new MapperConfiguration(cfg => 
+                        {
+                            cfg.CreateMap<Hall, HallDTO>()
+                            .ForMember(destination => destination.Title,
+                                map => map.MapFrom(
+                                    source => source.TitleEn))
+                            .ForMember(destination => destination.Stands,
+                                map => map.Ignore())
+                            .ForMember(destination => destination.Photo,
+                                map => map.Ignore());
+                            cfg.AllowNullCollections = true;
+                        });
+                        break;
+                    case "Be":
+                        mapperConfiguration = new MapperConfiguration(cfg => 
+                        {
+                            cfg.CreateMap<Hall, HallDTO>()
+                            .ForMember(destination => destination.Title,
+                                map => map.MapFrom(
+                                    source => source.TitleBe))
+                            .ForMember(destination => destination.Stands,
+                                map => map.Ignore())
+                            .ForMember(destination => destination.Photo,
+                                map => map.Ignore());
+                            cfg.AllowNullCollections = true;
+                        });
+                        break;
+                    default:
+                        mapperConfiguration = new MapperConfiguration(cfg =>
+                        {
+                            cfg.CreateMap<Hall, HallDTO>()
+                            .ForMember(destination => destination.Title,
+                                map => map.MapFrom(
+                                source => source.TitleEn))
+                            .ForMember(destination => destination.Stands,
+                                map => map.Ignore())
+                            .ForMember(destination => destination.Photo,
+                                map => map.Ignore());
+                            cfg.AllowNullCollections = true;
+                        });
+                        break;
+                }
                 var mapper = new Mapper(mapperConfiguration);
                 hallDTO = mapper.Map<HallDTO>(hall);
-                
-                mapper = new Mapper(mapperConfigurationPhoto);
-                var photoInfoDTO = mapper.Map<PhotoInfoDTO>(hall.Photo);
-                hallDTO.Photo = photoInfoDTO;
                 
                 var stands = await _standsService.GetAllAsync(request, id);
                 hallDTO.Stands = stands;

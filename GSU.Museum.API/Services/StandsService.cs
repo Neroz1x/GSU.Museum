@@ -34,105 +34,9 @@ namespace GSU.Museum.API.Services
             }
             var stands = await _standsRepository.GetAllAsync(hallId);
             MapperConfiguration mapperConfiguration = null;
+            MapperConfiguration mapperConfigurationPhoto = null;
             List<StandDTO> standsDTO = new List<StandDTO>();
             if (stands != null)
-            {
-                switch (language)
-                {
-                    case "Ru":
-                        mapperConfiguration = new MapperConfiguration(cfg => 
-                        {
-                            cfg.CreateMap<Stand, StandDTO>()
-                            .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                                    source => source.TitleRu))
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionRu))
-                            .ForMember(destination => destination.Exhibits,
-                                map => map.Ignore())
-                            .ForMember(destination => destination.Photo,
-                                map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
-                        break;
-                    case "En":
-                        mapperConfiguration = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<Stand, StandDTO>()
-                            .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                            source => source.TitleEn))
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionEn))
-                            .ForMember(destination => destination.Exhibits,
-                                map => map.Ignore())
-                            .ForMember(destination => destination.Photo,
-                                map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
-                        break;
-                    case "Be":
-                        mapperConfiguration = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<Stand, StandDTO>()
-                            .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                                    source => source.TitleBe))
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionBe))
-                            .ForMember(destination => destination.Exhibits,
-                                map => map.Ignore())
-                            .ForMember(destination => destination.Photo,
-                                map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
-                        break;
-                    default:
-                        mapperConfiguration = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<Stand, StandDTO>()
-                            .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                                    source => source.TitleEn))
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionEn))
-                            .ForMember(destination => destination.Exhibits,
-                                map => map.Ignore())
-                            .ForMember(destination => destination.Photo,
-                                map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
-                        break;
-                }
-                var mapper = new Mapper(mapperConfiguration);
-                standsDTO = mapper.Map<List<StandDTO>>(stands);
-            }
-            return standsDTO;
-        }
-
-        public async Task<StandDTO> GetAsync(HttpRequest request, string hallId, string id)
-        {
-            StringValues language = "";
-            if (request != null)
-            {
-                if (!request.Headers.TryGetValue("Language", out language))
-                {
-                    language = "En";
-                }
-            }
-            else
-            {
-                language = "En";
-            }
-            var stand = await _standsRepository.GetAsync(hallId, id);
-            MapperConfiguration mapperConfiguration = null;
-            MapperConfiguration mapperConfigurationPhoto = null;
-            StandDTO standDTO = null;
-            if (stand != null)
             {
                 switch (language)
                 {
@@ -166,7 +70,7 @@ namespace GSU.Museum.API.Services
                             cfg.CreateMap<Stand, StandDTO>()
                             .ForMember(destination => destination.Title,
                                 map => map.MapFrom(
-                                    source => source.TitleEn))
+                            source => source.TitleEn))
                             .ForMember(destination => destination.Description,
                                 map => map.MapFrom(
                                     source => source.DescriptionEn))
@@ -229,16 +133,114 @@ namespace GSU.Museum.API.Services
                             cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
                             .ForMember(destination => destination.Description,
                                 map => map.MapFrom(
-                                source => source.DescriptionEn));
+                                    source => source.DescriptionEn));
+                        });
+                        break;
+                }
+                var mapper = new Mapper(mapperConfiguration);
+                standsDTO = mapper.Map<List<StandDTO>>(stands);
+                mapper = new Mapper(mapperConfigurationPhoto);
+                for(int i = 0; i < stands.Count; i++)
+                {
+                    var photoInfoDTO = mapper.Map<PhotoInfoDTO>(stands[i].Photo);
+                    standsDTO[i].Photo = photoInfoDTO;
+                }
+            }
+            return standsDTO;
+        }
+
+        public async Task<StandDTO> GetAsync(HttpRequest request, string hallId, string id)
+        {
+            StringValues language = "";
+            if (request != null)
+            {
+                if (!request.Headers.TryGetValue("Language", out language))
+                {
+                    language = "En";
+                }
+            }
+            else
+            {
+                language = "En";
+            }
+            var stand = await _standsRepository.GetAsync(hallId, id);
+            MapperConfiguration mapperConfiguration = null;
+            StandDTO standDTO = null;
+            if (stand != null)
+            {
+                switch (language)
+                {
+                    case "Ru":
+                        mapperConfiguration = new MapperConfiguration(cfg => 
+                        {
+                            cfg.CreateMap<Stand, StandDTO>()
+                            .ForMember(destination => destination.Title,
+                                map => map.MapFrom(
+                                    source => source.TitleRu))
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                                    source => source.DescriptionRu))
+                            .ForMember(destination => destination.Exhibits,
+                                map => map.Ignore())
+                            .ForMember(destination => destination.Photo,
+                                map => map.Ignore());
+                            cfg.AllowNullCollections = true;
+                        });
+                        break;
+                    case "En":
+                        mapperConfiguration = new MapperConfiguration(cfg =>
+                        {
+                            cfg.CreateMap<Stand, StandDTO>()
+                            .ForMember(destination => destination.Title,
+                                map => map.MapFrom(
+                                    source => source.TitleEn))
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                                    source => source.DescriptionEn))
+                            .ForMember(destination => destination.Exhibits,
+                                map => map.Ignore())
+                            .ForMember(destination => destination.Photo,
+                                map => map.Ignore());
+                            cfg.AllowNullCollections = true;
+                        });
+                        break;
+                    case "Be":
+                        mapperConfiguration = new MapperConfiguration(cfg =>
+                        {
+                            cfg.CreateMap<Stand, StandDTO>()
+                            .ForMember(destination => destination.Title,
+                                map => map.MapFrom(
+                                    source => source.TitleBe))
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                                    source => source.DescriptionBe))
+                            .ForMember(destination => destination.Exhibits,
+                                map => map.Ignore())
+                            .ForMember(destination => destination.Photo,
+                                map => map.Ignore());
+                            cfg.AllowNullCollections = true;
+                        });
+                        break;
+                    default:
+                        mapperConfiguration = new MapperConfiguration(cfg =>
+                        {
+                            cfg.CreateMap<Stand, StandDTO>()
+                            .ForMember(destination => destination.Title,
+                                map => map.MapFrom(
+                                    source => source.TitleEn))
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                                    source => source.DescriptionEn))
+                            .ForMember(destination => destination.Exhibits,
+                                map => map.Ignore())
+                            .ForMember(destination => destination.Photo,
+                                map => map.Ignore());
+                            cfg.AllowNullCollections = true;
                         });
                         break;
                 }
                 var mapper = new Mapper(mapperConfiguration);
                 standDTO = mapper.Map<StandDTO>(stand);
-
-                mapper = new Mapper(mapperConfigurationPhoto);
-                var photoInfoDTO = mapper.Map<PhotoInfoDTO>(stand.Photo);
-                standDTO.Photo = photoInfoDTO;
 
                 var exhibits = await _exhibitsService.GetAllAsync(request, hallId, id);
                 standDTO.Exhibits = exhibits;
