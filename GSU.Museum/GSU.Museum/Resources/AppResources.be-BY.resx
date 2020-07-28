@@ -127,6 +127,12 @@
   <data name="ErrorMessage_ServerIsNotResponse" xml:space="preserve">
     <value>Не атрымалася падлучыцца да сервера</value>
   </data>
+  <data name="HallPage_MenuDescription" xml:space="preserve">
+    <value>Выберыце стэнд</value>
+  </data>
+  <data name="HallPage_Title" xml:space="preserve">
+    <value>выбар стэнду</value>
+  </data>
   <data name="HomePage_MainText" xml:space="preserve">
     <value>Дадзенае прыкладанне дазваляе наведаць Музей ГДУ імя. Ф. Скарыны. Яно змяшчае інфармацыю аб усіх стэндах і экспанатах музея</value>
   </data>
@@ -141,6 +147,9 @@
   </data>
   <data name="HomePage_Title" xml:space="preserve">
     <value>Музей ГДУ ім Ф. Скарыны</value>
+  </data>
+  <data name="MainPage_MenuDescription" xml:space="preserve">
+    <value>Выберыце хол</value>
   </data>
   <data name="MainPage_Title" xml:space="preserve">
     <value>Выбар холу</value>
@@ -159,5 +168,8 @@
   </data>
   <data name="OptionsPage_Title" xml:space="preserve">
     <value>Налады</value>
+  </data>
+  <data name="StandPage_Title" xml:space="preserve">
+    <value>выбар экспанату</value>
   </data>
 </root>

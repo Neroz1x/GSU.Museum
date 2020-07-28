@@ -126,6 +126,13 @@
   <data name="ErrorMessage_ServerIsNotResponse" xml:space="preserve">
     <value>Can not connect to the server</value>
   </data>
+  <data name="HallPage_MenuDescription" xml:space="preserve">
+    <value>Select stand</value>
+  </data>
+  <data name="HallPage_Title" xml:space="preserve">
+    <value>stand selection</value>
+    <comment> </comment>
+  </data>
   <data name="HomePage_MainText" xml:space="preserve">
     <value>This application helps to visit F. Scorina GSU Museum. It contains information about stands and exhibits.</value>
   </data>
@@ -140,6 +147,9 @@
   </data>
   <data name="HomePage_Title" xml:space="preserve">
     <value>F. Scorina GSU Museum</value>
+  </data>
+  <data name="MainPage_MenuDescription" xml:space="preserve">
+    <value>Select hall</value>
   </data>
   <data name="MainPage_Title" xml:space="preserve">
     <value>Hall selection</value>
@@ -158,5 +168,8 @@
   </data>
   <data name="OptionsPage_Title" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="StandPage_Title" xml:space="preserve">
+    <value>exhibit selection</value>
   </data>
 </root>

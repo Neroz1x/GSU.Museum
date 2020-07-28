@@ -88,6 +88,24 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select stand.
+        /// </summary>
+        public static string HallPage_MenuDescription {
+            get {
+                return ResourceManager.GetString("HallPage_MenuDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stand selection.
+        /// </summary>
+        public static string HallPage_Title {
+            get {
+                return ResourceManager.GetString("HallPage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This application helps to visit F. Scorina GSU Museum. It contains information about stands and exhibits..
         /// </summary>
         public static string HomePage_MainText {
@@ -129,6 +147,15 @@ namespace GSU.Museum.Shared.Resources {
         public static string HomePage_Title {
             get {
                 return ResourceManager.GetString("HomePage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select hall.
+        /// </summary>
+        public static string MainPage_MenuDescription {
+            get {
+                return ResourceManager.GetString("MainPage_MenuDescription", resourceCulture);
             }
         }
         
@@ -183,6 +210,15 @@ namespace GSU.Museum.Shared.Resources {
         public static string OptionsPage_Title {
             get {
                 return ResourceManager.GetString("OptionsPage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to exhibit selection.
+        /// </summary>
+        public static string StandPage_Title {
+            get {
+                return ResourceManager.GetString("StandPage_Title", resourceCulture);
             }
         }
     }
