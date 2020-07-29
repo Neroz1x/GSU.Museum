@@ -12,25 +12,73 @@
     </NavigationPage.TitleView>
     <ContentPage.Content>
         <ScrollView >
-            <StackLayout Margin="5, 0" Orientation="Vertical">
-                <Grid VerticalOptions="Start">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.6"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-
-                    <StackLayout Grid.Column="1" Orientation="Vertical" HorizontalOptions="Start">
-                        <Label FontSize="Large" TextColor="Black" Text="{Binding LanguageLabel}"/>
-                        <Label FontSize="Medium" Text="{Binding LanguageDescriptionLabel}"/>
-                    </StackLayout>
-
-                    <Picker Grid.Column="2" FontSize="Large" 
-                            HorizontalOptions="Fill" VerticalOptions="Center" 
+            <StackLayout Orientation="Vertical" Padding="10, 0">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
+                    <Label Style="{StaticResource OptionsSectionLabelHeader}" Text="Language settings"></Label>
+                    <BoxView Style="{StaticResource LineForOptions}"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Fill" >
+                        <Label Style="{StaticResource OptionsLabelHeader}" Text="{Binding LanguageLabel}"/>
+                        <Picker FontSize="Large"
+                            VerticalOptions="Center"
+                            WidthRequest="170"
+                            HorizontalOptions="End" 
                             ItemsSource="{Binding Languages}" 
                             SelectedItem="{Binding SelectedLanguage}" 
                             ItemDisplayBinding="{Binding LanguageName}"/>
-
-                </Grid>
+                    </StackLayout>
+                    <Label Style="{StaticResource OptionsLabelDescription}" Text="{Binding LanguageDescriptionLabel}"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
+                    <Label Style="{StaticResource OptionsSectionLabelHeader}" Text="Cahce settings"></Label>
+                    <BoxView Style="{StaticResource LineForOptions}"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                        <Label Style="{StaticResource OptionsLabelHeader}" Text="{Binding UseCacheLabel}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OnLabelTapCommand}" CommandParameter="0"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <CheckBox HorizontalOptions="Fill" 
+                                  VerticalOptions="Center" 
+                                  x:Name="UseCacheCheckBox"
+                                  IsChecked="{Binding UseCacheIsChecked}"
+                            />
+                    </StackLayout>
+                    <Label Style="{StaticResource OptionsLabelDescription}" Text="{Binding UseCacheDescriptionLabel}"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical" IsVisible="{Binding Source={x:Reference UseCacheCheckBox}, Path=IsChecked}">
+                    <StackLayout Orientation="Vertical">
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                            <Label Style="{StaticResource OptionsLabelHeader}" Text="{Binding CheckForUpdatesLabel}">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding OnLabelTapCommand}" CommandParameter="1"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <RadioButton HorizontalOptions="Fill" VerticalOptions="Center" 
+                                IsChecked="{Binding CheckForUpdatesIsSelected}"
+                                GroupName="CacheStrategy"
+                            />
+                        </StackLayout>
+                        <Label Style="{StaticResource OptionsLabelDescription}" Text="{Binding CheckForUpdatesDescriptionLabel}"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical">
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                            <Label Style="{StaticResource OptionsLabelHeader}" Text="{Binding UseOnlyCacheLabel}">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding OnLabelTapCommand}" CommandParameter="2"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <RadioButton HorizontalOptions="Fill" VerticalOptions="Center" 
+                                IsChecked="{Binding UseOnlyCacheIsSelected}"
+                                GroupName="CacheStrategy"
+                            />
+                        </StackLayout>
+                        <Label Style="{StaticResource OptionsLabelDescription}" Text="{Binding UseOnlyCacheDescriptionLabel}"/>
+                    </StackLayout>
+                </StackLayout>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

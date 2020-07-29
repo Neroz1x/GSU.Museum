@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using GSU.Museum.Shared.Services;
 using GSU.Museum.CommonClassLibrary.Models;
+using GSU.Museum.Shared.Resources;
 
 [assembly: Dependency(typeof(ContentLoaderService))]
 namespace GSU.Museum.Shared.Services
@@ -18,10 +19,18 @@ namespace GSU.Museum.Shared.Services
             var exhibitCached = await DependencyService.Get<CachingService>().ReadExhibitAsync(id);
             if (exhibitCached != null)
             {
-                return await DependencyService.Get<NetworkService>().LoadExhibitAsync(hallId, standId, id, exhibitCached);
+                if (App.Settings.CheckForUpdates)
+                {
+                    return await DependencyService.Get<NetworkService>().LoadExhibitAsync(hallId, standId, id, exhibitCached);
+                }
+                return exhibitCached;
             }
             else
             {
+                if (App.Settings.UseCache && App.Settings.UseOnlyCache)
+                {
+                    throw new Error(){ ErrorCode = CommonClassLibrary.Enums.Errors.Not_Found_In_Cache, Info = AppResources.ErrorMessage_NotFoundInCache };
+                }
                 return await DependencyService.Get<NetworkService>().LoadExhibitAsync(hallId, standId, id);
             }
         }
@@ -32,10 +41,18 @@ namespace GSU.Museum.Shared.Services
             var hallCached = await DependencyService.Get<CachingService>().ReadHallAsync(id);
             if (hallCached != null)
             {
-                return await DependencyService.Get<NetworkService>().LoadHallAsync(id, hallCached);
+                if (App.Settings.CheckForUpdates)
+                {
+                    return await DependencyService.Get<NetworkService>().LoadHallAsync(id, hallCached);
+                }
+                return hallCached;
             }
             else
             {
+                if (App.Settings.UseCache && App.Settings.UseOnlyCache)
+                {
+                    throw new Error() { ErrorCode = CommonClassLibrary.Enums.Errors.Not_Found_In_Cache, Info = AppResources.ErrorMessage_NotFoundInCache };
+                }
                 return await DependencyService.Get<NetworkService>().LoadHallAsync(id);
             }
         }
@@ -46,10 +63,18 @@ namespace GSU.Museum.Shared.Services
             var hallsCached = await DependencyService.Get<CachingService>().ReadHallsAsync();
             if (hallsCached != null)
             {
-                return await DependencyService.Get<NetworkService>().LoadHallsAsync(hallsCached);
+                if (App.Settings.CheckForUpdates)
+                {
+                    return await DependencyService.Get<NetworkService>().LoadHallsAsync(hallsCached);
+                }
+                return hallsCached;
             }
             else
             {
+                if (App.Settings.UseCache && App.Settings.UseOnlyCache)
+                {
+                    throw new Error() { ErrorCode = CommonClassLibrary.Enums.Errors.Not_Found_In_Cache, Info = AppResources.ErrorMessage_NotFoundInCache };
+                }
                 return await DependencyService.Get<NetworkService>().LoadHallsAsync();
             }
         }
@@ -60,10 +85,18 @@ namespace GSU.Museum.Shared.Services
             var standCached = await DependencyService.Get<CachingService>().ReadStandAsync(id);
             if (standCached != null)
             {
-                return await DependencyService.Get<NetworkService>().LoadStandAsync(hallId, id, standCached);
+                if (App.Settings.CheckForUpdates)
+                {
+                    return await DependencyService.Get<NetworkService>().LoadStandAsync(hallId, id, standCached);
+                }
+                return standCached;
             }
             else
             {
+                if (App.Settings.UseCache && App.Settings.UseOnlyCache)
+                {
+                    throw new Error() { ErrorCode = CommonClassLibrary.Enums.Errors.Not_Found_In_Cache, Info = AppResources.ErrorMessage_NotFoundInCache };
+                }
                 return await DependencyService.Get<NetworkService>().LoadStandAsync(hallId, id);
             }
         }

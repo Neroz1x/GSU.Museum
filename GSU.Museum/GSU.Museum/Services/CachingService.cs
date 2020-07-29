@@ -20,6 +20,11 @@ namespace GSU.Museum.Shared.Services
 
         public async Task<ExhibitDTO> ReadExhibitAsync(string id)
         {
+            if (!App.Settings.UseCache) 
+            { 
+                return null; 
+            }
+            
             string language = Thread.CurrentThread.CurrentUICulture.Name;
             var keys = await BlobCache.LocalMachine.GetAllKeys();
             if (keys.Contains($"{language}{id}"))
@@ -34,6 +39,11 @@ namespace GSU.Museum.Shared.Services
 
         public async Task<HallDTO> ReadHallAsync(string id)
         {
+            if (!App.Settings.UseCache)
+            {
+                return null;
+            }
+
             string language = Thread.CurrentThread.CurrentUICulture.Name;
             var keys = await BlobCache.LocalMachine.GetAllKeys();
             if (keys.Contains($"{language}{id}"))
@@ -48,6 +58,11 @@ namespace GSU.Museum.Shared.Services
 
         public async Task<List<HallDTO>> ReadHallsAsync()
         {
+            if (!App.Settings.UseCache)
+            {
+                return null;
+            }
+
             string language = Thread.CurrentThread.CurrentUICulture.Name;
             var keys = await BlobCache.LocalMachine.GetAllKeys();
             if (keys.Contains($"{language}halls"))
@@ -73,6 +88,11 @@ namespace GSU.Museum.Shared.Services
 
         public async Task<StandDTO> ReadStandAsync(string id)
         {
+            if (!App.Settings.UseCache)
+            {
+                return null;
+            }
+
             string language = Thread.CurrentThread.CurrentUICulture.Name;
             var keys = await BlobCache.LocalMachine.GetAllKeys();
             if (keys.Contains($"{language}{id}"))
@@ -87,6 +107,11 @@ namespace GSU.Museum.Shared.Services
 
         public async Task WriteExhibitAsync(ExhibitDTO exhibit)
         {
+            if (!App.Settings.UseCache)
+            {
+                return;
+            }
+
             string language = Thread.CurrentThread.CurrentUICulture.Name;
 
             _logger.Info($"Write to cache ExhibitDTO {language}-{exhibit.Id}");
@@ -100,6 +125,11 @@ namespace GSU.Museum.Shared.Services
 
         public async Task WriteHallAsync(HallDTO hall)
         {
+            if (!App.Settings.UseCache)
+            {
+                return;
+            }
+
             string language = Thread.CurrentThread.CurrentUICulture.Name;
 
             _logger.Info($"Write to cache HallDTO {language}-{hall.Id}");
@@ -113,6 +143,11 @@ namespace GSU.Museum.Shared.Services
 
         public async Task WriteHallsAsync(List<HallDTO> halls)
         {
+            if (!App.Settings.UseCache)
+            {
+                return;
+            }
+
             string language = Thread.CurrentThread.CurrentUICulture.Name;
 
             _logger.Info($"Write to cache halls");
@@ -128,6 +163,11 @@ namespace GSU.Museum.Shared.Services
 
         public async Task WriteStandAsync(StandDTO stand)
         {
+            if (!App.Settings.UseCache)
+            {
+                return;
+            }
+
             string language = Thread.CurrentThread.CurrentUICulture.Name;
 
             _logger.Info($"Write to cache StandDTO {language}-{stand.Id}");
