@@ -1,12 +1,10 @@
-﻿
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
 using Xamarin.Forms;
 using System.Reflection;
 using GSU.Museum.Shared.Services;
-using Android;
 
 namespace GSU.Museum.Droid
 {
@@ -19,8 +17,9 @@ namespace GSU.Museum.Droid
             ToolbarResource = Resource.Layout.Toolbar;
             base.OnCreate(savedInstanceState);
 
+            Forms.SetFlags("RadioButton_Experimental");
             Forms.SetFlags("IndicatorView_Experimental");
-
+            
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             
