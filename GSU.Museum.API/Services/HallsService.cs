@@ -20,17 +20,18 @@ namespace GSU.Museum.API.Services
 
         public async Task<List<HallDTO>> GetAllAsync(HttpRequest request)
         {
+            // Get language from header
             StringValues language = "";
             if (request != null)
             {
-                if (!request.Headers.TryGetValue("Language", out language))
+                if (!request.Headers.TryGetValue("Accept-Language", out language))
                 {
-                    language = "En";
+                    language = "en";
                 }
             }
             else
             {
-                language = "En";
+                language = "en";
             }
             var halls = await _hallsRepository.GetAllAsync();
             MapperConfiguration mapperConfiguration = null;
@@ -38,9 +39,10 @@ namespace GSU.Museum.API.Services
             List<HallDTO> hallsDTO = new List<HallDTO>();
             if (halls != null)
             {
+                // Create mapping depending on language
                 switch (language)
                 {
-                    case "Ru":
+                    case "ru":
                         mapperConfiguration = new MapperConfiguration(cfg =>
                         {
                             cfg.CreateMap<Hall, HallDTO>()
@@ -61,7 +63,7 @@ namespace GSU.Museum.API.Services
                                     source => source.DescriptionRu));
                         });
                         break;
-                    case "En":
+                    case "en":
                         mapperConfiguration = new MapperConfiguration(cfg => 
                         {
                             cfg.CreateMap<Hall, HallDTO>()
@@ -82,7 +84,7 @@ namespace GSU.Museum.API.Services
                                     source => source.DescriptionEn));
                         });
                         break;
-                    case "Be":
+                    case "be":
                         mapperConfiguration = new MapperConfiguration(cfg => 
                         {
                             cfg.CreateMap<Hall, HallDTO>()
@@ -141,26 +143,28 @@ namespace GSU.Museum.API.Services
 
         public async Task<HallDTO> GetAsync(HttpRequest request, string id)
         {
+            // Get language from header
             StringValues language = "";
             if (request != null)
             {
-                if (!request.Headers.TryGetValue("Language", out language))
+                if (!request.Headers.TryGetValue("Accept-Language", out language))
                 {
-                    language = "En";
+                    language = "en";
                 }
             }
             else
             {
-                language = "En";
+                language = "en";
             }
             var hall = await _hallsRepository.GetAsync(id);
             MapperConfiguration mapperConfiguration = null;
             HallDTO hallDTO = null;
             if (hall != null)
             {
+                // Create mapping depending on language
                 switch (language)
                 {
-                    case "Ru":
+                    case "ru":
                         mapperConfiguration = new MapperConfiguration(cfg => 
                         {
                             cfg.CreateMap<Hall, HallDTO>()
@@ -174,7 +178,7 @@ namespace GSU.Museum.API.Services
                             cfg.AllowNullCollections = true;
                         });
                         break;
-                    case "En":
+                    case "en":
                         mapperConfiguration = new MapperConfiguration(cfg => 
                         {
                             cfg.CreateMap<Hall, HallDTO>()
@@ -188,7 +192,7 @@ namespace GSU.Museum.API.Services
                             cfg.AllowNullCollections = true;
                         });
                         break;
-                    case "Be":
+                    case "be":
                         mapperConfiguration = new MapperConfiguration(cfg => 
                         {
                             cfg.CreateMap<Hall, HallDTO>()

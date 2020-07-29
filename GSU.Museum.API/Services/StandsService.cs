@@ -20,17 +20,18 @@ namespace GSU.Museum.API.Services
         }
         public async Task<List<StandDTO>> GetAllAsync(HttpRequest request, string hallId)
         {
+            // Get language from header
             StringValues language = "";
             if (request != null)
             {
-                if (!request.Headers.TryGetValue("Language", out language))
+                if (!request.Headers.TryGetValue("Accept-Language", out language))
                 {
-                    language = "En";
+                    language = "en";
                 }
             }
             else
             {
-                language = "En";
+                language = "en";
             }
             var stands = await _standsRepository.GetAllAsync(hallId);
             MapperConfiguration mapperConfiguration = null;
@@ -38,9 +39,10 @@ namespace GSU.Museum.API.Services
             List<StandDTO> standsDTO = new List<StandDTO>();
             if (stands != null)
             {
+                // Create mapping depending on language
                 switch (language)
                 {
-                    case "Ru":
+                    case "ru":
                         mapperConfiguration = new MapperConfiguration(cfg => 
                         {
                             cfg.CreateMap<Stand, StandDTO>()
@@ -64,7 +66,7 @@ namespace GSU.Museum.API.Services
                                     source => source.DescriptionRu));
                         });
                         break;
-                    case "En":
+                    case "en":
                         mapperConfiguration = new MapperConfiguration(cfg =>
                         {
                             cfg.CreateMap<Stand, StandDTO>()
@@ -88,7 +90,7 @@ namespace GSU.Museum.API.Services
                                     source => source.DescriptionEn));
                         });
                         break;
-                    case "Be":
+                    case "be":
                         mapperConfiguration = new MapperConfiguration(cfg =>
                         {
                             cfg.CreateMap<Stand, StandDTO>()
@@ -151,26 +153,28 @@ namespace GSU.Museum.API.Services
 
         public async Task<StandDTO> GetAsync(HttpRequest request, string hallId, string id)
         {
+            // Get language from header
             StringValues language = "";
             if (request != null)
             {
-                if (!request.Headers.TryGetValue("Language", out language))
+                if (!request.Headers.TryGetValue("Accept-Language", out language))
                 {
-                    language = "En";
+                    language = "en";
                 }
             }
             else
             {
-                language = "En";
+                language = "en";
             }
             var stand = await _standsRepository.GetAsync(hallId, id);
             MapperConfiguration mapperConfiguration = null;
             StandDTO standDTO = null;
             if (stand != null)
             {
+                // Create mapping depending on language
                 switch (language)
                 {
-                    case "Ru":
+                    case "ru":
                         mapperConfiguration = new MapperConfiguration(cfg => 
                         {
                             cfg.CreateMap<Stand, StandDTO>()
@@ -187,7 +191,7 @@ namespace GSU.Museum.API.Services
                             cfg.AllowNullCollections = true;
                         });
                         break;
-                    case "En":
+                    case "en":
                         mapperConfiguration = new MapperConfiguration(cfg =>
                         {
                             cfg.CreateMap<Stand, StandDTO>()
@@ -204,7 +208,7 @@ namespace GSU.Museum.API.Services
                             cfg.AllowNullCollections = true;
                         });
                         break;
-                    case "Be":
+                    case "be":
                         mapperConfiguration = new MapperConfiguration(cfg =>
                         {
                             cfg.CreateMap<Stand, StandDTO>()

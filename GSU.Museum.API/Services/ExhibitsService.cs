@@ -19,26 +19,28 @@ namespace GSU.Museum.API.Services
 
         public async Task<List<ExhibitDTO>> GetAllAsync(HttpRequest request, string hallId, string standId)
         {
+            // Get language from header
             StringValues language = "";
             if(request != null)
             {
-                if (!request.Headers.TryGetValue("Language", out language))
+                if (!request.Headers.TryGetValue("Accept-Language", out language))
                 {
-                    language = "En";
+                    language = "en";
                 }
             }
             else
             {
-                language = "En";
+                language = "en";
             }
             var exhibits = await _exhibitsRepository.GetAllAsync(hallId, standId);
             MapperConfiguration mapperConfiguration = null;
             List<ExhibitDTO> exhibitsDTO = new List<ExhibitDTO>();
             if (exhibits != null)
             {
+                // Create mapping depending on language
                 switch (language)
                 {
-                    case "Ru":
+                    case "ru":
                         mapperConfiguration = new MapperConfiguration(cfg => 
                         {
                             cfg.CreateMap<Exhibit, ExhibitDTO>()
@@ -56,7 +58,7 @@ namespace GSU.Museum.API.Services
                             cfg.AllowNullCollections = true;
                         });
                         break;
-                    case "En":
+                    case "en":
                         mapperConfiguration = new MapperConfiguration(cfg => 
                         {
                             cfg.CreateMap<Exhibit, ExhibitDTO>()
@@ -74,7 +76,7 @@ namespace GSU.Museum.API.Services
                             cfg.AllowNullCollections = true;
                         });
                         break;
-                    case "Be":
+                    case "be":
                         mapperConfiguration = new MapperConfiguration(cfg => 
                         {
                             cfg.CreateMap<Exhibit, ExhibitDTO>()
@@ -119,17 +121,18 @@ namespace GSU.Museum.API.Services
 
         public async Task<ExhibitDTO> GetAsync(HttpRequest request, string hallId, string standId, string id)
         {
+            // Get language from header
             StringValues language = "";
             if (request != null)
             {
-                if (!request.Headers.TryGetValue("Language", out language))
+                if (!request.Headers.TryGetValue("Accept-Language", out language))
                 {
-                    language = "En";
+                    language = "en";
                 }
             }
             else
             {
-                language = "En";
+                language = "en";
             }
             var exhibit = await _exhibitsRepository.GetAsync(hallId, standId, id);
             MapperConfiguration mapperConfiguration = null;
@@ -138,9 +141,10 @@ namespace GSU.Museum.API.Services
             ExhibitDTO exhibitDTO = null;
             if (exhibit != null)
             {
+                // Create mapping depending on language
                 switch (language)
                 {
-                    case "Ru":
+                    case "ru":
                         mapperConfiguration = new MapperConfiguration(cfg => 
                         {
                             cfg.CreateMap<Exhibit, ExhibitDTO>()
@@ -165,7 +169,7 @@ namespace GSU.Museum.API.Services
                                     source => source.DescriptionRu));
                         });
                         break;
-                    case "En":
+                    case "en":
                         mapperConfiguration = new MapperConfiguration(cfg => 
                         {
                             cfg.CreateMap<Exhibit, ExhibitDTO>()
@@ -190,7 +194,7 @@ namespace GSU.Museum.API.Services
                                     source => source.DescriptionEn));
                         });
                         break;
-                    case "Be":
+                    case "be":
                         mapperConfiguration = new MapperConfiguration(cfg =>
                         {
                             cfg.CreateMap<Exhibit, ExhibitDTO>()

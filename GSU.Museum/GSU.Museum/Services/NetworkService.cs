@@ -21,6 +21,10 @@ namespace GSU.Museum.Shared.Services
     {
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 
+        /// <summary>
+        /// Check Internet connection
+        /// </summary>
+        /// <returns></returns>
         private bool CheckConnection()
         {
             if (Connectivity.NetworkAccess == NetworkAccess.ConstrainedInternet || Connectivity.NetworkAccess == NetworkAccess.Internet)
@@ -39,16 +43,16 @@ namespace GSU.Museum.Shared.Services
             switch (Thread.CurrentThread.CurrentUICulture.Name)
             {
                 case "ru-RU":
-                    language = "Ru";
+                    language = "ru";
                     break;
                 case "en-US":
-                    language = "En";
+                    language = "en";
                     break;
                 case "be-BY":
-                    language = "Be";
+                    language = "be";
                     break;
                 default:
-                    language = "En";
+                    language = "en";
                     break;
             }
             HttpClient httpClient;
@@ -64,7 +68,7 @@ namespace GSU.Museum.Shared.Services
                     break;
             }
 
-            httpClient.DefaultRequestHeaders.Add("Language", language);
+            httpClient.DefaultRequestHeaders.Add("Accept-Language", language);
             httpClient.DefaultRequestHeaders.Add("X-API-KEY", "U3VwZXJTZWNyZXRBcGlLZXkxMjM");
             return httpClient;
         }
