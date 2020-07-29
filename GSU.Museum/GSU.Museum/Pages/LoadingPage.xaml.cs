@@ -1,4 +1,5 @@
-﻿using GSU.Museum.Shared.Services;
+﻿using GSU.Museum.Shared.Data.Models;
+using GSU.Museum.Shared.Services;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -17,8 +18,12 @@ namespace GSU.Museum.Shared.Pages
         {
             if (App.Settings == null)
             {
-                App.Settings = await DependencyService.Get<CachingService>().ReadSettings();
-                DependencyService.Get<LocalizationService>().Localize();
+                try
+                {
+                    App.Settings = await DependencyService.Get<CachingService>().ReadSettings();
+                    DependencyService.Get<LocalizationService>().Localize();
+                }
+                catch (Exception) { App.Settings = new Settings(); }
             }
             Style style = Application.Current.Resources["TransparentMenuItem"] as Style;
             var width = Math.Round(App.Current.MainPage.Width - (0.1 * App.Current.MainPage.Width));
