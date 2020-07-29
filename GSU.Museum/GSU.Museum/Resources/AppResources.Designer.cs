@@ -79,6 +79,15 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Can not found data in cache. Set &quot;Сheck for updates&quot; field in settings to allow downloading data.
+        /// </summary>
+        public static string ErrorMessage_NotFoundInCache {
+            get {
+                return ResourceManager.GetString("ErrorMessage_NotFoundInCache", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Can not connect to the server.
         /// </summary>
         public static string ErrorMessage_ServerIsNotResponse {
@@ -187,6 +196,24 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Internet is used to check cached data for updates. If there are changes, they will be downloaded. The Internet will also be used to download new data. It require connection to the Internet.
+        /// </summary>
+        public static string OptionsPage_CheckForUpdatesDescriptionLabel {
+            get {
+                return ResourceManager.GetString("OptionsPage_CheckForUpdatesDescriptionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check for updates.
+        /// </summary>
+        public static string OptionsPage_CheckForUpdatesLabel {
+            get {
+                return ResourceManager.GetString("OptionsPage_CheckForUpdatesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string OptionsPage_Language {
@@ -210,6 +237,42 @@ namespace GSU.Museum.Shared.Resources {
         public static string OptionsPage_Title {
             get {
                 return ResourceManager.GetString("OptionsPage_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cache will be saved on your mobile storage. It reduces the Internet usage.
+        /// </summary>
+        public static string OptionsPage_UseCacheDescriptionLabel {
+            get {
+                return ResourceManager.GetString("OptionsPage_UseCacheDescriptionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use cahce.
+        /// </summary>
+        public static string OptionsPage_UseCacheLabel {
+            get {
+                return ResourceManager.GetString("OptionsPage_UseCacheLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only cached data will be displayed. No need connetction to the Internet.
+        /// </summary>
+        public static string OptionsPage_UseOnlyCacheDescriptionLabel {
+            get {
+                return ResourceManager.GetString("OptionsPage_UseOnlyCacheDescriptionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use only cache.
+        /// </summary>
+        public static string OptionsPage_UseOnlyCacheLabel {
+            get {
+                return ResourceManager.GetString("OptionsPage_UseOnlyCacheLabel", resourceCulture);
             }
         }
         

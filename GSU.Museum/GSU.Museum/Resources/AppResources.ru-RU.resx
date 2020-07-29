@@ -123,6 +123,9 @@
   <data name="ErrorMessage_LoadingFaild" xml:space="preserve">
     <value>Не удалось загрузить страницу. Проверьте подключение к интернету и настройки кеширования</value>
   </data>
+  <data name="ErrorMessage_NotFoundInCache" xml:space="preserve">
+    <value>Не удалось загрузить данные из кеша. Установите пункт "Проверять обновления" в настройках, чтобы разрешить скачивание</value>
+  </data>
   <data name="ErrorMessage_ServerIsNotResponse" xml:space="preserve">
     <value>Не удалось подключиться к серверу</value>
   </data>
@@ -160,7 +163,13 @@
     <value>Ок</value>
   </data>
   <data name="MessageBox_TitleAlert" xml:space="preserve">
-    <value>Предупреждение</value>
+    <value>Внимание</value>
+  </data>
+  <data name="OptionsPage_CheckForUpdatesDescriptionLabel" xml:space="preserve">
+    <value>Интерент используется для проверки обнавлений сохраненных данных. Если найдены различия, то будет скачана новая версия. Интернет также используется для загрузки новых данных. Необходимо подключение к интернету</value>
+  </data>
+  <data name="OptionsPage_CheckForUpdatesLabel" xml:space="preserve">
+    <value>Проверять обновления</value>
   </data>
   <data name="OptionsPage_Language" xml:space="preserve">
     <value>Язык</value>
@@ -170,6 +179,18 @@
   </data>
   <data name="OptionsPage_Title" xml:space="preserve">
     <value>Настройки</value>
+  </data>
+  <data name="OptionsPage_UseCacheDescriptionLabel" xml:space="preserve">
+    <value>Кеш сохраняется на устройстве. Это позволит уменьшить использование трафика</value>
+  </data>
+  <data name="OptionsPage_UseCacheLabel" xml:space="preserve">
+    <value>Использовать кеширование</value>
+  </data>
+  <data name="OptionsPage_UseOnlyCacheDescriptionLabel" xml:space="preserve">
+    <value>Будут отображаться только сохраненные данные. Не требуется подключение к интернету</value>
+  </data>
+  <data name="OptionsPage_UseOnlyCacheLabel" xml:space="preserve">
+    <value>Использовать только кеш</value>
   </data>
   <data name="StandPage_Title" xml:space="preserve">
     <value>выбор экспоната</value>

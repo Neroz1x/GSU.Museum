@@ -124,6 +124,9 @@
   <data name="ErrorMessage_LoadingFaild" xml:space="preserve">
     <value>Не атрымалася загрузіць старонку. Праверце падлучэнне да інтэрнэту і налады кэшавання</value>
   </data>
+  <data name="ErrorMessage_NotFoundInCache" xml:space="preserve">
+    <value>Не удалось загрузить данные из кеша. Установить пункт Не атрымалася загрузіць дадзеныя з кэшу. Усталюйце пункт "Правяраць абнаўленнi" у наладах, каб дазволіць запампоўка</value>
+  </data>
   <data name="ErrorMessage_ServerIsNotResponse" xml:space="preserve">
     <value>Не атрымалася падлучыцца да сервера</value>
   </data>
@@ -158,7 +161,13 @@
     <value>Так</value>
   </data>
   <data name="MessageBox_TitleAlert" xml:space="preserve">
-    <value>Папярэджанне</value>
+    <value>Увага</value>
+  </data>
+  <data name="OptionsPage_CheckForUpdatesDescriptionLabel" xml:space="preserve">
+    <value>Інтэрэнт выкарыстоўваецца для праверкі обнавлений захаваных дадзеных. Калі знойдзены адрозненні, то будзе запампавана новая версія. Інтэрнэт таксама выкарыстоўваецца для загрузкі новых дадзеных. Неабходна падлучэнне да інтэрнэту</value>
+  </data>
+  <data name="OptionsPage_CheckForUpdatesLabel" xml:space="preserve">
+    <value>Правяраць абнаўленнi</value>
   </data>
   <data name="OptionsPage_Language" xml:space="preserve">
     <value>Мова</value>
@@ -168,6 +177,18 @@
   </data>
   <data name="OptionsPage_Title" xml:space="preserve">
     <value>Налады</value>
+  </data>
+  <data name="OptionsPage_UseCacheDescriptionLabel" xml:space="preserve">
+    <value>Кэш будзе захоўвацца на вашым мабільным сховішчы. Гэта зніжае выкарыстанне Інтэрнэту</value>
+  </data>
+  <data name="OptionsPage_UseCacheLabel" xml:space="preserve">
+    <value>Выкарыстоўвць кэш</value>
+  </data>
+  <data name="OptionsPage_UseOnlyCacheDescriptionLabel" xml:space="preserve">
+    <value>Будуць адлюстроўвацца толькі захаваныя дадзеныя. Не патрабуецца падлучэнне да інтэрнэту</value>
+  </data>
+  <data name="OptionsPage_UseOnlyCacheLabel" xml:space="preserve">
+    <value>Выкарыстоўваць толькі кэш</value>
   </data>
   <data name="StandPage_Title" xml:space="preserve">
     <value>выбар экспанату</value>

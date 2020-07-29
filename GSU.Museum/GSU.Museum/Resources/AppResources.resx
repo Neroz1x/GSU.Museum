@@ -123,6 +123,9 @@
   <data name="ErrorMessage_LoadingFaild" xml:space="preserve">
     <value>Can not load page. Check Internet connection and caching settings</value>
   </data>
+  <data name="ErrorMessage_NotFoundInCache" xml:space="preserve">
+    <value>Can not found data in cache. Set "Сheck for updates" field in settings to allow downloading data</value>
+  </data>
   <data name="ErrorMessage_ServerIsNotResponse" xml:space="preserve">
     <value>Can not connect to the server</value>
   </data>
@@ -131,7 +134,6 @@
   </data>
   <data name="HallPage_Title" xml:space="preserve">
     <value>stand selection</value>
-    <comment> </comment>
   </data>
   <data name="HomePage_MainText" xml:space="preserve">
     <value>This application helps to visit F. Scorina GSU Museum. It contains information about stands and exhibits.</value>
@@ -160,6 +162,12 @@
   <data name="MessageBox_TitleAlert" xml:space="preserve">
     <value>Alert</value>
   </data>
+  <data name="OptionsPage_CheckForUpdatesDescriptionLabel" xml:space="preserve">
+    <value>The Internet is used to check cached data for updates. If there are changes, they will be downloaded. The Internet will also be used to download new data. It require connection to the Internet</value>
+  </data>
+  <data name="OptionsPage_CheckForUpdatesLabel" xml:space="preserve">
+    <value>Check for updates</value>
+  </data>
   <data name="OptionsPage_Language" xml:space="preserve">
     <value>Language</value>
   </data>
@@ -168,6 +176,18 @@
   </data>
   <data name="OptionsPage_Title" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="OptionsPage_UseCacheDescriptionLabel" xml:space="preserve">
+    <value>Cache will be saved on your mobile storage. It reduces the Internet usage</value>
+  </data>
+  <data name="OptionsPage_UseCacheLabel" xml:space="preserve">
+    <value>Use cahce</value>
+  </data>
+  <data name="OptionsPage_UseOnlyCacheDescriptionLabel" xml:space="preserve">
+    <value>Only cached data will be displayed. No need connetction to the Internet</value>
+  </data>
+  <data name="OptionsPage_UseOnlyCacheLabel" xml:space="preserve">
+    <value>Use only cache</value>
   </data>
   <data name="StandPage_Title" xml:space="preserve">
     <value>exhibit selection</value>
