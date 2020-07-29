@@ -8,6 +8,7 @@
         Update_error,
         Unauthorized,
         Unhandled_exception,
-        Failed_Connection
+        Failed_Connection,
+        Not_Found_In_Cache
     }
 }
