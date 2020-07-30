@@ -11,30 +11,42 @@
         <Label Text="{x:Static resources:AppResources.MainPage_Title}" Style="{StaticResource PageTitle}" />
     </NavigationPage.TitleView>
     <Grid>
-        <StackLayout IsVisible="{Binding ContentVisibility}" Padding="10">
-            <Label Style="{StaticResource DefaultMenuItemHeader}" 
+        <ScrollView IsVisible="{Binding ContentVisibility}" Padding="10">
+            <StackLayout >
+                <Label Style="{StaticResource DefaultMenuItemHeader}" 
                    Text="{x:Static resources:AppResources.MainPage_MenuDescription}"/>
-            <CollectionView x:Name="HallsCollectionView" SelectionMode="Single" ItemsSource="{Binding Halls}"
+                <CollectionView HeightRequest="{Binding CollectionViewHeight}" x:Name="HallsCollectionView" SelectionMode="Single" ItemsSource="{Binding Halls}"
                     SelectionChangedCommand="{Binding SelectHallCommand}"
                     SelectionChangedCommandParameter="{Binding SelectedItem.Id, Source={x:Reference HallsCollectionView}}">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout ItemSpacing="20" Orientation="Vertical"/>
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame 
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="20" Orientation="Vertical"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame 
                             Style="{StaticResource TransparentMenuItem}">
-                            <Grid>
-                                <Image Style="{StaticResource MenuImage}" 
+                                <Grid>
+                                    <Image Style="{StaticResource MenuImage}" 
                                        Source="{Binding Photo.Photo, Converter={StaticResource ByteArrayToImage}}" />
-                                <Label Style="{StaticResource WhiteMenuItemHeader}"
+                                    <Label Style="{StaticResource WhiteMenuItemHeader}"
                                     Text="{Binding Title}"/>
-                            </Grid>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </StackLayout>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.EmptyView>
+                        <StackLayout>
+                            <Button Text="{x:Static resources:AppResources.Button_HomePage}" Style="{StaticResource DefaultButton}" 
+                        Command="{Binding NavigateToHomePageCommand}"/>
+                        </StackLayout>
+                    </CollectionView.EmptyView>
+                </CollectionView>
+                <StackLayout Margin="0, 10">
+                    <Button Text="{x:Static resources:AppResources.Button_HomePage}" Style="{StaticResource DefaultButton}" 
+                        Command="{Binding NavigateToHomePageCommand}"/>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
         <Button Text="Reload" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding ReloadButtonVisibility}" Command="{Binding GetHallsCommand}"/>
         <ActivityIndicator IsVisible="{Binding IsBusy}" 
                            IsRunning="True" 

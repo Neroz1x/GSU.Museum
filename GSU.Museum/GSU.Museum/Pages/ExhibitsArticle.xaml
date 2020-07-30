@@ -7,6 +7,7 @@
              mc:Ignorable="d"
              x:Class="GSU.Museum.Shared.Pages.ExhibitsArticle"
              Appearing="ContentPage_Appearing"
+             xmlns:resources="clr-namespace:GSU.Museum.Shared.Resources"
              >
     <NavigationPage.TitleView>
         <Label Text="{Binding Title}" Style="{StaticResource PageTitle}" />
@@ -36,8 +37,16 @@
 
                 <Controls:JustifiedLabel Text="{Binding Text}" 
                                          Style="{StaticResource DefaultLabel}"/>
-                <Button Text="Main menu" Style="{StaticResource DefaultButton}" 
-                        Command="{Binding NavigateToMainMenuCommand}"/>
+                <StackLayout Margin="0, 10">
+                    <Button Text="{x:Static resources:AppResources.Button_HomePage}" Style="{StaticResource DefaultButton}" 
+                        Command="{Binding NavigateToHomePageCommand}"/>
+                    <Button Text="{x:Static resources:AppResources.Button_HallSelectionPage}" Style="{StaticResource DefaultButton}" 
+                        Command="{Binding NavigateToHallSelectionPageCommand}"/>
+                    <Button Text="{x:Static resources:AppResources.Button_StandSelectionPage}" Style="{StaticResource DefaultButton}" 
+                        Command="{Binding NavigateToStandSelectionPageCommand}"/>
+                    <Button Text="{x:Static resources:AppResources.Button_ExhibitSelectionPage}" Style="{StaticResource DefaultButton}" 
+                        Command="{Binding NavigateToExhibitSelectionPageCommand}"/>
+                </StackLayout>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

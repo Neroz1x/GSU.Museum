@@ -17,6 +17,8 @@ namespace GSU.Museum.Shared.ViewModels
         public INavigation Navigation;
         public Command GetStandsCommand { get; }
         public Command SelectStandCommand { get; }
+        public Command NavigateToHomePageCommand { get; }
+        public Command NavigateToHallSelectionPageCommand { get; }
         public ObservableCollection<StandDTO> Stands { get; }
 
         // Visibility of page content
@@ -57,6 +59,25 @@ namespace GSU.Museum.Shared.ViewModels
             }
         }
 
+        // Height of collection vire
+        private double _collectionViewHeight;
+        public double CollectionViewHeight
+        {
+            get
+            {
+                return _collectionViewHeight;
+            }
+
+            set
+            {
+                if (value != _collectionViewHeight)
+                {
+                    _collectionViewHeight = value;
+                }
+                OnPropertyChanged(nameof(CollectionViewHeight));
+            }
+        }
+
         // Title of the page
         private string _title;
         public string Title
@@ -86,6 +107,8 @@ namespace GSU.Museum.Shared.ViewModels
             Stands = new ObservableCollection<StandDTO>();
             GetStandsCommand = new Command(async () => await GetStands());
             SelectStandCommand = new Command(async id => await SelectStand(id.ToString()));
+            NavigateToHomePageCommand = new Command(() => App.Current.MainPage = new NavigationPage(new HomePage()));
+            NavigateToHallSelectionPageCommand = new Command(async () => await Navigation.PushAsync(new MainPage()));
         }
 
         #region Methods
@@ -100,7 +123,7 @@ namespace GSU.Museum.Shared.ViewModels
                 Stands.Clear();
                 foreach (var stand in hall.Stands)
                 {
-                    if(string.IsNullOrEmpty(stand.Title) || string.IsNullOrEmpty(stand.Description) || stand.State == false)
+                    if(string.IsNullOrEmpty(stand.Title) || string.IsNullOrEmpty(stand.Description) || stand.State == false || stand.Photo?.Photo == null)
                     {
                         continue;
                     }
@@ -113,6 +136,9 @@ namespace GSU.Museum.Shared.ViewModels
                 }
                 else
                 {
+                    var height = Math.Round(App.Current.MainPage.Width - (0.1 * App.Current.MainPage.Width)) / 2;
+                    height = height * Stands.Count + (Stands.Count - 1) * 20 + 1;
+                    CollectionViewHeight = height;
                     ContentVisibility = true;
                 }
             }
@@ -120,12 +146,19 @@ namespace GSU.Museum.Shared.ViewModels
             {
                 if (ex is Error error)
                 {
-                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, error.Info, AppResources.MessageBox_ButtonOk);
+                    if (error.ErrorCode == CommonClassLibrary.Enums.Errors.Failed_Connection)
+                    {
+                        await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, error.Info, AppResources.MessageBox_ButtonOk);
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, error.Info, AppResources.MessageBox_ButtonOk);
+                    }
                     await Navigation.PopAsync();
                 }
                 else if(ex is HttpRequestException || ex is WebException)
                 {
-                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, AppResources.ErrorMessage_ServerIsNotResponse, AppResources.MessageBox_ButtonOk);
+                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, AppResources.ErrorMessage_ServerIsNotResponse, AppResources.MessageBox_ButtonOk);
                     await Navigation.PopAsync();
                 }
                 else

@@ -18,6 +18,9 @@ namespace GSU.Museum.Shared.ViewModels
         public INavigation Navigation;
         public Command GetExhibitsCommand { get; }
         public Command SelectExhibitCommand { get; }
+        public Command NavigateToHomePageCommand { get; }
+        public Command NavigateToHallSelectionPageCommand { get; }
+        public Command NavigateToStandSelectionPageCommand { get; }
         public ObservableCollection<ExhibitDTO> Exhibits { get; }
 
         // Visibility of page content
@@ -58,6 +61,25 @@ namespace GSU.Museum.Shared.ViewModels
             }
         }
 
+        // Height of collection vire
+        private double _collectionViewHeight;
+        public double CollectionViewHeight
+        {
+            get
+            {
+                return _collectionViewHeight;
+            }
+
+            set
+            {
+                if (value != _collectionViewHeight)
+                {
+                    _collectionViewHeight = value;
+                }
+                OnPropertyChanged(nameof(CollectionViewHeight));
+            }
+        }
+
         // Title of the page
         private string _title;
         public string Title
@@ -89,6 +111,9 @@ namespace GSU.Museum.Shared.ViewModels
             Exhibits = new ObservableCollection<ExhibitDTO>();
             GetExhibitsCommand = new Command(async () => await GetExhibits());
             SelectExhibitCommand = new Command(async Id => await SelectExhibit((string)Id));
+            NavigateToHomePageCommand = new Command(() => App.Current.MainPage = new NavigationPage(new HomePage()));
+            NavigateToHallSelectionPageCommand = new Command(async () => await Navigation.PushAsync(new MainPage()));
+            NavigateToStandSelectionPageCommand = new Command(async () => await Navigation.PushAsync(new HallPage(hallId)));
         }
 
         #region Methods
@@ -116,6 +141,9 @@ namespace GSU.Museum.Shared.ViewModels
                 }
                 else
                 {
+                    var height = Math.Round(App.Current.MainPage.Width - (0.1 * App.Current.MainPage.Width)) / 2;
+                    height = height * Exhibits.Count + (Exhibits.Count - 1) * 20 + 1;
+                    CollectionViewHeight = height;
                     ContentVisibility = true;
                 }
             }
@@ -123,12 +151,19 @@ namespace GSU.Museum.Shared.ViewModels
             {
                 if (ex is Error error)
                 {
-                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, error.Info, AppResources.MessageBox_ButtonOk);
+                    if (error.ErrorCode == CommonClassLibrary.Enums.Errors.Failed_Connection)
+                    {
+                        await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, error.Info, AppResources.MessageBox_ButtonOk);
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, error.Info, AppResources.MessageBox_ButtonOk);
+                    }
                     await Navigation.PopAsync();
                 }
                 else if (ex is HttpRequestException || ex is WebException)
                 {
-                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, AppResources.ErrorMessage_ServerIsNotResponse, AppResources.MessageBox_ButtonOk);
+                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, AppResources.ErrorMessage_ServerIsNotResponse, AppResources.MessageBox_ButtonOk);
                     await Navigation.PopAsync();
                 }
                 else
@@ -149,17 +184,24 @@ namespace GSU.Museum.Shared.ViewModels
             {
                 IsBusy = true;
                 var exhibit = await DependencyService.Get<ContentLoaderService>().LoadExhibitAsync(_hallId, _standId, id);
-                await Navigation.PushAsync(new ExhibitsArticle(exhibit));
+                await Navigation.PushAsync(new ExhibitsArticle(exhibit, _hallId, _standId));
             }
             catch(Exception ex)
             {
                 if (ex is Error error)
                 {
-                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, error.Info, AppResources.MessageBox_ButtonOk);
+                    if(error.ErrorCode == CommonClassLibrary.Enums.Errors.Failed_Connection)
+                    {
+                        await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, error.Info, AppResources.MessageBox_ButtonOk);
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, error.Info, AppResources.MessageBox_ButtonOk);
+                    }
                 }
                 else if (ex is HttpRequestException || ex is WebException)
                 {
-                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, AppResources.ErrorMessage_ServerIsNotResponse, AppResources.MessageBox_ButtonOk);
+                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, AppResources.ErrorMessage_ServerIsNotResponse, AppResources.MessageBox_ButtonOk);
                 }
                 else
                 {

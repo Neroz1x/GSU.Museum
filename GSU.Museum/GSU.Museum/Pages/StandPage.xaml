@@ -5,31 +5,44 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="GSU.Museum.Shared.Pages.StandPage"
-             Appearing="ContentPage_Appearing">
+             Appearing="ContentPage_Appearing"
+             xmlns:resources="clr-namespace:GSU.Museum.Shared.Resources">
     <NavigationPage.TitleView>
         <Label Text="{Binding Title}" Style="{StaticResource PageTitle}" />
     </NavigationPage.TitleView>
     <Grid>
-        <StackLayout Padding="10" IsVisible="{Binding ContentVisibility}">
-            <CollectionView x:Name="ExhibitsCollectionView" SelectionMode="Single" ItemsSource="{Binding Exhibits}"
+        <ScrollView Padding="10" IsVisible="{Binding ContentVisibility}">
+            <StackLayout>
+                <CollectionView x:Name="ExhibitsCollectionView" SelectionMode="Single"
+                        HeightRequest="{Binding CollectionViewHeight}"
+                        ItemsSource="{Binding Exhibits}"
                         SelectionChangedCommand="{Binding SelectExhibitCommand}"
                         SelectionChangedCommandParameter="{Binding SelectedItem.Id, Source={x:Reference ExhibitsCollectionView}}">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout ItemSpacing="20" Orientation="Vertical"/>
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame 
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="20" Orientation="Vertical"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame 
                             Style="{StaticResource DefaultMenuItem}">
-                            <StackLayout VerticalOptions="Fill">
-                                <Label Style="{StaticResource WhiteTransparentMenuItemHeader}" Text="{Binding Title}"></Label>
-                                <Label Style="{StaticResource WhiteTransparentMenuItemBody}" Text="{Binding Description}"></Label>
-                            </StackLayout>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </StackLayout>
+                                <StackLayout VerticalOptions="Fill">
+                                    <Label Style="{StaticResource WhiteTransparentMenuItemHeader}" Text="{Binding Title}"></Label>
+                                    <Label Style="{StaticResource WhiteTransparentMenuItemBody}" Text="{Binding Description}"></Label>
+                                </StackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <StackLayout Margin="0, 10">
+                    <Button Text="{x:Static resources:AppResources.Button_HomePage}" Style="{StaticResource DefaultButton}" 
+                        Command="{Binding NavigateToHomePageCommand}"/>
+                    <Button Text="{x:Static resources:AppResources.Button_HallSelectionPage}" Style="{StaticResource DefaultButton}" 
+                        Command="{Binding NavigateToHallSelectionPageCommand}"/>
+                    <Button Text="{x:Static resources:AppResources.Button_StandSelectionPage}" Style="{StaticResource DefaultButton}" 
+                        Command="{Binding NavigateToStandSelectionPageCommand}"/>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
         <ActivityIndicator IsVisible="{Binding IsBusy}" 
                            IsRunning="True" 
                            Color="HotPink" 

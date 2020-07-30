@@ -1,7 +1,7 @@
 ﻿using GSU.Museum.CommonClassLibrary.Models;
+using GSU.Museum.Shared.Pages;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 
@@ -11,7 +11,10 @@ namespace GSU.Museum.Shared.ViewModels
     {
         #region Fields
         public INavigation Navigation;
-        public Command NavigateToMainMenuCommand { get; }
+        public Command NavigateToHomePageCommand { get; }
+        public Command NavigateToHallSelectionPageCommand { get; }
+        public Command NavigateToStandSelectionPageCommand { get; }
+        public Command NavigateToExhibitSelectionPageCommand { get; }
         public ObservableCollection<ImageSource> Photos { get; }
         
         public ExhibitDTO Exhibit;
@@ -92,13 +95,22 @@ namespace GSU.Museum.Shared.ViewModels
             }
         }
         #endregion
-
-        public ExhibitsArticleViewModel(ExhibitDTO exhibit, INavigation navigation)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="exhibit">Exhibit to display</param>
+        /// <param name="navigation">Instance of navigation</param>
+        /// <param name="hallId">Id of the hall</param>
+        /// <param name="standId">Id of the stand</param>
+        public ExhibitsArticleViewModel(ExhibitDTO exhibit, INavigation navigation, string hallId, string standId)
         {
             Navigation = navigation;
             Exhibit = exhibit;
             Photos = new ObservableCollection<ImageSource>();
-            NavigateToMainMenuCommand = new Command(async () => await NavigateToMainMenu());
+            NavigateToHomePageCommand = new Command(() => App.Current.MainPage = new NavigationPage(new HomePage()));
+            NavigateToHallSelectionPageCommand = new Command(async () => await Navigation.PushAsync(new MainPage()));
+            NavigateToStandSelectionPageCommand = new Command(async () => await Navigation.PushAsync(new HallPage(hallId)));
+            NavigateToExhibitSelectionPageCommand = new Command(async () => await Navigation.PushAsync(new StandPage(hallId, standId)));
         }
 
         #region Methods
@@ -130,11 +142,6 @@ namespace GSU.Museum.Shared.ViewModels
             }
             Title = Exhibit.Title;
             Text = Exhibit.Text;
-        }
-
-        public async Task NavigateToMainMenu()
-        {
-            await Navigation.PushAsync(new MainPage());
         }
         #endregion
     }
