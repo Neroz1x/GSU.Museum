@@ -8,6 +8,7 @@
              xmlns:resources="clr-namespace:GSU.Museum.Shared.Resources"
              Appearing="ContentPage_Appearing"
              Disappearing="ContentPage_Disappearing"
+             xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
              >
     <NavigationPage.TitleView>
         <Label Text="{x:Static resources:AppResources.HomePage_PageTitle}" Style="{StaticResource PageTitle}" />
@@ -19,13 +20,13 @@
                        Text="{x:Static resources:AppResources.HomePage_Title}"/>
                 <Label Style="{StaticResource DefaultMenuItemBody}" 
                        Text="{x:Static resources:AppResources.HomePage_MainText}"/>
-                <CarouselView PeekAreaInsets="50" ItemsSource="{Binding Images}" x:Name="Carousel" HeightRequest="100">
-                    <CarouselView.ItemTemplate>
+                <cards:CarouselView IsCyclical="True" ItemsSource="{Binding Images}" x:Name="Carousel" HeightRequest="100">
+                    <cards:CarouselView.ItemTemplate>
                         <DataTemplate>
                             <Image WidthRequest="300" Source="{Binding .}"></Image>
                         </DataTemplate>
-                    </CarouselView.ItemTemplate>
-                </CarouselView>
+                    </cards:CarouselView.ItemTemplate>
+                </cards:CarouselView>
                 <Button Text="{x:Static resources:AppResources.HomePage_MenuItem_MainPage}" 
                         Command="{Binding NavigateToMainPageCommand}"
                         TextColor="White"

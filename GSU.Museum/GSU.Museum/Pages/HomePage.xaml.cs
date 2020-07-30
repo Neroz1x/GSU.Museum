@@ -20,13 +20,14 @@ namespace GSU.Museum.Shared.Pages
             _isActiveCarousel = true;
             Device.StartTimer(TimeSpan.FromSeconds(5), () =>
             {
-                if (Carousel.Position == 2)
+                if (Carousel.SelectedIndex == Carousel.ItemsCount - 1)
                 {
-                    // Carousel.IsScrollAnimated = false;
-                    Carousel.Position = 0;
-                    // Carousel.IsScrollAnimated = true;
+                    Carousel.SelectedIndex = 0;
                 }
-                Carousel.Position += 1;
+                else
+                {
+                    Carousel.SelectedIndex += 1;
+                }
                 return _isActiveCarousel;
             });
         }

@@ -23,7 +23,6 @@ namespace GSU.Museum.Shared.ViewModels
             Images.Add("Emblem.png");
             Images.Add("Flag.jpeg");
             Images.Add("Shield.jpeg");
-            Images.Add("Emblem.png");
         }
 
         #region Methods
