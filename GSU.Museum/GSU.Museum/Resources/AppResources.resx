@@ -177,6 +177,9 @@
   <data name="MessageBox_TitleError" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="OptionsPage_CacheSectionTitle" xml:space="preserve">
+    <value>Cache settings</value>
+  </data>
   <data name="OptionsPage_CheckForUpdatesDescriptionLabel" xml:space="preserve">
     <value>The Internet is used to check cached data for updates. If there are changes, they will be downloaded. The Internet will also be used to download new data. It require connection to the Internet</value>
   </data>
@@ -188,6 +191,9 @@
   </data>
   <data name="OptionsPage_LanguageDescription" xml:space="preserve">
     <value>Current interface language</value>
+  </data>
+  <data name="OptionsPage_LanguageSectionTitle" xml:space="preserve">
+    <value>Language settings</value>
   </data>
   <data name="OptionsPage_Title" xml:space="preserve">
     <value>Settings</value>

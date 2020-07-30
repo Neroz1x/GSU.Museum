@@ -180,6 +180,9 @@
   <data name="MessageBox_TitleError" xml:space="preserve">
     <value>Ошибка</value>
   </data>
+  <data name="OptionsPage_CacheSectionTitle" xml:space="preserve">
+    <value>Настройки кеширования</value>
+  </data>
   <data name="OptionsPage_CheckForUpdatesDescriptionLabel" xml:space="preserve">
     <value>Интерент используется для проверки обнавлений сохраненных данных. Если найдены различия, то будет скачана новая версия. Интернет также используется для загрузки новых данных. Необходимо подключение к интернету</value>
   </data>
@@ -191,6 +194,9 @@
   </data>
   <data name="OptionsPage_LanguageDescription" xml:space="preserve">
     <value>Текущий язык интерфейса</value>
+  </data>
+  <data name="OptionsPage_LanguageSectionTitle" xml:space="preserve">
+    <value>Настройки языка</value>
   </data>
   <data name="OptionsPage_Title" xml:space="preserve">
     <value>Настройки</value>

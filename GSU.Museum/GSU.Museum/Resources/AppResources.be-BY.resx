@@ -178,6 +178,9 @@
   <data name="MessageBox_TitleError" xml:space="preserve">
     <value>Памылка</value>
   </data>
+  <data name="OptionsPage_CacheSectionTitle" xml:space="preserve">
+    <value>Налады кэшавання</value>
+  </data>
   <data name="OptionsPage_CheckForUpdatesDescriptionLabel" xml:space="preserve">
     <value>Інтэрэнт выкарыстоўваецца для праверкі обнавлений захаваных дадзеных. Калі знойдзены адрозненні, то будзе запампавана новая версія. Інтэрнэт таксама выкарыстоўваецца для загрузкі новых дадзеных. Неабходна падлучэнне да інтэрнэту</value>
   </data>
@@ -189,6 +192,9 @@
   </data>
   <data name="OptionsPage_LanguageDescription" xml:space="preserve">
     <value>Актуальная мова інтэрфейсу</value>
+  </data>
+  <data name="OptionsPage_LanguageSectionTitle" xml:space="preserve">
+    <value>Налады мовы</value>
   </data>
   <data name="OptionsPage_Title" xml:space="preserve">
     <value>Налады</value>
