@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Button_ExhibitSelectionPage" xml:space="preserve">
+    <value>Старонка выбару экспаната</value>
+  </data>
+  <data name="Button_HallSelectionPage" xml:space="preserve">
+    <value>Старонка выбару хола</value>
+  </data>
+  <data name="Button_HomePage" xml:space="preserve">
+    <value>Хатняя старонка</value>
+  </data>
+  <data name="Button_StandSelectionPage" xml:space="preserve">
+    <value>Старонка выбару стэнда</value>
+  </data>
   <data name="ErrorMessage_InProgress" xml:space="preserve">
     <value>Дадзеная старонка не даступная. Паспрабуйце, калі ласка, 
 пазней</value>
@@ -162,6 +174,9 @@
   </data>
   <data name="MessageBox_TitleAlert" xml:space="preserve">
     <value>Увага</value>
+  </data>
+  <data name="MessageBox_TitleError" xml:space="preserve">
+    <value>Памылка</value>
   </data>
   <data name="OptionsPage_CheckForUpdatesDescriptionLabel" xml:space="preserve">
     <value>Інтэрэнт выкарыстоўваецца для праверкі обнавлений захаваных дадзеных. Калі знойдзены адрозненні, то будзе запампавана новая версія. Інтэрнэт таксама выкарыстоўваецца для загрузкі новых дадзеных. Неабходна падлучэнне да інтэрнэту</value>

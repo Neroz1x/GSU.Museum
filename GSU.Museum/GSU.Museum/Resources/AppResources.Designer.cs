@@ -61,6 +61,42 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exhibit selection page.
+        /// </summary>
+        public static string Button_ExhibitSelectionPage {
+            get {
+                return ResourceManager.GetString("Button_ExhibitSelectionPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hall selection page.
+        /// </summary>
+        public static string Button_HallSelectionPage {
+            get {
+                return ResourceManager.GetString("Button_HallSelectionPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home page.
+        /// </summary>
+        public static string Button_HomePage {
+            get {
+                return ResourceManager.GetString("Button_HomePage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stand selection page.
+        /// </summary>
+        public static string Button_StandSelectionPage {
+            get {
+                return ResourceManager.GetString("Button_StandSelectionPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This page is unavailable now. Try later please.
         /// </summary>
         public static string ErrorMessage_InProgress {
@@ -192,6 +228,15 @@ namespace GSU.Museum.Shared.Resources {
         public static string MessageBox_TitleAlert {
             get {
                 return ResourceManager.GetString("MessageBox_TitleAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string MessageBox_TitleError {
+            get {
+                return ResourceManager.GetString("MessageBox_TitleError", resourceCulture);
             }
         }
         

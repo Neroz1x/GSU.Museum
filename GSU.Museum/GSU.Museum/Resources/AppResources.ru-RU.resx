@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Button_ExhibitSelectionPage" xml:space="preserve">
+    <value>Страницы выбора экспоната</value>
+  </data>
+  <data name="Button_HallSelectionPage" xml:space="preserve">
+    <value>Страница выбора холла</value>
+  </data>
+  <data name="Button_HomePage" xml:space="preserve">
+    <value>Домашняя страница</value>
+  </data>
+  <data name="Button_StandSelectionPage" xml:space="preserve">
+    <value>Страница выбора стенда</value>
+  </data>
   <data name="ErrorMessage_InProgress" xml:space="preserve">
     <value>Данная страница недоступна сейчас. Попробуйте, пожалуйста, позже</value>
   </data>
@@ -164,6 +176,9 @@
   </data>
   <data name="MessageBox_TitleAlert" xml:space="preserve">
     <value>Внимание</value>
+  </data>
+  <data name="MessageBox_TitleError" xml:space="preserve">
+    <value>Ошибка</value>
   </data>
   <data name="OptionsPage_CheckForUpdatesDescriptionLabel" xml:space="preserve">
     <value>Интерент используется для проверки обнавлений сохраненных данных. Если найдены различия, то будет скачана новая версия. Интернет также используется для загрузки новых данных. Необходимо подключение к интернету</value>

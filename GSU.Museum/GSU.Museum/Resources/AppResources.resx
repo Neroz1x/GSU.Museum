@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Button_ExhibitSelectionPage" xml:space="preserve">
+    <value>Exhibit selection page</value>
+  </data>
+  <data name="Button_HallSelectionPage" xml:space="preserve">
+    <value>Hall selection page</value>
+  </data>
+  <data name="Button_HomePage" xml:space="preserve">
+    <value>Home page</value>
+  </data>
+  <data name="Button_StandSelectionPage" xml:space="preserve">
+    <value>Stand selection page</value>
+  </data>
   <data name="ErrorMessage_InProgress" xml:space="preserve">
     <value>This page is unavailable now. Try later please</value>
   </data>
@@ -161,6 +173,9 @@
   </data>
   <data name="MessageBox_TitleAlert" xml:space="preserve">
     <value>Alert</value>
+  </data>
+  <data name="MessageBox_TitleError" xml:space="preserve">
+    <value>Error</value>
   </data>
   <data name="OptionsPage_CheckForUpdatesDescriptionLabel" xml:space="preserve">
     <value>The Internet is used to check cached data for updates. If there are changes, they will be downloaded. The Internet will also be used to download new data. It require connection to the Internet</value>
