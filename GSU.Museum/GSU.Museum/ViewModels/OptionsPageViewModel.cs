@@ -1,7 +1,6 @@
 ﻿using GSU.Museum.Shared.Data.Models;
 using GSU.Museum.Shared.Resources;
 using GSU.Museum.Shared.Services;
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Xamarin.Forms;
@@ -365,6 +364,10 @@ namespace GSU.Museum.Shared.ViewModels
             UseOnlyCacheDescriptionLabel = AppResources.OptionsPage_UseOnlyCacheDescriptionLabel;
         }
 
+        /// <summary>
+        /// Performs when detects tap on label
+        /// </summary>
+        /// <param name="labelId">0 if tapped use cahce checkbox; 1 - chech for updates; 2 - use only cahce</param>
         private void OnLabelTap(int labelId)
         {
             switch (labelId)
