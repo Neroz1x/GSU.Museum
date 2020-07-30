@@ -39,7 +39,6 @@
         <Style TargetType="Frame" x:Key="DefaultMenuItem">
             <Setter Property="Visual" Value="Material"></Setter>
             <Setter Property="Padding" Value="0"></Setter>
-            <Setter Property="Margin" Value="20, 10"></Setter>
             <Setter Property="BackgroundColor" Value="#ff2196f3"></Setter>
             <Setter Property="HasShadow" Value="True"></Setter>
             <Setter Property="IsClippedToBounds" Value="True"></Setter>
@@ -52,7 +51,6 @@
         <Style TargetType="Frame" x:Key="TransparentMenuItem">
             <Setter Property="Visual" Value="Material"></Setter>
             <Setter Property="Padding" Value="0"></Setter>
-            <Setter Property="Margin" Value="20, 10"></Setter>
             <Setter Property="BackgroundColor" Value="White"></Setter>
             <Setter Property="HasShadow" Value="True"></Setter>
             <Setter Property="IsClippedToBounds" Value="True"></Setter>
