@@ -22,6 +22,8 @@ namespace GSU.Museum.iOS
         {
             global::Xamarin.Forms.Forms.Init();
 
+            CardsViewRenderer.Preserve()
+
             InitializeNLog();
 
             LoadApplication(new App());

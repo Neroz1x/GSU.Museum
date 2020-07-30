@@ -5,6 +5,7 @@ using Android.OS;
 using Xamarin.Forms;
 using System.Reflection;
 using GSU.Museum.Shared.Services;
+using PanCardView.Droid;
 
 namespace GSU.Museum.Droid
 {
@@ -22,7 +23,8 @@ namespace GSU.Museum.Droid
             
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            
+
+            CardsViewRenderer.Preserve();
             InitializeNLog();
 
             LoadApplication(new App());
