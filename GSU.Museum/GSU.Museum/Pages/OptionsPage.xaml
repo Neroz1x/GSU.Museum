@@ -14,7 +14,7 @@
         <ScrollView >
             <StackLayout Orientation="Vertical" Padding="10, 0">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
-                    <Label Style="{StaticResource OptionsSectionLabelHeader}" Text="Language settings"></Label>
+                    <Label Style="{StaticResource OptionsSectionLabelHeader}" Text="{Binding LanguageSectionTitle}"></Label>
                     <BoxView Style="{StaticResource LineForOptions}"/>
                 </StackLayout>
                 <StackLayout Orientation="Vertical">
@@ -31,7 +31,7 @@
                     <Label Style="{StaticResource OptionsLabelDescription}" Text="{Binding LanguageDescriptionLabel}"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
-                    <Label Style="{StaticResource OptionsSectionLabelHeader}" Text="Cahce settings"></Label>
+                    <Label Style="{StaticResource OptionsSectionLabelHeader}" Text="{Binding UseCacheSectionTitle}"></Label>
                     <BoxView Style="{StaticResource LineForOptions}"/>
                 </StackLayout>
                 <StackLayout Orientation="Vertical">

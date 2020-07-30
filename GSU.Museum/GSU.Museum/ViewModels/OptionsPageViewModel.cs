@@ -362,6 +362,8 @@ namespace GSU.Museum.Shared.ViewModels
             CheckForUpdatesDescriptionLabel = AppResources.OptionsPage_CheckForUpdatesDescriptionLabel;
             UseOnlyCacheLabel = AppResources.OptionsPage_UseOnlyCacheLabel;
             UseOnlyCacheDescriptionLabel = AppResources.OptionsPage_UseOnlyCacheDescriptionLabel;
+            UseCacheSectionTitle = AppResources.OptionsPage_CacheSectionTitle;
+            LanguageSectionTitle = AppResources.OptionsPage_LanguageSectionTitle;
         }
 
         /// <summary>
