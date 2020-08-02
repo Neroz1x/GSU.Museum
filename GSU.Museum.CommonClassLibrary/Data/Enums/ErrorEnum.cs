@@ -9,6 +9,7 @@
         Unauthorized,
         Unhandled_exception,
         Failed_Connection,
-        Not_Found_In_Cache
+        Not_Found_In_Cache,
+        Info
     }
 }
