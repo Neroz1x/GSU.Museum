@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GSU.Museum.CommonClassLibrary.Models;
 using GSU.Museum.Shared.Data.Models;
+using System.IO;
 
 namespace GSU.Museum.Shared.Interfaces
 {
@@ -72,5 +73,18 @@ namespace GSU.Museum.Shared.Interfaces
         /// </summary>
         /// <returns></returns>
         Task WriteSettings();
+
+        /// <summary>
+        /// Write files from stream to path
+        /// </summary>
+        /// <param name="stream">Data to write</param>
+        /// <param name="path">Path to write</param>
+        void WriteCache(Stream stream, string path);
+
+        /// <summary>
+        /// Remove all cache
+        /// </summary>
+        /// <returns></returns>
+        Task ClearCache();
     }
 }

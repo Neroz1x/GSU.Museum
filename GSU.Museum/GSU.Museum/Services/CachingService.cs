@@ -10,6 +10,7 @@ using System.Threading;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using GSU.Museum.CommonClassLibrary.Models;
+using System.IO;
 
 [assembly: Dependency(typeof(CachingService))]
 namespace GSU.Museum.Shared.Services
@@ -177,6 +178,21 @@ namespace GSU.Museum.Shared.Services
             stand.Photo = null;
             await BlobCache.LocalMachine.InsertObject($"{language}{stand.Id}", stand);
             stand.Photo = photo;
+        }
+
+        public void WriteCache(Stream stream, string path)
+        {
+            File.Delete(path);
+            using (FileStream outputFileStream = new FileStream(path, FileMode.CreateNew))
+            {
+                stream.CopyTo(outputFileStream);
+            }
+        }
+
+        public async Task ClearCache()
+        {
+            await BlobCache.LocalMachine.InvalidateAll();
+            await WriteSettings();
         }
     }
 }

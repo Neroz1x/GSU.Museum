@@ -1,6 +1,7 @@
 ﻿using GSU.Museum.CommonClassLibrary.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -87,5 +88,18 @@ namespace GSU.Museum.Shared.Interfaces
         /// <param name="exhibitCached">ExhibitDTO from cache to compare hashes</param>
         /// <returns>ExhibitDTO or exhibitCached if hash codes are equal</returns>
         Task<ExhibitDTO> LoadExhibitAsync(string hallId, string standId, string id, ExhibitDTO exhibitCached);
+
+        /// <summary>
+        /// Load cache
+        /// </summary>
+        /// <returns></returns>
+        Task LoadCacheAsync();
+
+        /// <summary>
+        /// Perform request and return content as Stream
+        /// </summary>
+        /// <param name="uri">Uri to perform request</param>
+        /// <returns></returns>
+        Task<Stream> LoadStreamAsync(Uri uri);
     }
 }

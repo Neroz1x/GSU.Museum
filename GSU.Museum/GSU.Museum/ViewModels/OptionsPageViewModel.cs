@@ -1,19 +1,31 @@
-﻿using GSU.Museum.Shared.Data.Models;
+﻿using GSU.Museum.CommonClassLibrary.Enums;
+using GSU.Museum.CommonClassLibrary.Models;
+using GSU.Museum.Shared.Data.Models;
 using GSU.Museum.Shared.Resources;
 using GSU.Museum.Shared.Services;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace GSU.Museum.Shared.ViewModels
 {
     class OptionsPageViewModel : BaseViewModel
     {
-        #region Fields
-        public Command OnLabelTapCommand { get; }
         public INavigation Navigation;
         public ObservableCollection<Language> Languages { get; }
 
+        #region Commands
+
+        public Command OnLabelTapCommand { get; }
+        public Command ClearCacheCommand { get; }
+        public Command LoadCacheCommand { get; }
+        
+        #endregion
+        
+
+        #region Bindings
         // Title of the page
         private string _title;
         public string Title
@@ -334,6 +346,8 @@ namespace GSU.Museum.Shared.ViewModels
             CheckForUpdatesIsSelected = App.Settings.CheckForUpdates;
             LocalizePage();
             OnLabelTapCommand = new Command(labelId => OnLabelTap(int.Parse(labelId.ToString())));
+            ClearCacheCommand = new Command(async() => await DependencyService.Get<CachingService>().ClearCache());
+            LoadCacheCommand = new Command(async() => await LoadCache());
         }
 
         #region Methods
@@ -389,6 +403,36 @@ namespace GSU.Museum.Shared.ViewModels
                         UseOnlyCacheIsSelected = true;
                     }
                     break;
+            }
+        }
+
+        public async Task LoadCache()
+        {
+            try
+            {
+                await DependencyService.Get<NetworkService>().LoadCacheAsync();
+            }
+            catch(Exception ex)
+            {
+                if(ex is Error er)
+                {
+                    if(er.ErrorCode == Errors.Info)
+                    {
+                        await App.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleInfo, er.Info, AppResources.MessageBox_ButtonOk);
+                    }
+                    else if (er.ErrorCode == Errors.Not_found)
+                    {
+                        await App.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, er.Info, AppResources.MessageBox_ButtonOk);
+                    }
+                    else
+                    {
+                        await App.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, er.Info, AppResources.MessageBox_ButtonOk);
+                    }
+                }
+                else
+                {
+                    await App.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, ex.Message, AppResources.MessageBox_ButtonOk);
+                }
             }
         }
         #endregion

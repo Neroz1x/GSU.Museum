@@ -78,6 +78,10 @@
                         </StackLayout>
                         <Label Style="{StaticResource OptionsLabelDescription}" Text="{Binding UseOnlyCacheDescriptionLabel}"/>
                     </StackLayout>
+                    <StackLayout Orientation="Vertical">
+                        <Button Style="{StaticResource DefaultButton}" Text="Load cache" Command="{Binding LoadCacheCommand}"></Button>
+                        <Button Style="{StaticResource DefaultButton}" Text="Clear cache" Command="{Binding ClearCacheCommand}"></Button>
+                    </StackLayout>
                 </StackLayout>
             </StackLayout>
         </ScrollView>
