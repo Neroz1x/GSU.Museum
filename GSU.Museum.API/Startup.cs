@@ -43,6 +43,7 @@ namespace GSU.Museum.API
             services.AddSingleton<IStandsService, StandsService>();
             services.AddSingleton<IExhibitsService, ExhibitsService>();
             services.AddSingleton<ICompareService, CompareService>();
+            services.AddSingleton<ICacheService, CacheService>();
 
             services.AddSwaggerGen(c =>
             {
