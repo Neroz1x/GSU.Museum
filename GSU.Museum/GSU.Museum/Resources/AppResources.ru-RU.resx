@@ -129,6 +129,12 @@
   <data name="Button_StandSelectionPage" xml:space="preserve">
     <value>Страница выбора стенда</value>
   </data>
+  <data name="ErrorMessage_CacheIsUpToDate" xml:space="preserve">
+    <value>Вы используете последнюю версию кеша</value>
+  </data>
+  <data name="ErrorMessage_CanNotLoadCache" xml:space="preserve">
+    <value>Не удалось загрузить кеш. Попробуйте, пожалуйста, позже</value>
+  </data>
   <data name="ErrorMessage_InProgress" xml:space="preserve">
     <value>Данная страница недоступна сейчас. Попробуйте, пожалуйста, позже</value>
   </data>
@@ -179,6 +185,9 @@
   </data>
   <data name="MessageBox_TitleError" xml:space="preserve">
     <value>Ошибка</value>
+  </data>
+  <data name="MessageBox_TitleInfo" xml:space="preserve">
+    <value>Информация</value>
   </data>
   <data name="OptionsPage_CacheSectionTitle" xml:space="preserve">
     <value>Настройки кеширования</value>

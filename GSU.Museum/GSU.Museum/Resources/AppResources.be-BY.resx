@@ -129,6 +129,12 @@
   <data name="Button_StandSelectionPage" xml:space="preserve">
     <value>Старонка выбару стэнда</value>
   </data>
+  <data name="ErrorMessage_CacheIsUpToDate" xml:space="preserve">
+    <value>Вы выкарыстоўвеце апошнюю версію кэша</value>
+  </data>
+  <data name="ErrorMessage_CanNotLoadCache" xml:space="preserve">
+    <value>Не атрымалася загрузіць кэш. Паспрабуйце, калі ласка, пазней</value>
+  </data>
   <data name="ErrorMessage_InProgress" xml:space="preserve">
     <value>Дадзеная старонка не даступная. Паспрабуйце, калі ласка, 
 пазней</value>
@@ -177,6 +183,9 @@
   </data>
   <data name="MessageBox_TitleError" xml:space="preserve">
     <value>Памылка</value>
+  </data>
+  <data name="MessageBox_TitleInfo" xml:space="preserve">
+    <value>Iнфармацыя</value>
   </data>
   <data name="OptionsPage_CacheSectionTitle" xml:space="preserve">
     <value>Налады кэшавання</value>

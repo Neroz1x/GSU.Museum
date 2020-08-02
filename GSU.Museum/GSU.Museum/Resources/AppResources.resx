@@ -129,6 +129,12 @@
   <data name="Button_StandSelectionPage" xml:space="preserve">
     <value>Stand selection page</value>
   </data>
+  <data name="ErrorMessage_CacheIsUpToDate" xml:space="preserve">
+    <value>Cache is up-to-date</value>
+  </data>
+  <data name="ErrorMessage_CanNotLoadCache" xml:space="preserve">
+    <value>Unable to load cache. Try later, please</value>
+  </data>
   <data name="ErrorMessage_InProgress" xml:space="preserve">
     <value>This page is unavailable now. Try later please</value>
   </data>
@@ -176,6 +182,9 @@
   </data>
   <data name="MessageBox_TitleError" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="MessageBox_TitleInfo" xml:space="preserve">
+    <value>Info</value>
   </data>
   <data name="OptionsPage_CacheSectionTitle" xml:space="preserve">
     <value>Cache settings</value>

@@ -97,6 +97,24 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cache is up-to-date.
+        /// </summary>
+        public static string ErrorMessage_CacheIsUpToDate {
+            get {
+                return ResourceManager.GetString("ErrorMessage_CacheIsUpToDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to load cache. Try later, please.
+        /// </summary>
+        public static string ErrorMessage_CanNotLoadCache {
+            get {
+                return ResourceManager.GetString("ErrorMessage_CanNotLoadCache", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This page is unavailable now. Try later please.
         /// </summary>
         public static string ErrorMessage_InProgress {
@@ -237,6 +255,15 @@ namespace GSU.Museum.Shared.Resources {
         public static string MessageBox_TitleError {
             get {
                 return ResourceManager.GetString("MessageBox_TitleError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        public static string MessageBox_TitleInfo {
+            get {
+                return ResourceManager.GetString("MessageBox_TitleInfo", resourceCulture);
             }
         }
         
