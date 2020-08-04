@@ -1,10 +1,13 @@
 ﻿@model GSU.Museum.Web.Models.StandViewModel
 @{
-    ViewData["Title"] = "EditStand";
+    ViewData["Title"] = "Edit stand";
 }
 
 @{
-    <form method="post" asp-action="Edit" asp-route-hallId="@ViewBag.HallId" asp-controller="Stands" enctype="multipart/form-data">
+    <form id="form" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="@Model.Id" />
+        <input type="hidden" name="hallId" value="@ViewBag.HallId" />
+
         <div class="form-group">
             <label for="titleBe">Belarusian title</label>
             <input type="text" name="titleBe" class="form-control" value="@Model.TitleBe" />
@@ -15,7 +18,7 @@
         </div>
         <div class="form-group">
             <label for="titleEn">English title</label>
-            <input type="text" name="titleEn" class="form-control" value="@Model.TitleEn" />
+            <input type="text" name="titleEn" id="titleEn" class="form-control" value="@Model.TitleEn" />
         </div>
 
         <div class="form-group">
@@ -38,7 +41,7 @@
                     @foreach (var exhibit in Model.Exhibits)
                     {
                         <div class="d-flex flex-row justify-content-between">
-                            <input type="hidden" name="exhibits" value="@exhibit.Id"/>
+                            <input type="hidden" name="exhibits" value="@exhibit.Id" />
                             <p style="width:20%">@exhibit.TitleBe</p> <p style="width:20%">@exhibit.TitleEn</p> <p style="width:20%">@exhibit.TitleRu</p>
                             <div class="d-flex flex-row">
                                 <input type="button" class="btn btn-outline-secondary" onclick="MoveUpRow(this)" value="&#8593;" />
@@ -80,7 +83,7 @@
             </div>
         </div>
         <div class="form-group">
-            <input type="submit" value="Save" class="btn btn-outline-secondary" />
+            <input type="button" onclick="edit('@Model.Id', 'titleEn', '/Stands/Edit/@Model.Id')" value="Save" class="btn btn-outline-secondary" />
         </div>
     </form>
 }

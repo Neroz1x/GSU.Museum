@@ -68,26 +68,26 @@
                 <p>No</p>
             }
         </div>
-            <div class="form-group">
-                <h5>State</h5>
-                <p>@state</p>
-            </div>
-            <div class="form-group">
-                <h5>Photo</h5>
-                @if (Model.Photo != null)
-                {
-                    var base64 = Convert.ToBase64String(Model.Photo.Photo);
-                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-
-                    <img class='img-thumbnail small-image img-small-loaded' src="@imgSrc" />
-                }
-                else
-                {
-                    <label>No photo</label>
-                }
-            </div>
-            <a class="a-btn" asp-controller="Stands" asp-action="Edit" asp-route-id="@Model.Id" asp-route-hallId="@ViewBag.HallId">Edit</a>
-            <a class="a-btn" asp-controller="Stands" asp-action="Delete" asp-route-id="@Model.Id" asp-route-hallId="@ViewBag.HallId">Delete</a>
+        <div class="form-group">
+            <h5>State</h5>
+            <p>@state</p>
         </div>
+        <div class="form-group">
+            <h5>Photo</h5>
+            @if (Model.Photo != null)
+            {
+                var base64 = Convert.ToBase64String(Model.Photo.Photo);
+                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                <img class='img-thumbnail small-image img-small-loaded' src="@imgSrc" />
+            }
+            else
+            {
+                <label>No photo</label>
+            }
+        </div>
+        <a class="a-btn" onclick="loadEditPage('/Stands/Edit/@Model.Id?hallId=@ViewBag.HallId')">Edit</a>
+        <a class="a-btn" onclick="deleteItem('/Stands/Delete/@Model.Id?hallId=@ViewBag.HallId', '@Model.Id')">Delete</a>
+    </div>
 }
 

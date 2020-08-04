@@ -4,7 +4,11 @@
 }
 
 @{
-    <form method="post" asp-action="Edit" asp-route-hallId="@ViewBag.HallId" asp-route-standId="@ViewBag.StandId" asp-controller="Exhibits" enctype="multipart/form-data">
+    <form id="form" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="@Model.Id" />
+        <input type="hidden" name="hallId" value="@ViewBag.HallId" />
+        <input type="hidden" name="standId" value="@ViewBag.StandId" />
+
         <div class="form-group">
             <label for="titleBe">Belarusian title</label>
             <input type="text" name="titleBe" class="form-control" value="@Model.TitleBe" />
@@ -15,19 +19,19 @@
         </div>
         <div class="form-group">
             <label for="titleEn">English title</label>
-            <input type="text" name="titleEn" class="form-control" value="@Model.TitleEn" />
+            <input type="text" name="titleEn" id="titleEn" class="form-control" value="@Model.TitleEn" />
         </div>
         <div class="form-group">
             <label for="descriptionBe">Belarusian description</label>
-            <input type="text" name="descriptionBe" class="form-control" value="@Model.DescriptionBe"/>
+            <input type="text" name="descriptionBe" class="form-control" value="@Model.DescriptionBe" />
         </div>
         <div class="form-group">
             <label for="descriptionRu">Russian description</label>
-            <input type="text" name="descriptionRu" class="form-control" value="@Model.DescriptionRu"/>
+            <input type="text" name="descriptionRu" class="form-control" value="@Model.DescriptionRu" />
         </div>
         <div class="form-group">
             <label for="descriptionEn">English description</label>
-            <input type="text" name="descriptionEn" class="form-control" value="@Model.DescriptionEn"/>
+            <input type="text" name="descriptionEn" class="form-control" value="@Model.DescriptionEn" />
         </div>
         <div class="form-group">
             <label for="textBe">Belarusian text</label>
@@ -71,7 +75,7 @@
             }
         </div>
         <div class="form-group">
-            <input type="submit" value="Save" class="btn btn-outline-secondary" />
+            <input type="button" onclick="edit('@Model.Id', 'titleEn', '/Exhibits/Edit/@Model.Id')" value="Save" class="btn btn-outline-secondary" />
         </div>
     </form>
 }

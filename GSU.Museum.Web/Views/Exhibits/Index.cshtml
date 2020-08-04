@@ -90,8 +90,8 @@
                 <label>No photo</label>
             }
         </div>
-        <a class="a-btn" asp-controller="Exhibits" asp-action="Edit" asp-route-standId="@ViewBag.StandId" asp-route-hallId="@ViewBag.HallId" asp-route-id="@Model.Id">Edit</a>
-        <a class="a-btn" asp-controller="Exhibits" asp-action="Delete" asp-route-standId="@ViewBag.StandId" asp-route-hallId="@ViewBag.HallId" asp-route-id="@Model.Id">Delete</a>
+        <a class="a-btn" onclick="loadEditPage('/Exhibits/Edit/@Model.Id?hallId=@ViewBag.HallId&standId=@ViewBag.StandId')">Edit</a>
+        <a class="a-btn" onclick="deleteItem('/Exhibits/Delete/@Model.Id?hallId=@ViewBag.HallId&standId=@ViewBag.StandId', '@Model.Id')">Delete</a>
     </div>
 }
 
