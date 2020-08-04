@@ -84,6 +84,26 @@ namespace GSU.Museum.Web.Repositories
             {
                 await _gridFS.DeleteAsync(ObjectId.Parse(hallIn.Photo.Id));
             }
+            foreach(var stand in hallIn.Stands)
+            {
+                if (stand.Photo?.Id != null)
+                {
+                    await _gridFS.DeleteAsync(ObjectId.Parse(stand.Photo.Id));
+                }
+                foreach(var exhibit in stand.Exhibits)
+                {
+                    if(exhibit.Photos != null && exhibit.Photos?.Count != 0)
+                    {
+                        foreach(var photo in exhibit.Photos)
+                        {
+                            if (photo?.Id != null)
+                            {
+                                await _gridFS.DeleteAsync(ObjectId.Parse(photo.Id));
+                            }
+                        }
+                    }
+                }
+            }
             await _halls.DeleteOneAsync(hall => hall.Id.Equals(hallIn.Id));
         }
 

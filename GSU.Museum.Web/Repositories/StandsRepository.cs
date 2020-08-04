@@ -76,6 +76,19 @@ namespace GSU.Museum.Web.Repositories
             {
                 await _gridFS.DeleteAsync(ObjectId.Parse(stand.Photo.Id));
             }
+            foreach (var exhibit in stand.Exhibits)
+            {
+                if (exhibit.Photos != null && exhibit.Photos?.Count != 0)
+                {
+                    foreach (var photo in exhibit.Photos)
+                    {
+                        if (photo?.Id != null)
+                        {
+                            await _gridFS.DeleteAsync(ObjectId.Parse(photo.Id));
+                        }
+                    }
+                }
+            }
             var update = Builders<HallViewModel>.Update.PullFilter(hall => hall.Stands,
                                                 stand => stand.Id.Equals(id));
             var result = await _halls
