@@ -22,8 +22,8 @@ function readURL(input) {
     }
 }
 
-$("#inputFile").change(function () {
-    readURL(this);
+$(document).on("change", "#inputFile", function () {
+    readURL($('#inputFile').get()[0]);
 });
 
 function MoveUpRow(button) {
@@ -36,12 +36,32 @@ function MoveDownRow(button) {
     row.insertAfter(row.next());
 }
 
-function MoveLeftRow(button) {
-    var row = $(button).parent();
-    row.insertBefore(row.prev());
+function createPage(url) {
+    $("#content").load(url);
 }
 
-function MoveRightRow(button) {
-    var row = $(button).parent();
-    row.insertAfter(row.next());
+function loadIndexPage(url) {
+    $("#content").load(url);
+}
+
+function loadEditPage(url) {
+    $("#content").load(url);
+}
+
+function deleteItem(url, id) {
+    $("#content").load(url);
+    $('#id' + id).parent().remove();
+}
+
+function edit(id, textId, url) {
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: new FormData($('#form').get()[0]),
+        processData: false,
+        contentType: false
+    });
+
+    $('#el' + id).text($('#' + textId).val());
+    $('#content').empty();
 }
