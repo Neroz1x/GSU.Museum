@@ -19,42 +19,41 @@ namespace GSU.Museum.Web.Controllers
             _formFileToByteConverterService = formFileToByteConverterService;
         }
         [HttpGet]
-        public async Task<IActionResult> Index(string hallId, string standId, string id)
+        public async Task<PartialViewResult> Index(string hallId, string standId, string id)
         {
             ViewBag.HallId = hallId;
             ViewBag.StandId = standId;
-            return View(await _exhibitsRepository.GetAsync(hallId, standId, id));
+            return PartialView("~/Views/Exhibits/Index.cshtml", await _exhibitsRepository.GetAsync(hallId, standId, id));
         }
 
         [HttpGet]
-        public IActionResult Create(string hallId, string standId)
+        public PartialViewResult Create(string hallId, string standId)
         {
             ViewBag.HallId = hallId;
             ViewBag.StandId = standId;
-            return View();
+            return PartialView("~/Views/Exhibits/Create.cshtml");
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(string hallId, string standId, ExhibitViewModel exhibit, IEnumerable<IFormFile> files)
+        public async Task Create(string hallId, string standId, ExhibitViewModel exhibit, IEnumerable<IFormFile> files)
         {
             if (files.Count() != 0)
             {
                 await _formFileToByteConverterService.ConvertAsync(files, exhibit);
             }
             await _exhibitsRepository.CreateAsync(hallId, standId, exhibit);
-            return RedirectToAction("MuseumManagement", "Home");
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(string hallId, string standId, string id)
+        public async Task<PartialViewResult> Edit(string hallId, string standId, string id)
         {
             ViewBag.HallId = hallId;
             ViewBag.StandId = standId;
-            return View(await _exhibitsRepository.GetAsync(hallId, standId, id));
+            return PartialView("~/Views/Exhibits/Edit.cshtml", await _exhibitsRepository.GetAsync(hallId, standId, id));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(string hallId, string standId, ExhibitViewModel exhibit, IEnumerable<IFormFile> files, IEnumerable<string> ids)
+        public async Task Edit(string hallId, string standId, ExhibitViewModel exhibit, IEnumerable<IFormFile> files, IEnumerable<string> ids)
         {
             var initialExhibit = await _exhibitsRepository.GetAsync(hallId, standId, exhibit.Id);
 
@@ -76,14 +75,12 @@ namespace GSU.Museum.Web.Controllers
             }
 
             await _exhibitsRepository.UpdateAsync(hallId, standId, exhibit.Id, exhibit);
-            return RedirectToAction("MuseumManagement", "Home");
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(string hallId, string standId, string id)
+        public async Task Delete(string hallId, string standId, string id)
         {
             await _exhibitsRepository.RemoveAsync(hallId, standId, id);
-            return RedirectToAction("MuseumManagement", "Home");
         }
     }
 }

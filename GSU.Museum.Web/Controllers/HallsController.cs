@@ -19,19 +19,19 @@ namespace GSU.Museum.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string id)
+        public async Task<PartialViewResult> Index(string id)
         {
-            return View(await _hallsRepository.GetAsync(id));
+            return PartialView("~/Views/Halls/Index.cshtml", await _hallsRepository.GetAsync(id));
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public PartialViewResult Create()
         {
-            return View();
+            return PartialView("~/Views/Halls/Create.cshtml");
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(HallViewModel hall, IFormFile file)
+        public async Task Create(HallViewModel hall, IFormFile file)
         {
             if (file != null)
             {
@@ -39,17 +39,16 @@ namespace GSU.Museum.Web.Controllers
             }
             hall.Stands = new List<StandViewModel>();
             await _hallsRepository.CreateAsync(hall);
-            return RedirectToAction("MuseumManagement", "Home");
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(string id)
+        public async Task<PartialViewResult> Edit(string id)
         {
-            return View(await _hallsRepository.GetAsync(id));
+            return PartialView("~/Views/Halls/Edit.cshtml", await _hallsRepository.GetAsync(id));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(HallViewModel hall, byte[] photo, IFormFile file)
+        public async Task Edit(HallViewModel hall, byte[] photo, IFormFile file)
         {
             var initialHall = await _hallsRepository.GetAsync(hall.Id);
             hall.Stands = initialHall.Stands;
@@ -69,14 +68,12 @@ namespace GSU.Museum.Web.Controllers
             }
             
             await _hallsRepository.UpdateAsync(hall.Id, hall);
-            return RedirectToAction("MuseumManagement", "Home");
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(string id)
+        public void Delete(string id)
         {
-            await _hallsRepository.RemoveAsync(id);
-            return RedirectToAction("MuseumManagement", "Home");
+            _hallsRepository.RemoveAsync(id);
         }
     }
 }
