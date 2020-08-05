@@ -3,7 +3,7 @@
 }
 
 @{
-    <form method="post" asp-action="Create" asp-controller="Stands" asp-route-hallId="@ViewBag.HallId" enctype="multipart/form-data">
+    <form method="post" id="form" enctype="multipart/form-data">
         <div class="form-group">
             <label for="titleBe">Belarusian title</label>
             <input type="text" name="titleBe" class="form-control" />
@@ -14,7 +14,7 @@
         </div>
         <div class="form-group">
             <label for="titleEn">English title</label>
-            <input type="text" name="titleEn" class="form-control" />
+            <input type="text" name="titleEn" id="titleEn" class="form-control" />
         </div>
 
         <div class="form-group">
@@ -43,7 +43,7 @@
         </div>
 
         <div class="form-group">
-            <input type="submit" value="Save" class="btn btn-outline-secondary" />
+            <input type="button" onclick="CreateStand('@ViewBag.HallId', 'titleEn')" value="Save" class="btn btn-outline-secondary" />
         </div>
     </form>
 }

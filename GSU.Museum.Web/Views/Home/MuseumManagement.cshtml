@@ -4,10 +4,10 @@
 }
 
 @{
-    <div class="d-flex flex-row">
+    <div class="d-flex flex-row align-items-start">
         <div style="width:30%" class="box-shadow border-right border-bottom">
             <a class="a-btn" onclick="loadView('/Halls/Create')">Add hall</a>
-            <div class="d-flex flex-column">
+            <div class="d-flex flex-column" id="halls">
                 @foreach (var hall in Model)
                 {
                     <div id="elId@{@hall.Id}">
@@ -52,7 +52,7 @@
                 }
             </div>
         </div>
-        <div id="content">
+        <div id="content" class="ml-5">
 
         </div>
     </div>
