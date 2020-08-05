@@ -91,3 +91,45 @@ function Reorder(parendFrom, parentToId) {
         $('#' + parentToId + ' > div[id=elId' + id + ']').insertAfter($('#' + parentToId + ' > a'));
     }
 }
+
+function CreateHall(textId) {
+    $.ajax({
+        url: '/Halls/Create',
+        type: 'POST',
+        data: new FormData($('#form').get()[0]),
+        processData: false,
+        contentType: false,
+        success: function (id) {
+            $('#halls').append("<div id='elId" + id + "'><div style='margin-top: 10px;' class='flex-row'><button class='btn btn-link collapsed' data-toggle='collapse' data-target='#id" + id + "' aria-expanded='false' aria-controls='id" + id + "' style='margin-bottom:3px;padding:2px;'> <i class='fa' aria-hidden='false'></i></button><a class='a-header' id='elName" + id + "' onclick=\"loadView('/Halls/Index/" + id + "')\">" + $('#' + textId).val() + "</a></div><div class='collapse' id='id" + id + "' style='margin-left: 50px'><a class='a-btn' onclick=\"loadView('/Stands/Create?hallId=" + id + "')\">Add stand</a></div></div>");
+            $('#content').empty();
+        }
+    });
+}
+
+function CreateStand(hallId, textId) {
+    $.ajax({
+        url: '/Stands/Create?hallId=' + hallId,
+        type: 'POST',
+        data: new FormData($('#form').get()[0]),
+        processData: false,
+        contentType: false,
+        success: function (id) {
+            $('#id' + hallId).append("<div id='elId" + id + "'><div style='margin-top: 10px;' class='flex-row'><button class='btn btn-link collapsed' data-toggle='collapse' data-target='#id" + id + "' aria-expanded='false' aria-controls='id" + id + "' style='margin-bottom:3px;padding:2px;'> <i class='fa' aria-hidden='false'></i></button><a class='a-header' id='elName" + id + "' onclick=\"loadView('/Stands/Index/" + id + "?hallId=" + hallId + "')\">" + $('#' + textId).val() + "</a></div><div class='collapse' id='id" + id + "' style='margin-left: 50px'><a class='a-btn' onclick=\"loadView('/Exhibits/Create?standId=" + id + "&hallId=" + hallId + "')\">Add exhibit</a></div></div>");
+            $('#content').empty();
+        }
+    });
+}
+
+function CreateExhibit(hallId, standId, textId) {
+    $.ajax({
+        url: '/Exhibits/Create?hallId=' + hallId + '&standId=' + standId,
+        type: 'POST',
+        data: new FormData($('#form').get()[0]),
+        processData: false,
+        contentType: false,
+        success: function (id) {
+            $('#id' + standId).append("<div style='margin-top: 10px;' class='flex-row' id='elId" + id + "'><a class='a-header' id='elName" + id + "' onclick=\"loadView('/Exhibits/Index?id=" + id + "&standId=" + standId + "&hallId=" + hallId + "')\">" + $('#' + textId).val() + "</a></div>");
+            $('#content').empty();
+        }
+    });
+}
