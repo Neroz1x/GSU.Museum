@@ -5,12 +5,12 @@
 
 @{
     <div class="d-flex flex-row">
-        <div style="width:20%">
-            <a class="a-btn" onclick="createPage('/Halls/Create')">Add hall</a>
+        <div style="width:30%" class="box-shadow border-right border-bottom">
+            <a class="a-btn" onclick="loadView('/Halls/Create')">Add hall</a>
             <div class="d-flex flex-column">
                 @foreach (var hall in Model)
                 {
-                    <div>
+                    <div id="elId@{@hall.Id}">
                         <div style="margin-top: 10px;" class="flex-row">
                             <button class="btn btn-link collapsed" data-toggle="collapse"
                                     data-target="#id@{@hall.Id}"
@@ -19,13 +19,13 @@
                                     style="margin-bottom:3px;padding:2px;">
                                 <i class="fa" aria-hidden="false"></i>
                             </button>
-                            <a class="a-header" id="el@{@hall.Id}" onclick="loadIndexPage('/Halls/Index/@hall.Id')">@hall.TitleEn</a>
+                            <a class="a-header" id="elName@{@hall.Id}" onclick="loadView('/Halls/Index/@hall.Id')">@hall.TitleEn</a>
                         </div>
                         <div class="collapse" id="id@{@hall.Id}" style="margin-left: 50px">
-                            <a class="a-btn" onclick="createPage('/Stands/Create?hallId=@hall.Id')">Add stand</a>
+                            <a class="a-btn" onclick="loadView('/Stands/Create?hallId=@hall.Id')">Add stand</a>
                             @foreach (var stand in hall.Stands)
                             {
-                                <div>
+                                <div id="elId@{@stand.Id}">
                                     <div style="margin-top: 10px;" class="flex-row">
                                         <button class="btn btn-link collapsed" data-toggle="collapse"
                                                 data-target="#id@{@stand.Id}"
@@ -34,14 +34,14 @@
                                                 style="margin-bottom:3px;padding:2px;">
                                             <i class="fa" aria-hidden="false"></i>
                                         </button>
-                                        <a class="a-header" id="el@{@stand.Id}" onclick="loadIndexPage('/Stands/Index/@stand.Id?hallId=@hall.Id')">@stand.TitleEn</a>
+                                        <a class="a-header" id="elName@{@stand.Id}" onclick="loadView('/Stands/Index/@stand.Id?hallId=@hall.Id')">@stand.TitleEn</a>
                                     </div>
                                     <div class="collapse" id="id@{@stand.Id}" style="margin-left: 50px">
-                                        <a class="a-btn" onclick="createPage('/Exhibits/Create?standId=@stand.Id&hallId=@hall.Id')">Add exhibit</a>
+                                        <a class="a-btn" onclick="loadView('/Exhibits/Create?standId=@stand.Id&hallId=@hall.Id')">Add exhibit</a>
                                         @foreach (var exhibit in stand.Exhibits)
                                         {
-                                            <div style="margin-top: 10px;" class="flex-row" id="id@{@exhibit.Id} ">
-                                                <a class="a-header" id="el@{@exhibit.Id}" onclick="loadIndexPage('/Exhibits/Index?id=@exhibit.Id&standId=@stand.Id&hallId=@hall.Id')">@exhibit.TitleEn</a>
+                                            <div style="margin-top: 10px;" class="flex-row" id="elId@{@exhibit.Id}">
+                                                <a class="a-header" id="elName@{@exhibit.Id}" onclick="loadView('/Exhibits/Index?id=@exhibit.Id&standId=@stand.Id&hallId=@hall.Id')">@exhibit.TitleEn</a>
                                             </div>
                                         }
                                     </div>

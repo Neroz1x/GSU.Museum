@@ -90,7 +90,7 @@
                 <label>No photo</label>
             }
         </div>
-        <a class="a-btn" onclick="loadEditPage('/Exhibits/Edit/@Model.Id?hallId=@ViewBag.HallId&standId=@ViewBag.StandId')">Edit</a>
+        <a class="a-btn" onclick="loadView('/Exhibits/Edit/@Model.Id?hallId=@ViewBag.HallId&standId=@ViewBag.StandId')">Edit</a>
         <a class="a-btn" onclick="deleteItem('/Exhibits/Delete/@Model.Id?hallId=@ViewBag.HallId&standId=@ViewBag.StandId', '@Model.Id')">Delete</a>
     </div>
 }

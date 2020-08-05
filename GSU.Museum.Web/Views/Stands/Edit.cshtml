@@ -37,7 +37,7 @@
             <h5>Экспонаты</h5>
             @if (Model.Exhibits?.Count != 0)
             {
-                <div>
+                <div id="exhibits">
                     @foreach (var exhibit in Model.Exhibits)
                     {
                         <div class="d-flex flex-row justify-content-between">
@@ -83,7 +83,7 @@
             </div>
         </div>
         <div class="form-group">
-            <input type="button" onclick="edit('@Model.Id', 'titleEn', '/Stands/Edit/@Model.Id')" value="Save" class="btn btn-outline-secondary" />
+            <input type="button" onclick="edit('@Model.Id', 'titleEn', '/Stands/Edit/@Model.Id', 'exhibits')" value="Save" class="btn btn-outline-secondary" />
         </div>
     </form>
 }
