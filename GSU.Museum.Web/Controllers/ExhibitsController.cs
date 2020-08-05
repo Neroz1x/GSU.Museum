@@ -35,13 +35,13 @@ namespace GSU.Museum.Web.Controllers
         }
 
         [HttpPost]
-        public async Task Create(string hallId, string standId, ExhibitViewModel exhibit, IEnumerable<IFormFile> files)
+        public async Task<string> Create(string hallId, string standId, ExhibitViewModel exhibit, IEnumerable<IFormFile> files)
         {
             if (files.Count() != 0)
             {
                 await _formFileToByteConverterService.ConvertAsync(files, exhibit);
             }
-            await _exhibitsRepository.CreateAsync(hallId, standId, exhibit);
+            return await _exhibitsRepository.CreateAsync(hallId, standId, exhibit);
         }
 
         [HttpGet]

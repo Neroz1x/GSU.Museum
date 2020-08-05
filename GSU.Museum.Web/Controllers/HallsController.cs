@@ -31,14 +31,14 @@ namespace GSU.Museum.Web.Controllers
         }
 
         [HttpPost]
-        public async Task Create(HallViewModel hall, IFormFile file)
+        public async Task<string> Create(HallViewModel hall, IFormFile file)
         {
             if (file != null)
             {
                 await _formFileToByteConverterService.ConvertAsync(file, hall);
             }
             hall.Stands = new List<StandViewModel>();
-            await _hallsRepository.CreateAsync(hall);
+            return await _hallsRepository.CreateAsync(hall);
         }
 
         [HttpGet]
