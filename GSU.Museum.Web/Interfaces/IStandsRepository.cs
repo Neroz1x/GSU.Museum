@@ -30,8 +30,8 @@ namespace GSU.Museum.Web.Interfaces
         /// </summary>
         /// <param name="hallId">Hall id</param>
         /// <param name="entity">New record to add</param>
-        /// <returns></returns>
-        Task CreateAsync(string hallId, StandViewModel entity);
+        /// <returns>An id of new record</returns>
+        Task<string> CreateAsync(string hallId, StandViewModel entity);
 
         /// <summary>
         /// Update existing record

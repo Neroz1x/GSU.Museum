@@ -24,7 +24,7 @@ namespace GSU.Museum.Web.Repositories
             _gridFS = new GridFSBucket(database);
         }
 
-        public async Task CreateAsync(string hallId, StandViewModel stand)
+        public async Task<string> CreateAsync(string hallId, StandViewModel stand)
         {
             if (stand.Photo?.Photo != null)
             {
@@ -37,6 +37,7 @@ namespace GSU.Museum.Web.Repositories
             var filter = Builders<HallViewModel>.Filter.Eq("Id", hallId);
             var update = Builders<HallViewModel>.Update.Push("Stands", stand);
             await _halls.UpdateOneAsync(filter, update);
+            return stand.Id;
         }
 
         public async Task<List<StandViewModel>> GetAllAsync(string hallId)

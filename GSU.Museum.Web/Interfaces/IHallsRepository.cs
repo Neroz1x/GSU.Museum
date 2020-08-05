@@ -26,8 +26,8 @@ namespace GSU.Museum.Web.Interfaces
         /// Add new record
         /// </summary>
         /// <param name="entity">New record to add</param>
-        /// <returns></returns>
-        Task CreateAsync(HallViewModel entity);
+        /// <returns>An id of new record</returns>
+        Task<string> CreateAsync(HallViewModel entity);
 
         /// <summary>
         /// Update existing record
