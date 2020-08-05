@@ -1,11 +1,14 @@
-﻿function RemoveBlock(block) {
+﻿// Remove parent block. Used to delete image
+function RemoveBlock(block) {
     $(block).parent().remove();
 }
 
+// Activate input type file by button click
 function LoadFile(id) {
     $(id).click();
 }
 
+// Drow selected images to block with id imageBlock
 function readURL(input) {
     if (input.files) {
         $('#imageBlock').children().remove();
@@ -22,38 +25,44 @@ function readURL(input) {
     }
 }
 
+// Used to invoke method that display selected images
 $(document).on("change", "#inputFile", function () {
     readURL($('#inputFile').get()[0]);
 });
 
+// Move block up. Used to reorder blocks
 function MoveUpRow(button) {
     var row = $(button).parent().parent();
     row.insertBefore(row.prev());
 }
 
+// Move block down. Used to reorder blocks
 function MoveDownRow(button) {
     var row = $(button).parent().parent();
     row.insertAfter(row.next());
 }
 
-function createPage(url) {
+// Load partial view and display in div with id content
+// url - url to send request
+function loadView(url) {
     $("#content").load(url);
 }
 
-function loadIndexPage(url) {
-    $("#content").load(url);
-}
-
-function loadEditPage(url) {
-    $("#content").load(url);
-}
-
+// Send request to controller to perform delete and remove item from menu
+// url - url to send request
+// id - id of the recor to delete
 function deleteItem(url, id) {
     $("#content").load(url);
-    $('#id' + id).parent().remove();
+    $('#elId' + id).remove();
 }
 
-function edit(id, textId, url) {
+
+// Send request to controller to perform edit
+// id - id of edited record
+// textId - id of text to display on menu after edditing
+// url - url to send request to
+// idOfElementsToReorder - if enable elements reordering, else null
+function edit(id, textId, url, idOfElementsToReorder) {
     $.ajax({
         url: url,
         type: 'POST',
@@ -62,6 +71,23 @@ function edit(id, textId, url) {
         contentType: false
     });
 
-    $('#el' + id).text($('#' + textId).val());
+    if (idOfElementsToReorder != null) {
+        var parentFrom = $('#' + idOfElementsToReorder).get()[0];
+        if (parentFrom.children.length > 0) {
+            Reorder(parentFrom, 'id' + id)
+        }
+    }
+
+    $('#elName' + id).text($('#' + textId).val());
     $('#content').empty();
+}
+
+// Reorder elements in navigation menu
+// parentFrom - parent of elements with new ordering
+// parentToId - id of parent of elements in menu
+function Reorder(parendFrom, parentToId) {
+    for (var i = parendFrom.children.length - 1; i >= 0; i--) {
+        id = parendFrom.children[i].children[0].value;
+        $('#' + parentToId + ' > div[id=elId' + id + ']').insertAfter($('#' + parentToId + ' > a'));
+    }
 }
