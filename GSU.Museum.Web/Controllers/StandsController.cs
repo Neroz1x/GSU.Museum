@@ -23,14 +23,14 @@ namespace GSU.Museum.Web.Controllers
         public async Task<PartialViewResult> Index(string hallId, string id)
         {
             ViewBag.HallId = hallId;
-            return PartialView("~/Views/Stands/Index.cshtml", await _standsRepository.GetAsync(hallId, id));
+            return PartialView("~/Views/Shared/Stands/_Index.cshtml", await _standsRepository.GetAsync(hallId, id));
         }
 
         [HttpGet]
         public PartialViewResult Create(string hallId)
         {
             ViewBag.HallId = hallId;
-            return PartialView("~/Views/Stands/Create.cshtml");
+            return PartialView("~/Views/Shared/Stands/_Create.cshtml");
         }
 
         [HttpPost]
@@ -48,7 +48,7 @@ namespace GSU.Museum.Web.Controllers
         public async Task<PartialViewResult> Edit(string hallId, string id)
         {
             ViewBag.HallId = hallId;
-            return PartialView("~/Views/Stands/Edit.cshtml", await _standsRepository.GetAsync(hallId, id));
+            return PartialView("~/Views/Shared/Stands/_Edit.cshtml", await _standsRepository.GetAsync(hallId, id));
         }
 
         [HttpPost]

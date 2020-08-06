@@ -21,13 +21,13 @@ namespace GSU.Museum.Web.Controllers
         [HttpGet]
         public async Task<PartialViewResult> Index(string id)
         {
-            return PartialView("~/Views/Halls/Index.cshtml", await _hallsRepository.GetAsync(id));
+            return PartialView("~/Views/Shared/Halls/_Index.cshtml", await _hallsRepository.GetAsync(id));
         }
 
         [HttpGet]
         public PartialViewResult Create()
         {
-            return PartialView("~/Views/Halls/Create.cshtml");
+            return PartialView("~/Views/Shared/Halls/_Create.cshtml");
         }
 
         [HttpPost]
@@ -44,7 +44,7 @@ namespace GSU.Museum.Web.Controllers
         [HttpGet]
         public async Task<PartialViewResult> Edit(string id)
         {
-            return PartialView("~/Views/Halls/Edit.cshtml", await _hallsRepository.GetAsync(id));
+            return PartialView("~/Views/Shared/Halls/_Edit.cshtml", await _hallsRepository.GetAsync(id));
         }
 
         [HttpPost]

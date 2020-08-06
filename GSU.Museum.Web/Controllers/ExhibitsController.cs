@@ -23,7 +23,7 @@ namespace GSU.Museum.Web.Controllers
         {
             ViewBag.HallId = hallId;
             ViewBag.StandId = standId;
-            return PartialView("~/Views/Exhibits/Index.cshtml", await _exhibitsRepository.GetAsync(hallId, standId, id));
+            return PartialView("~/Views/Shared/Exhibits/_Index.cshtml", await _exhibitsRepository.GetAsync(hallId, standId, id));
         }
 
         [HttpGet]
@@ -31,7 +31,7 @@ namespace GSU.Museum.Web.Controllers
         {
             ViewBag.HallId = hallId;
             ViewBag.StandId = standId;
-            return PartialView("~/Views/Exhibits/Create.cshtml");
+            return PartialView("~/Views/Shared/Exhibits/_Create.cshtml");
         }
 
         [HttpPost]
@@ -49,7 +49,7 @@ namespace GSU.Museum.Web.Controllers
         {
             ViewBag.HallId = hallId;
             ViewBag.StandId = standId;
-            return PartialView("~/Views/Exhibits/Edit.cshtml", await _exhibitsRepository.GetAsync(hallId, standId, id));
+            return PartialView("~/Views/Shared/Exhibits/_Edit.cshtml", await _exhibitsRepository.GetAsync(hallId, standId, id));
         }
 
         [HttpPost]
