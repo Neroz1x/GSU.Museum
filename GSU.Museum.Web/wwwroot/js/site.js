@@ -52,8 +52,11 @@ function loadView(url) {
 // url - url to send request
 // id - id of the recor to delete
 function deleteItem(url, id) {
-    $("#content").load(url);
-    $('#elId' + id).remove();
+    result = confirm("Do you want to delete this item?");
+    if (result) {
+        $("#content").load(url);
+        $('#elId' + id).remove();
+    }
 }
 
 
