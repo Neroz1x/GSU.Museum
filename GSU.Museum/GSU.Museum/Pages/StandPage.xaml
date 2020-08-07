@@ -13,6 +13,8 @@
     <Grid>
         <ScrollView Padding="10" IsVisible="{Binding ContentVisibility}">
             <StackLayout>
+                <Label Style="{StaticResource DefaultMenuItemHeader}" 
+                   Text="{x:Static resources:AppResources.StandPage_MenuDescription}"/>
                 <CollectionView x:Name="ExhibitsCollectionView" SelectionMode="Single"
                         HeightRequest="{Binding CollectionViewHeight}"
                         ItemsSource="{Binding Exhibits}"
@@ -25,10 +27,15 @@
                         <DataTemplate>
                             <Frame 
                             Style="{StaticResource DefaultMenuItem}">
-                                <StackLayout VerticalOptions="Fill">
-                                    <Label Style="{StaticResource WhiteTransparentMenuItemHeader}" Text="{Binding Title}"></Label>
-                                    <Label Style="{StaticResource WhiteTransparentMenuItemBody}" Text="{Binding Description}"></Label>
-                                </StackLayout>
+                                <Grid >
+                                    <Image Style="{StaticResource MenuImage}"
+                                       Source="{Binding Photos[0]?.Photo, Converter={StaticResource ByteArrayToImage}}" />
+                                    <StackLayout Style="{StaticResource TextBackground}"></StackLayout>
+                                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                        <Label Style="{StaticResource WhiteTransparentMenuItemHeader}" Text="{Binding Title}"></Label>
+                                        <Label Style="{StaticResource WhiteTransparentMenuItemBody}" Text="{Binding Description}"></Label>
+                                    </StackLayout>
+                                </Grid>
                             </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
@@ -36,10 +43,6 @@
                 <StackLayout Margin="0, 10">
                     <Button Text="{x:Static resources:AppResources.Button_HomePage}" Style="{StaticResource DefaultButton}" 
                         Command="{Binding NavigateToHomePageCommand}"/>
-                    <Button Text="{x:Static resources:AppResources.Button_HallSelectionPage}" Style="{StaticResource DefaultButton}" 
-                        Command="{Binding NavigateToHallSelectionPageCommand}"/>
-                    <Button Text="{x:Static resources:AppResources.Button_StandSelectionPage}" Style="{StaticResource DefaultButton}" 
-                        Command="{Binding NavigateToStandSelectionPageCommand}"/>
                 </StackLayout>
             </StackLayout>
         </ScrollView>

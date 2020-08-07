@@ -30,8 +30,11 @@
                                 <Grid >
                                     <Image Style="{StaticResource MenuImage}"
                                        Source="{Binding Photo.Photo, Converter={StaticResource ByteArrayToImage}}" />
-                                    <Label Style="{StaticResource WhiteMenuItemHeader}" Text="{Binding Title}"></Label>
-                                    <Label Style="{StaticResource WhiteMenuItemBody}" Text="{Binding Description}"></Label>
+                                    <StackLayout Style="{StaticResource TextBackground}"></StackLayout>
+                                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                        <Label Style="{StaticResource WhiteTransparentMenuItemHeader}" Text="{Binding Title}"></Label>
+                                        <Label Style="{StaticResource WhiteTransparentMenuItemBody}" Text="{Binding Description}"></Label>
+                                    </StackLayout>                                
                                 </Grid>
                             </Frame>
                         </DataTemplate>
@@ -40,8 +43,6 @@
                 <StackLayout Margin="0, 10">
                     <Button Text="{x:Static resources:AppResources.Button_HomePage}" Style="{StaticResource DefaultButton}" 
                         Command="{Binding NavigateToHomePageCommand}"/>
-                    <Button Text="{x:Static resources:AppResources.Button_HallSelectionPage}" Style="{StaticResource DefaultButton}" 
-                        Command="{Binding NavigateToHallSelectionPageCommand}"/>
                 </StackLayout>
             </StackLayout>
         </ScrollView>

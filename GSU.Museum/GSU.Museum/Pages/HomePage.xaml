@@ -16,7 +16,7 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
-                <Label Style="{StaticResource DefaultMenuItemHeader}" 
+                <Label HorizontalOptions="Center" Style="{StaticResource DefaultMenuItemHeader}" 
                        Text="{x:Static resources:AppResources.HomePage_Title}"/>
                 <Label Style="{StaticResource DefaultMenuItemBody}" 
                        Text="{x:Static resources:AppResources.HomePage_MainText}"/>

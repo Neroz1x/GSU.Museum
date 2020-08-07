@@ -28,8 +28,10 @@
                                 <Grid>
                                     <Image Style="{StaticResource MenuImage}" 
                                        Source="{Binding Photo.Photo, Converter={StaticResource ByteArrayToImage}}" />
-                                    <Label Style="{StaticResource WhiteMenuItemHeader}"
-                                    Text="{Binding Title}"/>
+                                    <StackLayout Style="{StaticResource TextBackground}"></StackLayout>
+                                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                        <Label Style="{StaticResource WhiteTransparentMenuItemHeader}" Text="{Binding Title}"></Label>
+                                    </StackLayout>
                                 </Grid>
                             </Frame>
                         </DataTemplate>

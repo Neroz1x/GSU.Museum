@@ -18,9 +18,9 @@
                     <BoxView Style="{StaticResource LineForOptions}"/>
                 </StackLayout>
                 <StackLayout Orientation="Vertical">
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="Fill" >
-                        <Label Style="{StaticResource OptionsLabelHeader}" Text="{Binding LanguageLabel}"/>
-                        <Picker FontSize="Large"
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
+                        <Label HorizontalOptions="StartAndExpand" Style="{StaticResource OptionsLabelHeader}" Text="{Binding LanguageLabel}"/>
+                        <Picker FontSize="Large" 
                             VerticalOptions="Center"
                             WidthRequest="170"
                             HorizontalOptions="End" 
@@ -38,13 +38,13 @@
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
                         <Label Style="{StaticResource OptionsLabelHeader}" Text="{Binding UseCacheLabel}">
                             <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding OnLabelTapCommand}" CommandParameter="0"/>
+                                <TapGestureRecognizer  CommandParameter="0"/>
                             </Label.GestureRecognizers>
                         </Label>
                         <CheckBox HorizontalOptions="Fill" 
                                   VerticalOptions="Center" 
-                                  x:Name="UseCacheCheckBox"
-                                  IsChecked="{Binding UseCacheIsChecked}"
+                                  x:Name="UseCacheCheckBox" IsEnabled="False"
+                                  IsChecked="True"
                             />
                     </StackLayout>
                     <Label Style="{StaticResource OptionsLabelDescription}" Text="{Binding UseCacheDescriptionLabel}"/>
@@ -54,11 +54,12 @@
                         <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
                             <Label Style="{StaticResource OptionsLabelHeader}" Text="{Binding CheckForUpdatesLabel}">
                                 <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding OnLabelTapCommand}" CommandParameter="1"/>
+                                    <TapGestureRecognizer  CommandParameter="1"/>
                                 </Label.GestureRecognizers>
                             </Label>
                             <RadioButton HorizontalOptions="Fill" VerticalOptions="Center" 
-                                IsChecked="{Binding CheckForUpdatesIsSelected}"
+                                IsChecked="True"
+                                IsEnabled="False"
                                 GroupName="CacheStrategy"
                             />
                         </StackLayout>
@@ -68,17 +69,17 @@
                         <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
                             <Label Style="{StaticResource OptionsLabelHeader}" Text="{Binding UseOnlyCacheLabel}">
                                 <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding OnLabelTapCommand}" CommandParameter="2"/>
+                                    <TapGestureRecognizer  CommandParameter="2"/>
                                 </Label.GestureRecognizers>
                             </Label>
                             <RadioButton HorizontalOptions="Fill" VerticalOptions="Center" 
-                                IsChecked="{Binding UseOnlyCacheIsSelected}"
+                                IsChecked="False" IsEnabled="False"
                                 GroupName="CacheStrategy"
                             />
                         </StackLayout>
                         <Label Style="{StaticResource OptionsLabelDescription}" Text="{Binding UseOnlyCacheDescriptionLabel}"/>
                     </StackLayout>
-                    <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Vertical" IsVisible="False">
                         <Button Style="{StaticResource DefaultButton}" Text="Load cache" Command="{Binding LoadCacheCommand}"></Button>
                         <Button Style="{StaticResource DefaultButton}" Text="Clear cache" Command="{Binding ClearCacheCommand}"></Button>
                     </StackLayout>
