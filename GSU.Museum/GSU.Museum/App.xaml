@@ -9,6 +9,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <converters:ByteToImageSourceConverter x:Key="ByteArrayToImage" />
+            <converters:PhotoInfoListToImageSourceConverter x:Key="PhotosListToImage" />
         </ResourceDictionary>
 
         <Style TargetType="BoxView" x:Key="LineForOptions">
@@ -67,7 +68,7 @@
         </Style>
         
         <Style TargetType="Label" x:Key="DefaultMenuItemHeader">
-            <Setter Property="HorizontalOptions" Value="Center"></Setter>
+            <Setter Property="HorizontalOptions" Value="Start"></Setter>
             <Setter Property="TextColor" Value="Black"></Setter>
             <Setter Property="VerticalOptions" Value="Start"></Setter>
             <Setter Property="FontSize" Value="Large"></Setter>
@@ -82,11 +83,16 @@
             <Setter Property="Margin" Value="0, 5, 0, 0"></Setter>
         </Style>
 
+        <Style TargetType="StackLayout" x:Key="TextBackground">
+            <Setter Property="BackgroundColor" Value="#7f000000"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+        </Style>
+        
         <Style TargetType="Label" x:Key="WhiteTransparentMenuItemHeader">
             <Setter Property="BackgroundColor" Value="##00000000"></Setter>
             <Setter Property="HorizontalOptions" Value="Center"></Setter>
             <Setter Property="TextColor" Value="White"></Setter>
-            <Setter Property="VerticalOptions" Value="Start"></Setter>
+            <Setter Property="VerticalOptions" Value="Center"></Setter>
             <Setter Property="FontSize" Value="Large"></Setter>
             <Setter Property="Margin" Value="0, 5, 0, 0"></Setter>
         </Style>
