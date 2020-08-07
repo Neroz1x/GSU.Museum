@@ -34,6 +34,8 @@ namespace GSU.Museum.API.Services
             }
             var exhibits = await _exhibitsRepository.GetAllAsync(hallId, standId);
             MapperConfiguration mapperConfiguration = null;
+            MapperConfiguration mapperConfigurationPhoto = null;
+
             List<ExhibitDTO> exhibitsDTO = new List<ExhibitDTO>();
             if (exhibits != null)
             {
@@ -57,6 +59,13 @@ namespace GSU.Museum.API.Services
                             map => map.Ignore());
                             cfg.AllowNullCollections = true;
                         });
+                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
+                        {
+                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                                    source => source.DescriptionRu));
+                        });
                         break;
                     case "en":
                         mapperConfiguration = new MapperConfiguration(cfg => 
@@ -74,6 +83,13 @@ namespace GSU.Museum.API.Services
                             .ForMember(destination => destination.Photos,
                             map => map.Ignore());
                             cfg.AllowNullCollections = true;
+                        });
+                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
+                        {
+                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                                    source => source.DescriptionEn));
                         });
                         break;
                     case "be":
@@ -93,6 +109,13 @@ namespace GSU.Museum.API.Services
                             map => map.Ignore());
                             cfg.AllowNullCollections = true;
                         });
+                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
+                        {
+                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                                    source => source.DescriptionBe));
+                        });
                         break;
                     default:
                         mapperConfiguration = new MapperConfiguration(cfg =>
@@ -111,10 +134,24 @@ namespace GSU.Museum.API.Services
                             map => map.Ignore());
                             cfg.AllowNullCollections = true;
                         });
+                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
+                        {
+                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
+                            .ForMember(destination => destination.Description,
+                                map => map.MapFrom(
+                                    source => source.DescriptionEn));
+                        });
                         break;
                 }
                 var mapper = new Mapper(mapperConfiguration);
                 exhibitsDTO = mapper.Map<List<ExhibitDTO>>(exhibits);
+
+                mapper = new Mapper(mapperConfigurationPhoto);
+                for(int i = 0; i < exhibits.Count; i++)
+                {
+                    var photoInfoDTO = mapper.Map<List<PhotoInfoDTO>>(exhibits[i].Photos);
+                    exhibitsDTO[i].Photos = photoInfoDTO;
+                }
             }
             return exhibitsDTO;
         }
