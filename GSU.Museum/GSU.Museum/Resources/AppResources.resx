@@ -148,7 +148,7 @@
     <value>Can not connect to the server</value>
   </data>
   <data name="HallPage_MenuDescription" xml:space="preserve">
-    <value>Select stand</value>
+    <value>Select a stand, please</value>
   </data>
   <data name="HallPage_Title" xml:space="preserve">
     <value>stand selection</value>
@@ -169,7 +169,7 @@
     <value>F. Scorina GSU Museum</value>
   </data>
   <data name="MainPage_MenuDescription" xml:space="preserve">
-    <value>Select hall</value>
+    <value>Select a hall, please</value>
   </data>
   <data name="MainPage_Title" xml:space="preserve">
     <value>Hall selection</value>
@@ -211,13 +211,16 @@
     <value>Cache will be saved on your mobile storage. It reduces the Internet usage</value>
   </data>
   <data name="OptionsPage_UseCacheLabel" xml:space="preserve">
-    <value>Use cahce</value>
+    <value>Use cache</value>
   </data>
   <data name="OptionsPage_UseOnlyCacheDescriptionLabel" xml:space="preserve">
     <value>Only cached data will be displayed. No need connetction to the Internet</value>
   </data>
   <data name="OptionsPage_UseOnlyCacheLabel" xml:space="preserve">
     <value>Use only cache</value>
+  </data>
+  <data name="StandPage_MenuDescription" xml:space="preserve">
+    <value>Select an exhibit, please</value>
   </data>
   <data name="StandPage_Title" xml:space="preserve">
     <value>exhibit selection</value>

@@ -151,7 +151,7 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select stand.
+        ///   Looks up a localized string similar to Select a stand, please.
         /// </summary>
         public static string HallPage_MenuDescription {
             get {
@@ -214,7 +214,7 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select hall.
+        ///   Looks up a localized string similar to Select a hall, please.
         /// </summary>
         public static string MainPage_MenuDescription {
             get {
@@ -340,7 +340,7 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use cahce.
+        ///   Looks up a localized string similar to Use cache.
         /// </summary>
         public static string OptionsPage_UseCacheLabel {
             get {
@@ -363,6 +363,15 @@ namespace GSU.Museum.Shared.Resources {
         public static string OptionsPage_UseOnlyCacheLabel {
             get {
                 return ResourceManager.GetString("OptionsPage_UseOnlyCacheLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select an exhibit, please.
+        /// </summary>
+        public static string StandPage_MenuDescription {
+            get {
+                return ResourceManager.GetString("StandPage_MenuDescription", resourceCulture);
             }
         }
         

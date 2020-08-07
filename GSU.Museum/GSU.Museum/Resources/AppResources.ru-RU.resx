@@ -148,7 +148,7 @@
     <value>Не удалось подключиться к серверу</value>
   </data>
   <data name="HallPage_MenuDescription" xml:space="preserve">
-    <value>Выберите стенд</value>
+    <value>Выберите, пожалуйста, стенд</value>
   </data>
   <data name="HallPage_Title" xml:space="preserve">
     <value>выбор стенда</value>
@@ -169,7 +169,7 @@
     <value>Музей ГГУ им. Ф. Скорины</value>
   </data>
   <data name="MainPage_MenuDescription" xml:space="preserve">
-    <value>Выберите холл</value>
+    <value>Выберите, пожалуйста, холл</value>
   </data>
   <data name="MainPage_Title" xml:space="preserve">
     <value>Выбор холла</value>
@@ -221,6 +221,9 @@
   </data>
   <data name="OptionsPage_UseOnlyCacheLabel" xml:space="preserve">
     <value>Использовать только кеш</value>
+  </data>
+  <data name="StandPage_MenuDescription" xml:space="preserve">
+    <value>Выберите, пожалуйста, экспонат</value>
   </data>
   <data name="StandPage_Title" xml:space="preserve">
     <value>выбор экспоната</value>

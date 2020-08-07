@@ -149,7 +149,7 @@
     <value>Не атрымалася падлучыцца да сервера</value>
   </data>
   <data name="HallPage_MenuDescription" xml:space="preserve">
-    <value>Выберыце стэнд</value>
+    <value>Выберыце, калі ласка, стэнд</value>
   </data>
   <data name="HallPage_Title" xml:space="preserve">
     <value>выбар стэнду</value>
@@ -170,7 +170,7 @@
     <value>Музей ГДУ ім Ф. Скарыны</value>
   </data>
   <data name="MainPage_MenuDescription" xml:space="preserve">
-    <value>Выберыце хол</value>
+    <value>Выберыце, калі ласка, хол</value>
   </data>
   <data name="MainPage_Title" xml:space="preserve">
     <value>Выбар холу</value>
@@ -219,6 +219,9 @@
   </data>
   <data name="OptionsPage_UseOnlyCacheLabel" xml:space="preserve">
     <value>Выкарыстоўваць толькі кэш</value>
+  </data>
+  <data name="StandPage_MenuDescription" xml:space="preserve">
+    <value>Выберыце, калі ласка, экспанат</value>
   </data>
   <data name="StandPage_Title" xml:space="preserve">
     <value>выбар экспанату</value>
