@@ -4,7 +4,7 @@ using GSU.Museum.Shared.Resources;
 using GSU.Museum.Shared.Services;
 using System;
 using System.Collections.ObjectModel;
-using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -19,8 +19,6 @@ namespace GSU.Museum.Shared.ViewModels
         public Command GetExhibitsCommand { get; }
         public Command SelectExhibitCommand { get; }
         public Command NavigateToHomePageCommand { get; }
-        public Command NavigateToHallSelectionPageCommand { get; }
-        public Command NavigateToStandSelectionPageCommand { get; }
         public ObservableCollection<ExhibitDTO> Exhibits { get; }
 
         // Visibility of page content
@@ -112,8 +110,6 @@ namespace GSU.Museum.Shared.ViewModels
             GetExhibitsCommand = new Command(async () => await GetExhibits());
             SelectExhibitCommand = new Command(async Id => await SelectExhibit((string)Id));
             NavigateToHomePageCommand = new Command(() => App.Current.MainPage = new NavigationPage(new HomePage()));
-            NavigateToHallSelectionPageCommand = new Command(async () => await Navigation.PushAsync(new MainPage()));
-            NavigateToStandSelectionPageCommand = new Command(async () => await Navigation.PushAsync(new HallPage(hallId)));
         }
 
         #region Methods

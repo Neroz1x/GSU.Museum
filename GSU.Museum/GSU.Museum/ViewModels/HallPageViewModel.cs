@@ -18,7 +18,6 @@ namespace GSU.Museum.Shared.ViewModels
         public Command GetStandsCommand { get; }
         public Command SelectStandCommand { get; }
         public Command NavigateToHomePageCommand { get; }
-        public Command NavigateToHallSelectionPageCommand { get; }
         public ObservableCollection<StandDTO> Stands { get; }
 
         // Visibility of page content
@@ -108,7 +107,6 @@ namespace GSU.Museum.Shared.ViewModels
             GetStandsCommand = new Command(async () => await GetStands());
             SelectStandCommand = new Command(async id => await SelectStand(id.ToString()));
             NavigateToHomePageCommand = new Command(() => App.Current.MainPage = new NavigationPage(new HomePage()));
-            NavigateToHallSelectionPageCommand = new Command(async () => await Navigation.PushAsync(new MainPage()));
         }
 
         #region Methods

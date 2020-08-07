@@ -12,9 +12,6 @@ namespace GSU.Museum.Shared.ViewModels
         #region Fields
         public INavigation Navigation;
         public Command NavigateToHomePageCommand { get; }
-        public Command NavigateToHallSelectionPageCommand { get; }
-        public Command NavigateToStandSelectionPageCommand { get; }
-        public Command NavigateToExhibitSelectionPageCommand { get; }
         public ObservableCollection<ImageSource> Photos { get; }
         
         public ExhibitDTO Exhibit;
@@ -108,9 +105,6 @@ namespace GSU.Museum.Shared.ViewModels
             Exhibit = exhibit;
             Photos = new ObservableCollection<ImageSource>();
             NavigateToHomePageCommand = new Command(() => App.Current.MainPage = new NavigationPage(new HomePage()));
-            NavigateToHallSelectionPageCommand = new Command(async () => await Navigation.PushAsync(new MainPage()));
-            NavigateToStandSelectionPageCommand = new Command(async () => await Navigation.PushAsync(new HallPage(hallId)));
-            NavigateToExhibitSelectionPageCommand = new Command(async () => await Navigation.PushAsync(new StandPage(hallId, standId)));
         }
 
         #region Methods
