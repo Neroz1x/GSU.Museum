@@ -124,7 +124,7 @@ namespace GSU.Museum.Shared.ViewModels
                 Exhibits.Clear();
                 foreach (var exhibit in stand.Exhibits)
                 {
-                    if(string.IsNullOrEmpty(exhibit.Text) || string.IsNullOrEmpty(exhibit.Title) || exhibit.State == false)
+                    if(string.IsNullOrEmpty(exhibit.Text) || string.IsNullOrEmpty(exhibit.Title) || exhibit.State == false || exhibit.Photos == null || exhibit?.Photos.Count == 0)
                     {
                         continue;
                     }

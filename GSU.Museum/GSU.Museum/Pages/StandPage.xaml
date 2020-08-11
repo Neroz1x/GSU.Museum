@@ -29,7 +29,7 @@
                             Style="{StaticResource DefaultMenuItem}">
                                 <Grid >
                                     <Image Style="{StaticResource MenuImage}"
-                                       Source="{Binding Photos[0]?.Photo, Converter={StaticResource ByteArrayToImage}}" />
+                                       Source="{Binding Photos[0].Photo, Converter={StaticResource ByteArrayToImage}}" />
                                     <StackLayout Style="{StaticResource TextBackground}"></StackLayout>
                                     <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
                                         <Label Style="{StaticResource WhiteTransparentMenuItemHeader}" Text="{Binding Title}"></Label>
