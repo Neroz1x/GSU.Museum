@@ -121,7 +121,7 @@ namespace GSU.Museum.Shared.ViewModels
                 Stands.Clear();
                 foreach (var stand in hall.Stands)
                 {
-                    if(string.IsNullOrEmpty(stand.Title) || string.IsNullOrEmpty(stand.Description) || stand.State == false || stand.Photo?.Photo == null)
+                    if(string.IsNullOrEmpty(stand.Title) || string.IsNullOrEmpty(stand.Description) || stand.Photo?.Photo == null)
                     {
                         continue;
                     }

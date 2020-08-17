@@ -121,7 +121,7 @@ namespace GSU.Museum.Shared.ViewModels
                 Halls.Clear();
                 foreach (var hall in halls)
                 {
-                    if(string.IsNullOrEmpty(hall.Title) || hall.State == false)
+                    if(string.IsNullOrEmpty(hall.Title))
                     {
                         continue;
                     }
