@@ -1,59 +1,69 @@
-﻿@{
-    ViewData["Title"] = "AddExhibit";
-}
+﻿@model GSU.Museum.Web.Models.ExhibitViewModel
 
 @{
+    <h3>Добавление экспоната</h3>
     <form method="post" id="form" enctype="multipart/form-data">
         <div class="form-group">
-            <label for="titleBe">Belarusian title</label>
-            <input type="text" name="titleBe" class="form-control" />
+            <label for="titleBe">Название (BY)</label>
+            <span asp-validation-for="TitleBe"></span>
+            <input type="text" placeholder="Название экспоната на белорусском языке" asp-for="TitleBe" class="form-control" />
         </div>
         <div class="form-group">
-            <label for="titleRu">Russian title</label>
-            <input type="text" name="titleRu" class="form-control" />
+            <label for="titleRu">Название (RU)</label>
+            <span asp-validation-for="TitleRu"></span>
+            <input type="text" placeholder="Название экспоната на русском языке" asp-for="TitleRu"  class="form-control" />
         </div>
         <div class="form-group">
-            <label for="titleEn">English title</label>
-            <input type="text" name="titleEn" id="titleEn" class="form-control" />
+            <label for="titleEn">Название (EN)</label>
+            <span asp-validation-for="TitleEn"></span>
+            <input type="text" placeholder="Название экспоната на английском языке" asp-for="TitleEn" class="form-control" />
         </div>
         <div class="form-group">
-            <label for="descriptionBe">Belarusian description</label>
-            <input type="text" name="descriptionBe" class="form-control" />
+            <label for="descriptionBe">Описание экспоната (BY)</label>
+            <span asp-validation-for="DescriptionBe"></span>
+            <input type="text" placeholder="Краткое описание экспоната на белорусском языке" asp-for="DescriptionBe" class="form-control" />
         </div>
         <div class="form-group">
-            <label for="descriptionRu">Russian description</label>
-            <input type="text" name="descriptionRu" class="form-control" />
+            <label for="descriptionRu">Описание экспоната (RU)</label>
+            <span asp-validation-for="DescriptionRu"></span>
+            <input type="text" placeholder="Краткое описание экспоната на русском языке" asp-for="DescriptionRu" class="form-control" />
         </div>
         <div class="form-group">
-            <label for="descriptionEn">English description</label>
-            <input type="text" name="descriptionEn" class="form-control" />
+            <label for="descriptionEn">Описание экспоната (EN)</label>
+            <span asp-validation-for="DescriptionEn"></span>
+            <input type="text" placeholder="Краткое описание экспоната на английском языке" asp-for="DescriptionEn" class="form-control" />
         </div>
         <div class="form-group">
-            <label for="textBe">Belarusian text</label>
-            <textarea style="resize:none" type="text" name="textBe" class="form-control" rows="5"></textarea>
+            <label for="textBe">Текст к экспонату (BE)</label>
+            <span asp-validation-for="TextBe"></span>
+            <textarea style="resize:none" placeholder="Текст к экспонатк на белорусском языке" type="text" asp-for="TextBe" class="form-control" rows="5"></textarea>
         </div>
         <div class="form-group">
-            <label for="textRu">Russian text</label>
-            <textarea style="resize:none" type="text" name="textRu" class="form-control" rows="5"></textarea>
+            <label for="textRu">Текст к экспонату (RU)</label>
+            <span asp-validation-for="TextRu"></span>
+            <textarea style="resize:none" placeholder="Текст к экспонатк на русском языке" type="text" asp-for="TextRu" class="form-control" rows="5"></textarea>
         </div>
         <div class="form-group">
-            <label for="textEn">English text</label>
-            <textarea style="resize:none" type="text" name="textEn" class="form-control" rows="5"></textarea>
+            <label for="textEn">Текст к экспонату (EN)</label>
+            <span asp-validation-for="TextEn"></span>
+            <textarea style="resize:none" placeholder="Текст к экспонатк на английском языке" type="text" asp-for="TextEn" class="form-control" rows="5"></textarea>
         </div>
         <div class="form-group">
-            <label for="state">State</label>
-            <input type="checkbox" id="state" name="state" value="true" class="form-check-inline" />
-            <input type="hidden" id="state" name="state" value="false" />
-        </div>
-        <div class="form-group">
-            <input type="button" onclick="LoadFile('#inputFile')" value="Upload" class="btn btn-outline-secondary" />
-            <input id="inputFile" style="visibility: hidden" type="file" name="files" multiple />
-        </div>
-        <div id="imageBlock" class="d-flex flex-row form-group">
+            <label>Фото</label>
+            <span class="field-validation-valid" id="photoSpan" data-valmsg-for="files" data-valmsg-replace="true"></span>
+            <div id="imageBlock" class="d-flex flex-row form-group flex-wrap">
+            </div>
+            <button type="button" onclick="LoadFile('#inputFile')" class="btn btn-outline-secondary btn-form">
+                <img src="~/images/upload.png" class="img-btn" />Загрузить
+            </button>
+            <input id="inputFile" data-val="true" data-val-required="Выберите фото" style="visibility: hidden" type="file" name="files" multiple />
         </div>
 
+
         <div class="form-group">
-            <input type="button" onclick="CreateExhibit('@ViewBag.HallId', '@ViewBag.StandId', 'titleEn')" value="Save" class="btn btn-outline-secondary" />
+            <button type="button" onclick="CreateExhibit('@ViewBag.HallId', '@ViewBag.StandId', 'TitleRu')" class="btn btn-outline-secondary btn-form">
+                <img src="~/images/save.png" class="img-btn" />Сохранить
+            </button>
         </div>
     </form>
 }

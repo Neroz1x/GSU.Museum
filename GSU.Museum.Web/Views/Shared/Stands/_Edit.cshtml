@@ -1,37 +1,42 @@
 ﻿@model GSU.Museum.Web.Models.StandViewModel
-@{
-    ViewData["Title"] = "Edit stand";
-}
 
 @{
+    <h3>Редактирование - @Model.TitleRu</h3>
+
     <form id="form" enctype="multipart/form-data">
         <input type="hidden" name="id" value="@Model.Id" />
         <input type="hidden" name="hallId" value="@ViewBag.HallId" />
 
         <div class="form-group">
-            <label for="titleBe">Belarusian title</label>
-            <input type="text" name="titleBe" class="form-control" value="@Model.TitleBe" />
+            <label for="titleBe">Название (BY)</label>
+            <span asp-validation-for="TitleBe"></span>
+            <input type="text" asp-for="TitleBe" placeholder="Название стенда на белорусском языке" class="form-control" value="@Model.TitleBe" />
         </div>
         <div class="form-group">
-            <label for="titleRu">Russian title</label>
-            <input type="text" name="titleRu" class="form-control" value="@Model.TitleRu" />
+            <label for="titleRu">Название (RU)</label>
+            <span asp-validation-for="TitleRu"></span>
+            <input type="text" asp-for="TitleRu" placeholder="Название стенда на русском языке" class="form-control" value="@Model.TitleRu" />
         </div>
         <div class="form-group">
-            <label for="titleEn">English title</label>
-            <input type="text" name="titleEn" id="titleEn" class="form-control" value="@Model.TitleEn" />
+            <label for="titleEn">Название (EN)</label>
+            <span asp-validation-for="TitleEn"></span>
+            <input type="text" asp-for="TitleEn" placeholder="Название стенда на английском языке" class="form-control" value="@Model.TitleEn" />
         </div>
 
         <div class="form-group">
-            <label for="descriptionBe">Stand description (Be)</label>
-            <textarea name="descriptionBe" class="form-control textarea-static" rows="3">@Model.DescriptionBe</textarea>
+            <label for="descriptionBe">Описание стенда (BY)</label>
+            <span asp-validation-for="DescriptionBe"></span>
+            <textarea asp-for="DescriptionBe" placeholder="Описание стенда на белорусском языке" class="form-control textarea-static" rows="3">@Model.DescriptionBe</textarea>
         </div>
         <div class="form-group">
-            <label for="descriptionRu">Stand description (Ru)</label>
-            <textarea name="descriptionRu" class="form-control textarea-static" rows="3">@Model.DescriptionRu</textarea>
+            <label for="descriptionRu">Описание стенда (RU)</label>
+            <span asp-validation-for="DescriptionRu"></span>
+            <textarea asp-for="DescriptionRu" placeholder="Описание стенда на русском языке" class="form-control textarea-static" rows="3">@Model.DescriptionRu</textarea>
         </div>
         <div class="form-group">
-            <label for="descriptionEn">Stand description (En)</label>
-            <textarea name="descriptionEn" class="form-control textarea-static" rows="3">@Model.DescriptionEn</textarea>
+            <label for="descriptionEn">Описание стенда (EN)</label>
+            <span asp-validation-for="DescriptionEn"></span>
+            <textarea asp-for="DescriptionEn" placeholder="Описание стенда на английском языке" class="form-control textarea-static" rows="3">@Model.DescriptionEn</textarea>
         </div>
         <div class="form-group">
             <h5>Экспонаты</h5>
@@ -42,7 +47,7 @@
                     {
                         <div class="d-flex flex-row justify-content-between">
                             <input type="hidden" name="exhibits" value="@exhibit.Id" />
-                            <p style="width:20%">@exhibit.TitleBe</p> <p style="width:20%">@exhibit.TitleEn</p> <p style="width:20%">@exhibit.TitleRu</p>
+                            <p style="width:20%">@exhibit.TitleBe</p> <p style="width:20%">@exhibit.TitleRu</p> <p style="width:20%">@exhibit.TitleEn</p>
                             <div class="d-flex flex-row">
                                 <input type="button" class="btn btn-outline-secondary" onclick="MoveUpRow(this)" value="&#8593;" />
                                 <input type="button" class="btn btn-outline-secondary" onclick="MoveDownRow(this)" value="&#8595;" />
@@ -53,37 +58,37 @@
             }
             else
             {
-                <p>No</p>
+                <p>Нет экспонатов</p>
             }
         </div>
 
-
         <div class="form-group">
-            <label for="state">State</label>
-            <input type="checkbox" id="state" name="state" value="true" checked="@Model.State" class="form-check-inline" />
-            <input type="hidden" id="state" name="state" value="false" />
-        </div>
-        <div class="form-group">
-            <input type="button" onclick="LoadFile('#inputFile')" value="Upload" class="btn btn-outline-secondary" />
-            <input id="inputFile" style="visibility: hidden" type="file" name="file" />
-        </div>
-        <div class="flex-row form-group" id="imageBlock">
-            <div style='margin: 5px;'>
-                @if (Model.Photo != null)
-                {
-                    <input type="hidden" value="@Convert.ToBase64String(Model.Photo.Photo)" name="photo" />
-                    var base64 = Convert.ToBase64String(Model.Photo.Photo);
-                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+            <label>Фото</label>
+            <span class="field-validation-valid" id="photoSpan" data-valmsg-for="file" data-valmsg-replace="true"></span>
+            <div class="flex-row form-group" id="imageBlock">
+                <div style='margin: 5px;'>
+                    @if (Model.Photo != null)
+                    {
+                        <input type="hidden" value="@Convert.ToBase64String(Model.Photo.Photo)" name="photo" />
+                        var base64 = Convert.ToBase64String(Model.Photo.Photo);
+                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 
 
-                    <img class="img-thumbnail small-image img-small-loaded" src="@imgSrc" />
-                    <input type="button" class="btn-outline-secondary btn-close" onclick="RemoveBlock(this)" value="x" />
+                        <img class="img-thumbnail small-image img-small-loaded" src="@imgSrc" />
+                        <input type="button" class="btn-outline-secondary btn-close" onclick="RemoveBlock(this)" value="x" />
 
-                }
+                    }
+                </div>
             </div>
+            <button type="button" onclick="LoadFile('#inputFile')" class="btn btn-outline-secondary btn-form">
+                <img src="~/images/upload.png" class="img-btn" />Загрузить
+            </button>
+            <input data-val="true" data-val-required="Выберите фото" id="inputFile" style="visibility: hidden" type="file" name="file" />
         </div>
         <div class="form-group">
-            <input type="button" onclick="edit('@Model.Id', 'titleEn', '/Stands/Edit/@Model.Id', 'exhibits')" value="Save" class="btn btn-outline-secondary" />
+            <button type="button" onclick="edit('@Model.Id', 'TitleRu', '/Stands/Edit/@Model.Id', 'exhibits')" class="btn btn-outline-secondary btn-form">
+                <img src="~/images/save.png" class="img-btn" />Сохранить
+            </button>
         </div>
     </form>
 }

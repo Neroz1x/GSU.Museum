@@ -1,59 +1,56 @@
 ﻿@model GSU.Museum.Web.Models.ExhibitViewModel
 @{
-    ViewData["Title"] = "Exhibit";
-}
+    <h3>Просмотр экспоната - @Model.TitleRu</h3>
 
-@{
-    var state = Model.State == true ? "active" : "in progress";
     <div class="flex-column">
         <div class="form-group">
-            <h5>Belarusian title</h5>
+            <h5>Название (BY)</h5>
             <p>@Model.TitleBe</p>
         </div>
         <div class="form-group">
-            <h5>Russian title</h5>
+            <h5>Название (RY)</h5>
             <p>@Model.TitleRu</p>
         </div>
         <div class="form-group">
-            <h5>English title</h5>
+            <h5>Название (EN)</h5>
             <p>@Model.TitleEn</p>
         </div>
         <div class="form-group">
-            <h5>Belarusian description</h5>
+            <h5>Описание экспоната (BY)</h5>
             <p>@Model.DescriptionBe</p>
         </div>
         <div class="form-group">
-            <h5>Russian description</h5>
+            <h5>Описание экспоната (RU)</h5>
             <p>@Model.DescriptionRu</p>
         </div>
         <div class="form-group">
-            <h5>English description</h5>
+            <h5>Описание экспоната (EN)</h5>
             <p>@Model.DescriptionEn</p>
         </div>
         <div class="form-group">
-            <h5>Belarusian text</h5>
+            <h5>Текст к экспонату (BY)</h5>
             @if (!string.IsNullOrEmpty(Model.TextBe))
             {
                 <p>@Model.TextBe</p>
             }
             else
             {
-                <p>No text</p>
+                <p>Нет текста</p>
             }
         </div>
         <div class="form-group">
-            <h5>Russian text</h5>
+            <h5>Текст к экспонату (RU)</h5>
             @if (!string.IsNullOrEmpty(Model.TextRu))
             {
                 <p>@Model.TextRu</p>
             }
             else
             {
-                <p>No text</p>
+                <p>Нет текста</p>
             }
         </div>
         <div class="form-group">
-            <h5>English text</h5>
+            <h5>Текст к экспонату (EN)</h5>
             @if (!string.IsNullOrEmpty(Model.TextEn))
             {
                 <p>@Model.TextEn</p>
@@ -61,15 +58,11 @@
             }
             else
             {
-                <p>No text</p>
+                <p>Нет текста</p>
             }
         </div>
         <div class="form-group">
-            <h5>State</h5>
-            <p>@state</p>
-        </div>
-        <div class="form-group">
-            <h5>Photo</h5>
+            <h5>Фото</h5>
             <div>
 
             </div>
@@ -87,11 +80,15 @@
             }
             else
             {
-                <label>No photo</label>
+                <label>Нет фото</label>
             }
         </div>
-        <a class="a-btn" onclick="loadView('/Exhibits/Edit/@Model.Id?hallId=@ViewBag.HallId&standId=@ViewBag.StandId')">Edit</a>
-        <a class="a-btn" onclick="deleteItem('/Exhibits/Delete/@Model.Id?hallId=@ViewBag.HallId&standId=@ViewBag.StandId', '@Model.Id')">Delete</a>
+        <button type="button" class="btn btn-outline-secondary btn-form" onclick="loadView('/Exhibits/Edit/@Model.Id?hallId=@ViewBag.HallId&standId=@ViewBag.StandId')">
+            <img src="~/images/edit.png" class="img-btn" />Редактировать
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-form" onclick="deleteItem('/Exhibits/Delete/@Model.Id?hallId=@ViewBag.HallId&standId=@ViewBag.StandId', '@Model.Id')">
+            <img src="~/images/delete.png" class="img-btn" />Удалить
+        </button>
     </div>
 }
 

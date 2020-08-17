@@ -1,54 +1,51 @@
 ﻿@model GSU.Museum.Web.Models.StandViewModel
-@{
-    ViewData["Title"] = "Stand";
-}
 
 @{
-    var state = Model.State == true ? "active" : "in progress";
+    <h3>Просмотр стенда - @Model.TitleRu</h3>
     <div class="flex-column">
         <div class="form-group">
-            <h5>Belarusian title</h5>
+            <h5>Название (BY)</h5>
             <p>@Model.TitleBe</p>
         </div>
         <div class="form-group">
-            <h5>Russian title</h5>
+            <h5>Название (RU)</h5>
             <p>@Model.TitleRu</p>
         </div>
         <div class="form-group">
-            <h5>English title</h5>
+            <h5>Название (EN)</h5>
             <p>@Model.TitleEn</p>
         </div>
         <div class="form-group">
-            <h5>Stand description (Be)</h5>
+            <h5>Описание стенда (BY)</h5>
             @if (!string.IsNullOrEmpty(Model.DescriptionBe))
             {
                 <p>@Model.DescriptionBe</p>
             }
             else
             {
-                <p>No text</p>
+                <p>Нет описания</p>
             }
         </div>
         <div class="form-group">
-            <h5>Stand description (Ru)</h5>
+            <h5>Описание стенда (RU)</h5>
             @if (!string.IsNullOrEmpty(Model.DescriptionRu))
             {
                 <p>@Model.DescriptionRu</p>
             }
             else
             {
-                <p>No text</p>
+                <p>Нет описания</p>
             }
         </div>
         <div class="form-group">
-            <h5>Stand description (En)</h5>
+            <h5>Описание стенда (EN)</h5>
             @if (!string.IsNullOrEmpty(Model.DescriptionEn))
             {
                 <p>@Model.DescriptionEn</p>
             }
             else
             {
-                <p>No text</p>
+                <p>Нет описания</p>
             }
         </div>
         <div class="form-group">
@@ -59,21 +56,17 @@
                 @foreach (var exhibit in Model.Exhibits)
                 {
                     <div class="d-flex flex-row justify-content-between">
-                        <p style="width:20%">@exhibit.TitleBe</p> <p style="width:20%">@exhibit.TitleEn</p> <p style="width:20%">@exhibit.TitleRu</p>
+                        <p style="width:25%">@exhibit.TitleBe</p> <p style="width:25%">@exhibit.TitleEn</p> <p style="width:25%">@exhibit.TitleRu</p>
                     </div>
                 }
             }
             else
             {
-                <p>No</p>
+                <p>Пусто</p>
             }
         </div>
         <div class="form-group">
-            <h5>State</h5>
-            <p>@state</p>
-        </div>
-        <div class="form-group">
-            <h5>Photo</h5>
+            <h5>Фото</h5>
             @if (Model.Photo != null)
             {
                 var base64 = Convert.ToBase64String(Model.Photo.Photo);
@@ -83,11 +76,15 @@
             }
             else
             {
-                <label>No photo</label>
+                <label>Нет фото</label>
             }
         </div>
-        <a class="a-btn" onclick="loadView('/Stands/Edit/@Model.Id?hallId=@ViewBag.HallId')">Edit</a>
-        <a class="a-btn" onclick="deleteItem('/Stands/Delete/@Model.Id?hallId=@ViewBag.HallId', '@Model.Id')">Delete</a>
+        <button type="button" class="btn btn-outline-secondary btn-form" onclick="loadView('/Stands/Edit/@Model.Id?hallId=@ViewBag.HallId')">
+            <img src="~/images/edit.png" class="img-btn" />Редактировать
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-form" onclick="deleteItem('/Stands/Delete/@Model.Id?hallId=@ViewBag.HallId', '@Model.Id')">
+            <img src="~/images/delete.png" class="img-btn" />Удалить
+        </button>
     </div>
 }
 

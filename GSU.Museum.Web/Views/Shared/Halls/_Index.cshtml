@@ -1,46 +1,43 @@
 ﻿@model GSU.Museum.Web.Models.HallViewModel
 @{
-    var state = Model.State == true ? "active" : "in progress";
+    <h3>Просмотр холла - @Model.TitleRu</h3>
+
     <div class="flex-column">
         <div class="form-group">
-            <h5>Title (Be)</h5>
+            <h5>Название (BY)</h5>
             @if (!string.IsNullOrEmpty(@Model.TitleBe))
             {
                 <p>@Model.TitleBe</p>
             }
             else
             {
-                <p>No title</p>
+                <p>Нет названия</p>
             }
         </div>
         <div class="form-group">
-            <h5>Title (Ru)</h5>
+            <h5>Название (RU)</h5>
             @if (!string.IsNullOrEmpty(@Model.TitleRu))
             {
                 <p>@Model.TitleRu</p>
             }
             else
             {
-                <p>No title</p>
+                <p>Нет названия</p>
             }
         </div>
         <div class="form-group">
-            <h5>Title (En)</h5>
+            <h5>Название (EN)</h5>
             @if (!string.IsNullOrEmpty(@Model.TitleEn))
             {
                 <p>@Model.TitleEn</p>
             }
             else
             {
-                <p>No title</p>
+                <p>Нет названия</p>
             }
         </div>
         <div class="form-group">
-            <h5>State</h5>
-            <p>@state</p>
-        </div>
-        <div class="form-group">
-            <h5>Photo</h5>
+            <h5>Фото</h5>
             @if (Model.Photo != null)
             {
                 var base64 = Convert.ToBase64String(Model.Photo.Photo);
@@ -50,10 +47,14 @@
             }
             else
             {
-                <label>No photo</label>
+                <label>Нет фото</label>
             }
         </div>
-        <a class="a-btn" onclick="loadView('/Halls/Edit/@Model.Id')">Edit</a>
-        <a class="a-btn" onclick="deleteItem('/Halls/Delete/@Model.Id', '@Model.Id')">Delete</a>
+        <button type="button" class="btn btn-outline-secondary btn-form" onclick="loadView('/Halls/Edit/@Model.Id')">
+            <img src="~/images/edit.png" class="img-btn" />Редактировать
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-form" onclick="deleteItem('/Halls/Delete/@Model.Id', '@Model.Id')">
+            <img src="~/images/delete.png" class="img-btn"/>Удалить
+        </button>
     </div>
 }
