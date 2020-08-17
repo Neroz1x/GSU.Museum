@@ -8,7 +8,6 @@ namespace GSU.Museum.CommonClassLibrary.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public string Text { get; set; }
-        public bool State { get; set; }
         public List<PhotoInfoDTO> Photos { get; set; }
 
         public override int GetHashCode()
@@ -20,7 +19,6 @@ namespace GSU.Museum.CommonClassLibrary.Models
                 hash = (hash * 16777619) ^ GetStringHashCode(Title);
                 hash = (hash * 16777619) ^ GetStringHashCode(Description);
                 hash = (hash * 16777619) ^ GetStringHashCode(Text);
-                hash = (hash * 16777619) ^ State.GetHashCode();
                 if (Photos != null)
                 {
                     foreach (var photo in Photos)

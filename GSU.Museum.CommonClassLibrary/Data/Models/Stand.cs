@@ -15,7 +15,6 @@ namespace GSU.Museum.CommonClassLibrary.Models
         public string DescriptionRu { get; set; }
         public string DescriptionEn { get; set; }
         public string DescriptionBe { get; set; }
-        public bool State { get; set; }
         public PhotoInfo Photo { get; set; }
         public List<Exhibit> Exhibits { get; set; }
 

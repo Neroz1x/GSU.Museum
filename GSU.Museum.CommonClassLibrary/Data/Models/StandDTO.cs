@@ -7,7 +7,6 @@ namespace GSU.Museum.CommonClassLibrary.Models
         public string Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public bool State { get; set; }
         public PhotoInfoDTO Photo { get; set; }
         public List<ExhibitDTO> Exhibits { get; set; }
 
@@ -19,7 +18,6 @@ namespace GSU.Museum.CommonClassLibrary.Models
                 hash = (hash * 16777619) ^ GetStringHashCode(Id);
                 hash = (hash * 16777619) ^ GetStringHashCode(Title);
                 hash = (hash * 16777619) ^ GetStringHashCode(Description);
-                hash = (hash * 16777619) ^ State.GetHashCode();
                 if(Photo != null)
                 {
                     hash = (hash * 16777619) ^ Photo.GetHashCode();

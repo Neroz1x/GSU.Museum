@@ -18,7 +18,6 @@ namespace GSU.Museum.CommonClassLibrary.Models
         public string TextRu { get; set; }
         public string TextEn { get; set; }
         public string TextBe { get; set; }
-        public bool State { get; set; }
         
         public List<PhotoInfo> Photos { get; set; }
 
