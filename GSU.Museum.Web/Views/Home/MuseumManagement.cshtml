@@ -1,47 +1,81 @@
 ﻿@model IEnumerable<GSU.Museum.Web.Models.HallViewModel>
 @{
-    ViewData["Title"] = "Museum management";
+    ViewData["Title"] = "Управление музеем";
+}
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
 
 @{
+    <div id="loader" style="position:absolute; visibility: collapse; margin-left:50%; margin-top:10%;">
+        <div class="lds-facebook"><div></div><div></div><div></div></div>
+    </div>
     <div class="d-flex flex-row align-items-start">
+       
         <div style="width:30%" class="box-shadow border-right border-bottom">
-            <a class="a-btn" onclick="loadView('/Halls/Create')">Add hall</a>
+            <div>
+                <div>
+                    <div onclick="loadViewFromMenu(this, '/Halls/Create')">
+                        <img src="~/images/add.png" class="img-btn" /><a class="a-btn">Добавить холл</a>
+                    </div>
+                </div>
+            </div>
             <div class="d-flex flex-column" id="halls">
                 @foreach (var hall in Model)
                 {
                     <div id="elId@{@hall.Id}">
-                        <div style="margin-top: 10px;" class="flex-row">
-                            <button class="btn btn-link collapsed" data-toggle="collapse"
-                                    data-target="#id@{@hall.Id}"
-                                    aria-expanded="false"
-                                    aria-controls="id@{@hall.Id}"
-                                    style="margin-bottom:3px;padding:2px;">
-                                <i class="fa" aria-hidden="false"></i>
-                            </button>
-                            <a class="a-header" id="elName@{@hall.Id}" onclick="loadView('/Halls/Index/@hall.Id')">@hall.TitleEn</a>
+                        <div>
+                            <div style="margin-top: 10px;" class="flex-row">
+                                <button class="btn btn-link collapsed" data-toggle="collapse"
+                                        data-target="#id@{@hall.Id}"
+                                        aria-expanded="false"
+                                        aria-controls="id@{@hall.Id}"
+                                        style="margin-bottom:3px;padding:2px;">
+                                    <i class="fa" aria-hidden="false"></i>
+                                </button>
+                                <a class="a-header" id="elName@{@hall.Id}" onclick="loadViewFromMenu(this, '/Halls/Index/@hall.Id')">@hall.TitleRu</a>
+                            </div>
                         </div>
-                        <div class="collapse" id="id@{@hall.Id}" style="margin-left: 50px">
-                            <a class="a-btn" onclick="loadView('/Stands/Create?hallId=@hall.Id')">Add stand</a>
+                        <div class="collapse" id="id@{@hall.Id}">
+                            <div>
+                                <div style="margin-left: 50px">
+                                    <div onclick="loadViewFromMenu(this, '/Halls/Create')">
+                                        <img src="~/images/add.png" class="img-btn" /><a class="a-btn" onclick="loadViewFromMenu(this, '/Stands/Create?hallId=@hall.Id')">Добавить стенд</a>
+                                    </div>
+                                </div>
+                            </div>
+
                             @foreach (var stand in hall.Stands)
                             {
                                 <div id="elId@{@stand.Id}">
-                                    <div style="margin-top: 10px;" class="flex-row">
-                                        <button class="btn btn-link collapsed" data-toggle="collapse"
-                                                data-target="#id@{@stand.Id}"
-                                                aria-expanded="false"
-                                                aria-controls="id@{@stand.Id}"
-                                                style="margin-bottom:3px;padding:2px;">
-                                            <i class="fa" aria-hidden="false"></i>
-                                        </button>
-                                        <a class="a-header" id="elName@{@stand.Id}" onclick="loadView('/Stands/Index/@stand.Id?hallId=@hall.Id')">@stand.TitleEn</a>
+                                    <div>
+                                        <div style="margin-top: 10px;margin-left: 50px" class="flex-row">
+                                            <button class="btn btn-link collapsed" data-toggle="collapse"
+                                                    data-target="#id@{@stand.Id}"
+                                                    aria-expanded="false"
+                                                    aria-controls="id@{@stand.Id}"
+                                                    style="margin-bottom:3px;padding:2px;">
+                                                <i class="fa" aria-hidden="false"></i>
+                                            </button>
+                                            <a class="a-header" id="elName@{@stand.Id}" onclick="loadViewFromMenu(this, '/Stands/Index/@stand.Id?hallId=@hall.Id')">@stand.TitleRu</a>
+                                        </div>
                                     </div>
-                                    <div class="collapse" id="id@{@stand.Id}" style="margin-left: 50px">
-                                        <a class="a-btn" onclick="loadView('/Exhibits/Create?standId=@stand.Id&hallId=@hall.Id')">Add exhibit</a>
+                                    <div class="collapse" id="id@{@stand.Id}">
+                                        <div>
+                                            <div style="margin-left: 100px">
+                                                <div onclick="loadViewFromMenu(this, '/Halls/Create')">
+                                                    <img src="~/images/add.png" class="img-btn" /><a class="a-btn" onclick="loadViewFromMenu(this, '/Exhibits/Create?standId=@stand.Id&hallId=@hall.Id')">Добавить экспонат</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         @foreach (var exhibit in stand.Exhibits)
                                         {
-                                            <div style="margin-top: 10px;" class="flex-row" id="elId@{@exhibit.Id}">
-                                                <a class="a-header" id="elName@{@exhibit.Id}" onclick="loadView('/Exhibits/Index?id=@exhibit.Id&standId=@stand.Id&hallId=@hall.Id')">@exhibit.TitleEn</a>
+                                            <div>
+                                                <div style="margin-top: 10px;margin-left: 100px;padding:2px;" class="flex-row" id="elId@{@exhibit.Id}">
+                                                    <a class="a-header" id="elName@{@exhibit.Id}" onclick="loadViewFromMenu(this, '/Exhibits/Index?id=@exhibit.Id&standId=@stand.Id&hallId=@hall.Id')">@exhibit.TitleRu</a>
+                                                </div>
                                             </div>
                                         }
                                     </div>
