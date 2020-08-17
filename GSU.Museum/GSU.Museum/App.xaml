@@ -9,7 +9,6 @@
     <Application.Resources>
         <ResourceDictionary>
             <converters:ByteToImageSourceConverter x:Key="ByteArrayToImage" />
-            <converters:PhotoInfoListToImageSourceConverter x:Key="PhotosListToImage" />
         </ResourceDictionary>
 
         <Style TargetType="BoxView" x:Key="LineForOptions">
