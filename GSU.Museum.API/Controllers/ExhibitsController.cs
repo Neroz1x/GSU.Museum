@@ -5,11 +5,13 @@ using GSU.Museum.API.Filters;
 using GSU.Museum.API.Interfaces;
 using GSU.Museum.CommonClassLibrary.Enums;
 using GSU.Museum.CommonClassLibrary.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GSU.Museum.API.Controllers
 {
     [ApiKeyAuth]
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class ExhibitsController : ControllerBase
@@ -35,6 +37,10 @@ namespace GSU.Museum.API.Controllers
         ///     GET: api/Exhibits
         /// </remarks>
         /// <returns>All exhibits</returns>
+        /// <response code="200">Everything is correct. Hash codes are different</response>
+        /// <response code="204">Everything is correct. Hash codes are the same</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpGet]
         public Task<List<ExhibitDTO>> GetAll(string hallId, string standId)
         {
@@ -54,7 +60,13 @@ namespace GSU.Museum.API.Controllers
         /// <param name="id">Id of the record</param>
         /// <param name="hash">Hash from client</param>
         /// <returns>Record or not found</returns>
-        // GET: api/Exhibits/5
+        /// GET: api/Exhibits/5
+        /// <response code="200">Everything is correct. Hash codes are different</response>
+        /// <response code="204">Everything is correct. Hash codes are the same</response>
+        /// <response code="404">Item not found</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpGet("{hallId}/{standId}/{id}")]
         public async Task<IActionResult> GetAsync(string hallId, string standId, string id, int? hash)
         {
@@ -84,7 +96,9 @@ namespace GSU.Museum.API.Controllers
         /// <param name="standId">Id of the stand</param>
         /// <param name="exhibit">Record to add</param>
         /// <returns>Result of the operation</returns>
-        // POST: api/Exhibits
+        /// POST: api/Exhibits
+        /// <response code="200">Everything is correct. Item has been created</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPost]
         public async Task<IActionResult> CreateAsync(string hallId, string standId, Exhibit exhibit)
         {
@@ -106,7 +120,11 @@ namespace GSU.Museum.API.Controllers
         /// <param name="standId">Id of the stand</param>
         /// <param name="exhibitIn">New record</param>
         /// <returns>Result of operation</returns>
-        // PUT: api/Exhibits/5
+        /// PUT: api/Exhibits/5
+        /// <response code="204">Everything is correct</response>
+        /// <response code="404">Item not found</response>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpPut]
         public async Task<IActionResult> UpdateAsync(string hallId, string standId, Exhibit exhibitIn)
         {
@@ -140,7 +158,11 @@ namespace GSU.Museum.API.Controllers
         /// <param name="standId">Id of the stand</param>
         /// <param name="id">Id of the record to delete</param>
         /// <returns>Result of the operation</returns>
-        // DELETE: api/Exhibits/5
+        /// DELETE: api/Exhibits/5
+        /// <response code="204">Everything is correct</response>
+        /// <response code="404">Item not found</response>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(string hallId, string standId, string id)
         {
