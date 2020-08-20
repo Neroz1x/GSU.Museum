@@ -35,7 +35,6 @@ namespace GSU.Museum.API.Tests.Services
                 new Hall()
                 {
                     Id = "123456789012345678901234",
-                    State = true,
                     TitleBe = "Be",
                     TitleEn = "En",
                     TitleRu = "Ru",
@@ -45,7 +44,6 @@ namespace GSU.Museum.API.Tests.Services
                         new Stand()
                         {
                             Id = "123456789012345678901111",
-                            State = true,
                             TitleRu = "TitleRu",
                             TitleEn = "TitleEn",
                             TitleBe = "TitleBe",
@@ -58,7 +56,6 @@ namespace GSU.Museum.API.Tests.Services
                                 new Exhibit()
                                 {
                                     Id = "123456789012345678901212",
-                                    State = true,
                                     TitleRu = "TitleRu",
                                     TitleEn = "TitleEn",
                                     TitleBe = "TitleBe",
@@ -70,7 +67,6 @@ namespace GSU.Museum.API.Tests.Services
                                 new Exhibit()
                                 {
                                     Id = "123456789012345678901213",
-                                    State = true,
                                     TitleRu = "TitleRu2",
                                     TitleEn = "TitleEn2",
                                     TitleBe = "TitleBe2",
@@ -84,7 +80,6 @@ namespace GSU.Museum.API.Tests.Services
                         new Stand()
                         {
                             Id = "123456789012345678901112",
-                            State = true,
                             TitleRu = "TitleRu",
                             TitleEn = "TitleEn",
                             TitleBe = "TitleBe",
@@ -97,7 +92,6 @@ namespace GSU.Museum.API.Tests.Services
                                 new Exhibit()
                                 {
                                     Id = "123456789012345678901313",
-                                    State = true,
                                     TitleRu = "TitleRu3",
                                     TitleBe = "TitleBe3",
                                     TextBe = "Be13",
@@ -110,7 +104,6 @@ namespace GSU.Museum.API.Tests.Services
                         new Stand()
                         {
                             Id = "123456789012345678903111",
-                            State = true,
                             TitleRu = "TitleRu",
                             TitleEn = "TitleEn",
                             TitleBe = "TitleBe",
@@ -123,7 +116,6 @@ namespace GSU.Museum.API.Tests.Services
                                 new Exhibit()
                                 {
                                     Id = "123456789012345678901415",
-                                    State = true,
                                     TitleRu = "TitleRu24",
                                     TitleEn = "TitleEn24",
                                     TitleBe = "TitleBe24",
@@ -138,7 +130,6 @@ namespace GSU.Museum.API.Tests.Services
                 new Hall()
                 {
                     Id = "123456789012345678901235",
-                    State = true,
                     TitleBe = "Be",
                     TitleEn = "En",
                     TitleRu = "Ru",

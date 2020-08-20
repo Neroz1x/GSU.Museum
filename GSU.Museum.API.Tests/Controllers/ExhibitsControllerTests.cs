@@ -31,7 +31,6 @@ namespace GSU.Museum.API.Tests.Controllers
                 new Hall()
                 {
                     Id = HallId,
-                    State = true,
                     TitleBe = "Be",
                     TitleEn = "En",
                     TitleRu = "Ru",
@@ -40,7 +39,6 @@ namespace GSU.Museum.API.Tests.Controllers
                         new Stand()
                         {
                             Id = StandId,
-                            State = true,
                             TitleRu = "TitleRu",
                             TitleEn = "TitleEn",
                             TitleBe = "TitleBe",
@@ -57,7 +55,6 @@ namespace GSU.Museum.API.Tests.Controllers
                 new Hall()
                 {
                     Id = HallId,
-                    State = true,
                     TitleBe = "Be",
                     TitleEn = "En",
                     TitleRu = "Ru",
@@ -66,7 +63,6 @@ namespace GSU.Museum.API.Tests.Controllers
                         new Stand()
                         {
                             Id = StandId,
-                            State = true,
                             TitleRu = "TitleRu",
                             TitleEn = "TitleEn",
                             TitleBe = "TitleBe",
@@ -78,7 +74,6 @@ namespace GSU.Museum.API.Tests.Controllers
                                 new Exhibit()
                                 {
                                     Id = "123456789012345678901212",
-                                    State = true,
                                     TitleRu = "TitleRu",
                                     TitleEn = "TitleEn",
                                     TitleBe = "TitleBe",
@@ -89,7 +84,6 @@ namespace GSU.Museum.API.Tests.Controllers
                                 new Exhibit()
                                 {
                                     Id = "123456789012345678901213",
-                                    State = true,
                                     TitleRu = "TitleRu2",
                                     TitleEn = "TitleEn2",
                                     TitleBe = "TitleBe2",
@@ -102,7 +96,6 @@ namespace GSU.Museum.API.Tests.Controllers
                         new Stand()
                         {
                             Id = "123456789012345678901112",
-                            State = true,
                             TitleRu = "TitleRu",
                             TitleEn = "TitleEn",
                             TitleBe = "TitleBe",
@@ -114,7 +107,6 @@ namespace GSU.Museum.API.Tests.Controllers
                                 new Exhibit()
                                 {
                                     Id = "123456789012345678901313",
-                                    State = true,
                                     TitleRu = "TitleRu3",
                                     TitleBe = "TitleBe3",
                                     TextBe = "Be13",
@@ -124,7 +116,6 @@ namespace GSU.Museum.API.Tests.Controllers
                                 new Exhibit()
                                 {
                                     Id = "123456789012345678901415",
-                                    State = true,
                                     TitleRu = "TitleRu24",
                                     TitleEn = "TitleEn24",
                                     TitleBe = "TitleBe24",
