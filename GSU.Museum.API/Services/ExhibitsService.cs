@@ -194,6 +194,9 @@ namespace GSU.Museum.API.Services
                             .ForMember(destination => destination.Text,
                                 map => map.MapFrom(
                                     source => source.TextRu))
+                            .ForMember(destination => destination.ExhibitType,
+                                map => map.MapFrom(
+                                    source => source.ExhibitType))
                             .ForMember(destenation => destenation.Photos,
                                 map => map.Ignore());
                             cfg.AllowNullCollections = true;
@@ -219,6 +222,9 @@ namespace GSU.Museum.API.Services
                            .ForMember(destination => destination.Text,
                                 map => map.MapFrom(
                                     source => source.TextEn))
+                           .ForMember(destination => destination.ExhibitType,
+                                map => map.MapFrom(
+                                    source => source.ExhibitType))
                            .ForMember(destenation => destenation.Photos,
                                 map => map.Ignore());
                             cfg.AllowNullCollections = true;
@@ -244,6 +250,9 @@ namespace GSU.Museum.API.Services
                             .ForMember(destination => destination.Text,
                                 map => map.MapFrom(
                                     source => source.TextBe))
+                            .ForMember(destination => destination.ExhibitType,
+                                map => map.MapFrom(
+                                    source => source.ExhibitType))
                             .ForMember(destenation => destenation.Photos,
                                 map => map.Ignore());
                             cfg.AllowNullCollections = true;
@@ -269,6 +278,9 @@ namespace GSU.Museum.API.Services
                            .ForMember(destination => destination.Text,
                                 map => map.MapFrom(
                                     source => source.TextEn))
+                           .ForMember(destination => destination.ExhibitType,
+                                map => map.MapFrom(
+                                    source => source.ExhibitType))
                            .ForMember(destenation => destenation.Photos,
                                 map => map.Ignore());
                             cfg.AllowNullCollections = true;

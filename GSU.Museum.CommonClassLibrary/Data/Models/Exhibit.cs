@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using GSU.Museum.CommonClassLibrary.Data.Enums;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 
@@ -18,6 +19,7 @@ namespace GSU.Museum.CommonClassLibrary.Models
         public string TextRu { get; set; }
         public string TextEn { get; set; }
         public string TextBe { get; set; }
+        public ExhibitType ExhibitType { get; set; }
         
         public List<PhotoInfo> Photos { get; set; }
 
