@@ -34,6 +34,7 @@ namespace GSU.Museum.Web
             services.AddSingleton<IExhibitsRepository, ExhibitsRepository>();
 
             services.AddSingleton<IHomeService, HomeService>();
+            services.AddSingleton<IExhibitsService, ExhibitsService>();
             services.AddSingleton<IFormFileToByteConverterService, FormFileToByteConverterService>();
 
             services.AddControllersWithViews();
