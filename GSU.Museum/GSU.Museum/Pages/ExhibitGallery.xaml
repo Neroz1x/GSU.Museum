@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GSU.Museum.Shared.Pages.ExhibitGallery"
+             Appearing="ContentPage_Appearing"
+             xmlns:resources="clr-namespace:GSU.Museum.Shared.Resources" 
+             >
+    <NavigationPage.TitleView>
+        <Label Text="{Binding Title}" Style="{StaticResource PageTitle}" />
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <ScrollView VerticalScrollBarVisibility="Always">
+            <StackLayout Orientation="Vertical" Margin="5">
+                <StackLayout IsVisible="{Binding CarouselVisibility}">
+                    <CarouselView
+                    ItemsSource="{Binding Photos}"
+                                Margin="5, 0"
+                                Style="{StaticResource DefaultCarouselView}" >
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Orientation="Vertical">
+                                    <Image Aspect="AspectFit" BackgroundColor="Transparent" Source="{Binding Photo, Converter={StaticResource ByteArrayToImage}}">
+                                    </Image>
+                                    <Label Text="{Binding Description}"/>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                </StackLayout>
+                <StackLayout Margin="0, 10">
+                    <Button Text="{x:Static resources:AppResources.Button_HomePage}" Style="{StaticResource DefaultButton}" 
+                    Command="{Binding NavigateToHomePageCommand}"/>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
