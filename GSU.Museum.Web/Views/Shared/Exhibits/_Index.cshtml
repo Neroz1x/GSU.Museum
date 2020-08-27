@@ -1,95 +1,159 @@
 ﻿@model GSU.Museum.Web.Models.ExhibitViewModel
 @{
     <h3>Просмотр экспоната - @Model.TitleRu</h3>
-
-    <div class="flex-column">
-        <div class="form-group">
-            <h5>Название (BY)</h5>
-            <p>@Model.TitleBe</p>
-        </div>
-        <div class="form-group">
-            <h5>Название (RY)</h5>
-            <p>@Model.TitleRu</p>
-        </div>
-        <div class="form-group">
-            <h5>Название (EN)</h5>
-            <p>@Model.TitleEn</p>
-        </div>
-        <div class="form-group">
-            <h5>Описание экспоната (BY)</h5>
-            <p>@Model.DescriptionBe</p>
-        </div>
-        <div class="form-group">
-            <h5>Описание экспоната (RU)</h5>
-            <p>@Model.DescriptionRu</p>
-        </div>
-        <div class="form-group">
-            <h5>Описание экспоната (EN)</h5>
-            <p>@Model.DescriptionEn</p>
-        </div>
-        <div class="form-group">
-            <h5>Текст к экспонату (BY)</h5>
-            @if (!string.IsNullOrEmpty(Model.TextBe))
-            {
-                <p>@Model.TextBe</p>
-            }
-            else
-            {
-                <p>Нет текста</p>
-            }
-        </div>
-        <div class="form-group">
-            <h5>Текст к экспонату (RU)</h5>
-            @if (!string.IsNullOrEmpty(Model.TextRu))
-            {
-                <p>@Model.TextRu</p>
-            }
-            else
-            {
-                <p>Нет текста</p>
-            }
-        </div>
-        <div class="form-group">
-            <h5>Текст к экспонату (EN)</h5>
-            @if (!string.IsNullOrEmpty(Model.TextEn))
-            {
-                <p>@Model.TextEn</p>
-
-            }
-            else
-            {
-                <p>Нет текста</p>
-            }
-        </div>
-        <div class="form-group">
-            <h5>Фото</h5>
-            <div>
-
+    @if (Model.ExhibitType == GSU.Museum.CommonClassLibrary.Data.Enums.ExhibitType.Article)
+    {
+        <div class="flex-column">
+            <div class="form-group">
+                <h5>Название (BY)</h5>
+                <p>@Model.TitleBe</p>
             </div>
-            @if (Model.Photos != null)
-            {
-                <div id="image" class="flex-row flex-wrap">
-                    @for (int i = 0; i < Model.Photos.Count; i++)
-                    {
-                        var base64 = Convert.ToBase64String(Model.Photos[i].Photo);
-                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+            <div class="form-group">
+                <h5>Название (RY)</h5>
+                <p>@Model.TitleRu</p>
+            </div>
+            <div class="form-group">
+                <h5>Название (EN)</h5>
+                <p>@Model.TitleEn</p>
+            </div>
+            <div class="form-group">
+                <h5>Описание экспоната (BY)</h5>
+                <p>@Model.DescriptionBe</p>
+            </div>
+            <div class="form-group">
+                <h5>Описание экспоната (RU)</h5>
+                <p>@Model.DescriptionRu</p>
+            </div>
+            <div class="form-group">
+                <h5>Описание экспоната (EN)</h5>
+                <p>@Model.DescriptionEn</p>
+            </div>
+            <div class="form-group">
+                <h5>Текст к экспонату (BY)</h5>
+                @if (!string.IsNullOrEmpty(Model.TextBe))
+                {
+                    <p>@Model.TextBe</p>
+                }
+                else
+                {
+                    <p>Нет текста</p>
+                }
+            </div>
+            <div class="form-group">
+                <h5>Текст к экспонату (RU)</h5>
+                @if (!string.IsNullOrEmpty(Model.TextRu))
+                {
+                    <p>@Model.TextRu</p>
+                }
+                else
+                {
+                    <p>Нет текста</p>
+                }
+            </div>
+            <div class="form-group">
+                <h5>Текст к экспонату (EN)</h5>
+                @if (!string.IsNullOrEmpty(Model.TextEn))
+                {
+                    <p>@Model.TextEn</p>
 
-                        <img class='img-thumbnail small-image img-small-loaded' src="@imgSrc" />
+                }
+                else
+                {
+                    <p>Нет текста</p>
+                }
+            </div>
+            <div class="form-group">
+                <h5>Фото</h5>
+                <div>
+
+                </div>
+                @if (Model.Photos != null)
+                {
+                    <div id="image" class="flex-row flex-wrap">
+                        @for (int i = 0; i < Model.Photos.Count; i++)
+                        {
+                            var base64 = Convert.ToBase64String(Model.Photos[i].Photo);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                            <img class='img-thumbnail small-image img-small-loaded' src="@imgSrc" />
+                        }
+                    </div>
+                }
+                else
+                {
+                    <label>Нет фото</label>
+                }
+            </div>
+            <button type="button" class="btn btn-outline-secondary btn-form" onclick="loadView('/Exhibits/Edit/@Model.Id?hallId=@ViewBag.HallId&standId=@ViewBag.StandId')">
+                <img src="~/images/edit.png" class="img-btn" />Редактировать
+            </button>
+            <button type="button" class="btn btn-outline-secondary btn-form" onclick="deleteItem('/Exhibits/Delete/@Model.Id?hallId=@ViewBag.HallId&standId=@ViewBag.StandId', '@Model.Id')">
+                <img src="~/images/delete.png" class="img-btn" />Удалить
+            </button>
+        </div>
+    }
+    else
+    {
+        <div >
+            <div class="form-group">
+                <h5>Название (BY)</h5>
+                <p>@Model.TitleBe</p>
+            </div>
+            <div class="form-group">
+                <h5>Название (RU)</h5>
+                <p>@Model.TitleRu</p>
+            </div>
+            <div class="form-group">
+                <h5>Название (EN)</h5>
+                <p>@Model.TitleEn</p>
+            </div>
+            <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false" style="width:450px;">
+                <div class="carousel-inner">
+                    @foreach (var photo in Model.Photos)
+                    {
+
+                        <div class="carousel-item @(photo == Model.Photos.First() ? "active" : "")">
+
+                            <img class="d-block w-100" src="data:image/jpg;base64,@Convert.ToBase64String(photo.Photo)" />
+                            <div class="carousel-caption">
+                                <div class="form-group">
+                                    <h5>Описание фото (BY)</h5>
+                                    <p>@photo.DescriptionBe</p>
+                                </div>
+                                <div class="form-group">
+                                    <h5>Описание фото (RU)</h5>
+                                    <p>@photo.DescriptionRu</p>
+                                </div>
+                                <div class="form-group">
+                                    <h5>Описание фото (EN)</h5>
+                                    <p>@photo.DescriptionEn</p>
+                                </div>
+                            </div>
+                        </div>
+
                     }
                 </div>
-            }
-            else
-            {
-                <label>Нет фото</label>
-            }
+
+                <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Предыдущий</span>
+                </a>
+                <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Следующий</span>
+                </a>
+            </div>
+
+            <div style="margin-top:20px;">
+                <button type="button" class="btn btn-outline-secondary btn-form" onclick="loadView('/Exhibits/Edit/@Model.Id?hallId=@ViewBag.HallId&standId=@ViewBag.StandId')">
+                    <img src="~/images/edit.png" class="img-btn" />Редактировать
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-form" onclick="deleteItem('/Exhibits/Delete/@Model.Id?hallId=@ViewBag.HallId&standId=@ViewBag.StandId', '@Model.Id')">
+                    <img src="~/images/delete.png" class="img-btn" />Удалить
+                </button>
+            </div>
         </div>
-        <button type="button" class="btn btn-outline-secondary btn-form" onclick="loadView('/Exhibits/Edit/@Model.Id?hallId=@ViewBag.HallId&standId=@ViewBag.StandId')">
-            <img src="~/images/edit.png" class="img-btn" />Редактировать
-        </button>
-        <button type="button" class="btn btn-outline-secondary btn-form" onclick="deleteItem('/Exhibits/Delete/@Model.Id?hallId=@ViewBag.HallId&standId=@ViewBag.StandId', '@Model.Id')">
-            <img src="~/images/delete.png" class="img-btn" />Удалить
-        </button>
-    </div>
+    }
 }
 
 
