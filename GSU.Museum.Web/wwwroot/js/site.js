@@ -323,7 +323,7 @@ function AddPhotoInfo() {
 }
 
 // Add new PhotoInfo part when editing exhibits galllery
-function AddPhotoInfo() {
+function AddPhotoInfoEdit() {
     $('#photos').append("<div><div><h5>Описание фотографии</h5><label>Фото</label><span class='field-validation-error'></span><div><div class='d-flex form-group'><button type='button' onclick='LoadPhoto(this)' class='btn btn-outline-secondary btn-form'><img src='/images/upload.png' class='img-btn' />Загрузить</button><input class='photoLoaderEdit' style='visibility: hidden' type='file' name='files' /></div></div></div><div class='form-group'><label for='descriptionBe'>Описание фото (BY)</label><span class='field-validation-error'></span><input type='text' placeholder='Краткое описание фото на белорусском языке' name='photoDescriptionBe' class='form-control validation-unit' /></div><div class='form-group'><label for='descriptionRu'>Описание фото (RU)</label><span class='field-validation-error'></span><input type='text' placeholder='Краткое описание фото на русском языке' name='photoDescriptionRu' class='form-control validation-unit' /></div><div class='form-group'><label for='descriptionEn'>Описание фото (EN)</label><span class='field-validation-error'></span><input type='text' placeholder='Краткое описание фото на английском языке' name='photoDescriptionEn' class='form-control validation-unit' /></div><button type='button' onclick='DeletePhotoInfo(this)' class='btn btn-outline-secondary btn-form'><img src='/images/delete.png' class='img-btn' />Удалить запись</button></div></div>");
 }
 
