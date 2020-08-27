@@ -1,0 +1,81 @@
+﻿@model GSU.Museum.Web.Models.ExhibitViewModel
+
+@{
+    <h3>Редактирование - @Model.TitleRu</h3>
+    <form id="form" enctype="multipart/form-data">
+        <input type="hidden" name="id" value="@Model.Id" />
+        <input type="hidden" name="hallId" value="@ViewBag.HallId" />
+        <input type="hidden" name="standId" value="@ViewBag.StandId" />
+        <input type="hidden" value="2" name="ExhibitType" />
+
+        <div class="form-group">
+            <label for="titleBe">Название (BY)</label>
+            <span asp-validation-for="TitleBe"></span>
+            <input type="text" placeholder="Название экспоната на белорусском языке" asp-for="TitleBe" class="form-control" value="@Model.TitleBe" />
+        </div>
+        <div class="form-group">
+            <label for="titleRu">Название (RU)</label>
+            <span asp-validation-for="TitleRu"></span>
+            <input type="text" placeholder="Название экспоната на русском языке" asp-for="TitleRu" class="form-control" value="@Model.TitleRu" />
+        </div>
+        <div class="form-group">
+            <label for="titleEn">Название (EN)</label>
+            <span asp-validation-for="TitleEn"></span>
+            <input type="text" placeholder="Название экспоната на английском языке" asp-for="TitleEn" class="form-control" value="@Model.TitleEn" />
+        </div>
+
+        <div class="form-group">
+            <button type="button" onclick="AddPhotoInfo()" class="btn btn-outline-secondary btn-form">
+                <img src="~/images/add32x32.png" class="img-btn" />Добавить
+            </button>
+            <div id="photos">
+                @foreach (var photo in Model.Photos)
+                {
+                    <div>
+                        <div>
+                            <h5>Описание фотографии</h5>
+                            <label>Фото</label>
+                            <span class="field-validation-error"></span>
+                            <div>
+                                <div style='margin:0px 0px 10px 0px;'>
+                                    <img class='img-thumbnail small-image img-small-loaded' src='data:image/jpg;base64,@Convert.ToBase64String(photo.Photo)' />
+                                    <input type='button' class='btn-outline-secondary btn-close' onclick='RemovePhoto(this)' value='x' />
+                                    <input type="hidden" value="@photo.Id" name="ids" />
+                                </div>
+                                <div class="d-flex form-group">
+                                    <button type="button" onclick="LoadPhoto(this)" class="btn btn-outline-secondary btn-form">
+                                        <img src="~/images/upload.png" class="img-btn" />Загрузить
+                                    </button>
+                                    <input class="photoLoaderEdit" style="visibility: hidden" type="file" name="files" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="descriptionBe">Описание фото (BY)</label>
+                            <span class='field-validation-error'></span>
+                            <input type="text" value="@photo.DescriptionBe" placeholder="Краткое описание фото на белорусском языке" name="photoDescriptionBe" class="form-control validation-unit" />
+                        </div>
+                        <div class="form-group">
+                            <label for="descriptionRu">Описание фото (RU)</label>
+                            <span class='field-validation-error'></span>
+                            <input type="text" value="@photo.DescriptionRu" placeholder="Краткое описание фото на русском языке" name="photoDescriptionRu" class="form-control validation-unit" />
+                        </div>
+                        <div class="form-group">
+                            <label for="descriptionEn">Описание фото (EN)</label>
+                            <span class='field-validation-error'></span>
+                            <input type="text" value="@photo.DescriptionEn" placeholder="Краткое описание фото на английском языке" name="photoDescriptionEn" class="form-control validation-unit" />
+                        </div>
+                        <button type="button" onclick="DeletePhotoInfo(this)" class="btn btn-outline-secondary btn-form">
+                            <img src="~/images/delete.png" class="img-btn" />Удалить запись
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="button" onclick="EditGallery('@Model.Id', 'TitleRu', '/Exhibits/EditGallery/@Model.Id', null)" class="btn btn-outline-secondary btn-form">
+                <img src="~/images/save.png" class="img-btn" />Сохранить
+            </button>
+        </div>
+    </form>
+}

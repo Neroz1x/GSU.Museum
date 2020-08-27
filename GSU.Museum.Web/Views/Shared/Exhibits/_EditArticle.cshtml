@@ -6,6 +6,7 @@
         <input type="hidden" name="id" value="@Model.Id" />
         <input type="hidden" name="hallId" value="@ViewBag.HallId" />
         <input type="hidden" name="standId" value="@ViewBag.StandId" />
+        <input type="hidden" value="1" name="ExhibitType" />
 
         <div class="form-group">
             <label for="titleBe">Название (BY)</label>
@@ -78,10 +79,10 @@
             <button type="button" onclick="LoadFile('#inputFile')" class="btn btn-outline-secondary btn-form">
                 <img src="~/images/upload.png" class="img-btn" />Загрузить
             </button>
-            <input data-val="true" data-val-required="Выберите фото" id="inputFile" style="visibility: hidden" type="file" name="files" multiple />
+            <input id="inputFile" style="visibility: hidden" type="file" name="files" multiple />
         </div>
         <div class="form-group">
-            <button type="button" onclick="edit('@Model.Id', 'TitleEn', '/Exhibits/Edit/@Model.Id', null)" class="btn btn-outline-secondary btn-form">
+            <button type="button" onclick="edit('@Model.Id', 'TitleRu', '/Exhibits/EditArticle/@Model.Id', null)" class="btn btn-outline-secondary btn-form">
                 <img src="~/images/save.png" class="img-btn" />Сохранить
             </button>
         </div>
