@@ -190,6 +190,7 @@ animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
 }
 
 .field-validation-error {
+    margin-left: 10px;
     color: #b94a48;
 }
 
