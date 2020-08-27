@@ -79,10 +79,10 @@
                 <label>Нет фото</label>
             }
         </div>
-        <button type="button" class="btn btn-outline-secondary btn-form" onclick="loadView('/Stands/Edit/@Model.Id?hallId=@ViewBag.HallId')">
+        <button type="button" class="btn btn-outline-secondary btn-form" onclick="LoadView('/Stands/Edit/@Model.Id?hallId=@ViewBag.HallId')">
             <img src="~/images/edit.png" class="img-btn" />Редактировать
         </button>
-        <button type="button" class="btn btn-outline-secondary btn-form" onclick="deleteItem('/Stands/Delete/@Model.Id?hallId=@ViewBag.HallId', '@Model.Id')">
+        <button type="button" class="btn btn-outline-secondary btn-form" onclick="DeleteItem('/Stands/Delete/@Model.Id?hallId=@ViewBag.HallId', '@Model.Id')">
             <img src="~/images/delete.png" class="img-btn" />Удалить
         </button>
     </div>

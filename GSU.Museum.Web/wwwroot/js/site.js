@@ -78,7 +78,7 @@ function MoveDownRow(button) {
 
 // Load partial view, apply style to menu item and display in div with id content
 // url - url to send request
-function loadViewFromMenu(element, url) {
+function LoadViewFromMenu(element, url) {
     $('.selected-item').removeClass("selected-item");
     $(element).parent().parent().addClass("selected-item");
     $.ajax({
@@ -102,7 +102,7 @@ function loadViewFromMenu(element, url) {
 
 // Load partial view and display in div with id content
 // url - url to send request
-function loadView(url) {
+function LoadView(url) {
     $.ajax({
         url: url,
         type: 'GET',
@@ -125,7 +125,8 @@ function loadView(url) {
 // Send request to controller to perform delete and remove item from menu
 // url - url to send request
 // id - id of the recor to delete
-function deleteItem(url, id) {
+function DeleteItem(url, id) {
+
     result = confirm("Вы действительно хотите удалить данную страницу?");
     if (result) {
         $("#content").load(url);
@@ -139,7 +140,7 @@ function deleteItem(url, id) {
 // textId - id of text to display on menu after edditing
 // url - url to send request to
 // idOfElementsToReorder - if enable elements reordering, else null
-function edit(id, textId, url, idOfElementsToReorder) {
+function Edit(id, textId, url, idOfElementsToReorder) {
     var $form = $('form');
     $form.validate();
     if (!$form.valid() | !ValidateImage()) { alert("Заполните все поля!"); return false; }
@@ -207,7 +208,7 @@ function CreateHall(textId) {
         processData: false,
         contentType: false,
         success: function (id) {
-            $('#halls').append("<div id='elId" + id + "'><div><div style='margin-top: 10px;' class='flex-row'><button class='btn btn-link collapsed' data-toggle='collapse' data-target='#id" + id + "' aria-expanded='false' aria-controls='id" + id + "' style='margin-bottom:3px;padding:2px;'><i class='fa' aria-hidden='false'></i></button><a class='a-header' id='elName" + id + "' onclick=\"loadViewFromMenu(this, '/Halls/Index/" + id + "')\">" + $('#' + textId).val() + "</a></div></div><div class='collapse' id='id" + id + "'><div><div style='margin-left: 50px'><div onclick=\"loadViewFromMenu(this, '/Stands/Create?hallId=" + id + "')\"><img src='/images/add.png' class='img-btn' /><a class='a-btn' >Добавить стенд</a></div></div></div></div></div>");
+            $('#halls').append("<div id='elId" + id + "'><div><div style='margin-top: 10px;' class='flex-row'><button class='btn btn-link collapsed' data-toggle='collapse' data-target='#id" + id + "' aria-expanded='false' aria-controls='id" + id + "' style='margin-bottom:3px;padding:2px;'><i class='fa' aria-hidden='false'></i></button><a class='a-header' id='elName" + id + "' onclick=\"LoadViewFromMenu(this, '/Halls/Index/" + id + "')\">" + $('#' + textId).val() + "</a></div></div><div class='collapse' id='id" + id + "'><div><div style='margin-left: 50px'><div onclick=\"LoadViewFromMenu(this, '/Stands/Create?hallId=" + id + "')\"><img src='/images/add.png' class='img-btn' /><a class='a-btn' >Добавить стенд</a></div></div></div></div></div>");
             $('#content').empty();
         }
     });
@@ -227,7 +228,7 @@ function CreateStand(hallId, textId) {
         processData: false,
         contentType: false,
         success: function (id) {
-            $('#id' + hallId).append("<div id='elId" + id + "'><div><div style='margin-top: 10px;margin-left: 50px' class='flex-row'><button class='btn btn-link collapsed' data-toggle='collapse' data-target='#id" + id + "' aria-expanded='false' aria-controls='id" + id + "' style='margin-bottom:3px;padding:2px;'><i class='fa' aria-hidden='false'></i></button><a class='a-header' id='elName" + id + "' onclick=\"loadViewFromMenu(this, '/Stands/Index/" + id + "?hallId=" + hallId + "')\">" + $('#' + textId).val() + "</a></div></div><div class='collapse' id='id" + id + "'><div><div style='margin-left: 100px'><div onclick=\"loadViewFromMenu(this, '/Exhibits/Create?standId=" + id + "&hallId=" + hallId + "')\"><img src='/images/add.png' class='img-btn' /><a class='a-btn' >Добавить экспонат</a></div></div></div></div></div>");
+            $('#id' + hallId).append("<div id='elId" + id + "'><div><div style='margin-top: 10px;margin-left: 50px' class='flex-row'><button class='btn btn-link collapsed' data-toggle='collapse' data-target='#id" + id + "' aria-expanded='false' aria-controls='id" + id + "' style='margin-bottom:3px;padding:2px;'><i class='fa' aria-hidden='false'></i></button><a class='a-header' id='elName" + id + "' onclick=\"LoadViewFromMenu(this, '/Stands/Index/" + id + "?hallId=" + hallId + "')\">" + $('#' + textId).val() + "</a></div></div><div class='collapse' id='id" + id + "'><div><div style='margin-left: 100px'><div onclick=\"LoadViewFromMenu(this, '/Exhibits/Create?standId=" + id + "&hallId=" + hallId + "')\"><img src='/images/add.png' class='img-btn' /><a class='a-btn' >Добавить экспонат</a></div></div></div></div></div>");
             $('#content').empty();
             $('.')
         }
@@ -248,7 +249,7 @@ function CreateExhibit(hallId, standId, textId) {
         processData: false,
         contentType: false,
         success: function (id) {
-            $('#id' + standId).append("<div><div style='margin-top: 10px;margin-left: 100px;padding:2px;' class='flex-row' id='elId" + id + "'><a class='a-header' id='elName" + id + "' onclick=\"loadViewFromMenu(this, '/Exhibits/Index?id=" + id + "&standId=" + standId + "&hallId=" + hallId + "')\">" + $('#' + textId).val() +"</a ></div></div>");
+            $('#id' + standId).append("<div><div style='margin-top: 10px;margin-left: 100px;padding:2px;' class='flex-row' id='elId" + id + "'><a class='a-header' id='elName" + id + "' onclick=\"LoadViewFromMenu(this, '/Exhibits/Index?id=" + id + "&standId=" + standId + "&hallId=" + hallId + "')\">" + $('#' + textId).val() +"</a ></div></div>");
             $('#content').empty();
         }
     });
@@ -268,7 +269,7 @@ function CreateExhibitGallery(hallId, standId, textId) {
         processData: false,
         contentType: false,
         success: function (id) {
-            $('#id' + standId).append("<div><div style='margin-top: 10px;margin-left: 100px;padding:2px;' class='flex-row' id='elId" + id + "'><a class='a-header' id='elName" + id + "' onclick=\"loadViewFromMenu(this, '/Exhibits/Index?id=" + id + "&standId=" + standId + "&hallId=" + hallId + "')\">" + $('#' + textId).val() +"</a ></div></div>");
+            $('#id' + standId).append("<div><div style='margin-top: 10px;margin-left: 100px;padding:2px;' class='flex-row' id='elId" + id + "'><a class='a-header' id='elName" + id + "' onclick=\"LoadViewFromMenu(this, '/Exhibits/Index?id=" + id + "&standId=" + standId + "&hallId=" + hallId + "')\">" + $('#' + textId).val() +"</a ></div></div>");
             $('#content').empty();
         }
     });

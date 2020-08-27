@@ -50,10 +50,10 @@
                 <label>Нет фото</label>
             }
         </div>
-        <button type="button" class="btn btn-outline-secondary btn-form" onclick="loadView('/Halls/Edit/@Model.Id')">
+        <button type="button" class="btn btn-outline-secondary btn-form" onclick="LoadView('/Halls/Edit/@Model.Id')">
             <img src="~/images/edit.png" class="img-btn" />Редактировать
         </button>
-        <button type="button" class="btn btn-outline-secondary btn-form" onclick="deleteItem('/Halls/Delete/@Model.Id', '@Model.Id')">
+        <button type="button" class="btn btn-outline-secondary btn-form" onclick="DeleteItem('/Halls/Delete/@Model.Id', '@Model.Id')">
             <img src="~/images/delete.png" class="img-btn"/>Удалить
         </button>
     </div>

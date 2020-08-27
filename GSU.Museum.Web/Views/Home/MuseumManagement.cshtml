@@ -12,11 +12,11 @@
         <div class="lds-facebook"><div></div><div></div><div></div></div>
     </div>
     <div class="d-flex flex-row align-items-start">
-       
+
         <div style="width:30%" class="box-shadow border-right border-bottom">
             <div>
                 <div>
-                    <div onclick="loadViewFromMenu(this, '/Halls/Create')">
+                    <div onclick="LoadViewFromMenu(this, '/Halls/Create')">
                         <img src="~/images/add.png" class="img-btn" /><a class="a-btn">Добавить холл</a>
                     </div>
                 </div>
@@ -34,13 +34,13 @@
                                         style="margin-bottom:3px;padding:2px;">
                                     <i class="fa" aria-hidden="false"></i>
                                 </button>
-                                <a class="a-header" id="elName@{@hall.Id}" onclick="loadViewFromMenu(this, '/Halls/Index/@hall.Id')">@hall.TitleRu</a>
+                                <a class="a-header" id="elName@{@hall.Id}" onclick="LoadViewFromMenu(this, '/Halls/Index/@hall.Id')">@hall.TitleRu</a>
                             </div>
                         </div>
                         <div class="collapse" id="id@{@hall.Id}">
                             <div>
                                 <div style="margin-left: 50px">
-                                    <div onclick="loadViewFromMenu(this, '/Stands/Create?hallId=@hall.Id')">
+                                    <div onclick="LoadViewFromMenu(this, '/Stands/Create?hallId=@hall.Id')">
                                         <img src="~/images/add.png" class="img-btn" /><a class="a-btn">Добавить стенд</a>
                                     </div>
                                 </div>
@@ -58,13 +58,13 @@
                                                     style="margin-bottom:3px;padding:2px;">
                                                 <i class="fa" aria-hidden="false"></i>
                                             </button>
-                                            <a class="a-header" id="elName@{@stand.Id}" onclick="loadViewFromMenu(this, '/Stands/Index/@stand.Id?hallId=@hall.Id')">@stand.TitleRu</a>
+                                            <a class="a-header" id="elName@{@stand.Id}" onclick="LoadViewFromMenu(this, '/Stands/Index/@stand.Id?hallId=@hall.Id')">@stand.TitleRu</a>
                                         </div>
                                     </div>
                                     <div class="collapse" id="id@{@stand.Id}">
                                         <div>
                                             <div style="margin-left: 100px">
-                                                <div onclick="loadViewFromMenu(this, '/Exhibits/Create?standId=@stand.Id&hallId=@hall.Id')">
+                                                <div onclick="LoadViewFromMenu(this, '/Exhibits/Create?standId=@stand.Id&hallId=@hall.Id')">
                                                     <img src="~/images/add.png" class="img-btn" /><a class="a-btn">Добавить экспонат</a>
                                                 </div>
                                             </div>
@@ -74,7 +74,7 @@
                                         {
                                             <div>
                                                 <div style="margin-top: 10px;margin-left: 100px;padding:2px;" class="flex-row" id="elId@{@exhibit.Id}">
-                                                    <a class="a-header" id="elName@{@exhibit.Id}" onclick="loadViewFromMenu(this, '/Exhibits/Index?id=@exhibit.Id&standId=@stand.Id&hallId=@hall.Id')">@exhibit.TitleRu</a>
+                                                    <a class="a-header" id="elName@{@exhibit.Id}" onclick="LoadViewFromMenu(this, '/Exhibits/Index?id=@exhibit.Id&standId=@stand.Id&hallId=@hall.Id')">@exhibit.TitleRu</a>
                                                 </div>
                                             </div>
                                         }
@@ -90,5 +90,25 @@
 
         </div>
     </div>
+
+    @*<div class="modal fade" id="deleteConfirm" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="addPositionsLabel">Подтверждение</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h6>Вы действительно хотите удалить страницу?</h6>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary ok" data-save="modal" id="save">Да</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Нет</button>
+                </div>
+            </div>
+        </div>
+    </div>*@
 }
 
