@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using GSU.Museum.CommonClassLibrary.Data.Enums;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -37,7 +38,10 @@ namespace GSU.Museum.Web.Models
 
         [Required(ErrorMessage = "Не указан текст")]
         public string TextBe { get; set; }
-        
+
+        [Required(ErrorMessage = "Не указан тип экспоната")]
+        public ExhibitType ExhibitType { get; set; }
+
         public List<PhotoInfo> Photos { get; set; }
     }
 }
