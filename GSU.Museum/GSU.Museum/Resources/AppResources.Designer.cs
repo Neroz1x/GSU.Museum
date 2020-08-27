@@ -277,7 +277,7 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Internet is used to check cached data for updates. If there are changes, they will be downloaded. The Internet will also be used to download new data. It require connection to the Internet.
+        ///   Looks up a localized string similar to The Internet is used to check cached data for updates. If there are changes, they will be downloaded. The Internet will also be used to download new data. It requires connection to the Internet.
         /// </summary>
         public static string OptionsPage_CheckForUpdatesDescriptionLabel {
             get {
