@@ -145,10 +145,10 @@
             </div>
 
             <div style="margin-top:20px;">
-                <button type="button" class="btn btn-outline-secondary btn-form" onclick="loadView('/Exhibits/Edit/@Model.Id?hallId=@ViewBag.HallId&standId=@ViewBag.StandId')">
+                <button type="button" class="btn btn-outline-secondary btn-form" onclick="LoadView('/Exhibits/Edit/@Model.Id?hallId=@ViewBag.HallId&standId=@ViewBag.StandId')">
                     <img src="~/images/edit.png" class="img-btn" />Редактировать
                 </button>
-                <button type="button" class="btn btn-outline-secondary btn-form" onclick="deleteItem('/Exhibits/Delete/@Model.Id?hallId=@ViewBag.HallId&standId=@ViewBag.StandId', '@Model.Id')">
+                <button type="button" class="btn btn-outline-secondary btn-form" onclick="DeleteItem('/Exhibits/Delete/@Model.Id?hallId=@ViewBag.HallId&standId=@ViewBag.StandId', '@Model.Id')">
                     <img src="~/images/delete.png" class="img-btn" />Удалить
                 </button>
             </div>
