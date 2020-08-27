@@ -40,8 +40,8 @@
                         <div class="collapse" id="id@{@hall.Id}">
                             <div>
                                 <div style="margin-left: 50px">
-                                    <div onclick="loadViewFromMenu(this, '/Halls/Create')">
-                                        <img src="~/images/add.png" class="img-btn" /><a class="a-btn" onclick="loadViewFromMenu(this, '/Stands/Create?hallId=@hall.Id')">Добавить стенд</a>
+                                    <div onclick="loadViewFromMenu(this, '/Stands/Create?hallId=@hall.Id')">
+                                        <img src="~/images/add.png" class="img-btn" /><a class="a-btn">Добавить стенд</a>
                                     </div>
                                 </div>
                             </div>
@@ -64,8 +64,8 @@
                                     <div class="collapse" id="id@{@stand.Id}">
                                         <div>
                                             <div style="margin-left: 100px">
-                                                <div onclick="loadViewFromMenu(this, '/Halls/Create')">
-                                                    <img src="~/images/add.png" class="img-btn" /><a class="a-btn" onclick="loadViewFromMenu(this, '/Exhibits/Create?standId=@stand.Id&hallId=@hall.Id')">Добавить экспонат</a>
+                                                <div onclick="loadViewFromMenu(this, '/Exhibits/Create?standId=@stand.Id&hallId=@hall.Id')">
+                                                    <img src="~/images/add.png" class="img-btn" /><a class="a-btn">Добавить экспонат</a>
                                                 </div>
                                             </div>
                                         </div>
