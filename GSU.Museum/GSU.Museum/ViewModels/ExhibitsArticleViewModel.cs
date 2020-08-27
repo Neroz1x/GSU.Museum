@@ -99,7 +99,7 @@ namespace GSU.Museum.Shared.ViewModels
         /// <param name="navigation">Instance of navigation</param>
         /// <param name="hallId">Id of the hall</param>
         /// <param name="standId">Id of the stand</param>
-        public ExhibitsArticleViewModel(ExhibitDTO exhibit, INavigation navigation, string hallId, string standId)
+        public ExhibitsArticleViewModel(ExhibitDTO exhibit, INavigation navigation)
         {
             Navigation = navigation;
             Exhibit = exhibit;

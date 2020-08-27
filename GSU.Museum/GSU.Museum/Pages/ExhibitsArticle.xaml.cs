@@ -12,12 +12,10 @@ namespace GSU.Museum.Shared.Pages
         /// 
         /// </summary>
         /// <param name="exhibit">Exhibit to display</param>
-        /// <param name="hallId">Id of the hall</param>
-        /// <param name="standId">Id of the stand</param>
-        public ExhibitsArticle(ExhibitDTO exhibit, string hallId, string standId)
+        public ExhibitsArticle(ExhibitDTO exhibit)
         {
             InitializeComponent();
-            BindingContext = new ExhibitsArticleViewModel(exhibit, Navigation, hallId, standId);
+            BindingContext = new ExhibitsArticleViewModel(exhibit, Navigation);
         }
 
         private void ContentPage_Appearing(object sender, System.EventArgs e)

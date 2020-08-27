@@ -4,7 +4,6 @@ using GSU.Museum.Shared.Resources;
 using GSU.Museum.Shared.Services;
 using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -124,7 +123,7 @@ namespace GSU.Museum.Shared.ViewModels
                 Exhibits.Clear();
                 foreach (var exhibit in stand.Exhibits)
                 {
-                    if(string.IsNullOrEmpty(exhibit.Text) || string.IsNullOrEmpty(exhibit.Title) || exhibit.Photos == null || exhibit?.Photos.Count == 0)
+                    if(string.IsNullOrEmpty(exhibit.Title) || exhibit.Photos == null || exhibit?.Photos.Count == 0)
                     {
                         continue;
                     }
@@ -180,7 +179,14 @@ namespace GSU.Museum.Shared.ViewModels
             {
                 IsBusy = true;
                 var exhibit = await DependencyService.Get<ContentLoaderService>().LoadExhibitAsync(_hallId, _standId, id);
-                await Navigation.PushAsync(new ExhibitsArticle(exhibit, _hallId, _standId));
+                if(exhibit.ExhibitType == CommonClassLibrary.Data.Enums.ExhibitType.Article)
+                {
+                    await Navigation.PushAsync(new ExhibitsArticle(exhibit));
+                }
+                else
+                {
+                    await Navigation.PushAsync(new ExhibitGallery(exhibit));
+                }
             }
             catch(Exception ex)
             {
