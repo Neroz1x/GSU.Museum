@@ -126,12 +126,9 @@ function LoadView(url) {
 // url - url to send request
 // id - id of the recor to delete
 function DeleteItem(url, id) {
-
-    result = confirm("Вы действительно хотите удалить данную страницу?");
-    if (result) {
-        $("#content").load(url);
-        $('#elId' + id).remove();
-    }
+    $('#deleteConfirm').attr('data-id', id);
+    $('#deleteConfirm').attr('data-url', url);
+    $('#deleteConfirm').modal("show");
 }
 
 
@@ -349,6 +346,13 @@ $(document).on("focusout", ".validation-unit", function () {
 
 $(document).on("input", ".validation-unit", function () {
     ValidateRequired(this);
+});
+
+// Is activated when confirm delete button pressed
+$(document).on("click", ".confirmOk", function () {
+    $("#content").load($('#deleteConfirm').attr('data-url'));
+    $('#elId' + $('#deleteConfirm').attr('data-id')).remove();
+    $('#deleteConfirm').modal("hide");
 });
 // -----------------
 
