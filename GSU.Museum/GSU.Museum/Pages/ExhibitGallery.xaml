@@ -21,7 +21,7 @@
                                 <StackLayout Orientation="Vertical">
                                     <Image Aspect="AspectFit" BackgroundColor="Transparent" Source="{Binding Photo, Converter={StaticResource ByteArrayToImage}}">
                                     </Image>
-                                    <Label Text="{Binding Description}"/>
+                                    <Label Style="{StaticResource DefaultLabel}" HorizontalOptions="Center" Text="{Binding Description}"/>
                                 </StackLayout>
                             </DataTemplate>
                         </CarouselView.ItemTemplate>
