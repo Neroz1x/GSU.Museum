@@ -10,6 +10,9 @@
     <NavigationPage.TitleView>
         <Label Text="{x:Static resources:AppResources.MainPage_Title}" Style="{StaticResource PageTitle}" />
     </NavigationPage.TitleView>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding NavigateToHomePageCommand}" Text="{x:Static resources:AppResources.Button_HomePage}"/>
+    </ContentPage.ToolbarItems>
     <Grid>
         <ScrollView IsVisible="{Binding ContentVisibility}" Padding="10">
             <StackLayout >
@@ -43,10 +46,6 @@
                         </StackLayout>
                     </CollectionView.EmptyView>
                 </CollectionView>
-                <StackLayout Margin="0, 10">
-                    <Button Text="{x:Static resources:AppResources.Button_HomePage}" Style="{StaticResource DefaultButton}" 
-                        Command="{Binding NavigateToHomePageCommand}"/>
-                </StackLayout>
             </StackLayout>
         </ScrollView>
         <Button Text="Reload" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding ReloadButtonVisibility}" Command="{Binding GetHallsCommand}"/>

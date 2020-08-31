@@ -10,6 +10,9 @@
     <NavigationPage.TitleView>
         <Label Text="{Binding Title}" Style="{StaticResource PageTitle}" />
     </NavigationPage.TitleView>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding NavigateToHomePageCommand}" Text="{x:Static resources:AppResources.Button_HomePage}"/>
+    </ContentPage.ToolbarItems>
     <Grid>
         <ScrollView Padding="10" IsVisible="{Binding ContentVisibility}">
             <StackLayout >
@@ -34,16 +37,12 @@
                                     <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
                                         <Label Style="{StaticResource WhiteTransparentMenuItemHeader}" Text="{Binding Title}"></Label>
                                         <Label Style="{StaticResource WhiteTransparentMenuItemBody}" Text="{Binding Description}"></Label>
-                                    </StackLayout>                                
+                                    </StackLayout>
                                 </Grid>
                             </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-                <StackLayout Margin="0, 10">
-                    <Button Text="{x:Static resources:AppResources.Button_HomePage}" Style="{StaticResource DefaultButton}" 
-                        Command="{Binding NavigateToHomePageCommand}"/>
-                </StackLayout>
             </StackLayout>
         </ScrollView>
         
