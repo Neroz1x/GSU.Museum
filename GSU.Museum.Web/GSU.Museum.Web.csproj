@@ -14,4 +14,8 @@
     <ProjectReference Include="..\GSU.Museum.CommonClassLibrary\GSU.Museum.CommonClassLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 </Project>

@@ -72,11 +72,11 @@ body {
 
 
 [data-toggle="collapse"] .fa:before {
-    content: "\f139";
+    content: "\f13a";
 }
 
 [data-toggle="collapse"].collapsed .fa:before {
-    content: "\f13a";
+    content: "\f138";
 }
 
 
@@ -212,4 +212,14 @@ input[type="checkbox"].input-validation-error {
 
 .validation-summary-valid {
     display: none;
+}
+
+#content{
+    margin-right: 10%;
+}
+
+.overflow {
+    text-overflow: ellipsis;
+    white-space:nowrap;
+    overflow:hidden;
 }

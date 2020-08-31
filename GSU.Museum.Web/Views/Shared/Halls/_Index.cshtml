@@ -1,40 +1,37 @@
 ﻿@model GSU.Museum.Web.Models.HallViewModel
 @{
-    <h3>Просмотр холла - @Model.TitleRu</h3>
+    <div class="d-flex flex-row">
+        <div>
+            <h3>@Model.TitleRu</h3>
+        </div>
 
-    <div class="flex-column">
+        <div style="margin-left:auto;">
+            <button style="line-height:1.2em;" type="button" class="btn btn-outline-secondary btn-form" onclick="LoadView('/Halls/Edit/@Model.Id')">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                </svg>Редактировать
+            </button>
+            <button style="line-height:1.2em;" type="button" class="btn btn-outline-secondary btn-form" onclick="DeleteItem('/Halls/Delete/@Model.Id', '@Model.Id', false)">
+                <svg width="1.2em" height="1.2em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z" />
+                </svg>Удалить
+            </button>
+        </div>
+    </div>
+
+    <div class="flex-column ml-3">
         <div class="form-group">
             <h5>Название (BY)</h5>
-            @if (!string.IsNullOrEmpty(@Model.TitleBe))
-            {
-                <p>@Model.TitleBe</p>
-            }
-            else
-            {
-                <p>Нет названия</p>
-            }
+            <p class="ml-3">@Model.TitleBe</p>
         </div>
         <div class="form-group">
             <h5>Название (RU)</h5>
-            @if (!string.IsNullOrEmpty(@Model.TitleRu))
-            {
-                <p>@Model.TitleRu</p>
-            }
-            else
-            {
-                <p>Нет названия</p>
-            }
+            <p class="ml-3">@Model.TitleRu</p>
         </div>
         <div class="form-group">
             <h5>Название (EN)</h5>
-            @if (!string.IsNullOrEmpty(@Model.TitleEn))
-            {
-                <p>@Model.TitleEn</p>
-            }
-            else
-            {
-                <p>Нет названия</p>
-            }
+            <p class="ml-3">@Model.TitleEn</p>
         </div>
         <div class="form-group">
             <h5>Фото</h5>
@@ -43,18 +40,12 @@
                 var base64 = Convert.ToBase64String(Model.Photo.Photo);
                 var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 
-                <img class='img-thumbnail small-image img-small-loaded' src="@imgSrc" />
+                <img class='img-thumbnail small-image img-small-loaded ml-3' src="@imgSrc" />
             }
             else
             {
-                <label>Нет фото</label>
+                <label class="ml-3">Нет фото</label>
             }
         </div>
-        <button type="button" class="btn btn-outline-secondary btn-form" onclick="LoadView('/Halls/Edit/@Model.Id')">
-            <img src="~/images/edit.png" class="img-btn" />Редактировать
-        </button>
-        <button type="button" class="btn btn-outline-secondary btn-form" onclick="DeleteItem('/Halls/Delete/@Model.Id', '@Model.Id')">
-            <img src="~/images/delete.png" class="img-btn"/>Удалить
-        </button>
     </div>
 }
