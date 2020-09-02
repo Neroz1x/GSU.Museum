@@ -133,6 +133,7 @@ body {
 
 .btn-form{
     width:180px;
+    height:40px;
 }
 
 .selected-item {
@@ -220,6 +221,7 @@ input[type="checkbox"].input-validation-error {
 
 .overflow {
     text-overflow: ellipsis;
-    white-space:nowrap;
-    overflow:hidden;
+    white-space: nowrap;
+    overflow: hidden;
+    display:block;
 }

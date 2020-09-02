@@ -25,7 +25,7 @@
                 {
                     <div id="elId@{@hall.Id}">
                         <div>
-                            <div style="margin-top: 10px;" class="flex-row">
+                            <div style="margin-top: 10px;" class="d-flex flex-row align-items-center">
                                 <button class="btn btn-link collapsed" data-toggle="collapse"
                                         data-target="#id@{@hall.Id}"
                                         aria-expanded="false"
@@ -47,7 +47,7 @@
                             {
                                 <div id="elId@{@stand.Id}">
                                     <div>
-                                        <div style="margin-top: 10px;margin-left: 2em" class="flex-row">
+                                        <div style="margin-top: 10px;margin-left: 2em" class="d-flex flex-row align-items-center">
                                             <button class="btn btn-link collapsed" data-toggle="collapse"
                                                     data-target="#id@{@stand.Id}"
                                                     aria-expanded="false"
@@ -55,7 +55,7 @@
                                                     style="margin-bottom:3px;padding:2px;visibility: @(stand.Exhibits.Count == 0 ? "hidden" : "visible")">
                                                 <i class="fa" aria-hidden="false"></i>
                                             </button>
-                                            <a class="a-header" id="elName@{@stand.Id}" onclick="LoadViewFromMenu(this, '/Stands/Index/@stand.Id?hallId=@hall.Id')">@stand.TitleRu</a>
+                                            <a class="a-header overflow" id="elName@{@stand.Id}" onclick="LoadViewFromMenu(this, '/Stands/Index/@stand.Id?hallId=@hall.Id')">@stand.TitleRu</a>
                                             <button style="line-height:1.2em;" onclick="LoadCreateView('/Exhibits/Create?standId=@stand.Id&hallId=@hall.Id')" type="button" class="btn btn-primary">
                                                 <svg xmlns="http://www.w3.org/2000/svg" height="1.2em" viewBox="0 0 24 24" width="1.2em">
                                                     <path d="M0 0h24v24H0z" fill="none" />
@@ -69,10 +69,10 @@
                                         @foreach (var exhibit in stand.Exhibits)
                                         {
 
-                                            <div style="margin-top: 10px;" class="flex-row" id="elId@{@exhibit.Id}">
+                                            <div style="margin-top: 10px;" id="elId@{@exhibit.Id}">
                                                 <div>
-                                                    <div style="margin-left: 4em; padding:2px;">
-                                                        <a class="a-header" id="elName@{@exhibit.Id}" onclick="LoadViewFromMenu(this, '/Exhibits/Index?id=@exhibit.Id&standId=@stand.Id&hallId=@hall.Id')">@exhibit.TitleRu</a>
+                                                    <div style="margin-left: 4em; padding:2px;" class="d-flex flex-row">
+                                                        <a class="a-header overflow" id="elName@{@exhibit.Id}" onclick="LoadViewFromMenu(this, '/Exhibits/Index?id=@exhibit.Id&standId=@stand.Id&hallId=@hall.Id')">@exhibit.TitleRu</a>
                                                     </div>
                                                 </div>
                                             </div>
