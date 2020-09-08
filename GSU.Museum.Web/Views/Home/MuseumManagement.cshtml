@@ -8,13 +8,11 @@
 }
 
 @{
-    <div id="loader" style="position:absolute; visibility: collapse; margin-left:50%; margin-top:10%;">
-        <div class="lds-facebook"><div></div><div></div><div></div></div>
-    </div>
+    
     <div class="d-flex flex-row align-items-start">
 
         <div style="width:35%" class="box-shadow border-right border-bottom">
-            <button style="line-height:1.2em;" onclick="LoadCreateView('/Halls/Create')" type="button" class="btn btn-primary">
+            <button style="line-height:1.2em;" onclick="LoadViewFromMenu(null, '/Halls/Create', false, true)" type="button" class="btn btn-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" height="1.2em" viewBox="0 0 24 24" width="1.2em">
                     <path d="M0 0h24v24H0z" fill="none" />
                     <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
@@ -33,8 +31,8 @@
                                         style="margin-bottom:3px;padding:2px;visibility: @(hall.Stands.Count == 0 ? "hidden" : "visible")">
                                     <i class="fa" aria-hidden="false"></i>
                                 </button>
-                                <a class="a-header overflow" id="elName@{@hall.Id}" onclick="LoadViewFromMenu(this, '/Halls/Index/@hall.Id')">@hall.TitleRu</a>
-                                <button style="line-height:1.2em;" onclick="LoadCreateView('/Stands/Create?hallId=@hall.Id')" type="button" class="btn btn-primary">
+                                <a class="a-header overflow" id="elName@{@hall.Id}" onclick="LoadViewFromMenu(this, '/Halls/Index/@hall.Id', true, false)">@hall.TitleRu</a>
+                                <button style="line-height:1.2em;" onclick="LoadViewFromMenu(null, '/Stands/Create?hallId=@hall.Id', false, true)" type="button" class="btn btn-primary">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="1.2em" viewBox="0 0 24 24" width="1.2em">
                                         <path d="M0 0h24v24H0z" fill="none" />
                                         <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
@@ -55,8 +53,8 @@
                                                     style="margin-bottom:3px;padding:2px;visibility: @(stand.Exhibits.Count == 0 ? "hidden" : "visible")">
                                                 <i class="fa" aria-hidden="false"></i>
                                             </button>
-                                            <a class="a-header overflow" id="elName@{@stand.Id}" onclick="LoadViewFromMenu(this, '/Stands/Index/@stand.Id?hallId=@hall.Id')">@stand.TitleRu</a>
-                                            <button style="line-height:1.2em;" onclick="LoadCreateView('/Exhibits/Create?standId=@stand.Id&hallId=@hall.Id')" type="button" class="btn btn-primary">
+                                            <a class="a-header overflow" id="elName@{@stand.Id}" onclick="LoadViewFromMenu(this, '/Stands/Index/@stand.Id?hallId=@hall.Id', true, false)">@stand.TitleRu</a>
+                                            <button style="line-height:1.2em;" onclick="LoadViewFromMenu(null, '/Exhibits/Create?standId=@stand.Id&hallId=@hall.Id', false, true)" type="button" class="btn btn-primary">
                                                 <svg xmlns="http://www.w3.org/2000/svg" height="1.2em" viewBox="0 0 24 24" width="1.2em">
                                                     <path d="M0 0h24v24H0z" fill="none" />
                                                     <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
@@ -72,7 +70,7 @@
                                             <div style="margin-top: 10px;" id="elId@{@exhibit.Id}">
                                                 <div>
                                                     <div style="margin-left: 4em; padding:2px;" class="d-flex flex-row">
-                                                        <a class="a-header overflow" id="elName@{@exhibit.Id}" onclick="LoadViewFromMenu(this, '/Exhibits/Index?id=@exhibit.Id&standId=@stand.Id&hallId=@hall.Id')">@exhibit.TitleRu</a>
+                                                        <a class="a-header overflow" id="elName@{@exhibit.Id}" onclick="LoadViewFromMenu(this, '/Exhibits/Index?id=@exhibit.Id&standId=@stand.Id&hallId=@hall.Id', true, false)">@exhibit.TitleRu</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -87,26 +85,6 @@
         </div>
         <div id="content" style="width:100%" class="ml-5">
 
-        </div>
-    </div>
-
-    <div class="modal fade" id="deleteConfirm" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="addPositionsLabel">Подтверждение</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <h6>Вы действительно хотите удалить страницу?</h6>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary confirmOk" data-save="modal" id="save">Да</button>
-                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Нет</button>
-                </div>
-            </div>
         </div>
     </div>
 }
