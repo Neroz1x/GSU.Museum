@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using GSU.Museum.CommonClassLibrary.Data.Enums;
+using GSU.Museum.Web.Attributes;
 using GSU.Museum.Web.Interfaces;
 using GSU.Museum.Web.Models;
 using Microsoft.AspNetCore.Http;
@@ -8,11 +9,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GSU.Museum.Web.Controllers
 {
+    [Authorize]
     public class ExhibitsController : Controller
     {
         private readonly IExhibitsRepository _exhibitsRepository;
         private readonly IExhibitsService _exhibitsService;
-
+        
         public ExhibitsController(IExhibitsRepository exhibitsRepository, IExhibitsService exhibitsService)
         {
             _exhibitsRepository = exhibitsRepository;

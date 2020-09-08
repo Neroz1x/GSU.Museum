@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using GSU.Museum.Web.Models;
 using GSU.Museum.Web.Interfaces;
+using GSU.Museum.Web.Attributes;
 
 namespace GSU.Museum.Web.Controllers
 {
@@ -23,6 +24,7 @@ namespace GSU.Museum.Web.Controllers
             return View();
         }
 
+        [Authorize]
         public async Task<IActionResult> MuseumManagement()
         {
             return View(await _homeService.GetAllAsync());
