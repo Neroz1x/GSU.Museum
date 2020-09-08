@@ -6,9 +6,14 @@
     public interface IDatabaseSettings
     {
         /// <summary>
-        /// Name of the collection from appseting.json in DatabaseSettings section
+        /// Name of the collection of the content from appseting.json in DatabaseSettings section
         /// </summary>
         string CollectionName { get; set; }
+        
+        /// <summary>
+        /// Name of the collection pf users from appseting.json in DatabaseSettings section
+        /// </summary>
+        string UsersCollectionName { get; set; }
 
         /// <summary>
         /// Connection string from appseting.json in DatabaseSettings section
