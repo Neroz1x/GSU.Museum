@@ -1,0 +1,27 @@
+﻿@model GSU.Museum.Web.Models.User
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+
+@{
+    <h3>Аутентификация</h3>
+
+    <form class="w-25" method="post" id="form" enctype="multipart/form-data">
+        <div class="validation" asp-validation-summary="ModelOnly"></div>
+        <div class="form-group">
+            <label for="titleBe">Логин</label>
+            <span asp-validation-for="Login"></span>
+            <input autocomplete="off" type="text" placeholder="User" asp-for="Login" class="form-control ml-3" />
+        </div>
+        <div class="form-group">
+            <label for="titleBe">Пароль</label>
+            <span asp-validation-for="Password"></span>
+            <input type="password" asp-for="Password" class="form-control ml-3" />
+        </div>
+        <div class="form-group">
+            <button type="button" onclick="Authenticate()" class="btn btn-outline-secondary btn-form">Ок</button>
+        </div>
+    </form>
+
+}
