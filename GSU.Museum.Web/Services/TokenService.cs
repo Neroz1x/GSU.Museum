@@ -88,8 +88,7 @@ namespace GSU.Museum.Web.Services
             httpContext.Response.OnStarting(state =>
             {
                 var context = (HttpContext)state;
-                context.Response.Cookies.Delete("GSU.Museum.Web.AccessToken");
-                context.Response.Cookies.Delete("GSU.Museum.Web.RefreshToken");
+
                 context.Response.Cookies.Append("GSU.Museum.Web.AccessToken", newAccessToken, new CookieOptions
                 {
                     MaxAge = TimeSpan.FromDays(RefeshTokenLifeTimeInDays), 

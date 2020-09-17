@@ -8,11 +8,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using System.Net;
-using System.Threading.Tasks;
 
 namespace GSU.Museum.Web
 {
@@ -70,19 +67,10 @@ namespace GSU.Museum.Web
                 return next.Invoke();
             });
 
-            app.UseStatusCodePages(context => {
-                var response = context.HttpContext.Response;
-
-                if (response.StatusCode == (int)HttpStatusCode.Unauthorized)
-                {
-                    response.Redirect("/Authentication/index");
-                }
-
-                return Task.CompletedTask;
-            });
-
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
+            
             app.UseRouting();
 
             app.UseAuthorization();

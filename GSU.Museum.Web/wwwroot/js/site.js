@@ -148,7 +148,7 @@ function Revoke(login) {
             $('#loader').css('visibility', 'visible');
         },
         statusCode: {
-            200: function (view) {
+            204: function (view) {
                 $('#loader').css('visibility', 'collapse');
                 window.location.href = '/Home';
             }
@@ -188,12 +188,6 @@ function Edit(id, textId, url, idOfElementsToReorder) {
         data: new FormData($('#form').get()[0]),
         processData: false,
         contentType: false,
-        statusCode: {
-            401: function () {
-                $('#loader').css('visibility', 'collapse');
-                window.location.href = '/Authentication';
-            },
-        }
     });
 
     if (idOfElementsToReorder != null) {
@@ -222,12 +216,6 @@ function EditGallery(id, textId, url) {
         data: new FormData($('#form').get()[0]),
         processData: false,
         contentType: false,
-        statusCode: {
-            401: function () {
-                $('#loader').css('visibility', 'collapse');
-                window.location.href = '/Authentication';
-            },
-        }
     });
 
     $('#elName' + id).text($('#' + textId).val());
@@ -260,12 +248,6 @@ function CreateHall(textId) {
         success: function (id) {
             $('#halls').append("<div id='elId" + id + "'><div><div style='margin-top: 10px;' class='d-flex flex-row align-items-center'><button class='btn btn-link collapsed' data-toggle='collapse' data-target='#id" + id + "' aria-expanded='false' aria-controls='id" + id + "' style='margin-bottom:3px;padding:2px;visibility: hidden'><i class='fa' aria-hidden='false'></i></button><a class='a-header overflow' id='elName" + id + "' onclick=\"LoadViewFromMenu(this, '/Halls/Index/" + id + "', true, false)\">" + $('#' + textId).val() + "</a><button style='line-height:1em;' onclick=\"LoadViewFromMenu(null, '/Stands/Create?hallId=" + id + "', false, true)\" type='button' class='btn btn-secondary'><svg width='1em' height='1em' viewBox='0 0 16 16' class='bi bi-plus-circle-fill' fill='currentColor' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4a.5.5 0 0 0-1 0v3.5H4a.5.5 0 0 0 0 1h3.5V12a.5.5 0 0 0 1 0V8.5H12a.5.5 0 0 0 0-1H8.5V4z' /></svg></button></div></div><div class='collapse' id='id" + id + "'></div></div>");
             $('#content').empty();
-        },
-        statusCode: {
-            401: function () {
-                $('#loader').css('visibility', 'collapse');
-                window.location.href = '/Authentication';
-            },
         }
     });
     $('.selected-item').removeClass("selected-item");
@@ -287,12 +269,6 @@ function CreateStand(hallId, textId) {
             $('#elId' + hallId).children().first().children().first().children().first().css("visibility", "visible");
             $('#id' + hallId).append("<div id='elId" + id + "'><div><div style='margin-top: 10px;margin-left: 2em' class='d-flex flex-row align-items-center'><button class='btn btn-link collapsed' data-toggle='collapse' data-target='#id" + id + "' aria-expanded='false' aria-controls='id" + id + "' style='margin-bottom:3px;padding:2px;visibility: hidden'><i class='fa' aria-hidden='false'></i></button><a class='a-header overflow' id='elName" + id + "' onclick=\"LoadViewFromMenu(this, '/Stands/Index/" + id + "?hallId=" + hallId + "', true, false)\">" + $('#' + textId).val() + "</a><button style='line-height:1em;' onclick=\"LoadViewFromMenu(null, '/Exhibits/Create?standId=" + id + "&hallId=" + hallId + "', false, true)\" type='button' class='btn btn-secondary'><svg width='1em' height='1em' viewBox='0 0 16 16' class='bi bi-plus-circle-fill' fill='currentColor' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4a.5.5 0 0 0-1 0v3.5H4a.5.5 0 0 0 0 1h3.5V12a.5.5 0 0 0 1 0V8.5H12a.5.5 0 0 0 0-1H8.5V4z' /></svg></button></div></div><div class='collapse' id='id" + id + "'></div></div>");
             $('#content').empty();
-        },
-        statusCode: {
-            401: function () {
-                $('#loader').css('visibility', 'collapse');
-                window.location.href = '/Authentication';
-            },
         }
     });
     $('.selected-item').removeClass("selected-item");
@@ -314,12 +290,6 @@ function CreateExhibit(hallId, standId, textId) {
             $('#elId' + standId).children().first().children().first().children().first().css("visibility", "visible");
             $('#id' + standId).append("<div style='margin-top: 10px;' id='elId" + id + "'><div><div style='margin-left: 4em; padding:2px;'><a class='a-header overflow' id='elName" + id + "' onclick=\"LoadViewFromMenu(this, '/Exhibits/Index?id=" + id + "&standId=" + standId + "&hallId=" + hallId + "', true, false)\">" + $('#' + textId).val() + "</a></div></div></div>");
             $('#content').empty();
-        },
-        statusCode: {
-            401: function () {
-                $('#loader').css('visibility', 'collapse');
-                window.location.href = '/Authentication';
-            },
         }
     });
     $('.selected-item').removeClass("selected-item");
@@ -341,12 +311,6 @@ function CreateExhibitGallery(hallId, standId, textId) {
             $('#elId' + standId).children().first().children().first().children().first().css("visibility", "visible");
             $('#id' + standId).append("<div style='margin-top: 10px;' class='flex-row' id='elId" + id + "'><div><div style='margin-left: 4em; padding:2px;'><a class='a-header' id='elName" + id + "' onclick=\"LoadViewFromMenu(this, '/Exhibits/Index?id=" + id + "&standId=" + standId + "&hallId=" + hallId + "', true, false)\">" + $('#' + textId).val() + "</a></div></div></div>");
             $('#content').empty();
-        },
-        statusCode: {
-            401: function () {
-                $('#loader').css('visibility', 'collapse');
-                window.location.href = '/Authentication';
-            },
         }
     });
     $('.selected-item').removeClass("selected-item");
@@ -370,12 +334,6 @@ function ExhibitTypeChange(combobox, hallId, standId) {
                 $("#form").removeData("validator");
                 $("#form").removeData("unobtrusiveValidation");
                 $.validator.unobtrusive.parse("#form");
-            },
-            statusCode: {
-                401: function () {
-                    $('#loader').css('visibility', 'collapse');
-                    window.location.href = '/Authentication';
-                },
             }
         });
     }
@@ -395,12 +353,6 @@ function ExhibitTypeChange(combobox, hallId, standId) {
                 $("#form").removeData("validator");
                 $("#form").removeData("unobtrusiveValidation");
                 $.validator.unobtrusive.parse("#form");
-            },
-            statusCode: {
-                401: function () {
-                    $('#loader').css('visibility', 'collapse');
-                    window.location.href = '/Authentication';
-                },
             }
         });
     }
