@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 
 namespace GSU.Museum.Web.Attributes
@@ -12,7 +11,7 @@ namespace GSU.Museum.Web.Attributes
             var isAuthorised = context.HttpContext.Items["IsAuthorised"] ?? false;
             if (!((bool)isAuthorised))
             {
-                context.Result = new UnauthorizedResult();
+                context.HttpContext.Response.Redirect("/Authentication/index");
             }
         }
     }
