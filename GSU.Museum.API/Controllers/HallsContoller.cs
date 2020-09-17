@@ -110,7 +110,6 @@ namespace GSU.Museum.API.Controllers
             }
             catch (Exception)
             {
-                throw new Exception();
                 throw new Error(Errors.Create_error, $"Can not add record {hall}");
             }
         }
