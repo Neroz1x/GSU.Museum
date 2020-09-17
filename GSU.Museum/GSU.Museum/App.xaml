@@ -71,6 +71,7 @@
             <Setter Property="TextColor" Value="Black"></Setter>
             <Setter Property="VerticalOptions" Value="Start"></Setter>
             <Setter Property="FontSize" Value="Large"></Setter>
+            <Setter Property="Padding" Value="10,0"></Setter>
         </Style>
 
         <Style TargetType="Label" x:Key="WhiteMenuItemHeader">
@@ -80,6 +81,7 @@
             <Setter Property="VerticalOptions" Value="Start"></Setter>
             <Setter Property="FontSize" Value="Large"></Setter>
             <Setter Property="Margin" Value="0, 5, 0, 0"></Setter>
+            <Setter Property="Padding" Value="10,0"></Setter>
         </Style>
 
         <Style TargetType="StackLayout" x:Key="TextBackground">
@@ -94,6 +96,7 @@
             <Setter Property="VerticalOptions" Value="Center"></Setter>
             <Setter Property="FontSize" Value="Large"></Setter>
             <Setter Property="Margin" Value="0, 5, 0, 0"></Setter>
+            <Setter Property="Padding" Value="10,0"></Setter>
         </Style>
 
         <Style TargetType="Label" x:Key="DefaultMenuItemBody">
@@ -113,6 +116,7 @@
             <Setter Property="Padding" Value="10, 0"></Setter>
             <Setter Property="VerticalOptions" Value="Center"></Setter>
             <Setter Property="FontSize" Value="Medium"></Setter>
+            <Setter Property="Padding" Value="10,0"></Setter>
         </Style>
         
         <Style TargetType="Label" x:Key="WhiteMenuItemBody">
