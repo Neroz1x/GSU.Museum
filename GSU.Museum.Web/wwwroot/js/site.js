@@ -49,7 +49,7 @@ function readURL(input) {
             if (input.files[i]) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    $('#imageBlock').append("<div style='margin: 5px;' class='ml-3'><img class='img-thumbnail small-image img-small-loaded' src='#'/><label style='text-align: center;'></label><input type='button' class='btn-outline-secondary btn-close' onclick='RemoveBlock(this)' value='x' /></div>");
+                    $('#imageBlock').append("<div style='margin: 5px;' class='ml-3'><img class='img-thumbnail small-image img-small-loaded' src='#'/><label style='text-align: center;'></label><input type='button' class='btn-outline-primary btn-close' onclick='RemoveBlock(this)' value='x' /></div>");
                     $('#imageBlock').children().last().children().first().attr('src', e.target.result);
                     ValidateImage();
                 }
@@ -97,12 +97,6 @@ function LoadViewFromMenu(element, url, shouldHighlightMenuItem, shouldChangeHig
             $("#form").removeData("validator");
             $("#form").removeData("unobtrusiveValidation");
             $.validator.unobtrusive.parse("#form");
-        },
-        statusCode: {
-            401: function () {
-                $('#loader').css('visibility', 'collapse');
-                window.location.href = '/Authentication';
-            },
         }
     });
 }
@@ -360,12 +354,12 @@ function ExhibitTypeChange(combobox, hallId, standId) {
 
 // Add new PhotoInfo part when creating exhibits galllery
 function AddPhotoInfo() {
-    $('#photos').append("<div class='mt-3'><div><h5>Описание фотографии</h5><label class='ml-3'>Фото</label><span class='field-validation-error'></span><div class='ml-3'><div class='d-flex form-group ml-3'><button type='button' onclick='LoadPhoto(this)' class='btn btn-outline-secondary btn-form'><svg xmlns='http://www.w3.org/2000/svg' height='1.3em' viewBox='0 0 24 24' width='1.3em'><path fill='currentColor' d='M19 7v2.99s-1.99.01-2 0V7h-3s.01-1.99 0-2h3V2h2v3h3v2h-3zm-3 4V8h-3V5H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-8h-3zM5 19l3-4 2 3 3-4 4 5H5z' /></svg>Загрузить</button><input class='photoLoader' style='visibility: hidden' type='file' name='files' /></div></div></div><div class='form-group ml-3'><label for='descriptionBe'>Описание фото (BY)</label><span class='field-validation-error'></span><input type='text' placeholder='Краткое описание фото на белорусском языке' name='photoDescriptionBe' class='form-control validation-unit ml-3' /></div><div class='form-group ml-3'><label for='descriptionRu'>Описание фото (RU)</label><span class='field-validation-error'></span><input type='text' placeholder='Краткое описание фото на русском языке' name='photoDescriptionRu' class='form-control validation-unit ml-3' /></div><div class='form-group ml-3'><label for='descriptionEn'>Описание фото (EN)</label><span class='field-validation-error'></span><input type='text' placeholder='Краткое описание фото на английском языке' name='photoDescriptionEn' class='form-control validation-unit ml-3' /></div><div class='form-group'><button type='button' onclick='DeletePhotoInfo(this)' class='btn btn-outline-secondary btn-form'><svg width='1.2em' height='1.2em' viewBox='0 0 16 16' class='bi bi-trash-fill' fill='currentColor' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z'/></svg>Удалить запись</button></div></div></div>");
+    $('#photos').append("<div class='mt-3'><div><h5>Описание фотографии</h5><label class='ml-3'>Фото</label><span class='field-validation-error'></span><div class='ml-3'><div class='d-flex form-group ml-3'><button type='button' onclick='LoadPhoto(this)' class='btn btn-primary btn-form'><svg xmlns='http://www.w3.org/2000/svg' height='1.3em' viewBox='0 0 24 24' width='1.3em'><path fill='currentColor' d='M19 7v2.99s-1.99.01-2 0V7h-3s.01-1.99 0-2h3V2h2v3h3v2h-3zm-3 4V8h-3V5H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-8h-3zM5 19l3-4 2 3 3-4 4 5H5z' /></svg>Загрузить</button><input class='photoLoader' style='visibility: hidden' type='file' name='files' /></div></div></div><div class='form-group ml-3'><label for='descriptionBe'>Описание фото (BY)</label><span class='field-validation-error'></span><input type='text' placeholder='Краткое описание фото на белорусском языке' name='photoDescriptionBe' class='form-control validation-unit ml-3' /></div><div class='form-group ml-3'><label for='descriptionRu'>Описание фото (RU)</label><span class='field-validation-error'></span><input type='text' placeholder='Краткое описание фото на русском языке' name='photoDescriptionRu' class='form-control validation-unit ml-3' /></div><div class='form-group ml-3'><label for='descriptionEn'>Описание фото (EN)</label><span class='field-validation-error'></span><input type='text' placeholder='Краткое описание фото на английском языке' name='photoDescriptionEn' class='form-control validation-unit ml-3' /></div><div class='form-group'><button type='button' onclick='DeletePhotoInfo(this)' class='btn btn-danger btn-form'><svg width='1.2em' height='1.2em' viewBox='0 0 16 16' class='bi bi-trash-fill' fill='currentColor' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z'/></svg>Удалить запись</button></div></div></div>");
 }
 
 // Add new PhotoInfo part when editing exhibits galllery
 function AddPhotoInfoEdit() {
-    $('#photos').append("<div class='mt-3'><div><h5>Описание фотографии</h5><label class='ml-3'>Фото</label><span class='field-validation-error'></span><div class='ml-3'><div class='d-flex form-group ml-3'><button type='button' onclick='LoadPhoto(this)' class='btn btn-outline-secondary btn-form'><svg xmlns='http://www.w3.org/2000/svg' height='1.3em' viewBox='0 0 24 24' width='1.3em'><path fill='currentColor' d='M19 7v2.99s-1.99.01-2 0V7h-3s.01-1.99 0-2h3V2h2v3h3v2h-3zm-3 4V8h-3V5H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-8h-3zM5 19l3-4 2 3 3-4 4 5H5z' /></svg>Загрузить</button><input class='photoLoaderEdit' style='visibility: hidden' type='file' name='files' /></div></div></div><div class='form-group ml-3'><label for='descriptionBe'>Описание фото (BY)</label><span class='field-validation-error'></span><input type='text' placeholder='Краткое описание фото на белорусском языке' name='photoDescriptionBe' class='form-control validation-unit ml-3' /></div><div class='form-group ml-3'><label for='descriptionRu'>Описание фото (RU)</label><span class='field-validation-error'></span><input type='text' placeholder='Краткое описание фото на русском языке' name='photoDescriptionRu' class='form-control validation-unit ml-3' /></div><div class='form-group ml-3'><label for='descriptionEn'>Описание фото (EN)</label><span class='field-validation-error'></span><input type='text' placeholder='Краткое описание фото на английском языке' name='photoDescriptionEn' class='form-control validation-unit ml-3' /></div><div class='form-group'><button type='button' onclick='DeletePhotoInfo(this)' class='btn btn-outline-secondary btn-form'><svg width='1.2em' height='1.2em' viewBox='0 0 16 16' class='bi bi-trash-fill' fill='currentColor' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z'/></svg>Удалить запись</button></div></div></div>");
+    $('#photos').append("<div class='mt-3'><div><h5>Описание фотографии</h5><label class='ml-3'>Фото</label><span class='field-validation-error'></span><div class='ml-3'><div class='d-flex form-group ml-3'><button type='button' onclick='LoadPhoto(this)' class='btn btn-primary btn-form'><svg xmlns='http://www.w3.org/2000/svg' height='1.3em' viewBox='0 0 24 24' width='1.3em'><path fill='currentColor' d='M19 7v2.99s-1.99.01-2 0V7h-3s.01-1.99 0-2h3V2h2v3h3v2h-3zm-3 4V8h-3V5H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-8h-3zM5 19l3-4 2 3 3-4 4 5H5z' /></svg>Загрузить</button><input class='photoLoaderEdit' style='visibility: hidden' type='file' name='files' /></div></div></div><div class='form-group ml-3'><label for='descriptionBe'>Описание фото (BY)</label><span class='field-validation-error'></span><input type='text' placeholder='Краткое описание фото на белорусском языке' name='photoDescriptionBe' class='form-control validation-unit ml-3' /></div><div class='form-group ml-3'><label for='descriptionRu'>Описание фото (RU)</label><span class='field-validation-error'></span><input type='text' placeholder='Краткое описание фото на русском языке' name='photoDescriptionRu' class='form-control validation-unit ml-3' /></div><div class='form-group ml-3'><label for='descriptionEn'>Описание фото (EN)</label><span class='field-validation-error'></span><input type='text' placeholder='Краткое описание фото на английском языке' name='photoDescriptionEn' class='form-control validation-unit ml-3' /></div><div class='form-group'><button type='button' onclick='DeletePhotoInfo(this)' class='btn btn-danger btn-form'><svg width='1.2em' height='1.2em' viewBox='0 0 16 16' class='bi bi-trash-fill' fill='currentColor' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z'/></svg>Удалить запись</button></div></div></div>");
 }
 
 // Used to invoke method that display selected images
@@ -436,7 +430,7 @@ function ReadPhoto(input) {
             if (input.files[i]) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    $(input).parent().parent().prepend("<div style='margin:0px 0px 10px 0px;' class='ml-3'><img class='img-thumbnail small-image img-small-loaded' src='#'/><input type='button' class='btn-outline-secondary btn-close' onclick='RemovePhoto(this)' value='x' /></div>");
+                    $(input).parent().parent().prepend("<div style='margin:0px 0px 10px 0px;' class='ml-3'><img class='img-thumbnail small-image img-small-loaded' src='#'/><input type='button' class='btn-outline-primary btn-close' onclick='RemovePhoto(this)' value='x' /></div>");
                     $(input).parent().parent().children().first().children().first().attr('src', e.target.result);
                 }
                 reader.readAsDataURL(input.files[i]);
@@ -456,7 +450,7 @@ function ReadPhotoEdit(input) {
             if (input.files[i]) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    $(input).parent().parent().prepend("<div style='margin:0px 0px 10px 0px;'><img class='img-thumbnail small-image img-small-loaded' src='#'/><input type='button' class='btn-outline-secondary btn-close' onclick='RemovePhoto(this)' value='x' /><input type='hidden' value='0' name='ids' /></div>");
+                    $(input).parent().parent().prepend("<div style='margin:0px 0px 10px 0px;'><img class='img-thumbnail small-image img-small-loaded' src='#'/><input type='button' class='btn-outline-primary btn-close' onclick='RemovePhoto(this)' value='x' /><input type='hidden' value='0' name='ids' /></div>");
                     $(input).parent().parent().children().first().children().first().attr('src', e.target.result);
                 }
                 reader.readAsDataURL(input.files[i]);
@@ -478,7 +472,7 @@ function RemovePhoto(photo) {
 // Remove block with photo in Exhibits galery
 function DeletePhotoInfo(block) {
     if ($('#photos').children().length > 1) {
-        $(block).parent().remove();
+        $(block).parent().parent().remove();
     }
 }
 

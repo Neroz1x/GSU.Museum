@@ -16,6 +16,36 @@ a {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
+  line-height:1.2em;
+}
+
+.btn-warning{
+    color:white;
+}
+
+.btn-warning:hover {
+    color: white;
+}
+
+.btn-warning:active:focus{
+    color: white;
+    background-color:black;
+}
+
+.btn-warning:not(:disabled):not(.disabled):active,
+.btn-warning:not(:disabled):not(.disabled).active,
+.btn-warning:not(:disabled):not(.disabled):active:focus,
+.btn-warning:not(:disabled):not(.disabled).active:focus,
+.btn-warning:focus, .btn-warning.focus {
+    color: white;
+}
+
+.btn-small{
+    padding:0px;
+    min-height:1.2em;
+    min-width:1.2em;
+    height:1.2em;
+    width:1.2em;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
@@ -133,9 +163,10 @@ body {
 .btn-close {
     background-color: ivory;
     width: 20px;
-    height: 25px;
+    height: 20px;
     vertical-align: top;
-    margin-left: -15px;
+    margin-left: -10px;
+    margin-top:-10px;
     border-radius: 5px;
     box-shadow: none;
     text-align: center;
