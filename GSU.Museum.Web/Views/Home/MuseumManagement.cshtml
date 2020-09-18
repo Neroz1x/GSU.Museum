@@ -12,8 +12,8 @@
     <div class="d-flex flex-row align-items-start">
 
         <div style="width:35%" class="box-shadow border-right border-bottom">
-            <button style="line-height:1.2em;" onclick="LoadViewFromMenu(null, '/Halls/Create', false, true)" type="button" class="btn btn-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" height="1.2em" viewBox="0 0 24 24" width="1.2em">
+            <button onclick="LoadViewFromMenu(null, '/Halls/Create', false, true)" type="button" class="btn btn-primary btn-add">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="plus-svg">
                     <path d="M0 0h24v24H0z" fill="none" />
                     <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
                 </svg>
@@ -32,9 +32,8 @@
                                     <i class="fa" aria-hidden="false"></i>
                                 </button>
                                 <a class="a-header overflow" id="elName@{@hall.Id}" onclick="LoadViewFromMenu(this, '/Halls/Index/@hall.Id', true, false)">@hall.TitleRu</a>
-                                <button style="line-height:1.2em;" onclick="LoadViewFromMenu(null, '/Stands/Create?hallId=@hall.Id', false, true)" type="button" class="btn btn-primary">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="1.2em" viewBox="0 0 24 24" width="1.2em">
-                                        <path d="M0 0h24v24H0z" fill="none" />
+                                <button onclick="LoadViewFromMenu(null, '/Stands/Create?hallId=@hall.Id', false, true)" type="button" class="btn btn-primary btn-add">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="plus-svg">
                                         <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
                                     </svg>
                                 </button>
@@ -54,8 +53,8 @@
                                                 <i class="fa" aria-hidden="false"></i>
                                             </button>
                                             <a class="a-header overflow" id="elName@{@stand.Id}" onclick="LoadViewFromMenu(this, '/Stands/Index/@stand.Id?hallId=@hall.Id', true, false)">@stand.TitleRu</a>
-                                            <button style="line-height:1.2em;" onclick="LoadViewFromMenu(null, '/Exhibits/Create?standId=@stand.Id&hallId=@hall.Id', false, true)" type="button" class="btn btn-primary">
-                                                <svg xmlns="http://www.w3.org/2000/svg" height="1.2em" viewBox="0 0 24 24" width="1.2em">
+                                            <button onclick="LoadViewFromMenu(null, '/Exhibits/Create?standId=@stand.Id&hallId=@hall.Id', false, true)" type="button" class="btn btn-primary btn-add">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="plus-svg">
                                                     <path d="M0 0h24v24H0z" fill="none" />
                                                     <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
                                                 </svg>

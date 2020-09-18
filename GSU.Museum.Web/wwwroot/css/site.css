@@ -108,6 +108,19 @@ body {
     text-decoration: none;
 }
 
+.btn-add{
+    min-width:1.2em;
+    margin-left:2px;
+    width: 1.2em;
+    height: 1.2em;
+    padding:0px;
+    line-height:1.2em;
+}
+
+.plus-svg{
+    padding-bottom:4px;
+}
+
 .img-small-loaded{
     width: 100px;
     height: 100px;
