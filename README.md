@@ -6,7 +6,6 @@
 ![Framework: ASP.NET Core](https://img.shields.io/badge/Framework-ASP.NET%20Core-blue)
 ![Framework: Xamarin.Forms](https://img.shields.io/badge/Framework-Xamarin.Forms-blue)
 [![GitHub issues](https://img.shields.io/github/issues-raw/Neroz1x/GSU.Museum)](https://github.com/Neroz1x/GSU.Museum/issues)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Neroz1x/GSU.Museum)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![GitHub watchers](https://img.shields.io/github/watchers/Neroz1x/GSU.Museum?label=Watch&style=social)
 
