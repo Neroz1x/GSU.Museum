@@ -31,11 +31,12 @@
         <Style TargetType="Label" x:Key="OptionsLabelDescription">
             <Setter Property="FontSize" Value="Medium"/>
         </Style>
+
         <Style TargetType="Label" x:Key="PageTitle">
             <Setter Property="FontSize" Value="Large"></Setter>
             <Setter Property="TextColor" Value="White"></Setter>
         </Style>
-        
+
         <Style TargetType="Frame" x:Key="DefaultMenuItem">
             <Setter Property="Visual" Value="Material"></Setter>
             <Setter Property="Padding" Value="0"></Setter>
@@ -65,22 +66,12 @@
             </Setter>
             <Setter Property="HorizontalOptions" Value="Center"></Setter>
         </Style>
-        
+
         <Style TargetType="Label" x:Key="DefaultMenuItemHeader">
             <Setter Property="HorizontalOptions" Value="Start"></Setter>
             <Setter Property="TextColor" Value="Black"></Setter>
             <Setter Property="VerticalOptions" Value="Start"></Setter>
             <Setter Property="FontSize" Value="Large"></Setter>
-            <Setter Property="Padding" Value="10,0"></Setter>
-        </Style>
-
-        <Style TargetType="Label" x:Key="WhiteMenuItemHeader">
-            <Setter Property="BackgroundColor" Value="#aac0c0c0"></Setter>
-            <Setter Property="HorizontalOptions" Value="Center"></Setter>
-            <Setter Property="TextColor" Value="White"></Setter>
-            <Setter Property="VerticalOptions" Value="Start"></Setter>
-            <Setter Property="FontSize" Value="Large"></Setter>
-            <Setter Property="Margin" Value="0, 5, 0, 0"></Setter>
             <Setter Property="Padding" Value="10,0"></Setter>
         </Style>
 
@@ -118,17 +109,7 @@
             <Setter Property="FontSize" Value="Medium"></Setter>
             <Setter Property="Padding" Value="10,0"></Setter>
         </Style>
-        
-        <Style TargetType="Label" x:Key="WhiteMenuItemBody">
-            <Setter Property="BackgroundColor" Value="#aac0c0c0"></Setter>
-            <Setter Property="HorizontalOptions" Value="Center"></Setter>
-            <Setter Property="TextColor" Value="White"></Setter>
-            <Setter Property="Margin" Value="15, 0"></Setter>
-            <Setter Property="Padding" Value="10, 0"></Setter>
-            <Setter Property="VerticalOptions" Value="Center"></Setter>
-            <Setter Property="FontSize" Value="Medium"></Setter>
-        </Style>
-        
+
         <Style TargetType="Label" x:Key="DefaultLabel">
             <Setter Property="FontSize">
                 <OnIdiom x:TypeArguments="x:Double" Phone="16" Tablet="20"></OnIdiom>
