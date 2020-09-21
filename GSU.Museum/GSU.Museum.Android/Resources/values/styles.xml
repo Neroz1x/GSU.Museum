@@ -31,4 +31,8 @@
     <item name="colorAccent">#FF4081</item>
   </style>
 
+  <style name="AppToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+    <item name="android:textSize">20sp</item>
+  </style>
+
 </resources>
