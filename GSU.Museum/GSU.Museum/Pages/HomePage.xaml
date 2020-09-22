@@ -14,28 +14,26 @@
         <Label Text="{x:Static resources:AppResources.HomePage_PageTitle}" Style="{StaticResource PageTitle}" />
     </NavigationPage.TitleView>
     <ContentPage.Content>
-        <ScrollView>
-            <StackLayout>
-                <cards:CarouselView IsCyclical="True" ItemsSource="{Binding Images}" x:Name="Carousel" HeightRequest="100">
-                    <cards:CarouselView.ItemTemplate>
-                        <DataTemplate>
-                            <Image WidthRequest="300" Source="{Binding .}"></Image>
-                        </DataTemplate>
-                    </cards:CarouselView.ItemTemplate>
-                </cards:CarouselView>
-                <Label HorizontalOptions="Center" Style="{StaticResource DefaultMenuItemHeader}" 
-                       Text="{x:Static resources:AppResources.HomePage_Title}"/>
-                <Label Style="{StaticResource DefaultMenuItemBody}" 
-                       Text="{x:Static resources:AppResources.HomePage_MainText}"/>
-                <Button Text="{x:Static resources:AppResources.HomePage_MenuItem_MainPage}" 
-                        Command="{Binding NavigateToMainPageCommand}"
-                        TextColor="White"
-                        Style="{StaticResource HomePageMenuItem}"/>
-                <Button Text="{x:Static resources:AppResources.HomePage_MenuItem_Options}" 
-                        Command="{Binding NavigateToOptionsPageCommand}"
-                        TextColor="White"
-                        Style="{StaticResource HomePageMenuItem}"/>
-            </StackLayout>
-        </ScrollView>
+        <StackLayout Margin="0, 20, 0, 0" Spacing="10">
+            <cards:CarouselView IsCyclical="True" ItemsSource="{Binding Images}" x:Name="Carousel" HeightRequest="100">
+                <cards:CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Image WidthRequest="300" Source="{Binding .}"></Image>
+                    </DataTemplate>
+                </cards:CarouselView.ItemTemplate>
+            </cards:CarouselView>
+            <Label HorizontalOptions="Center" Style="{StaticResource DefaultMenuItemHeader}" 
+                    Text="{x:Static resources:AppResources.HomePage_Title}"/>
+            <Label Style="{StaticResource DefaultMenuItemBody}" 
+                    Text="{x:Static resources:AppResources.HomePage_MainText}"/>
+            <Button Text="{x:Static resources:AppResources.HomePage_MenuItem_MainPage}" 
+                    Command="{Binding NavigateToMainPageCommand}"
+                    TextColor="White"
+                    Style="{StaticResource HomePageMenuItem}"/>
+            <Button Text="{x:Static resources:AppResources.HomePage_MenuItem_Options}" 
+                    Command="{Binding NavigateToOptionsPageCommand}"
+                    TextColor="White"
+                    Style="{StaticResource HomePageMenuItem}"/>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>
