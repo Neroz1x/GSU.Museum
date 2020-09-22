@@ -6,6 +6,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -15,6 +16,9 @@ namespace GSU.Museum.Shared.ViewModels
     {
 #region Fields 
         public INavigation Navigation;
+
+        private CancellationTokenSource _cancellationTokenSource;
+
         public Command GetHallsCommand { get; }
         public Command SelectHallCommand { get; }
         public Command NavigateToHomePageCommand { get; }
@@ -58,25 +62,6 @@ namespace GSU.Museum.Shared.ViewModels
             }
         }
 
-        // Visibility of reload button
-        private bool _reloadButtonVisibility = false;
-        public bool ReloadButtonVisibility
-        {
-            get
-            {
-                return _reloadButtonVisibility;
-            }
-
-            set
-            {
-                if (value != _reloadButtonVisibility)
-                {
-                    _reloadButtonVisibility = value;
-                }
-                OnPropertyChanged(nameof(ReloadButtonVisibility));
-            }
-        }
-
         // Visibility of page content
         private bool _contentVisibility = true;
         public bool ContentVisibility
@@ -111,13 +96,13 @@ namespace GSU.Museum.Shared.ViewModels
         public async Task GetHalls()
         {
             Halls.Clear();
-            ReloadButtonVisibility = false;
             ContentVisibility = false;
             IsBusy = true;
 
             try
             {
-                var halls = await DependencyService.Get<ContentLoaderService>().LoadHallsAsync();
+                _cancellationTokenSource = new CancellationTokenSource();
+                var halls = await DependencyService.Get<ContentLoaderService>().LoadHallsAsync(_cancellationTokenSource.Token);
                 Halls.Clear();
                 foreach (var hall in halls)
                 {
@@ -129,7 +114,8 @@ namespace GSU.Museum.Shared.ViewModels
                 }
                 if(halls.Count == 0)
                 {
-                    ReloadButtonVisibility = true;
+                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, AppResources.ErrorMessage_InProgress, AppResources.MessageBox_ButtonOk);
+                    await Navigation.PopAsync();
                 }
                 else
                 {
@@ -156,12 +142,12 @@ namespace GSU.Museum.Shared.ViewModels
                 {
                     await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, AppResources.ErrorMessage_ServerIsNotResponse, AppResources.MessageBox_ButtonOk);
                 }
+                else if(ex is OperationCanceledException){ }
                 else
                 {
                     await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, ex.Message, AppResources.MessageBox_ButtonOk);
                 }
                 ContentVisibility = false;
-                ReloadButtonVisibility = true;
             }
             finally
             {
@@ -177,6 +163,17 @@ namespace GSU.Museum.Shared.ViewModels
         public async Task NavigateToOptionsPage()
         {
             await Navigation.PushAsync(new OptionsPage());
+        }
+
+        /// <summary>
+        /// Cancel current token
+        /// </summary>
+        public void Cancel()
+        {
+            if (!_cancellationTokenSource.IsCancellationRequested && IsBusy)
+            {
+                _cancellationTokenSource.Cancel();
+            }
         }
         #endregion
     }

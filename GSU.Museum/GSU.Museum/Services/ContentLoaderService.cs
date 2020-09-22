@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using GSU.Museum.Shared.Services;
 using GSU.Museum.CommonClassLibrary.Models;
 using GSU.Museum.Shared.Resources;
+using System.Threading;
 
 [assembly: Dependency(typeof(ContentLoaderService))]
 namespace GSU.Museum.Shared.Services
@@ -13,7 +14,7 @@ namespace GSU.Museum.Shared.Services
     {
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public async Task<ExhibitDTO> LoadExhibitAsync(string hallId, string standId, string id)
+        public async Task<ExhibitDTO> LoadExhibitAsync(string hallId, string standId, string id, CancellationToken cancellationToken)
         {
             _logger.Info($"Loading exhibit with id {id}");
             var exhibitCached = await DependencyService.Get<CachingService>().ReadExhibitAsync(id);
@@ -21,7 +22,7 @@ namespace GSU.Museum.Shared.Services
             {
                 if (App.Settings.CheckForUpdates)
                 {
-                    return await DependencyService.Get<NetworkService>().LoadExhibitAsync(hallId, standId, id, exhibitCached);
+                    return await DependencyService.Get<NetworkService>().LoadExhibitAsync(hallId, standId, id, exhibitCached, cancellationToken);
                 }
                 return exhibitCached;
             }
@@ -29,13 +30,13 @@ namespace GSU.Museum.Shared.Services
             {
                 if (App.Settings.UseCache && App.Settings.UseOnlyCache)
                 {
-                    throw new Error(){ ErrorCode = CommonClassLibrary.Enums.Errors.Not_Found_In_Cache, Info = AppResources.ErrorMessage_NotFoundInCache };
+                    throw new Error() { ErrorCode = CommonClassLibrary.Enums.Errors.Not_Found_In_Cache, Info = AppResources.ErrorMessage_NotFoundInCache };
                 }
-                return await DependencyService.Get<NetworkService>().LoadExhibitAsync(hallId, standId, id);
+                return await DependencyService.Get<NetworkService>().LoadExhibitAsync(hallId, standId, id, cancellationToken);
             }
         }
 
-        public async Task<HallDTO> LoadHallAsync(string id)
+        public async Task<HallDTO> LoadHallAsync(string id, CancellationToken cancellationToken)
         {
             _logger.Info($"Loading hall with id {id}");
             var hallCached = await DependencyService.Get<CachingService>().ReadHallAsync(id);
@@ -43,7 +44,7 @@ namespace GSU.Museum.Shared.Services
             {
                 if (App.Settings.CheckForUpdates)
                 {
-                    return await DependencyService.Get<NetworkService>().LoadHallAsync(id, hallCached);
+                    return await DependencyService.Get<NetworkService>().LoadHallAsync(id, hallCached, cancellationToken);
                 }
                 return hallCached;
             }
@@ -53,11 +54,11 @@ namespace GSU.Museum.Shared.Services
                 {
                     throw new Error() { ErrorCode = CommonClassLibrary.Enums.Errors.Not_Found_In_Cache, Info = AppResources.ErrorMessage_NotFoundInCache };
                 }
-                return await DependencyService.Get<NetworkService>().LoadHallAsync(id);
+                return await DependencyService.Get<NetworkService>().LoadHallAsync(id,cancellationToken);
             }
         }
 
-        public async Task<List<HallDTO>> LoadHallsAsync()
+        public async Task<List<HallDTO>> LoadHallsAsync(CancellationToken cancellationToken)
         {
             _logger.Info($"Loading halls");
             var hallsCached = await DependencyService.Get<CachingService>().ReadHallsAsync();
@@ -65,7 +66,7 @@ namespace GSU.Museum.Shared.Services
             {
                 if (App.Settings.CheckForUpdates)
                 {
-                    return await DependencyService.Get<NetworkService>().LoadHallsAsync(hallsCached);
+                    return await DependencyService.Get<NetworkService>().LoadHallsAsync(hallsCached, cancellationToken);
                 }
                 return hallsCached;
             }
@@ -75,11 +76,11 @@ namespace GSU.Museum.Shared.Services
                 {
                     throw new Error() { ErrorCode = CommonClassLibrary.Enums.Errors.Not_Found_In_Cache, Info = AppResources.ErrorMessage_NotFoundInCache };
                 }
-                return await DependencyService.Get<NetworkService>().LoadHallsAsync();
+                return await DependencyService.Get<NetworkService>().LoadHallsAsync(cancellationToken);
             }
         }
 
-        public async Task<StandDTO> LoadStandAsync(string hallId, string id)
+        public async Task<StandDTO> LoadStandAsync(string hallId, string id, CancellationToken cancellationToken)
         {
             _logger.Info($"Loading stand with id {id}");
             var standCached = await DependencyService.Get<CachingService>().ReadStandAsync(id);
@@ -87,7 +88,7 @@ namespace GSU.Museum.Shared.Services
             {
                 if (App.Settings.CheckForUpdates)
                 {
-                    return await DependencyService.Get<NetworkService>().LoadStandAsync(hallId, id, standCached);
+                    return await DependencyService.Get<NetworkService>().LoadStandAsync(hallId, id, standCached, cancellationToken);
                 }
                 return standCached;
             }
@@ -97,7 +98,7 @@ namespace GSU.Museum.Shared.Services
                 {
                     throw new Error() { ErrorCode = CommonClassLibrary.Enums.Errors.Not_Found_In_Cache, Info = AppResources.ErrorMessage_NotFoundInCache };
                 }
-                return await DependencyService.Get<NetworkService>().LoadStandAsync(hallId, id);
+                return await DependencyService.Get<NetworkService>().LoadStandAsync(hallId, id, cancellationToken);
             }
         }
     }

@@ -6,6 +6,7 @@
              mc:Ignorable="d"
              x:Class="GSU.Museum.MainPage"
              Appearing="ContentPage_Appearing"
+             Disappearing="ContentPage_Disappearing"
              xmlns:resources="clr-namespace:GSU.Museum.Shared.Resources">
     <NavigationPage.TitleView>
         <Label Text="{x:Static resources:AppResources.MainPage_Title}" Style="{StaticResource PageTitle}" />
@@ -48,7 +49,6 @@
                 </CollectionView>
             </StackLayout>
         </ScrollView>
-        <Button Text="Reload" HorizontalOptions="Center" VerticalOptions="Center" IsVisible="{Binding ReloadButtonVisibility}" Command="{Binding GetHallsCommand}"/>
         <ActivityIndicator IsVisible="{Binding IsBusy}" 
                            IsRunning="True" 
                            Color="HotPink" 

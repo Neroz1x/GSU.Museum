@@ -18,5 +18,11 @@ namespace GSU.Museum.Shared.Pages
             var viewModel = BindingContext as StandPageViewModel;
             await viewModel.GetExhibits();
         }
+
+        private void ContentPage_Disappearing(object sender, System.EventArgs e)
+        {
+            var viewModel = BindingContext as StandPageViewModel;
+            viewModel.Cancel();
+        }
     }
 }

@@ -6,6 +6,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -19,6 +20,8 @@ namespace GSU.Museum.Shared.ViewModels
         public Command SelectExhibitCommand { get; }
         public Command NavigateToHomePageCommand { get; }
         public ObservableCollection<ExhibitDTO> Exhibits { get; }
+
+        private CancellationTokenSource _cancellationTokenSource;
 
         // Visibility of page content
         private bool _contentVisibility = true;
@@ -118,7 +121,8 @@ namespace GSU.Museum.Shared.ViewModels
             IsBusy = true;
             try
             {
-                var stand = await DependencyService.Get<ContentLoaderService>().LoadStandAsync(_hallId, _standId);
+                _cancellationTokenSource = new CancellationTokenSource();
+                var stand = await DependencyService.Get<ContentLoaderService>().LoadStandAsync(_hallId, _standId, new System.Threading.CancellationToken());
                 Title = $"{stand.Title} - {AppResources.StandPage_Title}";
                 Exhibits.Clear();
                 foreach (var exhibit in stand.Exhibits)
@@ -161,6 +165,7 @@ namespace GSU.Museum.Shared.ViewModels
                     await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, AppResources.ErrorMessage_ServerIsNotResponse, AppResources.MessageBox_ButtonOk);
                     await Navigation.PopAsync();
                 }
+                else if (ex is OperationCanceledException) { }
                 else
                 {
                     await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, ex.Message, AppResources.MessageBox_ButtonOk);
@@ -178,7 +183,7 @@ namespace GSU.Museum.Shared.ViewModels
             try
             {
                 IsBusy = true;
-                var exhibit = await DependencyService.Get<ContentLoaderService>().LoadExhibitAsync(_hallId, _standId, id);
+                var exhibit = await DependencyService.Get<ContentLoaderService>().LoadExhibitAsync(_hallId, _standId, id, new System.Threading.CancellationToken());
                 if(exhibit.ExhibitType == CommonClassLibrary.Data.Enums.ExhibitType.Article)
                 {
                     await Navigation.PushAsync(new ExhibitsArticle(exhibit));
@@ -213,6 +218,17 @@ namespace GSU.Museum.Shared.ViewModels
             finally
             {
                 IsBusy = false;
+            }
+        }
+
+        /// <summary>
+        /// Cancel current token
+        /// </summary>
+        public void Cancel()
+        {
+            if (!_cancellationTokenSource.IsCancellationRequested && IsBusy)
+            {
+                _cancellationTokenSource.Cancel();
             }
         }
         #endregion

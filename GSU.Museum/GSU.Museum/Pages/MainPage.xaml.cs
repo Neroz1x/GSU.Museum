@@ -1,4 +1,5 @@
-﻿using GSU.Museum.Shared.ViewModels;
+﻿using GSU.Museum.Shared.Interfaces;
+using GSU.Museum.Shared.ViewModels;
 using System;
 using System.ComponentModel;
 using Xamarin.Forms;
@@ -20,6 +21,12 @@ namespace GSU.Museum
         {
             var viewModel = BindingContext as MainPageViewModel;
             await viewModel.GetHalls();
+        }
+
+        private void ContentPage_Disappearing(object sender, EventArgs e)
+        {
+            var viewModel = BindingContext as MainPageViewModel;
+            viewModel.Cancel();
         }
     }
 }

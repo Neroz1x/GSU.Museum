@@ -6,6 +6,7 @@
              mc:Ignorable="d"
              x:Class="GSU.Museum.Shared.Pages.StandPage"
              Appearing="ContentPage_Appearing"
+             Disappearing="ContentPage_Disappearing"
              xmlns:resources="clr-namespace:GSU.Museum.Shared.Resources">
     <NavigationPage.TitleView>
         <Label Text="{Binding Title}" Style="{StaticResource PageTitle}" />

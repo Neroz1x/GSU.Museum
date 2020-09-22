@@ -1,6 +1,4 @@
-﻿using Akavache;
-using Akavache.Sqlite3;
-using GSU.Museum.CommonClassLibrary.Enums;
+﻿using GSU.Museum.CommonClassLibrary.Enums;
 using GSU.Museum.CommonClassLibrary.Models;
 using GSU.Museum.Shared.Interfaces;
 using GSU.Museum.Shared.Resources;
@@ -24,7 +22,7 @@ namespace GSU.Museum.Shared.Services
     public class NetworkService : INetworkService
     {
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
-
+        
         /// <summary>
         /// Check Internet connection
         /// </summary>
@@ -119,12 +117,12 @@ namespace GSU.Museum.Shared.Services
             }
         }
 
-        public async Task<string> LoadAsync(Uri uri)
+        public async Task<string> LoadAsync(Uri uri, CancellationToken cancellationToken)
         {
             _logger.Info($"Send request to {uri}");
             try
             {
-                HttpResponseMessage response = await GetHttpClient().GetAsync(uri);
+                HttpResponseMessage response = await GetHttpClient().GetAsync(uri, cancellationToken);
                 _logger.Info($"Response's status code is {response.StatusCode}");
                 string content = await response.Content.ReadAsStringAsync();
                 if (response.IsSuccessStatusCode)
@@ -147,30 +145,37 @@ namespace GSU.Museum.Shared.Services
             }
             catch (Exception ex)
             {
-                _logger.Error($"Error while sending request: {ex.Message}");
+                if(ex is OperationCanceledException)
+                {
+                    _logger.Error("Request canceld");
+                }
+                else
+                {
+                    _logger.Error($"Error while sending request: {ex.Message}");
+                }
                 throw ex;
             }
         }
 
-        public async Task<ExhibitDTO> LoadExhibitAsync(string hallId, string standId, string id)
+        public async Task<ExhibitDTO> LoadExhibitAsync(string hallId, string standId, string id, CancellationToken cancellationToken)
         {
             if (CheckConnection())
             {
-                string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Exhibits/{hallId}/{standId}/{id}"));
+                string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Exhibits/{hallId}/{standId}/{id}"), cancellationToken);
                 ExhibitDTO exhibit = JsonConvert.DeserializeObject<ExhibitDTO>(content);
                 await DependencyService.Get<CachingService>().WriteExhibitAsync(exhibit);
                 return exhibit;
             }
-            throw new Error() { ErrorCode = Errors.Failed_Connection, Info = AppResources.ErrorMessage_LoadingFaild};
+            throw new Error() { ErrorCode = Errors.Failed_Connection, Info = AppResources.ErrorMessage_LoadingFaild };
         }
 
-        public async Task<ExhibitDTO> LoadExhibitAsync(string hallId, string standId, string id, ExhibitDTO exhibitCached)
+        public async Task<ExhibitDTO> LoadExhibitAsync(string hallId, string standId, string id, ExhibitDTO exhibitCached, CancellationToken cancellationToken)
         {
             if (CheckConnection())
             {
                 try
                 {
-                    string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Exhibits/{hallId}/{standId}/{id}?hash={exhibitCached.GetHashCode()}"));
+                    string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Exhibits/{hallId}/{standId}/{id}?hash={exhibitCached.GetHashCode()}"), cancellationToken);
                     if (string.IsNullOrEmpty(content))
                     {
                         return exhibitCached;
@@ -185,16 +190,20 @@ namespace GSU.Museum.Shared.Services
                     {
                         return exhibitCached;
                     }
-                }   
+                    else if (ex is OperationCanceledException)
+                    {
+                        throw ex;
+                    }
+                }
             }
             return exhibitCached;
         }
 
-        public async Task<HallDTO> LoadHallAsync(string id)
+        public async Task<HallDTO> LoadHallAsync(string id, CancellationToken cancellationToken)
         {
             if (CheckConnection())
             {
-                string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Halls/{id}"));
+                string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Halls/{id}"), cancellationToken);
                 HallDTO hall = JsonConvert.DeserializeObject<HallDTO>(content);
                 await DependencyService.Get<CachingService>().WriteHallAsync(hall);
                 return hall;
@@ -202,13 +211,13 @@ namespace GSU.Museum.Shared.Services
             throw new Error() { ErrorCode = Errors.Failed_Connection, Info = AppResources.ErrorMessage_LoadingFaild };
         }
 
-        public async Task<HallDTO> LoadHallAsync(string id, HallDTO hallCached)
+        public async Task<HallDTO> LoadHallAsync(string id, HallDTO hallCached, CancellationToken cancellationToken)
         {
             if (CheckConnection())
             {
                 try
                 {
-                    string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Halls/{id}?hash={hallCached.GetHashCode()}"));
+                    string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Halls/{id}?hash={hallCached.GetHashCode()}"), cancellationToken);
                     if (string.IsNullOrEmpty(content))
                     {
                         return hallCached;
@@ -223,16 +232,20 @@ namespace GSU.Museum.Shared.Services
                     {
                         return hallCached;
                     }
+                    else if (ex is OperationCanceledException)
+                    {
+                        throw ex;
+                    }
                 }
             }
             return hallCached;
         }
 
-        public async Task<List<HallDTO>> LoadHallsAsync()
+        public async Task<List<HallDTO>> LoadHallsAsync(CancellationToken cancellationToken)
         {
             if (CheckConnection())
             {
-                string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Halls"));
+                string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Halls"), cancellationToken);
                 List<HallDTO> halls = JsonConvert.DeserializeObject<List<HallDTO>>(content);
                 await DependencyService.Get<CachingService>().WriteHallsAsync(halls);
                 return halls;
@@ -240,13 +253,13 @@ namespace GSU.Museum.Shared.Services
             throw new Error() { ErrorCode = Errors.Failed_Connection, Info = AppResources.ErrorMessage_LoadingFaild };
         }
 
-        public async Task<List<HallDTO>> LoadHallsAsync(List<HallDTO> hallsCached)
+        public async Task<List<HallDTO>> LoadHallsAsync(List<HallDTO> hallsCached, CancellationToken cancellationToken)
         {
             if (CheckConnection())
             {
                 try
                 {
-                    string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Halls?hash={GetHash(hallsCached)}"));
+                    string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Halls?hash={GetHash(hallsCached)}"), cancellationToken);
                     if (string.IsNullOrEmpty(content))
                     {
                         return hallsCached;
@@ -261,16 +274,20 @@ namespace GSU.Museum.Shared.Services
                     {
                         return hallsCached;
                     }
+                    else if(ex is OperationCanceledException)
+                    {
+                        throw ex;
+                    }
                 }
             }
             return hallsCached;
         }
 
-        public async Task<StandDTO> LoadStandAsync(string hallId, string id)
+        public async Task<StandDTO> LoadStandAsync(string hallId, string id, CancellationToken cancellationToken)
         {
             if (CheckConnection())
             {
-                string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Stands/{hallId}/{id}"));
+                string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Stands/{hallId}/{id}"), cancellationToken);
                 StandDTO stand = JsonConvert.DeserializeObject<StandDTO>(content);
                 await DependencyService.Get<CachingService>().WriteStandAsync(stand);
                 return stand;
@@ -278,13 +295,13 @@ namespace GSU.Museum.Shared.Services
             throw new Error() { ErrorCode = Errors.Failed_Connection, Info = AppResources.ErrorMessage_LoadingFaild };
         }
 
-        public async Task<StandDTO> LoadStandAsync(string hallId, string id, StandDTO standCached)
+        public async Task<StandDTO> LoadStandAsync(string hallId, string id, StandDTO standCached, CancellationToken cancellationToken)
         {
             if (CheckConnection())
             {
                 try
                 {
-                    string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Stands/{hallId}/{id}?hash={standCached.GetHashCode()}"));
+                    string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Stands/{hallId}/{id}?hash={standCached.GetHashCode()}"), cancellationToken);
                     if (string.IsNullOrEmpty(content))
                     {
                         return standCached;
@@ -299,10 +316,14 @@ namespace GSU.Museum.Shared.Services
                     {
                         return standCached;
                     }
+                    else if (ex is OperationCanceledException)
+                    {
+                        throw ex;
+                    }
                 }
             }
             return standCached;
-            
+
         }
 
         public int GetHash(List<HallDTO> hallsCached)

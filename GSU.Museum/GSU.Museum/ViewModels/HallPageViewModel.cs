@@ -6,6 +6,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -19,6 +20,8 @@ namespace GSU.Museum.Shared.ViewModels
         public Command SelectStandCommand { get; }
         public Command NavigateToHomePageCommand { get; }
         public ObservableCollection<StandDTO> Stands { get; }
+
+        private CancellationTokenSource _cancellationTokenSource;
 
         // Visibility of page content
         private bool _contentVisibility = true;
@@ -114,9 +117,10 @@ namespace GSU.Museum.Shared.ViewModels
         {
             try
             {
+                _cancellationTokenSource = new CancellationTokenSource();
                 ContentVisibility = false;
                 IsBusy = true;
-                var hall = await DependencyService.Get<ContentLoaderService>().LoadHallAsync(_hallId);
+                var hall = await DependencyService.Get<ContentLoaderService>().LoadHallAsync(_hallId, new System.Threading.CancellationToken());
                 Title = $"{hall.Title} - {AppResources.HallPage_Title}";
                 Stands.Clear();
                 foreach (var stand in hall.Stands)
@@ -159,6 +163,7 @@ namespace GSU.Museum.Shared.ViewModels
                     await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, AppResources.ErrorMessage_ServerIsNotResponse, AppResources.MessageBox_ButtonOk);
                     await Navigation.PopAsync();
                 }
+                else if (ex is OperationCanceledException) { }
                 else
                 {
                     await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, ex.Message, AppResources.MessageBox_ButtonOk);
@@ -174,6 +179,17 @@ namespace GSU.Museum.Shared.ViewModels
         public async Task SelectStand(string id)
         {
             await Navigation.PushAsync(new StandPage(_hallId, id));
+        }
+
+        /// <summary>
+        /// Cancel current token
+        /// </summary>
+        public void Cancel()
+        {
+            if (!_cancellationTokenSource.IsCancellationRequested && IsBusy)
+            {
+                _cancellationTokenSource.Cancel();
+            }
         }
         #endregion
     }
