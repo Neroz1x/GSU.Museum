@@ -450,7 +450,7 @@ function ReadPhotoEdit(input) {
             if (input.files[i]) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    $(input).parent().parent().prepend("<div style='margin:0px 0px 10px 0px;'><img class='img-thumbnail small-image img-small-loaded' src='#'/><input type='button' class='btn-outline-primary btn-close' onclick='RemovePhoto(this)' value='x' /><input type='hidden' value='0' name='ids' /></div>");
+                    $(input).parent().parent().prepend("<div style='margin:0px 0px 10px 0px;' class='ml-3'><img class='img-thumbnail small-image img-small-loaded' src='#'/><input type='button' class='btn-outline-primary btn-close' onclick='RemovePhoto(this)' value='x' /><input type='hidden' value='0' name='ids' /></div>");
                     $(input).parent().parent().children().first().children().first().attr('src', e.target.result);
                 }
                 reader.readAsDataURL(input.files[i]);
