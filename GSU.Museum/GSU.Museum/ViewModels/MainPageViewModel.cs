@@ -69,7 +69,7 @@ namespace GSU.Museum.Shared.ViewModels
             Navigation = navigation;
             Halls = new ObservableCollection<HallDTO>();
             GetHallsCommand = new Command(async () => await GetHalls());
-            SelectHallCommand = new Command(async Id => await SelectHall((string)Id));
+            SelectHallCommand = new Command(async id => await SelectHall(id?.ToString()));
             NavigateToHomePageCommand = new Command(() => App.Current.MainPage = new NavigationPage(new HomePage()));
         }
 
@@ -135,7 +135,10 @@ namespace GSU.Museum.Shared.ViewModels
 
         public async Task SelectHall(string id)
         {
-            await Navigation.PushAsync(new HallPage(id));
+            if(!string.IsNullOrEmpty(id))
+            {
+                await Navigation.PushAsync(new HallPage(id));
+            }
         }
         
         public async Task NavigateToOptionsPage()

@@ -84,14 +84,14 @@ namespace GSU.Museum.Shared.ViewModels
         private string _standId;
         #endregion
 
-        public StandPageViewModel(string hallId, string id, INavigation navigation)
+        public StandPageViewModel(string hallId, string standId, INavigation navigation)
         {
             _hallId = hallId;
-            _standId = id;
+            _standId = standId;
             Navigation = navigation;
             Exhibits = new ObservableCollection<ExhibitDTO>();
             GetExhibitsCommand = new Command(async () => await GetExhibits());
-            SelectExhibitCommand = new Command(async Id => await SelectExhibit((string)Id));
+            SelectExhibitCommand = new Command(async id => await SelectExhibit(id?.ToString()));
             NavigateToHomePageCommand = new Command(() => App.Current.MainPage = new NavigationPage(new HomePage()));
         }
 
@@ -103,7 +103,7 @@ namespace GSU.Museum.Shared.ViewModels
             try
             {
                 _cancellationTokenSource = new CancellationTokenSource();
-                var stand = await DependencyService.Get<ContentLoaderService>().LoadStandAsync(_hallId, _standId, new System.Threading.CancellationToken());
+                var stand = await DependencyService.Get<ContentLoaderService>().LoadStandAsync(_hallId, _standId, _cancellationTokenSource.Token);
                 Title = $"{stand.Title} - {AppResources.StandPage_Title}";
                 Exhibits.Clear();
                 foreach (var exhibit in stand.Exhibits)
@@ -158,44 +158,48 @@ namespace GSU.Museum.Shared.ViewModels
 
         public async Task SelectExhibit(string id)
         {
-            try
+            if (!string.IsNullOrEmpty(id)) 
             {
-                IsBusy = true;
-                var exhibit = await DependencyService.Get<ContentLoaderService>().LoadExhibitAsync(_hallId, _standId, id, new System.Threading.CancellationToken());
-                if(exhibit.ExhibitType == CommonClassLibrary.Data.Enums.ExhibitType.Article)
+                try
                 {
-                    await Navigation.PushAsync(new ExhibitsArticle(exhibit));
-                }
-                else
-                {
-                    await Navigation.PushAsync(new ExhibitGallery(exhibit));
-                }
-            }
-            catch(Exception ex)
-            {
-                if (ex is Error error)
-                {
-                    if(error.ErrorCode == CommonClassLibrary.Enums.Errors.Failed_Connection)
+                    _cancellationTokenSource = new CancellationTokenSource();
+                    IsBusy = true;
+                    var exhibit = await DependencyService.Get<ContentLoaderService>().LoadExhibitAsync(_hallId, _standId, id, _cancellationTokenSource.Token);
+                    if (exhibit.ExhibitType == CommonClassLibrary.Data.Enums.ExhibitType.Article)
                     {
-                        await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, error.Info, AppResources.MessageBox_ButtonOk);
+                        await Navigation.PushAsync(new ExhibitsArticle(exhibit));
                     }
                     else
                     {
-                        await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, error.Info, AppResources.MessageBox_ButtonOk);
+                        await Navigation.PushAsync(new ExhibitGallery(exhibit));
                     }
                 }
-                else if (ex is HttpRequestException || ex is WebException)
+                catch (Exception ex)
                 {
-                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, AppResources.ErrorMessage_ServerIsNotResponse, AppResources.MessageBox_ButtonOk);
+                    if (ex is Error error)
+                    {
+                        if (error.ErrorCode == CommonClassLibrary.Enums.Errors.Failed_Connection)
+                        {
+                            await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, error.Info, AppResources.MessageBox_ButtonOk);
+                        }
+                        else
+                        {
+                            await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, error.Info, AppResources.MessageBox_ButtonOk);
+                        }
+                    }
+                    else if (ex is HttpRequestException || ex is WebException)
+                    {
+                        await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, AppResources.ErrorMessage_ServerIsNotResponse, AppResources.MessageBox_ButtonOk);
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, ex.Message, AppResources.MessageBox_ButtonOk);
+                    }
                 }
-                else
+                finally
                 {
-                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, ex.Message, AppResources.MessageBox_ButtonOk);
+                    IsBusy = false;
                 }
-            }
-            finally
-            {
-                IsBusy = false;
             }
         }
 

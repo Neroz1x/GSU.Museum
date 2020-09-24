@@ -89,7 +89,7 @@ namespace GSU.Museum.Shared.ViewModels
             _hallId = hallId;
             Stands = new ObservableCollection<StandDTO>();
             GetStandsCommand = new Command(async () => await GetStands());
-            SelectStandCommand = new Command(async id => await SelectStand(id.ToString()));
+            SelectStandCommand = new Command(async id => await SelectStand(id?.ToString()));
             NavigateToHomePageCommand = new Command(() => App.Current.MainPage = new NavigationPage(new HomePage()));
         }
 
@@ -101,7 +101,7 @@ namespace GSU.Museum.Shared.ViewModels
                 _cancellationTokenSource = new CancellationTokenSource();
                 ContentVisibility = false;
                 IsBusy = true;
-                var hall = await DependencyService.Get<ContentLoaderService>().LoadHallAsync(_hallId, new System.Threading.CancellationToken());
+                var hall = await DependencyService.Get<ContentLoaderService>().LoadHallAsync(_hallId, _cancellationTokenSource.Token);
                 Title = $"{hall.Title} - {AppResources.HallPage_Title}";
                 Stands.Clear();
                 foreach (var stand in hall.Stands)
@@ -156,7 +156,10 @@ namespace GSU.Museum.Shared.ViewModels
 
         public async Task SelectStand(string id)
         {
-            await Navigation.PushAsync(new StandPage(_hallId, id));
+            if (!string.IsNullOrEmpty(id))
+            {
+                await Navigation.PushAsync(new StandPage(_hallId, id));
+            }
         }
 
         /// <summary>

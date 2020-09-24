@@ -1,5 +1,6 @@
 ﻿using GSU.Museum.Shared.Interfaces;
 using GSU.Museum.Shared.ViewModels;
+using PanCardView.Extensions;
 using System;
 using System.ComponentModel;
 using Xamarin.Forms;
@@ -19,8 +20,15 @@ namespace GSU.Museum
 
         async void ContentPage_Appearing(object sender, EventArgs e)
         {
-            var viewModel = BindingContext as MainPageViewModel;
-            await viewModel.GetHalls();
+            if(HallsCollectionView.SelectedItem == null)
+            {
+                var viewModel = BindingContext as MainPageViewModel;
+                await viewModel.GetHalls();
+            }
+            else
+            {
+                HallsCollectionView.SelectedItem = null;
+            }
         }
 
         private void ContentPage_Disappearing(object sender, EventArgs e)

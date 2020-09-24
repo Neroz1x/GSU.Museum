@@ -16,8 +16,15 @@ namespace GSU.Museum.Shared.Pages
 
         private async void ContentPage_Appearing(object sender, System.EventArgs e)
         {
-            var viewModel = BindingContext as HallPageViewModel;
-            await viewModel.GetStands();
+            if (StandsCollectionView.SelectedItem == null)
+            {
+                var viewModel = BindingContext as HallPageViewModel;
+                await viewModel.GetStands();
+            }
+            else
+            {
+                StandsCollectionView.SelectedItem = null;
+            }
         }
 
         private void ContentPage_Disappearing(object sender, System.EventArgs e)
