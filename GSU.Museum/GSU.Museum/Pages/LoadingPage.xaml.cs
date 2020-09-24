@@ -31,13 +31,6 @@ namespace GSU.Museum.Shared.Pages
             style.Setters.Add(new Setter() { Property = WidthRequestProperty, Value = width });
             Application.Current.Resources.Remove("TransparentMenuItem");
             Application.Current.Resources.Add("TransparentMenuItem", style);
-
-            style = Application.Current.Resources["DefaultMenuItem"] as Style;
-            style.Setters.Add(new Setter() { Property = HeightRequestProperty, Value = width / 2 });
-            style.Setters.Add(new Setter() { Property = WidthRequestProperty, Value = width });
-            Application.Current.Resources.Remove("DefaultMenuItem");
-            Application.Current.Resources.Add("DefaultMenuItem", style);
-
             App.Current.MainPage = new NavigationPage(new HomePage());
         }
     }
