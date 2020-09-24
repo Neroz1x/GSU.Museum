@@ -46,9 +46,11 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <ActivityIndicator IsVisible="{Binding IsBusy}" 
-                           IsRunning="True" 
-                           Color="HotPink" 
-                           VerticalOptions="CenterAndExpand"/>
+        <StackLayout Style="{StaticResource LoaderBackground}" IsVisible="{Binding IsBusy}">
+            <ActivityIndicator  
+                IsRunning="True" 
+                Color="HotPink" 
+                VerticalOptions="CenterAndExpand"/>
+        </StackLayout>
     </Grid>
 </ContentPage>
