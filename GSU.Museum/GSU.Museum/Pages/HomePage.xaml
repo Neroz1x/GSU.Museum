@@ -26,14 +26,25 @@
                     Text="{x:Static resources:AppResources.HomePage_Title}"/>
             <Label Style="{StaticResource DefaultMenuItemBody}" 
                     Text="{x:Static resources:AppResources.HomePage_MainText}"/>
-            <Button Text="{x:Static resources:AppResources.HomePage_MenuItem_MainPage}" 
-                    Command="{Binding NavigateToMainPageCommand}"
-                    TextColor="White"
-                    Style="{StaticResource HomePageMenuItem}"/>
-            <Button Text="{x:Static resources:AppResources.HomePage_MenuItem_Options}" 
-                    Command="{Binding NavigateToOptionsPageCommand}"
-                    TextColor="White"
-                    Style="{StaticResource HomePageMenuItem}"/>
+            
+            <Frame Style="{StaticResource HomePageMenuItem}">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToMainPageCommand}"></TapGestureRecognizer>
+                </Frame.GestureRecognizers>
+                <StackLayout HorizontalOptions="Center" Orientation="Horizontal" BackgroundColor="Transparent">
+                    <Image Source="Hall.png"></Image>
+                    <Label FontSize="Medium" TextColor="White" Text="{x:Static resources:AppResources.HomePage_MenuItem_MainPage}"></Label>
+                </StackLayout>
+            </Frame>
+            <Frame Style="{StaticResource HomePageMenuItem}">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToOptionsPageCommand}"></TapGestureRecognizer>
+                </Frame.GestureRecognizers>
+                <StackLayout HorizontalOptions="Center" Orientation="Horizontal" BackgroundColor="Transparent">
+                    <Image Source="Settings.png"></Image>
+                    <Label FontSize="Medium" TextColor="White" Text="{x:Static resources:AppResources.HomePage_MenuItem_Options}"></Label>
+                </StackLayout>
+            </Frame>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
