@@ -33,6 +33,7 @@
                     <Frame 
                     Style="{StaticResource TransparentMenuItem}">
                         <Grid>
+                            <Image Source="Photo.png"></Image>
                             <Image Style="{StaticResource MenuImage}" 
                             Source="{Binding Photo.Photo, Converter={StaticResource ByteArrayToImage}}"/>
                             <StackLayout Style="{StaticResource TextBackground}"></StackLayout>
