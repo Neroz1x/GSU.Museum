@@ -25,24 +25,18 @@
 
         <Style TargetType="Label" x:Key="OptionsLabelHeader">
             <Setter Property="FontSize" Value="Large"/>
-            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="TextColor" Value="White"/>
             <Setter Property="VerticalOptions" Value="Center"></Setter>
         </Style>
         <Style TargetType="Label" x:Key="OptionsLabelDescription">
             <Setter Property="FontSize" Value="Medium"/>
+            <Setter Property="TextColor" Value="White"/>
             <Setter Property="Padding" Value="10, 0, 0, 0"/>
         </Style>
 
         <Style TargetType="Label" x:Key="PageTitle">
             <Setter Property="FontSize" Value="Large"></Setter>
             <Setter Property="TextColor" Value="White"></Setter>
-        </Style>
-
-        <Style TargetType="Frame" x:Key="DefaultMenuItem">
-            <Setter Property="Visual" Value="Material"></Setter>
-            <Setter Property="Padding" Value="0"></Setter>
-            <Setter Property="HasShadow" Value="True"></Setter>
-            <Setter Property="IsClippedToBounds" Value="True"></Setter>
         </Style>
 
         <Style TargetType="Image" x:Key="MenuImage">
@@ -58,14 +52,14 @@
         
         <Style TargetType="CollectionView" x:Key="DefaultCollectionView">
             <Setter Property="SelectionMode" Value="Single"></Setter>
-            <Setter Property="Margin" Value="5"></Setter>
+            <Setter Property="Margin" Value="20, 5"></Setter>
         </Style>
         
         <Style TargetType="Frame" x:Key="TransparentMenuItem">
             <Setter Property="Visual" Value="Material"></Setter>
-            <Setter Property="Padding" Value="0"></Setter>
+            <Setter Property="Padding" Value="3"></Setter>
             <Setter Property="BackgroundColor" Value="White"></Setter>
-            <Setter Property="HasShadow" Value="True"></Setter>
+            <Setter Property="HasShadow" Value="False"></Setter>
             <Setter Property="IsClippedToBounds" Value="True"></Setter>
             <Setter Property="CornerRadius" Value="10"></Setter>
         </Style>
@@ -82,7 +76,7 @@
 
         <Style TargetType="Label" x:Key="DefaultMenuItemHeader">
             <Setter Property="HorizontalOptions" Value="Start"></Setter>
-            <Setter Property="TextColor" Value="Black"></Setter>
+            <Setter Property="TextColor" Value="White"></Setter>
             <Setter Property="VerticalOptions" Value="Start"></Setter>
             <Setter Property="FontSize" Value="Large"></Setter>
             <Setter Property="Padding" Value="10,0"></Setter>
@@ -105,7 +99,7 @@
 
         <Style TargetType="Label" x:Key="DefaultMenuItemBody">
             <Setter Property="HorizontalOptions" Value="Center"></Setter>
-            <Setter Property="TextColor" Value="Black"></Setter>
+            <Setter Property="TextColor" Value="White"></Setter>
             <Setter Property="Margin" Value="15, 0"></Setter>
             <Setter Property="Padding" Value="10, 0"></Setter>
             <Setter Property="VerticalOptions" Value="Center"></Setter>
@@ -125,16 +119,16 @@
 
         <Style TargetType="Label" x:Key="DefaultLabel">
             <Setter Property="FontSize">
-                <OnIdiom x:TypeArguments="x:Double" Phone="16" Tablet="20"></OnIdiom>
+                <OnIdiom x:TypeArguments="x:Double" Phone="18" Tablet="22"></OnIdiom>
             </Setter>
             <Setter Property="Margin" Value="10"></Setter>
-            <Setter Property="TextColor" Value="Black"></Setter>
+            <Setter Property="TextColor" Value="White"></Setter>
         </Style>
 
         <Style TargetType="IndicatorView" x:Key="DefaultIndicator">
-            <Setter Property="IndicatorColor" Value="Gray"></Setter>
+            <Setter Property="IndicatorColor" Value="White"></Setter>
             <Setter Property="HideSingle" Value="True"></Setter>
-            <Setter Property="SelectedIndicatorColor" Value="Blue"></Setter>
+            <Setter Property="SelectedIndicatorColor" Value="#1976D2"></Setter>
             <Setter Property="HorizontalOptions" Value="Center"></Setter>
             <Setter Property="IndicatorSize" Value="10"></Setter>
         </Style>
