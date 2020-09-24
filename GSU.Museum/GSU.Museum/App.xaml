@@ -30,6 +30,7 @@
         </Style>
         <Style TargetType="Label" x:Key="OptionsLabelDescription">
             <Setter Property="FontSize" Value="Medium"/>
+            <Setter Property="Padding" Value="10, 0, 0, 0"/>
         </Style>
 
         <Style TargetType="Label" x:Key="PageTitle">
@@ -40,27 +41,39 @@
         <Style TargetType="Frame" x:Key="DefaultMenuItem">
             <Setter Property="Visual" Value="Material"></Setter>
             <Setter Property="Padding" Value="0"></Setter>
-            <Setter Property="BackgroundColor" Value="#ff2196f3"></Setter>
             <Setter Property="HasShadow" Value="True"></Setter>
             <Setter Property="IsClippedToBounds" Value="True"></Setter>
         </Style>
 
         <Style TargetType="Image" x:Key="MenuImage">
             <Setter Property="Aspect" Value="AspectFill"></Setter>
+            <Setter Property="BackgroundColor" Value="Transparent"></Setter>
         </Style>
 
+        <Style TargetType="Label" x:Key="LoaderBackground">
+            <Setter Property="HorizontalOptions" Value="Fill"/>
+            <Setter Property="VerticalOptions" Value="Fill"/>
+            <Setter Property="BackgroundColor" Value="#55000000"/>
+        </Style>
+        
+        <Style TargetType="CollectionView" x:Key="DefaultCollectionView">
+            <Setter Property="SelectionMode" Value="Single"></Setter>
+            <Setter Property="Margin" Value="5"></Setter>
+        </Style>
+        
         <Style TargetType="Frame" x:Key="TransparentMenuItem">
             <Setter Property="Visual" Value="Material"></Setter>
             <Setter Property="Padding" Value="0"></Setter>
             <Setter Property="BackgroundColor" Value="White"></Setter>
             <Setter Property="HasShadow" Value="True"></Setter>
             <Setter Property="IsClippedToBounds" Value="True"></Setter>
+            <Setter Property="CornerRadius" Value="10"></Setter>
         </Style>
         
-        <Style TargetType="Button" x:Key="HomePageMenuItem">
+        <Style TargetType="Frame" x:Key="HomePageMenuItem">
+            <Setter Property="CornerRadius" Value="10"></Setter>
             <Setter Property="Margin" Value="0, 10"></Setter>
-            <Setter Property="BackgroundColor" Value="#ff2196f3"></Setter>
-            <Setter Property="FontSize" Value="Medium"></Setter>
+            <Setter Property="BackgroundColor" Value="#1976D2"></Setter>
             <Setter Property="WidthRequest">
                 <OnIdiom x:TypeArguments="x:Double" Phone="300" Tablet="500"></OnIdiom>
             </Setter>
