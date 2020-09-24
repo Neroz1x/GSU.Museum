@@ -4,6 +4,7 @@
              x:Class="GSU.Museum.Shared.Pages.ExhibitGallery"
              Appearing="ContentPage_Appearing"
              xmlns:resources="clr-namespace:GSU.Museum.Shared.Resources" 
+             BackgroundImageSource="Background.jpg"
              >
     <NavigationPage.TitleView>
         <Label Text="{Binding Title}" Style="{StaticResource PageTitle}" />

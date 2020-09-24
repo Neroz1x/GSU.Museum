@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="GSU.Museum.Shared.Pages.LoadingPage" Appearing="ContentPage_Appearing">
+    <NavigationPage.HasNavigationBar>False</NavigationPage.HasNavigationBar>
     <ContentPage.Content>
         <StackLayout VerticalOptions="CenterAndExpand">
             <Image Source="Emblem.png" VerticalOptions="Center"></Image>

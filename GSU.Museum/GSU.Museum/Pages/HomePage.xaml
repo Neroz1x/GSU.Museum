@@ -9,6 +9,7 @@
              Appearing="ContentPage_Appearing"
              Disappearing="ContentPage_Disappearing"
              xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
+             BackgroundImageSource="Background.jpg"
              >
     <NavigationPage.TitleView>
         <Label Text="{x:Static resources:AppResources.HomePage_PageTitle}" Style="{StaticResource PageTitle}" />
@@ -24,7 +25,7 @@
             </cards:CarouselView>
             <Label HorizontalOptions="Center" Style="{StaticResource DefaultMenuItemHeader}" 
                     Text="{x:Static resources:AppResources.HomePage_Title}"/>
-            <Label Style="{StaticResource DefaultMenuItemBody}" 
+            <Label Style="{StaticResource DefaultMenuItemBody}"
                     Text="{x:Static resources:AppResources.HomePage_MainText}"/>
             
             <Frame Style="{StaticResource HomePageMenuItem}">
