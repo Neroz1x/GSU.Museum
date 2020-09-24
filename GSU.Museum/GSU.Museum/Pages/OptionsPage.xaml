@@ -17,7 +17,7 @@
                     <Label Style="{StaticResource OptionsSectionLabelHeader}" Text="{Binding LanguageSectionTitle}"></Label>
                     <BoxView Style="{StaticResource LineForOptions}"/>
                 </StackLayout>
-                <StackLayout Orientation="Vertical">
+                <StackLayout Orientation="Vertical" Padding="10, 0, 0, 0">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
                         <Label HorizontalOptions="StartAndExpand" Style="{StaticResource OptionsLabelHeader}" Text="{Binding LanguageLabel}"/>
                         <Picker FontSize="Large" 
@@ -34,7 +34,7 @@
                     <Label Style="{StaticResource OptionsSectionLabelHeader}" Text="{Binding UseCacheSectionTitle}"></Label>
                     <BoxView Style="{StaticResource LineForOptions}"/>
                 </StackLayout>
-                <StackLayout Orientation="Vertical">
+                <StackLayout Orientation="Vertical" Padding="10, 0, 0, 0">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
                         <Label Style="{StaticResource OptionsLabelHeader}" Text="{Binding UseCacheLabel}">
                             <Label.GestureRecognizers>
@@ -51,7 +51,7 @@
                 </StackLayout>
                 
                 <!--IsVisible="{Binding Source={x:Reference UseCacheCheckBox}, Path=IsChecked}"-->
-                <StackLayout IsVisible="False" Orientation="Vertical">
+                <StackLayout IsVisible="False" Orientation="Vertical" Padding="10, 0, 0, 0">
                     <StackLayout Orientation="Vertical">
                         <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
                             <Label Style="{StaticResource OptionsLabelHeader}" Text="{Binding CheckForUpdatesLabel}">
