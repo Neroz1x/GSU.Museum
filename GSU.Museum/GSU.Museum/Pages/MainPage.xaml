@@ -15,40 +15,35 @@
         <ToolbarItem IconImageSource="HomeIcon.png" Command="{Binding NavigateToHomePageCommand}" Text="{x:Static resources:AppResources.Button_HomePage}"/>
     </ContentPage.ToolbarItems>
     <Grid>
-        <ScrollView IsVisible="{Binding ContentVisibility}" Padding="10">
-            <StackLayout >
+        <CollectionView x:Name="HallsCollectionView"  
+            Style="{StaticResource DefaultCollectionView}"
+            IsVisible="{Binding ContentVisibility}"
+            ItemsSource="{Binding Halls}"
+            SelectionChangedCommand="{Binding SelectHallCommand}"
+            SelectionChangedCommandParameter="{Binding SelectedItem.Id, Source={x:Reference HallsCollectionView}}">
+            <CollectionView.Header>
                 <Label Style="{StaticResource DefaultMenuItemHeader}" 
-                   Text="{x:Static resources:AppResources.MainPage_MenuDescription}"/>
-                <CollectionView HeightRequest="{Binding CollectionViewHeight}" x:Name="HallsCollectionView" SelectionMode="Single" ItemsSource="{Binding Halls}"
-                    SelectionChangedCommand="{Binding SelectHallCommand}"
-                    SelectionChangedCommandParameter="{Binding SelectedItem.Id, Source={x:Reference HallsCollectionView}}">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout ItemSpacing="20" Orientation="Vertical"/>
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame 
-                            Style="{StaticResource TransparentMenuItem}">
-                                <Grid>
-                                    <Image Style="{StaticResource MenuImage}" 
-                                       Source="{Binding Photo.Photo, Converter={StaticResource ByteArrayToImage}}" />
-                                    <StackLayout Style="{StaticResource TextBackground}"></StackLayout>
-                                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                                        <Label Style="{StaticResource WhiteTransparentMenuItemHeader}" Text="{Binding Title}"></Label>
-                                    </StackLayout>
-                                </Grid>
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                    <CollectionView.EmptyView>
-                        <StackLayout>
-                            <Button Text="{x:Static resources:AppResources.Button_HomePage}" Style="{StaticResource DefaultButton}" 
-                        Command="{Binding NavigateToHomePageCommand}"/>
-                        </StackLayout>
-                    </CollectionView.EmptyView>
-                </CollectionView>
-            </StackLayout>
-        </ScrollView>
+                    Text="{x:Static resources:AppResources.MainPage_MenuDescription}"/>
+            </CollectionView.Header>
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="20" Orientation="Vertical"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame 
+                    Style="{StaticResource TransparentMenuItem}">
+                        <Grid>
+                            <Image Style="{StaticResource MenuImage}" 
+                            Source="{Binding Photo.Photo, Converter={StaticResource ByteArrayToImage}}"/>
+                            <StackLayout Style="{StaticResource TextBackground}"></StackLayout>
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Style="{StaticResource WhiteTransparentMenuItemHeader}" Text="{Binding Title}"></Label>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
         <ActivityIndicator IsVisible="{Binding IsBusy}" 
                            IsRunning="True" 
                            Color="HotPink" 

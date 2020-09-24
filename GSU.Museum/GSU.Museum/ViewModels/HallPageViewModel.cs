@@ -61,25 +61,6 @@ namespace GSU.Museum.Shared.ViewModels
             }
         }
 
-        // Height of collection vire
-        private double _collectionViewHeight;
-        public double CollectionViewHeight
-        {
-            get
-            {
-                return _collectionViewHeight;
-            }
-
-            set
-            {
-                if (value != _collectionViewHeight)
-                {
-                    _collectionViewHeight = value;
-                }
-                OnPropertyChanged(nameof(CollectionViewHeight));
-            }
-        }
-
         // Title of the page
         private string _title;
         public string Title
@@ -138,9 +119,6 @@ namespace GSU.Museum.Shared.ViewModels
                 }
                 else
                 {
-                    var height = Math.Round(App.Current.MainPage.Width - (0.1 * App.Current.MainPage.Width)) / 2;
-                    height = height * Stands.Count + (Stands.Count - 1) * 20 + 1;
-                    CollectionViewHeight = height;
                     ContentVisibility = true;
                 }
             }

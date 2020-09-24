@@ -15,37 +15,36 @@
         <ToolbarItem IconImageSource="HomeIcon.png" Command="{Binding NavigateToHomePageCommand}" Text="{x:Static resources:AppResources.Button_HomePage}"/>
     </ContentPage.ToolbarItems>
     <Grid>
-        <ScrollView Padding="10" IsVisible="{Binding ContentVisibility}">
-            <StackLayout>
+        <CollectionView x:Name="ExhibitsCollectionView"
+            Style="{StaticResource DefaultCollectionView}"
+            IsVisible="{Binding ContentVisibility}"
+            ItemsSource="{Binding Exhibits}"
+            SelectionChangedCommand="{Binding SelectExhibitCommand}"
+            SelectionChangedCommandParameter="{Binding SelectedItem.Id, Source={x:Reference ExhibitsCollectionView}}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="20" Orientation="Vertical"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.Header>
                 <Label Style="{StaticResource DefaultMenuItemHeader}" 
-                   Text="{x:Static resources:AppResources.StandPage_MenuDescription}"/>
-                <CollectionView x:Name="ExhibitsCollectionView" SelectionMode="Single"
-                        HeightRequest="{Binding CollectionViewHeight}"
-                        ItemsSource="{Binding Exhibits}"
-                        SelectionChangedCommand="{Binding SelectExhibitCommand}"
-                        SelectionChangedCommandParameter="{Binding SelectedItem.Id, Source={x:Reference ExhibitsCollectionView}}">
-                    <CollectionView.ItemsLayout>
-                        <LinearItemsLayout ItemSpacing="20" Orientation="Vertical"/>
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame 
-                            Style="{StaticResource DefaultMenuItem}">
-                                <Grid >
-                                    <Image Style="{StaticResource MenuImage}"
+                    Text="{x:Static resources:AppResources.StandPage_MenuDescription}"/>
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame 
+                            Style="{StaticResource TransparentMenuItem}">
+                        <Grid >
+                            <Image Style="{StaticResource MenuImage}"
                                        Source="{Binding Photos[0].Photo, Converter={StaticResource ByteArrayToImage}}" />
-                                    <StackLayout Style="{StaticResource TextBackground}"></StackLayout>
-                                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                                        <Label Style="{StaticResource WhiteTransparentMenuItemHeader}" Text="{Binding Title}"></Label>
-                                        <Label Style="{StaticResource WhiteTransparentMenuItemBody}" Text="{Binding Description}"></Label>
-                                    </StackLayout>
-                                </Grid>
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </StackLayout>
-        </ScrollView>
+                            <StackLayout Style="{StaticResource TextBackground}"></StackLayout>
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Style="{StaticResource WhiteTransparentMenuItemHeader}" Text="{Binding Title}"></Label>
+                                <Label Style="{StaticResource WhiteTransparentMenuItemBody}" Text="{Binding Description}"></Label>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
         <ActivityIndicator IsVisible="{Binding IsBusy}" 
                            IsRunning="True" 
                            Color="HotPink" 
