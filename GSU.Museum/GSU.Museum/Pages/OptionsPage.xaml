@@ -6,6 +6,7 @@
              mc:Ignorable="d"
              x:Class="GSU.Museum.Shared.Pages.OptionsPage"
              Disappearing="ContentPage_Disappearing"
+             BackgroundImageSource="Background.jpg"
              >
     <NavigationPage.TitleView>
         <Label Text="{Binding Title}" Style="{StaticResource PageTitle}" />
@@ -23,6 +24,7 @@
                         <Picker FontSize="Large" 
                             VerticalOptions="Center"
                             WidthRequest="170"
+                            TextColor="White"
                             HorizontalOptions="End" 
                             ItemsSource="{Binding Languages}" 
                             SelectedItem="{Binding SelectedLanguage}" 
