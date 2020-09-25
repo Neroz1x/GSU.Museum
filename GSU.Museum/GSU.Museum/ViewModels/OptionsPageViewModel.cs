@@ -406,6 +406,10 @@ namespace GSU.Museum.Shared.ViewModels
             }
         }
 
+        /// <summary>
+        /// Load current cache from API 
+        /// </summary>
+        /// <returns></returns>
         public async Task LoadCache()
         {
             try
