@@ -22,7 +22,7 @@ namespace GSU.Museum.Shared.ViewModels
             NavigateToOptionsPageCommand = new Command(async () => await NavigateToOptionsPage());
             Images.Add("Emblem.png");
             Images.Add("Flag.jpeg");
-            Images.Add("Shield.jpeg");
+            Images.Add("Shield.png");
         }
 
         #region Methods
