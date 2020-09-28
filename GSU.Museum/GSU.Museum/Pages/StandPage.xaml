@@ -51,10 +51,6 @@
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="20" Orientation="Vertical"/>
             </CollectionView.ItemsLayout>
-            <CollectionView.Header>
-                <Label Style="{StaticResource DefaultMenuItemHeader}" 
-                    Text="{x:Static resources:AppResources.StandPage_MenuDescription}"/>
-            </CollectionView.Header>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame 

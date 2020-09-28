@@ -47,10 +47,6 @@
             ItemsSource="{Binding Halls}"
             SelectionChangedCommand="{Binding SelectHallCommand}"
             SelectionChangedCommandParameter="{Binding SelectedItem.Id, Source={x:Reference HallsCollectionView}}">
-            <CollectionView.Header>
-                <Label Style="{StaticResource DefaultMenuItemHeader}" 
-                Text="{x:Static resources:AppResources.MainPage_MenuDescription}"/>
-            </CollectionView.Header>
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="20" Orientation="Vertical"/>
             </CollectionView.ItemsLayout>
