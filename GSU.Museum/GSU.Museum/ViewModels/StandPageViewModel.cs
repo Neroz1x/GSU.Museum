@@ -19,6 +19,7 @@ namespace GSU.Museum.Shared.ViewModels
         public Command GetExhibitsCommand { get; }
         public Command SelectExhibitCommand { get; }
         public Command NavigateToHomePageCommand { get; }
+        public Command NavigateBackCommand { get; }
         public ObservableCollection<ExhibitDTO> Exhibits { get; }
 
         private CancellationTokenSource _cancellationTokenSource;
@@ -93,6 +94,7 @@ namespace GSU.Museum.Shared.ViewModels
             GetExhibitsCommand = new Command(async () => await GetExhibits());
             SelectExhibitCommand = new Command(async id => await SelectExhibit(id?.ToString()));
             NavigateToHomePageCommand = new Command(() => App.Current.MainPage = new NavigationPage(new HomePage()));
+            NavigateBackCommand = new Command(async () => await navigation.PopAsync());
         }
 
         #region Methods

@@ -21,9 +21,10 @@ namespace GSU.Museum.Shared.ViewModels
         public Command OnLabelTapCommand { get; }
         public Command ClearCacheCommand { get; }
         public Command LoadCacheCommand { get; }
-        
+        public Command NavigateBackCommand { get; }
+
         #endregion
-        
+
 
         #region Bindings
         // Title of the page
@@ -345,6 +346,7 @@ namespace GSU.Museum.Shared.ViewModels
             UseOnlyCacheIsSelected = App.Settings.UseOnlyCache;
             CheckForUpdatesIsSelected = App.Settings.CheckForUpdates;
             LocalizePage();
+            NavigateBackCommand = new Command(async () => await navigation.PopAsync());
             OnLabelTapCommand = new Command(labelId => OnLabelTap(int.Parse(labelId.ToString())));
             ClearCacheCommand = new Command(async() => await DependencyService.Get<CachingService>().ClearCache());
             LoadCacheCommand = new Command(async() => await LoadCache());

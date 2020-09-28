@@ -22,6 +22,7 @@ namespace GSU.Museum.Shared.ViewModels
         public Command GetHallsCommand { get; }
         public Command SelectHallCommand { get; }
         public Command NavigateToHomePageCommand { get; }
+        public Command NavigateBackCommand { get; }
         public ObservableCollection<HallDTO> Halls { get; }
 
         // Status of LoadingIndicator
@@ -71,6 +72,7 @@ namespace GSU.Museum.Shared.ViewModels
             GetHallsCommand = new Command(async () => await GetHalls());
             SelectHallCommand = new Command(async id => await SelectHall(id?.ToString()));
             NavigateToHomePageCommand = new Command(() => App.Current.MainPage = new NavigationPage(new HomePage()));
+            NavigateBackCommand = new Command(async () => await navigation.PopAsync());
         }
 
         #region Methods

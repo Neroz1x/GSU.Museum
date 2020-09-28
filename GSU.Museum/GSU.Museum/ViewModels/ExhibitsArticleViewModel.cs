@@ -12,6 +12,7 @@ namespace GSU.Museum.Shared.ViewModels
         #region Fields
         public INavigation Navigation;
         public Command NavigateToHomePageCommand { get; }
+        public Command NavigateBackCommand { get; }
         public ObservableCollection<ImageSource> Photos { get; }
         
         public ExhibitDTO Exhibit;
@@ -105,6 +106,7 @@ namespace GSU.Museum.Shared.ViewModels
             Exhibit = exhibit;
             Photos = new ObservableCollection<ImageSource>();
             NavigateToHomePageCommand = new Command(() => App.Current.MainPage = new NavigationPage(new HomePage()));
+            NavigateBackCommand = new Command(async () => await navigation.PopAsync());
         }
 
         #region Methods

@@ -9,14 +9,39 @@
              Disappearing="ContentPage_Disappearing"
              xmlns:resources="clr-namespace:GSU.Museum.Shared.Resources"
              BackgroundImageSource="Background.jpg">
-    <NavigationPage.TitleView>
-        <Label Text="{x:Static resources:AppResources.MainPage_Title}" Style="{StaticResource PageTitle}" />
-    </NavigationPage.TitleView>
-    <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="HomeIcon.png" Command="{Binding NavigateToHomePageCommand}" Text="{x:Static resources:AppResources.Button_HomePage}"/>
-    </ContentPage.ToolbarItems>
+    <NavigationPage.HasNavigationBar>false</NavigationPage.HasNavigationBar>
     <Grid>
-        <CollectionView x:Name="HallsCollectionView"  
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" BackgroundColor="Transparent" HorizontalOptions="FillAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.15*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="0.15*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="2"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Image Source="BackArrow.png" Style="{StaticResource LeftArrowImage}">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateBackCommand}"></TapGestureRecognizer>
+                </Image.GestureRecognizers>
+            </Image>
+            <Label Grid.Column="1" 
+                    VerticalOptions="Center" 
+                    Text="{x:Static resources:AppResources.MainPage_Title}" 
+                    Style="{StaticResource PageTitle}"></Label>
+            <Image Source="HomeIcon.png" Style="{StaticResource HomeImage}">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToHomePageCommand}"></TapGestureRecognizer>
+                </Image.GestureRecognizers>
+            </Image>
+            <BoxView HeightRequest="2" BackgroundColor="White" Grid.Row="1" Grid.ColumnSpan="3"></BoxView>
+        </Grid>
+        <CollectionView x:Name="HallsCollectionView" Grid.Row="1"
             Style="{StaticResource DefaultCollectionView}"
             IsVisible="{Binding ContentVisibility}"
             ItemsSource="{Binding Halls}"
@@ -24,7 +49,7 @@
             SelectionChangedCommandParameter="{Binding SelectedItem.Id, Source={x:Reference HallsCollectionView}}">
             <CollectionView.Header>
                 <Label Style="{StaticResource DefaultMenuItemHeader}" 
-                    Text="{x:Static resources:AppResources.MainPage_MenuDescription}"/>
+                Text="{x:Static resources:AppResources.MainPage_MenuDescription}"/>
             </CollectionView.Header>
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="20" Orientation="Vertical"/>
@@ -32,11 +57,11 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame 
-                    Style="{StaticResource TransparentMenuItem}">
+                Style="{StaticResource TransparentMenuItem}">
                         <Grid>
                             <Image Source="Photo.png"></Image>
                             <Image Style="{StaticResource MenuImage}" 
-                            Source="{Binding Photo.Photo, Converter={StaticResource ByteArrayToImage}}"/>
+                        Source="{Binding Photo.Photo, Converter={StaticResource ByteArrayToImage}}"/>
                             <StackLayout Style="{StaticResource TextBackground}"></StackLayout>
                             <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
                                 <Label Style="{StaticResource WhiteTransparentMenuItemHeader}" Text="{Binding Title}"></Label>
@@ -46,11 +71,13 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <StackLayout Style="{StaticResource LoaderBackground}" IsVisible="{Binding IsBusy}">
+        <StackLayout 
+            Grid.RowSpan="2"
+            Style="{StaticResource LoaderBackground}" IsVisible="{Binding IsBusy}">
             <ActivityIndicator  
-                IsRunning="True" 
-                Color="HotPink" 
-                VerticalOptions="CenterAndExpand"/>
+            IsRunning="True" 
+            Color="HotPink" 
+            VerticalOptions="CenterAndExpand"/>
         </StackLayout>
     </Grid>
 </ContentPage>
