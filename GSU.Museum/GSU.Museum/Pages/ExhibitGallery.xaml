@@ -9,7 +9,7 @@
     <NavigationPage.HasNavigationBar>false</NavigationPage.HasNavigationBar>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" BackgroundColor="Transparent" HorizontalOptions="FillAndExpand">

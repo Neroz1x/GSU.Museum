@@ -11,7 +11,7 @@
     <NavigationPage.HasNavigationBar>false</NavigationPage.HasNavigationBar>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition Height="60"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" BackgroundColor="Transparent" HorizontalOptions="FillAndExpand">
@@ -24,7 +24,7 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition Height="2"></RowDefinition>
             </Grid.RowDefinitions>
-            <Image Source="BackArrow.png" Grid.Column="0" HorizontalOptions="Center" Margin="10, 0" Aspect="AspectFit">
+            <Image Source="BackArrow.png" Style="{StaticResource LeftArrowImage}">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding NavigateBackCommand}"></TapGestureRecognizer>
                 </Image.GestureRecognizers>
@@ -33,7 +33,7 @@
                     VerticalOptions="Center" 
                     Text="{Binding Title}" 
                     Style="{StaticResource PageTitle}"/>
-            <Image Grid.Column="2" Source="HomeIcon.png" HorizontalOptions="Center" Margin="10, 0">
+            <Image Source="HomeIcon.png" Style="{StaticResource HomeImage}">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding NavigateToHomePageCommand}"></TapGestureRecognizer>
                 </Image.GestureRecognizers>
@@ -57,6 +57,7 @@
                             ItemsSource="{Binding Languages}" 
                             SelectedItem="{Binding SelectedLanguage}" 
                             ItemDisplayBinding="{Binding LanguageName}"/>
+                        <Button Clicked="Button_Clicked" Text="Ok"></Button>
                     </StackLayout>
                     <Label Style="{StaticResource OptionsLabelDescription}" Text="{Binding LanguageDescriptionLabel}"/>
                 </StackLayout>
@@ -118,5 +119,16 @@
                 </StackLayout>
             </StackLayout>
         </ScrollView>
+        <ContentView x:Name="popupLoadingView" 
+                     Grid.RowSpan="2"
+                     BackgroundColor="#C0808080" 
+                     Padding="10,0" 
+                     AbsoluteLayout.LayoutBounds="0,0,1,1" 
+                     AbsoluteLayout.LayoutFlags="All"
+                     IsVisible="False">
+            <StackLayout>
+                <Label Text="qwe"></Label>
+            </StackLayout>
+        </ContentView>
     </Grid>
 </ContentPage>
