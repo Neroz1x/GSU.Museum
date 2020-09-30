@@ -11,6 +11,17 @@
             <converters:ByteToImageSourceConverter x:Key="ByteArrayToImage" />
         </ResourceDictionary>
 
+        <Style TargetType="RadioButton" x:Key="PopupRadioButton">
+            <Setter Property="Margin" Value="10, 15"></Setter>
+            <Setter Property="FontSize" Value="Medium"></Setter>
+            <Setter Property="GroupName" Value="Languages"></Setter>
+        </Style>
+
+        <Style TargetType="Image" x:Key="FlagImage">
+            <Setter Property="WidthRequest" Value="50"></Setter>
+            <Setter Property="HeightRequest" Value="20"></Setter>
+        </Style>
+        
         <Style TargetType="BoxView" x:Key="LineForOptions">
             <Setter Property="BackgroundColor" Value="#ff2196f3"></Setter>
             <Setter Property="HeightRequest" Value="2"></Setter>
