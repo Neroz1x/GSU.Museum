@@ -14,7 +14,8 @@ namespace GSU.Museum.Shared.ViewModels
     class OptionsPageViewModel : BaseViewModel
     {
         public INavigation Navigation;
-        public ObservableCollection<Language> Languages { get; }
+        public ContentView Popup;
+        public StackLayout RadioGroup;
 
         #region Commands
 
@@ -22,6 +23,8 @@ namespace GSU.Museum.Shared.ViewModels
         public Command ClearCacheCommand { get; }
         public Command LoadCacheCommand { get; }
         public Command NavigateBackCommand { get; }
+        public Command ShowPopupCommand { get; }
+        public Command CancelCommand { get; }
 
         #endregion
 
@@ -43,6 +46,97 @@ namespace GSU.Museum.Shared.ViewModels
                     _title = value;
                 }
                 OnPropertyChanged(nameof(Title));
+            }
+        }
+
+        // Is selected english language
+        private bool _isSelectedEnglish;
+        public bool IsSelectedEnglish
+        {
+            get
+            {
+                return _isSelectedEnglish;
+            }
+
+            set
+            {
+                if (value != _isSelectedEnglish)
+                {
+                    _isSelectedEnglish = value;
+                    if (IsVisibleLanguageSelection)
+                    {
+                        App.Settings.Language = new Language() { CultureInfo = new System.Globalization.CultureInfo("en-US"), LanguageName = "English" };
+                        ChangeLanguage();
+                    }
+                }
+                OnPropertyChanged(nameof(IsSelectedEnglish));
+            }
+        }
+
+        // Is selected russian language
+        private bool _isSelectedRussian;
+        public bool IsSelectedRussian
+        {
+            get
+            {
+                return _isSelectedRussian;
+            }
+
+            set
+            {
+                if (value != _isSelectedRussian)
+                {
+                    _isSelectedRussian = value;
+                    if (IsVisibleLanguageSelection)
+                    {
+                        App.Settings.Language = new Language() { CultureInfo = new System.Globalization.CultureInfo("ru-RU"), LanguageName = "Русский" };
+                        ChangeLanguage();
+                    }
+                }
+                OnPropertyChanged(nameof(IsSelectedRussian));
+            }
+        }
+
+        // Is selected belorussian language
+        private bool _isSelectedBelorussian;
+        public bool IsSelectedBelorussian
+        {
+            get
+            {
+                return _isSelectedBelorussian;
+            }
+
+            set
+            {
+                if (value != _isSelectedBelorussian)
+                {
+                    _isSelectedBelorussian = value;
+                    if (IsVisibleLanguageSelection)
+                    {
+                        App.Settings.Language = new Language() { CultureInfo = new System.Globalization.CultureInfo("be-BY"), LanguageName = "Беларуская" };
+                        ChangeLanguage();
+                    }
+                }
+                OnPropertyChanged(nameof(IsSelectedBelorussian));
+            }
+        }
+
+        // Is visible language selection popup
+        private bool _isVisibleLanguageSelection = false;
+        public bool IsVisibleLanguageSelection
+        {
+            get
+            {
+                return _isVisibleLanguageSelection;
+            }
+
+            set
+            {
+                if (value != _isVisibleLanguageSelection)
+                {
+                    _isVisibleLanguageSelection = value;
+                }
+                OnPropertyChanged(nameof(IsVisibleLanguageSelection));
             }
         }
 
@@ -299,49 +393,49 @@ namespace GSU.Museum.Shared.ViewModels
         }
 
         // Title of the page
-        private Language _selectedLanguage;
-        public Language SelectedLanguage
+        private string _language;
+        public string Language
         {
             get
             {
-                return _selectedLanguage;
+                return _language;
             }
 
             set
             {
-                if (value != _selectedLanguage)
+                if (value != _language)
                 {
-                    _selectedLanguage = value;
+                    _language = value;
                     ChangeLanguage();
                 }
-                OnPropertyChanged(nameof(SelectedLanguage));
+                OnPropertyChanged(nameof(Language));
             }
         }
 
         #endregion
 
-        public OptionsPageViewModel(INavigation navigation) 
+        public OptionsPageViewModel(INavigation navigation, ContentView popup, StackLayout radioGroup) 
         {
             Navigation = navigation;
-            Languages = new ObservableCollection<Language>();
-            Languages.Add(new Language() { CultureInfo = new System.Globalization.CultureInfo("en-US"), LanguageName = "English" });
-            Languages.Add(new Language() { CultureInfo = new System.Globalization.CultureInfo("ru-RU"), LanguageName = "Русский" });
-            Languages.Add(new Language() { CultureInfo = new System.Globalization.CultureInfo("be-BY"), LanguageName = "Беларуская" });
+            Popup = popup;
+            RadioGroup = radioGroup;
+            Language = App.Settings.Language.LanguageName;
             switch (App.Settings.Language.LanguageName)
             {
                 case "English":
-                    SelectedLanguage = Languages.ElementAt(0);
+                    IsSelectedEnglish = true;
                     break;
                 case "Русский":
-                    SelectedLanguage = Languages.ElementAt(1);
+                    IsSelectedRussian = true;
                     break;
                 case "Беларуская":
-                    SelectedLanguage = Languages.ElementAt(2);
+                    IsSelectedBelorussian = true;
                     break;
                 default:
-                    SelectedLanguage = Languages.ElementAt(0);
+                    IsSelectedEnglish = true;
                     break;
             }
+
             UseCacheIsChecked = App.Settings.UseCache;
             UseOnlyCacheIsSelected = App.Settings.UseOnlyCache;
             CheckForUpdatesIsSelected = App.Settings.CheckForUpdates;
@@ -350,17 +444,42 @@ namespace GSU.Museum.Shared.ViewModels
             OnLabelTapCommand = new Command(labelId => OnLabelTap(int.Parse(labelId.ToString())));
             ClearCacheCommand = new Command(async() => await DependencyService.Get<CachingService>().ClearCache());
             LoadCacheCommand = new Command(async() => await LoadCache());
+            ShowPopupCommand = new Command(() => ShowPopup());
+            CancelCommand = new Command(() => IsVisibleLanguageSelection = false);
         }
 
         #region Methods
+
+        public void ShowPopup() 
+        {
+            IsVisibleLanguageSelection = true;
+            RadioGroup.AnchorX = 0.5;
+            RadioGroup.AnchorY = 0.5;
+
+            Animation scaleAnimation = new Animation(
+                f => RadioGroup.Scale = f,
+                0.2,
+                1,
+                Easing.SinInOut);
+
+            Animation fadeAnimation = new Animation(
+                f => RadioGroup.Opacity = f,
+                0.2,
+                1,
+                Easing.SinInOut);
+
+            scaleAnimation.Commit(RadioGroup, "radioGroupScaleAnimation", length : 200);
+            fadeAnimation.Commit(RadioGroup, "radioGroupFadeAnimation", length : 200);
+        }
 
         /// <summary>
         /// Change Culture by selected language
         /// </summary>
         private void ChangeLanguage()
         {
-            App.Settings.Language = SelectedLanguage;
+            Language = App.Settings.Language.LanguageName;
             DependencyService.Get<LocalizationService>().Localize();
+            IsVisibleLanguageSelection = false;
             LocalizePage();
         }
 

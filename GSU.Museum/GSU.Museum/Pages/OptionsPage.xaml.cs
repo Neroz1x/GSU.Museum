@@ -12,7 +12,7 @@ namespace GSU.Museum.Shared.Pages
         public OptionsPage()
         {
             InitializeComponent();
-            BindingContext = new OptionsPageViewModel(Navigation);
+            BindingContext = new OptionsPageViewModel(Navigation, Popup, RadioGroup);
         }
 
         private async void ContentPage_Disappearing(object sender, System.EventArgs e)
@@ -24,6 +24,21 @@ namespace GSU.Museum.Shared.Pages
         {
             await DependencyService.Get<CachingService>().WriteSettings();
             Application.Current.MainPage = new NavigationPage(new HomePage());
+        }
+
+        private void RuFlag_Tapped(object sender, System.EventArgs e)
+        {
+            RuRadioButton.IsChecked = true;
+        }
+
+        private void EnFlag_Tapped(object sender, System.EventArgs e)
+        {
+            EnRadioButton.IsChecked = true;
+        }
+
+        private void BeFlag_Tapped(object sender, System.EventArgs e)
+        {
+            BeRadioButton.IsChecked = true;
         }
     }
 }
