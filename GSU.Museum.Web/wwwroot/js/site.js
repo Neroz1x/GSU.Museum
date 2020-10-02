@@ -71,13 +71,47 @@ function MoveDownRow(button) {
     row.insertAfter(row.next());
 }
 
+// Add plus button to menu itme on hover
+
+$(document).on("mouseenter mouseleave", ".menu-item-hall", function (e) {
+    if (e.type == "mouseenter") {
+        $(this).children().first().append("<div onclick=\"LoadViewFromMenu(null, '/Stands/Create?hallId=" + $(this).attr("data-hall-id") + "', false, true, event)\" type='button' class='btn btn-add'><svg xmlns = 'http://www.w3.org/2000/svg' viewBox = '0 0 24 24' class= 'plus-svg'><path fill='currentColor' d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/></svg></div >");
+    } else {
+        $(this).children().first().find('.btn-add').remove();
+    }
+});
+
+$(document).on("mouseenter mouseleave", ".menu-item-stand", function (e) {
+    if (e.type == "mouseenter") {
+        $(this).children().first().append("<button onclick=\"LoadViewFromMenu(null, '/Exhibits/Create?standId=" + $(this).attr("data-stand-id") + "&hallId=" + $(this).attr("data-hall-id") + "', false, true, event)\" type='button' class='btn btn-add'><svg xmlns='http://www.w3.org/2000/svg' viewBox ='0 0 24 24' class='plus-svg'><path d='M0 0h24v24H0z' fill='none'/><path fill='currentColor' d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/></svg></button>");
+    } else {
+        $(this).children().first().find('.btn-add').remove();
+    }
+});
+
+// Collapse menu itmes
+// element - sender element
+// id of the collapsing area
+// e - event
+function Collapse(element, id, e) {
+    if ($(element).attr('aria-expanded') == 'true') {
+        $('#id' + id).collapse('hide');
+    }
+    else {
+        $('#id' + id).collapse('show');
+    }
+
+    e.stopPropagation();
+}
+
 // Load partial view, apply style to menu item and display in div with id content
 // element - element invoked action
 // url - url to send request
-function LoadViewFromMenu(element, url, shouldHighlightMenuItem, shouldChangeHighlightedItem) {
+function LoadViewFromMenu(element, url, shouldHighlightMenuItem, shouldChangeHighlightedItem, e) {
+    e.stopPropagation();
     if (shouldHighlightMenuItem) {
         $('.selected-item').removeClass("selected-item");
-        $(element).parent().parent().addClass("selected-item");
+        $(element).addClass("selected-item");
     }
     else if (shouldChangeHighlightedItem){
         $('.selected-item').removeClass("selected-item");
@@ -240,7 +274,7 @@ function CreateHall(textId) {
         processData: false,
         contentType: false,
         success: function (id) {
-            $('#halls').append("<div id='elId" + id + "'><div><div style='margin-top: 10px;' class='d-flex flex-row align-items-center'><button class='btn btn-link collapsed' data-toggle='collapse' data-target='#id" + id + "' aria-expanded='false' aria-controls='id" + id + "' style='margin-bottom:3px;padding:2px;visibility: hidden'><i class='fa' aria-hidden='false'></i></button><a class='a-header overflow' id='elName" + id + "' onclick=\"LoadViewFromMenu(this, '/Halls/Index/" + id + "', true, false)\">" + $('#' + textId).val() + "</a><button onclick=\"LoadViewFromMenu(null, '/Stands/Create?hallId=" + id + "', false, true)\" type='button' class='btn btn-primary btn-add'><svg xmlns='http://www.w3.org/2000/svg' viewBox = '0 0 24 24' class='plus-svg'><path fill='currentColor' d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/></svg></button ></div></div><div class='collapse' id='id" + id + "'></div></div>");
+            $("<div id='elId" + id + "'><div class='menuItem menu-item-hall' data-hall-id='" + id + "' onclick=\"LoadViewFromMenu(this, '/Halls/Index/" + id + "', true, false, event)\"><div class='d-flex flex-row align-items-center'><div class='btn btn-arrow collapsed' data-toggle='collapse' onclick=\"Collapse(this, '" + id + "', event)\" data-target='#id" + id + "' aria-expanded='false' aria-controls='id" + id + "' style='visibility: hidden;'><i class='fa' aria-hidden='false'></i></div ><a class='a-header overflow' id='elName" + id + "'>" + $('#' + textId).val() + "</a></div></div><div class='collapse' id='id" + id + "'></div></div>").insertBefore($('#halls').children().last());
             $('#content').empty();
         }
     });
@@ -261,7 +295,7 @@ function CreateStand(hallId, textId) {
         contentType: false,
         success: function (id) {
             $('#elId' + hallId).children().first().children().first().children().first().css("visibility", "visible");
-            $('#id' + hallId).append("<div id='elId" + id + "'><div><div style='margin-top: 10px;margin-left: 2em' class='d-flex flex-row align-items-center'><button class='btn btn-link collapsed' data-toggle='collapse' data-target='#id" + id + "' aria-expanded='false' aria-controls='id" + id + "' style='margin-bottom:3px;padding:2px;visibility: hidden'><i class='fa' aria-hidden='false'></i></button><a class='a-header overflow' id='elName" + id + "' onclick=\"LoadViewFromMenu(this, '/Stands/Index/" + id + "?hallId=" + hallId + "', true, false)\">" + $('#' + textId).val() + "</a><button onclick=\"LoadViewFromMenu(null, '/Exhibits/Create?standId=" + id + "&hallId=" + hallId + "', false, true)\" type='button' class='btn btn-primary btn-add'><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='plus-svg'><path d='M0 0h24v24H0z' fill='none' /><path fill='currentColor' d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z' /></svg ></button></div></div><div class='collapse' id='id" + id + "'></div></div>");
+            $('#id' + hallId).append("<div id='elId" + id + "'><div class='menuItem menu-item-stand' data-stand-id='" + id + "' data-hall-id='" + hallId + "' onclick=\"LoadViewFromMenu(this, '/Stands/Index/" + id + "?hallId=" + hallId + "', true, false, event)\"'><div class='d-flex flex-row align-items-center'><div class='btn btn-arrow collapsed' data-toggle='collapse' onclick='Collapse(this, '" + id + "', event)' data-target='#id" + id + "' aria-expanded='false' aria-controls='id" + id + "' style='visibility: hidden;'><i class='fa' aria-hidden='false'></i></div ><a class='a-header overflow' id='elName" + id + "'>" + $('#' + textId).val() + "</a></div></div><div class='collapse' id='id" + id + "'></div></div>");
             $('#content').empty();
         }
     });
@@ -282,7 +316,7 @@ function CreateExhibit(hallId, standId, textId) {
         contentType: false,
         success: function (id) {
             $('#elId' + standId).children().first().children().first().children().first().css("visibility", "visible");
-            $('#id' + standId).append("<div style='margin-top: 10px;' id='elId" + id + "'><div><div style='margin-left: 4em; padding:2px;'><a class='a-header overflow' id='elName" + id + "' onclick=\"LoadViewFromMenu(this, '/Exhibits/Index?id=" + id + "&standId=" + standId + "&hallId=" + hallId + "', true, false)\">" + $('#' + textId).val() + "</a></div></div></div>");
+            $('#id' + standId).append("<div style='margin-top: 10px;' id='elId" + id + "'><div class='menuItem' onclick=\"LoadViewFromMenu(this, '/Exhibits/Index?id=" + id + "&standId=" + standId + "&hallId=" + hallId + "', true, false, event)\"><div style='margin-left: 74px; padding:2px;' class='d-flex flex-row' ><a class='a-header overflow' id='elName" + id + "'>" + $('#' + textId).val() + "</a></div></div></div>");
             $('#content').empty();
         }
     });
@@ -303,7 +337,7 @@ function CreateExhibitGallery(hallId, standId, textId) {
         contentType: false,
         success: function (id) {
             $('#elId' + standId).children().first().children().first().children().first().css("visibility", "visible");
-            $('#id' + standId).append("<div style='margin-top: 10px;' class='flex-row' id='elId" + id + "'><div><div style='margin-left: 4em; padding:2px;'><a class='a-header' id='elName" + id + "' onclick=\"LoadViewFromMenu(this, '/Exhibits/Index?id=" + id + "&standId=" + standId + "&hallId=" + hallId + "', true, false)\">" + $('#' + textId).val() + "</a></div></div></div>");
+            $('#id' + standId).append("<div style='margin-top: 10px;' class='flex-row' id='elId" + id + "'><div class='menuItem' onclick=\"LoadViewFromMenu(this, '/Exhibits/Index?id=" + id + "&standId=" + standId + "&hallId=" + hallId + "', true, false)\"><div style='margin-left: 4em; padding:2px;'><a class='a-header' id='elName" + id + "'>" + $('#' + textId).val() + "</a></div></div></div>");
             $('#content').empty();
         }
     });
