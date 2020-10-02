@@ -157,7 +157,7 @@
     <value>Данное приложение позволяет посетить Музей ГГУ им. Ф. Скорины. Оно содержит информацию обо всех стендах и экспонатах музея</value>
   </data>
   <data name="HomePage_MenuItem_MainPage" xml:space="preserve">
-    <value>Выбор холла</value>
+    <value>Выберите холл</value>
   </data>
   <data name="HomePage_MenuItem_Options" xml:space="preserve">
     <value>Настройки</value>

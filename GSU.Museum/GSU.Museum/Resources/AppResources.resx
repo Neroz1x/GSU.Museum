@@ -157,7 +157,7 @@
     <value>This application helps to visit F. Scorina GSU Museum. It contains information about stands and exhibits.</value>
   </data>
   <data name="HomePage_MenuItem_MainPage" xml:space="preserve">
-    <value>Hall selection</value>
+    <value>Select hall</value>
   </data>
   <data name="HomePage_MenuItem_Options" xml:space="preserve">
     <value>Options</value>

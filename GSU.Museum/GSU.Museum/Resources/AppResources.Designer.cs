@@ -178,7 +178,7 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hall selection.
+        ///   Looks up a localized string similar to Select hall.
         /// </summary>
         public static string HomePage_MenuItem_MainPage {
             get {
