@@ -111,6 +111,7 @@
 
         <Style TargetType="Label" x:Key="DefaultMenuItemHeader">
             <Setter Property="HorizontalOptions" Value="Start"></Setter>
+            <Setter Property="HorizontalTextAlignment" Value="Center"></Setter>
             <Setter Property="TextColor" Value="White"></Setter>
             <Setter Property="VerticalOptions" Value="Start"></Setter>
             <Setter Property="FontSize" Value="Large"></Setter>
@@ -125,6 +126,7 @@
         <Style TargetType="Label" x:Key="WhiteTransparentMenuItemHeader">
             <Setter Property="BackgroundColor" Value="##00000000"></Setter>
             <Setter Property="HorizontalOptions" Value="Center"></Setter>
+            <Setter Property="HorizontalTextAlignment" Value="Center"></Setter>
             <Setter Property="TextColor" Value="White"></Setter>
             <Setter Property="VerticalOptions" Value="Center"></Setter>
             <Setter Property="FontSize" Value="Large"></Setter>
@@ -133,6 +135,7 @@
         </Style>
 
         <Style TargetType="Label" x:Key="DefaultMenuItemBody">
+            <Setter Property="HorizontalOptions" Value="Center"></Setter>
             <Setter Property="HorizontalOptions" Value="Center"></Setter>
             <Setter Property="TextColor" Value="White"></Setter>
             <Setter Property="Margin" Value="15, 0"></Setter>
@@ -143,6 +146,7 @@
 
         <Style TargetType="Label" x:Key="WhiteTransparentMenuItemBody">
             <Setter Property="HorizontalOptions" Value="Center"></Setter>
+            <Setter Property="HorizontalTextAlignment" Value="Center"></Setter>
             <Setter Property="BackgroundColor" Value="##00000000"></Setter>
             <Setter Property="TextColor" Value="White"></Setter>
             <Setter Property="Margin" Value="15, 0"></Setter>
