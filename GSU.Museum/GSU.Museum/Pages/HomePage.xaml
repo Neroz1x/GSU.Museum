@@ -13,37 +13,44 @@
              >
     <NavigationPage.HasNavigationBar>false</NavigationPage.HasNavigationBar>
     <ContentPage.Content>
-        <StackLayout Margin="0, 20, 0, 0" Spacing="10">
-            <cards:CarouselView IsCyclical="True" ItemsSource="{Binding Images}" x:Name="Carousel" HeightRequest="100">
-                <cards:CarouselView.ItemTemplate>
-                    <DataTemplate>
-                        <Image WidthRequest="300" Source="{Binding .}"></Image>
-                    </DataTemplate>
-                </cards:CarouselView.ItemTemplate>
-            </cards:CarouselView>
-            <Label HorizontalOptions="Center" Style="{StaticResource DefaultMenuItemHeader}" 
+        <Grid VerticalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackLayout VerticalOptions="Center" Spacing="10">
+                <cards:CarouselView IsCyclical="True" ItemsSource="{Binding Images}" x:Name="Carousel" HeightRequest="100">
+                    <cards:CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <Image WidthRequest="300" Source="{Binding .}"></Image>
+                        </DataTemplate>
+                    </cards:CarouselView.ItemTemplate>
+                </cards:CarouselView>
+                <Label HorizontalOptions="Center" Style="{StaticResource DefaultMenuItemHeader}" 
                     Text="{x:Static resources:AppResources.HomePage_Title}"/>
-            <Label Style="{StaticResource DefaultMenuItemBody}"
+                <Label Style="{StaticResource DefaultMenuItemBody}"
                     Text="{x:Static resources:AppResources.HomePage_MainText}"/>
-            
-            <Frame Style="{StaticResource HomePageMenuItem}">
-                <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding NavigateToMainPageCommand}"></TapGestureRecognizer>
-                </Frame.GestureRecognizers>
-                <StackLayout HorizontalOptions="Center" Orientation="Horizontal" BackgroundColor="Transparent">
-                    <Image Source="Hall.png"></Image>
-                    <Label FontSize="Medium" TextColor="White" Text="{x:Static resources:AppResources.HomePage_MenuItem_MainPage}"></Label>
-                </StackLayout>
-            </Frame>
-            <Frame Style="{StaticResource HomePageMenuItem}">
-                <Frame.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding NavigateToOptionsPageCommand}"></TapGestureRecognizer>
-                </Frame.GestureRecognizers>
-                <StackLayout HorizontalOptions="Center" Orientation="Horizontal" BackgroundColor="Transparent">
-                    <Image Source="Settings.png"></Image>
-                    <Label FontSize="Medium" TextColor="White" Text="{x:Static resources:AppResources.HomePage_MenuItem_Options}"></Label>
-                </StackLayout>
-            </Frame>
-        </StackLayout>
+            </StackLayout>
+            <StackLayout Grid.Row="1" VerticalOptions="Center">
+                <Frame Style="{StaticResource HomePageMenuItem}">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToMainPageCommand}"></TapGestureRecognizer>
+                    </Frame.GestureRecognizers>
+                    <StackLayout HorizontalOptions="Center" Orientation="Horizontal" BackgroundColor="Transparent">
+                        <Image Source="Hall.png"></Image>
+                        <Label FontSize="Medium" TextColor="White" Text="{x:Static resources:AppResources.HomePage_MenuItem_MainPage}"></Label>
+                    </StackLayout>
+                </Frame>
+                <Frame Style="{StaticResource HomePageMenuItem}">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToOptionsPageCommand}"></TapGestureRecognizer>
+                    </Frame.GestureRecognizers>
+                    <StackLayout HorizontalOptions="Center" Orientation="Horizontal" BackgroundColor="Transparent">
+                        <Image Source="Settings.png"></Image>
+                        <Label FontSize="Medium" TextColor="White" Text="{x:Static resources:AppResources.HomePage_MenuItem_Options}"></Label>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
