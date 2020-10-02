@@ -71,9 +71,7 @@
             Grid.RowSpan="2"
             Style="{StaticResource LoaderBackground}" IsVisible="{Binding IsBusy}">
             <ActivityIndicator  
-            IsRunning="True" 
-            Color="HotPink" 
-            VerticalOptions="CenterAndExpand"/>
+            Style="{StaticResource Loader}"/>
         </StackLayout>
     </Grid>
 </ContentPage>

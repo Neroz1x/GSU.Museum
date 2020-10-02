@@ -76,9 +76,15 @@
         <Style TargetType="Label" x:Key="LoaderBackground">
             <Setter Property="HorizontalOptions" Value="Fill"/>
             <Setter Property="VerticalOptions" Value="Fill"/>
-            <Setter Property="BackgroundColor" Value="#55000000"/>
+            <Setter Property="BackgroundColor" Value="#AA000000"/>
         </Style>
-        
+
+        <Style TargetType="ActivityIndicator" x:Key="Loader">
+            <Setter Property="IsRunning" Value="True"/>
+            <Setter Property="Color" Value="White"/>
+            <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+        </Style>
+
         <Style TargetType="CollectionView" x:Key="DefaultCollectionView">
             <Setter Property="SelectionMode" Value="Single"></Setter>
             <Setter Property="Margin" Value="20, 5"></Setter>
