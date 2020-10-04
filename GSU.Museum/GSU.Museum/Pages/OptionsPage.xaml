@@ -70,7 +70,7 @@
                         </Label>
                         <CheckBox HorizontalOptions="Fill" 
                                   VerticalOptions="Center" 
-                                  x:Name="UseCacheCheckBox" IsEnabled="False"
+                                  x:Name="UseCacheCheckBox" IsEnabled="True"
                                   IsChecked="True"
                             />
                     </StackLayout>
@@ -157,7 +157,13 @@
                         </Image>
                     </StackLayout>
                 </StackLayout>
-                <Button BackgroundColor="Transparent" FontSize="Medium" Text="Cancel" Command="{Binding CancelCommand}" TextColor="#1976D2" HorizontalOptions="End" VerticalOptions="End"></Button>
+                <Button BackgroundColor="Transparent" 
+                        FontSize="Medium" 
+                        Text="{Binding CancelButton}" 
+                        Command="{Binding CancelCommand}" 
+                        TextColor="#1976D2" 
+                        HorizontalOptions="End" 
+                        VerticalOptions="End"></Button>
             </StackLayout>
         </ContentView>
     </Grid>

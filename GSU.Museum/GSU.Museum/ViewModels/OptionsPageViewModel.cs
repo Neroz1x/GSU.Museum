@@ -49,6 +49,25 @@ namespace GSU.Museum.Shared.ViewModels
             }
         }
 
+        // Cancel button on language picker
+        private string _cancelButton;
+        public string CancelButton
+        {
+            get
+            {
+                return _cancelButton;
+            }
+
+            set
+            {
+                if (value != _cancelButton)
+                {
+                    _cancelButton = value;
+                }
+                OnPropertyChanged(nameof(CancelButton));
+            }
+        }
+
         // Is selected english language
         private bool _isSelectedEnglish;
         public bool IsSelectedEnglish
@@ -499,6 +518,7 @@ namespace GSU.Museum.Shared.ViewModels
             UseOnlyCacheDescriptionLabel = AppResources.OptionsPage_UseOnlyCacheDescriptionLabel;
             UseCacheSectionTitle = AppResources.OptionsPage_CacheSectionTitle;
             LanguageSectionTitle = AppResources.OptionsPage_LanguageSectionTitle;
+            CancelButton = AppResources.OptionsPage_CancelButton;
         }
 
         /// <summary>

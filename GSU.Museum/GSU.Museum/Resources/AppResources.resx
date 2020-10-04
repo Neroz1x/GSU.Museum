@@ -189,6 +189,9 @@
   <data name="OptionsPage_CacheSectionTitle" xml:space="preserve">
     <value>Cache settings</value>
   </data>
+  <data name="OptionsPage_CancelButton" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="OptionsPage_CheckForUpdatesDescriptionLabel" xml:space="preserve">
     <value>The Internet is used to check cached data for updates. If there are changes, they will be downloaded. The Internet will also be used to download new data. It requires connection to the Internet</value>
   </data>
