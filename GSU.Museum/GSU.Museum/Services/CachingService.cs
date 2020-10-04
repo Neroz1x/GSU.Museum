@@ -30,9 +30,15 @@ namespace GSU.Museum.Shared.Services
             var keys = await BlobCache.LocalMachine.GetAllKeys();
             if (keys.Contains($"{language}{id}"))
             {
-                _logger.Info($"Read from cache exhibit {language}-{id}");
+                _logger.Info($"Read exhibit {language}-{id} from cache");
+                
+                // Read exhibit
                 ExhibitDTO exhibit = await BlobCache.LocalMachine.GetObject<ExhibitDTO>($"{language}{id}");
+
+                // Read photos description
                 exhibit.Photos = await BlobCache.LocalMachine.GetObject<List<PhotoInfoDTO>>($"{language}{id}description");
+
+                // Read photos
                 var photosBytes = await BlobCache.LocalMachine.GetObject<List<byte[]>>(id);
                 int index = 0;
                 foreach(var photo in photosBytes)
@@ -55,9 +61,17 @@ namespace GSU.Museum.Shared.Services
             var keys = await BlobCache.LocalMachine.GetAllKeys();
             if (keys.Contains($"{language}{id}"))
             {
-                _logger.Info($"Read from cache hall {language}-{id}");
+                _logger.Info($"Read hall {language}-{id} from cache");
+
+                // Read hall
                 HallDTO hall = await BlobCache.LocalMachine.GetObject<HallDTO>($"{language}{id}");
-                hall.Photo = await BlobCache.LocalMachine.GetObject<PhotoInfoDTO>(id);
+
+                // Read photo
+                var photos = await BlobCache.LocalMachine.GetObject<List<byte[]>>(id);
+                for(int i = 0; i < hall.Stands.Count; i++)
+                {
+                    hall.Stands[i].Photo.Photo = photos[i];
+                }
                 return hall;
             }
             return null;
@@ -74,8 +88,17 @@ namespace GSU.Museum.Shared.Services
             var keys = await BlobCache.LocalMachine.GetAllKeys();
             if (keys.Contains($"{language}halls"))
             {
-                _logger.Info($"Read from halls");
+                _logger.Info($"Read halls from");
+
+                // Read halls
                 List<HallDTO> halls = await BlobCache.LocalMachine.GetObject<List<HallDTO>>($"{language}halls");
+                
+                // Read photos
+                List<PhotoInfoDTO> photos = await BlobCache.LocalMachine.GetObject<List<PhotoInfoDTO>>($"{language}halls-photo");
+                for(int i = 0; i < halls.Count; i++)
+                {
+                    halls[i].Photo = photos[i];
+                }
                 return halls;
             }
             return null;
@@ -83,11 +106,11 @@ namespace GSU.Museum.Shared.Services
 
         public async Task<Settings> ReadSettings()
         {
-            //await BlobCache.LocalMachine.InvalidateAll();
+            await BlobCache.LocalMachine.InvalidateAll();
             var keys = await BlobCache.LocalMachine.GetAllKeys();
             if (keys.Contains("settings"))
             {
-                _logger.Info($"Read from cache settings");
+                _logger.Info($"Read settings from cache");
                 Settings settings = await BlobCache.LocalMachine.GetObject<Settings>("settings");
                 return settings;
             }
@@ -105,9 +128,15 @@ namespace GSU.Museum.Shared.Services
             var keys = await BlobCache.LocalMachine.GetAllKeys();
             if (keys.Contains($"{language}{id}"))
             {
-                _logger.Info($"Read from cache stand {language}-{id}");
+                _logger.Info($"Read stand {language}-{id} from cache");
+                // Read stand
                 StandDTO stand = await BlobCache.LocalMachine.GetObject<StandDTO>($"{language}{id}");
-                stand.Photo = await BlobCache.LocalMachine.GetObject<PhotoInfoDTO>(id);
+                // Read photo
+                var photosBytes = await BlobCache.LocalMachine.GetObject<List<byte[]>>(id);
+                for(int i = 0; i < photosBytes.Count; i++)
+                {
+                    stand.Exhibits[i].Photos[0].Photo = photosBytes[i];
+                }
                 return stand;
             }
             return null;
@@ -122,7 +151,7 @@ namespace GSU.Museum.Shared.Services
 
             string language = Thread.CurrentThread.CurrentUICulture.Name;
 
-            _logger.Info($"Write to cache ExhibitDTO {language}-{exhibit.Id}");
+            _logger.Info($"Write exhibit {language}-{exhibit.Id} to cache");
 
             // Copy photos
             List<PhotoInfoDTO> photos = new List<PhotoInfoDTO>(exhibit.Photos);
@@ -161,13 +190,26 @@ namespace GSU.Museum.Shared.Services
 
             string language = Thread.CurrentThread.CurrentUICulture.Name;
 
-            _logger.Info($"Write to cache HallDTO {language}-{hall.Id}");
+            _logger.Info($"Write hall {language}-{hall.Id} to cache");
 
-            await BlobCache.LocalMachine.InsertObject(hall.Id, hall.Photo);
-            PhotoInfoDTO photo = hall.Photo;
-            hall.Photo = null;
+            // Copy bytes
+            var photosBytes = new List<byte[]>();
+            foreach (var stand in hall.Stands)
+            {
+                photosBytes.Add(stand.Photo.Photo);
+                stand.Photo.Photo = null;
+            }
+
+            // Write photo
+            await BlobCache.LocalMachine.InsertObject(hall.Id, photosBytes);
+            
+            // Write text
             await BlobCache.LocalMachine.InsertObject($"{language}{hall.Id}", hall);
-            hall.Photo = photo;
+
+            for (int i = 0; i < photosBytes.Count; i++)
+            {
+                hall.Stands[i].Photo.Photo = photosBytes[i];
+            }
         }
 
         public async Task WriteHallsAsync(List<HallDTO> halls)
@@ -179,14 +221,31 @@ namespace GSU.Museum.Shared.Services
 
             string language = Thread.CurrentThread.CurrentUICulture.Name;
 
-            _logger.Info($"Write to cache halls");
+            _logger.Info($"Write halls to cache");
 
+            List<PhotoInfoDTO> photos = new List<PhotoInfoDTO>();
+
+            foreach(var hall in halls)
+            {
+                photos.Add(hall.Photo);
+                hall.Photo = null;
+            }
+
+            // Write photo
+            await BlobCache.LocalMachine.InsertObject($"{language}halls-photo", photos);
+            
+            // Write hall text
             await BlobCache.LocalMachine.InsertObject($"{language}halls", halls);
+
+            for(int i = 0; i < photos.Count; i++)
+            {
+                halls[i].Photo = photos[i];
+            }
         }
 
         public async Task WriteSettings()
         {
-            _logger.Info($"Write to cache settings");
+            _logger.Info($"Write settings to cache");
             await BlobCache.LocalMachine.InsertObject("settings", App.Settings);
         }
 
@@ -199,15 +258,29 @@ namespace GSU.Museum.Shared.Services
 
             string language = Thread.CurrentThread.CurrentUICulture.Name;
 
-            _logger.Info($"Write to cache StandDTO {language}-{stand.Id}");
+            _logger.Info($"Write stand {language}-{stand.Id} to cache");
 
-            await BlobCache.LocalMachine.InsertObject(stand.Id, stand.Photo);
-            PhotoInfoDTO photo = stand.Photo;
-            stand.Photo = null;
+            // Save photos
+            List<byte[]> photosBytes = new List<byte[]>();
+            foreach(var exhibit in stand.Exhibits)
+            {
+                photosBytes.Add(exhibit.Photos[0]?.Photo);
+                exhibit.Photos[0].Photo = null;
+            }
+
+            // Write photos
+            await BlobCache.LocalMachine.InsertObject(stand.Id, photosBytes);
+            
+            // Write text
             await BlobCache.LocalMachine.InsertObject($"{language}{stand.Id}", stand);
-            stand.Photo = photo;
+
+            for(int i = 0; i < photosBytes.Count; i++)
+            {
+                stand.Exhibits[i].Photos[0].Photo = photosBytes[i];
+            }
         }
 
+        // TODO: Find out another way to replace cahce
         public void WriteCache(Stream stream, string path)
         {
             File.Delete(path);
