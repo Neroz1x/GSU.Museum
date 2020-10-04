@@ -32,7 +32,13 @@ namespace GSU.Museum.Shared.Services
             {
                 _logger.Info($"Read from cache exhibit {language}-{id}");
                 ExhibitDTO exhibit = await BlobCache.LocalMachine.GetObject<ExhibitDTO>($"{language}{id}");
-                exhibit.Photos = await BlobCache.LocalMachine.GetObject<List<PhotoInfoDTO>>(id);
+                exhibit.Photos = await BlobCache.LocalMachine.GetObject<List<PhotoInfoDTO>>($"{language}{id}description");
+                var photosBytes = await BlobCache.LocalMachine.GetObject<List<byte[]>>(id);
+                int index = 0;
+                foreach(var photo in photosBytes)
+                {
+                    exhibit.Photos[index++].Photo = photo;
+                }
                 return exhibit;
             }
             return null;
@@ -77,6 +83,7 @@ namespace GSU.Museum.Shared.Services
 
         public async Task<Settings> ReadSettings()
         {
+            //await BlobCache.LocalMachine.InvalidateAll();
             var keys = await BlobCache.LocalMachine.GetAllKeys();
             if (keys.Contains("settings"))
             {
@@ -117,10 +124,31 @@ namespace GSU.Museum.Shared.Services
 
             _logger.Info($"Write to cache ExhibitDTO {language}-{exhibit.Id}");
 
-            await BlobCache.LocalMachine.InsertObject(exhibit.Id, exhibit.Photos);
-            List<PhotoInfoDTO> photos = exhibit.Photos;
+            // Copy photos
+            List<PhotoInfoDTO> photos = new List<PhotoInfoDTO>(exhibit.Photos);
+
+            // Copy bytes
+            var photosBytes = new List<byte[]>();
+            foreach(var photo in exhibit.Photos)
+            {
+                photosBytes.Add(photo.Photo);
+                photo.Photo = null;
+            }
+
+            // Save images themselves
+            await BlobCache.LocalMachine.InsertObject(exhibit.Id, photosBytes);
+            
+            // Save images description
+            await BlobCache.LocalMachine.InsertObject($"{language}{exhibit.Id}description", exhibit.Photos);
             exhibit.Photos = null;
+
+            // Save exhibit description
             await BlobCache.LocalMachine.InsertObject($"{language}{exhibit.Id}", exhibit);
+
+            for(int i = 0; i < photos.Count; i++)
+            {
+                photos[i].Photo = photosBytes[i];
+            }
             exhibit.Photos = photos;
         }
 
