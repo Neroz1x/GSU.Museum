@@ -87,7 +87,8 @@
 
         <Style TargetType="CollectionView" x:Key="DefaultCollectionView">
             <Setter Property="SelectionMode" Value="Single"></Setter>
-            <Setter Property="Margin" Value="20, 5"></Setter>
+            <Setter Property="VerticalOptions" Value="Center"></Setter>
+            <Setter Property="Margin" Value="20"></Setter>
         </Style>
         
         <Style TargetType="Frame" x:Key="TransparentMenuItem">
