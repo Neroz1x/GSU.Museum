@@ -46,6 +46,7 @@
             Style="{StaticResource DefaultCollectionView}"
             IsVisible="{Binding ContentVisibility}"
             ItemsSource="{Binding Exhibits}"
+            HeightRequest="{Binding CollectionViewHeight}"
             SelectionChangedCommand="{Binding SelectExhibitCommand}"
             SelectionChangedCommandParameter="{Binding SelectedItem.Id, Source={x:Reference ExhibitsCollectionView}}">
             <CollectionView.ItemsLayout>

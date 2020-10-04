@@ -44,6 +44,7 @@
         <CollectionView x:Name="StandsCollectionView" Grid.Row="1" Style="{StaticResource DefaultCollectionView}"
             IsVisible="{Binding ContentVisibility}"
             ItemsSource="{Binding Stands}"
+            HeightRequest="{Binding CollectionViewHeight}"
             SelectionChangedCommand="{Binding SelectStandCommand}"
             SelectionChangedCommandParameter="{Binding SelectedItem.Id, Source={x:Reference StandsCollectionView}}">
             <CollectionView.ItemsLayout>

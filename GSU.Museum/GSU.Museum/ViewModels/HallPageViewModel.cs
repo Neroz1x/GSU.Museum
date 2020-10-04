@@ -4,6 +4,7 @@ using GSU.Museum.Shared.Resources;
 using GSU.Museum.Shared.Services;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -22,6 +23,8 @@ namespace GSU.Museum.Shared.ViewModels
         public Command NavigateBackCommand { get; }
 
         public ObservableCollection<StandDTO> Stands { get; }
+
+        private string _hallId;
 
         private CancellationTokenSource _cancellationTokenSource;
 
@@ -82,7 +85,24 @@ namespace GSU.Museum.Shared.ViewModels
             }
         }
 
-        private string _hallId;
+        // Height of collection view
+        private double _collectionViewHeight;
+        public double CollectionViewHeight
+        {
+            get
+            {
+                return _collectionViewHeight;
+            }
+
+            set
+            {
+                if (value != _collectionViewHeight)
+                {
+                    _collectionViewHeight = value;
+                }
+                OnPropertyChanged(nameof(CollectionViewHeight));
+            }
+        }
         #endregion
 
         public HallPageViewModel(string hallId, INavigation navigation)
@@ -122,6 +142,7 @@ namespace GSU.Museum.Shared.ViewModels
                 }
                 else
                 {
+                    SetHeight();
                     ContentVisibility = true;
                 }
             }
@@ -155,6 +176,17 @@ namespace GSU.Museum.Shared.ViewModels
             {
                 IsBusy = false;
             }
+        }
+
+        /// <summary>
+        /// Set height of collection view based on items count
+        /// </summary>
+        public void SetHeight()
+        {
+            Style style = Application.Current.Resources["TransparentMenuItem"] as Style;
+            var height = style.Setters.FirstOrDefault(s => s.Property.PropertyName.Equals("HeightRequest")).Value;
+            Thickness padding = (Thickness)style.Setters.FirstOrDefault(s => s.Property.PropertyName.Equals("Padding")).Value;
+            CollectionViewHeight = Stands.Count * ((double)height + padding.VerticalThickness) + (Stands.Count - 1) * 20 + 2;
         }
 
         public async Task SelectStand(string id)
