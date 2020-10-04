@@ -47,7 +47,7 @@ namespace GSU.Museum.Shared.Interfaces
         /// <summary>
         /// Write list of halls
         /// </summary>
-        /// <param name="halls">Hals to cache</param>
+        /// <param name="halls">Halls to cache</param>
         Task WriteHallsAsync(List<HallDTO> halls);
 
         /// <summary>
