@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Foundation;
 using GSU.Museum.Shared.Services;
+using PanCardView.iOS;
 using UIKit;
 
 namespace GSU.Museum.iOS
@@ -22,7 +23,7 @@ namespace GSU.Museum.iOS
         {
             global::Xamarin.Forms.Forms.Init();
 
-            CardsViewRenderer.Preserve()
+            CardsViewRenderer.Preserve();
 
             InitializeNLog();
 
