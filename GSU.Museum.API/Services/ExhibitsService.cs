@@ -149,8 +149,16 @@ namespace GSU.Museum.API.Services
                 mapper = new Mapper(mapperConfigurationPhoto);
                 for(int i = 0; i < exhibits.Count; i++)
                 {
-                    var photoInfoDTO = mapper.Map<List<PhotoInfoDTO>>(exhibits[i].Photos);
-                    exhibitsDTO[i].Photos = photoInfoDTO;
+                    if (exhibits[i]?.Photos?.Count != 0)
+                    {
+                        var photoInfoDTO = mapper.Map<PhotoInfoDTO>(exhibits[i]?.Photos[0]);
+                        exhibitsDTO[i].Photos = new List<PhotoInfoDTO>();
+                        exhibitsDTO[i].Photos.Add(photoInfoDTO);
+                    }
+                    else
+                    {
+                        exhibitsDTO[i].Photos = new List<PhotoInfoDTO>();
+                    }
                 }
             }
             return exhibitsDTO;
