@@ -318,7 +318,7 @@ function CreateStand(hallId, textId) {
         contentType: false,
         success: function (id) {
             $('#elId' + hallId).children().first().children().first().children().first().css("visibility", "visible");
-            $('#id' + hallId).append("<div id='elId" + id + "'><div class='menuItem menu-item-stand' data-stand-id='" + id + "' data-hall-id='" + hallId + "' onclick=\"LoadViewFromMenu(this, '/Stands/Index/" + id + "?hallId=" + hallId + "', true, false, event)\"'><div class='d-flex flex-row align-items-center'><div class='btn btn-arrow collapsed' data-toggle='collapse' onclick='Collapse(this, '" + id + "', event)' data-target='#id" + id + "' aria-expanded='false' aria-controls='id" + id + "' style='visibility: hidden;'><i class='fa' aria-hidden='false'></i></div ><a class='a-header overflow' id='elName" + id + "'>" + $('#' + textId).val() + "</a></div></div><div class='collapse' id='id" + id + "'></div></div>");
+            $('#id' + hallId).append("<div id='elId" + id + "'><div class='menuItem menu-item-stand' data-stand-id='" + id + "' data-hall-id='" + hallId + "' onclick=\"LoadViewFromMenu(this, '/Stands/Index/" + id + "?hallId=" + hallId + "', true, false, event)\"><div class='d-flex flex-row align-items-center'><div class='btn btn-arrow collapsed' data-toggle='collapse' onclick=\"Collapse(this, '" + id + "', event)\" data-target='#id" + id + "' aria-expanded='false' aria-controls='id" + id + "' style='visibility: hidden;'><i class='fa' aria-hidden='false'></i></div ><a class='a-header overflow' id='elName" + id + "'>" + $('#' + textId).val() + "</a></div></div><div class='collapse' id='id" + id + "'></div></div>");
             $('#content').empty();
         }
     });
@@ -360,7 +360,7 @@ function CreateExhibitGallery(hallId, standId, textId) {
         contentType: false,
         success: function (id) {
             $('#elId' + standId).children().first().children().first().children().first().css("visibility", "visible");
-            $('#id' + standId).append("<div style='margin-top: 10px;' class='flex-row' id='elId" + id + "'><div class='menuItem' onclick=\"LoadViewFromMenu(this, '/Exhibits/Index?id=" + id + "&standId=" + standId + "&hallId=" + hallId + "', true, false)\"><div style='margin-left: 4em; padding:2px;'><a class='a-header' id='elName" + id + "'>" + $('#' + textId).val() + "</a></div></div></div>");
+            $('#id' + standId).append("<div style='margin-top: 10px;' class='flex-row' id='elId" + id + "'><div class='menuItem' onclick=\"LoadViewFromMenu(this, '/Exhibits/Index?id=" + id + "&standId=" + standId + "&hallId=" + hallId + "', true, false, event)\"><div style='margin-left: 4em; padding:2px;'><a class='a-header' id='elName" + id + "'>" + $('#' + textId).val() + "</a></div></div></div>");
             $('#content').empty();
         }
     });
