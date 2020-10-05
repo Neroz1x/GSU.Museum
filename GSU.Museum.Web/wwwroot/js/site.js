@@ -219,9 +219,11 @@ function Edit(id, textId, url, idOfElementsToReorder) {
     });
 
     if (idOfElementsToReorder != null) {
-        var parentFrom = $('#' + idOfElementsToReorder).get()[0];
-        if (parentFrom.children.length > 0) {
-            Reorder(parentFrom, 'id' + id)
+        if ($('#' + idOfElementsToReorder).get()[0]) {
+            var parentFrom = $('#' + idOfElementsToReorder).get()[0];
+            if (parentFrom.children.length > 1) {
+                Reorder(parentFrom, 'id' + id)
+            }
         }
     }
 
