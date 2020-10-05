@@ -236,6 +236,27 @@ function Edit(id, textId, url, idOfElementsToReorder) {
 // id - id of edited record
 // textId - id of text to display on menu after edditing
 // url - url to send request to
+function EditArticle(id, textId, url) {
+    var $form = $('form');
+    $form.validate();
+    if (!$form.valid()) { Alert("Заполните все поля!"); return false; }
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: new FormData($('#form').get()[0]),
+        processData: false,
+        contentType: false,
+    });
+
+    $('#elName' + id).text($('#' + textId).val());
+    $('#content').empty();
+    $('.selected-item').removeClass("selected-item");
+}
+
+// Send request to controller to perform edit
+// id - id of edited record
+// textId - id of text to display on menu after edditing
+// url - url to send request to
 function EditGallery(id, textId, url) {
     var $form = $('form');
     $form.validate();

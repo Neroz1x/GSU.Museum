@@ -60,7 +60,7 @@
             </div>
             <div class="form-group">
                 <h5>Фото</h5>
-                @if (Model.Photos != null)
+                @if (Model.Photos != null && Model.Photos.Count > 0)
                 {
                     <div id="image" class="flex-row flex-wrap ml-3">
                         @for (int i = 0; i < Model.Photos.Count; i++)
