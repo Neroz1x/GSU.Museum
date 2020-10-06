@@ -4,6 +4,82 @@ function RemoveBlock(block) {
     ValidateImage();
 }
 
+// Sidebar resize calculation
+document.addEventListener('DOMContentLoaded', function () {
+
+    // Query the element
+    const resizer = document.getElementById('resizer');
+    const sidebar = document.getElementsByClassName('sidebar')[0];
+    const content = document.getElementById('content');
+
+    // The current position of mouse
+    let x = 0;
+    let sidebarWidth = 0;
+
+    // Handle the mousedown event that's triggered when user drags the resizer
+    const mouseDownHandler = function (e) {
+
+        // Get the current mouse position
+        x = e.clientX;
+        sidebarWidth = sidebar.getBoundingClientRect().width;
+
+        // Attach the listeners to `document`
+        document.addEventListener('mousemove', mouseMoveHandler);
+        document.addEventListener('mouseup', mouseUpHandler);
+    };
+
+    const mouseMoveHandler = function (e) {
+
+        // Set maximum and minimum width of sidebar in percent
+        const minWidth = 15;
+        const maxWidth = 50;
+
+        // Mouse movement distance
+        const dx = e.clientX - x;
+
+        newSidebarWidth = (sidebarWidth + dx) * 100 / document.getElementsByClassName('container-page')[0].getBoundingClientRect().width;
+
+        if (newSidebarWidth > maxWidth) {
+            newSidebarWidth = maxWidth;
+        }
+
+        if (newSidebarWidth < minWidth) {
+            newSidebarWidth = minWidth;
+        }
+
+        sidebar.style.width = `${newSidebarWidth}%`;
+        content.style.marginLeft = `${newSidebarWidth}%`;
+
+        const html = document.getElementsByTagName('html')[0];
+
+        // Set resize cursor and disable selection
+        html.style.cursor = 'ew-resize';
+        html.style.userSelect = 'none';
+        html.style.pointerEvents = 'none';
+    };
+
+    const mouseUpHandler = function () {
+
+        // Set cookie to save current sidebar width
+        var date = new Date();
+        date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toGMTString();
+        document.cookie = encodeURIComponent("MenuWidth") + "=" + encodeURIComponent(newSidebarWidth + "%") + expires + "; path=/";
+
+        // Set normal cursor and enable selection
+        html.style.removeProperty('cursor');
+        html.style.removeProperty('user-select');
+        html.style.removeProperty('pointer-events');
+
+        // Remove the handlers of `mousemove` and `mouseup`
+        document.removeEventListener('mousemove', mouseMoveHandler);
+        document.removeEventListener('mouseup', mouseUpHandler);
+    };
+
+    // Attach the handler
+    resizer.addEventListener('mousedown', mouseDownHandler);
+});
+
 // Validate image input
 function ValidateImage() {
     if ($('#imageBlock2').get()[0]) {

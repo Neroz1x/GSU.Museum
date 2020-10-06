@@ -146,13 +146,29 @@ body {
     left: 0;
     z-index: 1;
     width: 350px;
-    overflow-y: auto;
     background-color: #f8f8f8;
     box-shadow: inset -7px 0 9px -7px rgba(0,0,0,0.1), inset 0 -7px 9px -7px rgba(0,0,0,0.1), inset 0 7px 9px -7px rgba(0,0,0,0.1);
 }
 
+.sidebarcontent {
+    height: 100%;
+    overflow-y: auto;
+    border-color: transparent; background-color:transparent;
+}
+
+#resizer {
+    background-color: transparent;
+    width: 8px;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    cursor: ew-resize;
+}
+
 #content{
     margin-left:350px;
+    padding-left:50px;
 }
 
 .a-header-halls {
