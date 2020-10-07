@@ -129,7 +129,7 @@ namespace GSU.Museum.Shared.ViewModels
                 Exhibits.Clear();
                 foreach (var exhibit in stand.Exhibits)
                 {
-                    if(string.IsNullOrEmpty(exhibit.Title) || exhibit.Photos == null || exhibit?.Photos.Count == 0)
+                    if (string.IsNullOrEmpty(exhibit.Title))
                     {
                         continue;
                     }
