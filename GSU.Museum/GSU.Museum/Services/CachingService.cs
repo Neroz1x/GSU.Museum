@@ -133,9 +133,12 @@ namespace GSU.Museum.Shared.Services
                 StandDTO stand = await BlobCache.LocalMachine.GetObject<StandDTO>($"{language}{id}");
                 // Read photo
                 var photosBytes = await BlobCache.LocalMachine.GetObject<List<byte[]>>(id);
-                for(int i = 0; i < photosBytes.Count; i++)
+                for (int i = 0; i < photosBytes.Count; i++)
                 {
-                    stand.Exhibits[i].Photos[0].Photo = photosBytes[i];
+                    if (stand.Exhibits[i].Photos != null)
+                    {
+                        stand.Exhibits[i].Photos[0].Photo = photosBytes[i];
+                    }
                 }
                 return stand;
             }
@@ -264,8 +267,15 @@ namespace GSU.Museum.Shared.Services
             List<byte[]> photosBytes = new List<byte[]>();
             foreach(var exhibit in stand.Exhibits)
             {
-                photosBytes.Add(exhibit.Photos[0]?.Photo);
-                exhibit.Photos[0].Photo = null;
+                if(exhibit.Photos?.Count == 0 || exhibit.Photos == null)
+                {
+                    photosBytes.Add(null);
+                }
+                else
+                {
+                    photosBytes.Add(exhibit.Photos[0]?.Photo);
+                    exhibit.Photos[0].Photo = null;
+                }
             }
 
             // Write photos
@@ -276,7 +286,10 @@ namespace GSU.Museum.Shared.Services
 
             for(int i = 0; i < photosBytes.Count; i++)
             {
-                stand.Exhibits[i].Photos[0].Photo = photosBytes[i];
+                if(stand.Exhibits[i].Photos != null)
+                {
+                    stand.Exhibits[i].Photos[0].Photo = photosBytes[i];
+                }
             }
         }
 
