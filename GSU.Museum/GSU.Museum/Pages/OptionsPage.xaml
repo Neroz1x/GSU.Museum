@@ -44,13 +44,12 @@
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
                         <Label HorizontalOptions="StartAndExpand" Style="{StaticResource OptionsLabelHeader}" Text="{Binding LanguageLabel}"/>
                         <StackLayout >
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ShowPopupCommand}"></TapGestureRecognizer>
+                            </StackLayout.GestureRecognizers>
                             <Label FontSize="Large" 
-                            VerticalOptions="Center"
-                             
-                            HorizontalOptions="End" TextColor="White" Text="{Binding Language}">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding ShowPopupCommand}"></TapGestureRecognizer>
-                                </Label.GestureRecognizers>
+                                VerticalOptions="Center"
+                                HorizontalOptions="End" TextColor="White" Text="{Binding Language}">
                             </Label>
                             <BoxView Margin="0" HorizontalOptions="Fill" BackgroundColor="#1976D2" HeightRequest="2"></BoxView>
                         </StackLayout>
@@ -69,9 +68,9 @@
                             </Label.GestureRecognizers>
                         </Label>
                         <CheckBox HorizontalOptions="Fill" 
-                                  VerticalOptions="Center" 
+                                  VerticalOptions="Center"
+                                  IsChecked="{Binding UseCacheIsChecked}"
                                   x:Name="UseCacheCheckBox" IsEnabled="True"
-                                  IsChecked="True"
                             />
                     </StackLayout>
                     <Label Style="{StaticResource OptionsLabelDescription}" Text="{Binding UseCacheDescriptionLabel}"/>
