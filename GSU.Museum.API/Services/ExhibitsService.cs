@@ -157,7 +157,7 @@ namespace GSU.Museum.API.Services
                     }
                     else
                     {
-                        exhibitsDTO[i].Photos = new List<PhotoInfoDTO>();
+                        exhibitsDTO[i].Photos = null;
                     }
                 }
             }
