@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
         sidebar.style.width = `${newSidebarWidth}%`;
         content.style.marginLeft = `${newSidebarWidth}%`;
 
-        const html = document.getElementsByTagName('html')[0];
+        html = document.getElementsByTagName('html')[0];
 
         // Set resize cursor and disable selection
         html.style.cursor = 'ew-resize';
@@ -67,6 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.cookie = encodeURIComponent("MenuWidth") + "=" + encodeURIComponent(newSidebarWidth + "%") + expires + "; path=/";
 
         // Set normal cursor and enable selection
+        html = document.getElementsByTagName('html')[0];
         html.style.removeProperty('cursor');
         html.style.removeProperty('user-select');
         html.style.removeProperty('pointer-events');
