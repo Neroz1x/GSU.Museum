@@ -17,7 +17,7 @@ namespace GSU.Museum
             InitializeComponent();
 
             Akavache.Registrations.Start("GSU.Museum");
-            MainPage = new NavigationPage(new HomePage());
+            MainPage = new NavigationPage(new LoadingPage());
         }
 
         protected override void OnStart()

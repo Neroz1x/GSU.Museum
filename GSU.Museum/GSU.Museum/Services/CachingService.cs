@@ -106,7 +106,6 @@ namespace GSU.Museum.Shared.Services
 
         public async Task<Settings> ReadSettings()
         {
-            await BlobCache.LocalMachine.InvalidateAll();
             var keys = await BlobCache.LocalMachine.GetAllKeys();
             if (keys.Contains("settings"))
             {
