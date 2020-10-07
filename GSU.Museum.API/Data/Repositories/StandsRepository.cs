@@ -45,7 +45,7 @@ namespace GSU.Museum.API.Data.Repositories
             {
                 foreach (var stand in hall.Stands)
                 {
-                    if (!string.IsNullOrEmpty(stand.Photo?.Id))
+                    if (!string.IsNullOrEmpty(stand?.Photo?.Id))
                     {
                         stand.Photo.Photo = await _gridFS.DownloadAsBytesAsync(ObjectId.Parse(stand.Photo.Id));
                     }
@@ -60,7 +60,7 @@ namespace GSU.Museum.API.Data.Repositories
             var stand = hall?.Stands.FirstOrDefault(stand => stand.Id.Equals(id));
             if (stand != null)
             {
-                if (!string.IsNullOrEmpty(stand.Photo?.Id))
+                if (!string.IsNullOrEmpty(stand?.Photo?.Id))
                 {
                     stand.Photo.Photo = await _gridFS.DownloadAsBytesAsync(ObjectId.Parse(stand.Photo.Id));
                 }

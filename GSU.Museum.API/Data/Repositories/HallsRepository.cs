@@ -27,7 +27,7 @@ namespace GSU.Museum.API.Data.Repositories
             var halls = await _halls.Find(hall => true).ToListAsync();
             foreach (var hall in halls)
             {
-                if (!string.IsNullOrEmpty(hall.Photo?.Id))
+                if (!string.IsNullOrEmpty(hall?.Photo?.Id))
                 {
                     hall.Photo.Photo = await _gridFS.DownloadAsBytesAsync(ObjectId.Parse(hall.Photo.Id));
                 }
@@ -38,7 +38,7 @@ namespace GSU.Museum.API.Data.Repositories
         public async Task<Hall> GetAsync(string id)
         {
             var hall = await _halls.Find(hall => hall.Id.Equals(id)).FirstOrDefaultAsync();
-            if (!string.IsNullOrEmpty(hall.Photo?.Id))
+            if (!string.IsNullOrEmpty(hall?.Photo?.Id))
             {
                 hall.Photo.Photo = await _gridFS.DownloadAsBytesAsync(ObjectId.Parse(hall.Photo.Id));
             }
