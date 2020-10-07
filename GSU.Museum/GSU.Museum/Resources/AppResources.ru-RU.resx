@@ -154,7 +154,7 @@
     <value>выбор стенда</value>
   </data>
   <data name="HomePage_MainText" xml:space="preserve">
-    <value>Данное приложение позволяет посетить Музей ГГУ им. Ф. Скорины. Оно содержит информацию обо всех стендах и экспонатах музея</value>
+    <value>Приложение обеспечивает виртуальный тур в музей ГГУ им. Ф. Скорины. В нем рассказывается история университета от основания до наших дней. Все данные сопровождаются историческими фотографиями и документами.</value>
   </data>
   <data name="HomePage_MenuItem_MainPage" xml:space="preserve">
     <value>Выберите холл</value>
@@ -166,7 +166,7 @@
     <value>GSU Museum</value>
   </data>
   <data name="HomePage_Title" xml:space="preserve">
-    <value>Музей ГГУ им. Ф. Скорины</value>
+    <value>Добро пожаловать в музей ГГУ им. Ф. Скорины</value>
   </data>
   <data name="MainPage_MenuDescription" xml:space="preserve">
     <value>Выберите, пожалуйста, холл</value>

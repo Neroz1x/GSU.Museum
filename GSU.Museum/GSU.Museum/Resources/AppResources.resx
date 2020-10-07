@@ -154,7 +154,7 @@
     <value>stand selection</value>
   </data>
   <data name="HomePage_MainText" xml:space="preserve">
-    <value>This application helps to visit F. Scorina GSU Museum. It contains information about stands and exhibits.</value>
+    <value>This application provides a virtual tour to F. Scorina GSU Museum. It tells the history of the university from the establishment to present days. All data is accompanied by historical photos and documents.</value>
   </data>
   <data name="HomePage_MenuItem_MainPage" xml:space="preserve">
     <value>Select hall</value>
@@ -166,7 +166,7 @@
     <value>GSU Museum</value>
   </data>
   <data name="HomePage_Title" xml:space="preserve">
-    <value>F. Scorina GSU Museum</value>
+    <value>Welcome to F. Scorina GSU Museum</value>
   </data>
   <data name="MainPage_MenuDescription" xml:space="preserve">
     <value>Select a hall, please</value>

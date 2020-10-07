@@ -169,7 +169,7 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This application helps to visit F. Scorina GSU Museum. It contains information about stands and exhibits..
+        ///   Looks up a localized string similar to This application provides a virtual tour to F. Scorina GSU Museum. It tells the history of the university from the establishment to present days. All data is accompanied by historical photos and documents..
         /// </summary>
         public static string HomePage_MainText {
             get {
@@ -205,7 +205,7 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to F. Scorina GSU Museum.
+        ///   Looks up a localized string similar to Welcome to F. Scorina GSU Museum.
         /// </summary>
         public static string HomePage_Title {
             get {
