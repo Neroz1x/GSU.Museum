@@ -477,18 +477,18 @@ namespace GSU.Museum.Shared.ViewModels
 
             Animation scaleAnimation = new Animation(
                 f => RadioGroup.Scale = f,
-                0.2,
+                0.7,
                 1,
                 Easing.SinInOut);
 
             Animation fadeAnimation = new Animation(
                 f => RadioGroup.Opacity = f,
-                0.2,
+                0.9,
                 1,
                 Easing.SinInOut);
 
-            scaleAnimation.Commit(RadioGroup, "radioGroupScaleAnimation", length : 200);
-            fadeAnimation.Commit(RadioGroup, "radioGroupFadeAnimation", length : 200);
+            scaleAnimation.Commit(RadioGroup, "radioGroupScaleAnimation", length : 250, rate : 8);
+            fadeAnimation.Commit(RadioGroup, "radioGroupFadeAnimation", length : 100, rate : 8);
         }
 
         /// <summary>
