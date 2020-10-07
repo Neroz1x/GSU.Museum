@@ -142,6 +142,15 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page not found. Try later, please.
+        /// </summary>
+        public static string ErrorMessage_PageNotFound {
+            get {
+                return ResourceManager.GetString("ErrorMessage_PageNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Can not connect to the server.
         /// </summary>
         public static string ErrorMessage_ServerIsNotResponse {

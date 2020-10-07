@@ -145,6 +145,9 @@
   <data name="ErrorMessage_NotFoundInCache" xml:space="preserve">
     <value>Не удалось загрузить данные из кеша. Установить пункт Не атрымалася загрузіць дадзеныя з кэшу. Усталюйце пункт "Правяраць абнаўленнi" у наладах, каб дазволіць запампоўка</value>
   </data>
+  <data name="ErrorMessage_PageNotFound" xml:space="preserve">
+    <value>Старонка недаступная. Паспрабуйце, калі ласка, пазней</value>
+  </data>
   <data name="ErrorMessage_ServerIsNotResponse" xml:space="preserve">
     <value>Не атрымалася падлучыцца да сервера</value>
   </data>

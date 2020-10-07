@@ -144,6 +144,9 @@
   <data name="ErrorMessage_NotFoundInCache" xml:space="preserve">
     <value>Can not found data in cache. Set "Сheck for updates" field in settings to allow downloading data</value>
   </data>
+  <data name="ErrorMessage_PageNotFound" xml:space="preserve">
+    <value>Page not found. Try later, please</value>
+  </data>
   <data name="ErrorMessage_ServerIsNotResponse" xml:space="preserve">
     <value>Can not connect to the server</value>
   </data>

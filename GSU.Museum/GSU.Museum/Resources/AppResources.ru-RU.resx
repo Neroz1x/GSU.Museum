@@ -144,6 +144,9 @@
   <data name="ErrorMessage_NotFoundInCache" xml:space="preserve">
     <value>Не удалось загрузить данные из кеша. Установите пункт "Проверять обновления" в настройках, чтобы разрешить скачивание</value>
   </data>
+  <data name="ErrorMessage_PageNotFound" xml:space="preserve">
+    <value>Страница недоступна. Попробуйте, пожалуйста, позже</value>
+  </data>
   <data name="ErrorMessage_ServerIsNotResponse" xml:space="preserve">
     <value>Не удалось подключиться к серверу</value>
   </data>

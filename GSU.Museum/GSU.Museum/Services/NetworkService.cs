@@ -136,6 +136,10 @@ namespace GSU.Museum.Shared.Services
                     _logger.Error($"Error in response: {error}");
                     throw new Error() { Info = error.Info, ErrorCode = error.ErrorCode };
                 }
+                else if (response.StatusCode == HttpStatusCode.NotFound)
+                {
+                    throw new Error() { Info = AppResources.ErrorMessage_PageNotFound, ErrorCode = Errors.Not_found };
+                }
                 // if unhandled server-side exception
                 else
                 {
