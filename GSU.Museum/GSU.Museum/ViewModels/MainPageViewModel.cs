@@ -26,6 +26,9 @@ namespace GSU.Museum.Shared.ViewModels
         public Command NavigateBackCommand { get; }
         public ObservableCollection<HallDTO> Halls { get; }
 
+        // Indicates whether task was canceled by user
+        private bool _isCanceled = false;
+
         // Status of LoadingIndicator
         private bool _isBusy = false;
         public bool IsBusy 
@@ -142,7 +145,14 @@ namespace GSU.Museum.Shared.ViewModels
                 {
                     await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, AppResources.ErrorMessage_ServerIsNotResponse, AppResources.MessageBox_ButtonOk);
                 }
-                else if(ex is OperationCanceledException){ }
+                else if(ex is OperationCanceledException)
+                {
+                    if (!_isCanceled)
+                    {
+                        await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, AppResources.ErrorMessage_ServerIsNotResponse, AppResources.MessageBox_ButtonOk);
+                        await Navigation.PopAsync();
+                    }
+                }
                 else
                 {
                     await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, ex.Message, AppResources.MessageBox_ButtonOk);
@@ -186,6 +196,7 @@ namespace GSU.Museum.Shared.ViewModels
         {
             if (!_cancellationTokenSource.IsCancellationRequested && IsBusy)
             {
+                _isCanceled = true;
                 _cancellationTokenSource.Cancel();
             }
         }
