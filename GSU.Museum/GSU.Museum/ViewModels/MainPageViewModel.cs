@@ -91,14 +91,14 @@ namespace GSU.Museum.Shared.ViewModels
         {
             Navigation = navigation;
             Halls = new ObservableCollection<HallDTO>();
-            GetHallsCommand = new Command(async () => await GetHalls());
-            SelectHallCommand = new Command(async id => await SelectHall(id?.ToString()));
+            GetHallsCommand = new Command(async () => await GetHallsAsync());
+            SelectHallCommand = new Command(async id => await SelectHallAsync(id?.ToString()));
             NavigateToHomePageCommand = new Command(() => App.Current.MainPage = new NavigationPage(new HomePage()));
             NavigateBackCommand = new Command(async () => await navigation.PopAsync());
         }
 
         #region Methods
-        public async Task GetHalls()
+        public async Task GetHallsAsync()
         {
             Halls.Clear();
             ContentVisibility = false;
@@ -176,7 +176,7 @@ namespace GSU.Museum.Shared.ViewModels
             CollectionViewHeight = Halls.Count * ((double)height + padding.VerticalThickness) + (Halls.Count - 1) * 20 + 2;
         }
 
-        public async Task SelectHall(string id)
+        public async Task SelectHallAsync(string id)
         {
             if(!string.IsNullOrEmpty(id))
             {
@@ -184,7 +184,7 @@ namespace GSU.Museum.Shared.ViewModels
             }
         }
         
-        public async Task NavigateToOptionsPage()
+        public async Task NavigateToOptionsPageAsync()
         {
             await Navigation.PushAsync(new OptionsPage());
         }

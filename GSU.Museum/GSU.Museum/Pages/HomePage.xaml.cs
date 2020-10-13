@@ -1,6 +1,4 @@
-﻿using GSU.Museum.Shared.Data.Models;
-using GSU.Museum.Shared.Services;
-using GSU.Museum.Shared.ViewModels;
+﻿using GSU.Museum.Shared.ViewModels;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;

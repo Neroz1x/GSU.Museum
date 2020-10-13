@@ -18,7 +18,7 @@ namespace GSU.Museum.Shared.Pages
             if (ExhibitsCollectionView.SelectedItem == null)
             {
                 var viewModel = BindingContext as StandPageViewModel;
-                await viewModel.GetExhibits();
+                await viewModel.GetExhibitsAsync();
             }
             else
             {

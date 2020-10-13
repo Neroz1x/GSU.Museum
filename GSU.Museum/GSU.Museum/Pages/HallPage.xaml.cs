@@ -19,7 +19,7 @@ namespace GSU.Museum.Shared.Pages
             if (StandsCollectionView.SelectedItem == null)
             {
                 var viewModel = BindingContext as HallPageViewModel;
-                await viewModel.GetStands();
+                await viewModel.GetStandsAsync();
             }
             else
             {

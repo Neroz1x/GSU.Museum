@@ -112,14 +112,14 @@ namespace GSU.Museum.Shared.ViewModels
             _standId = standId;
             Navigation = navigation;
             Exhibits = new ObservableCollection<ExhibitDTO>();
-            GetExhibitsCommand = new Command(async () => await GetExhibits());
-            SelectExhibitCommand = new Command(async id => await SelectExhibit(id?.ToString()));
+            GetExhibitsCommand = new Command(async () => await GetExhibitsAsync());
+            SelectExhibitCommand = new Command(async id => await SelectExhibitAsync(id?.ToString()));
             NavigateToHomePageCommand = new Command(() => App.Current.MainPage = new NavigationPage(new HomePage()));
             NavigateBackCommand = new Command(async () => await navigation.PopAsync());
         }
 
         #region Methods
-        public async Task GetExhibits()
+        public async Task GetExhibitsAsync()
         {
             ContentVisibility = false;
             IsBusy = true;
@@ -198,7 +198,7 @@ namespace GSU.Museum.Shared.ViewModels
             CollectionViewHeight = Exhibits.Count * ((double)height + padding.VerticalThickness) + (Exhibits.Count - 1) * 20 + 2;
         }
 
-        public async Task SelectExhibit(string id)
+        public async Task SelectExhibitAsync(string id)
         {
             if (!string.IsNullOrEmpty(id)) 
             {

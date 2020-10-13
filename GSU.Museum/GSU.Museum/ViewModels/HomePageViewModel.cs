@@ -18,20 +18,20 @@ namespace GSU.Museum.Shared.ViewModels
         public HomePageViewModel(INavigation navigation) 
         {
             Navigation = navigation;
-            NavigateToMainPageCommand = new Command(async () => await NavigateToMainPage());
-            NavigateToOptionsPageCommand = new Command(async () => await NavigateToOptionsPage());
+            NavigateToMainPageCommand = new Command(async () => await NavigateToMainPageAsync());
+            NavigateToOptionsPageCommand = new Command(async () => await NavigateToOptionsPageAsync());
             Images.Add("Emblem.png");
             Images.Add("Flag.jpeg");
             Images.Add("Shield.png");
         }
 
         #region Methods
-        private async Task NavigateToMainPage()
+        private async Task NavigateToMainPageAsync()
         {
             await Navigation.PushAsync(new MainPage());
         }
 
-        private async Task NavigateToOptionsPage()
+        private async Task NavigateToOptionsPageAsync()
         {
             await Navigation.PushAsync(new OptionsPage());
         }

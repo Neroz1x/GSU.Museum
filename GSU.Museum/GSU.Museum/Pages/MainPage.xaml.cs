@@ -23,7 +23,7 @@ namespace GSU.Museum
             if(HallsCollectionView.SelectedItem == null)
             {
                 var viewModel = BindingContext as MainPageViewModel;
-                await viewModel.GetHalls();
+                await viewModel.GetHallsAsync();
             }
             else
             {

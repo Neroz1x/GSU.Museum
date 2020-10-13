@@ -462,7 +462,7 @@ namespace GSU.Museum.Shared.ViewModels
             NavigateBackCommand = new Command(async () => await navigation.PopAsync());
             OnLabelTapCommand = new Command(labelId => OnLabelTap(int.Parse(labelId.ToString())));
             ClearCacheCommand = new Command(async() => await DependencyService.Get<CachingService>().ClearCache());
-            LoadCacheCommand = new Command(async() => await LoadCache());
+            LoadCacheCommand = new Command(async() => await LoadCacheAsync());
             ShowPopupCommand = new Command(() => ShowPopup());
             CancelCommand = new Command(() => IsVisibleLanguageSelection = false);
         }
@@ -551,7 +551,7 @@ namespace GSU.Museum.Shared.ViewModels
         /// Load current cache from API 
         /// </summary>
         /// <returns></returns>
-        public async Task LoadCache()
+        public async Task LoadCacheAsync()
         {
             try
             {

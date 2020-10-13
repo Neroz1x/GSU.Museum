@@ -113,14 +113,14 @@ namespace GSU.Museum.Shared.ViewModels
             Navigation = navigation;
             _hallId = hallId;
             Stands = new ObservableCollection<StandDTO>();
-            GetStandsCommand = new Command(async () => await GetStands());
+            GetStandsCommand = new Command(async () => await GetStandsAsync());
             SelectStandCommand = new Command(async id => await SelectStand(id?.ToString()));
             NavigateToHomePageCommand = new Command(() => App.Current.MainPage = new NavigationPage(new HomePage()));
             NavigateBackCommand = new Command(async () => await navigation.PopAsync());
         }
 
         #region Methods
-        public async Task GetStands()
+        public async Task GetStandsAsync()
         {
             try
             {
