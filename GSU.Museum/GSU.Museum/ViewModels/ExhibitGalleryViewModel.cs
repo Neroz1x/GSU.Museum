@@ -12,9 +12,6 @@ namespace GSU.Museum.Shared.ViewModels
     public class ExhibitGalleryViewModel : BaseViewModel
     {
         #region Fields
-        public INavigation Navigation;
-        public Command NavigateToHomePageCommand { get; }
-        public Command NavigateBackCommand { get; }
         public ObservableCollection<PhotoInfoDTO> Photos { get; }
 
         public ExhibitDTO Exhibit;
@@ -46,13 +43,10 @@ namespace GSU.Museum.Shared.ViewModels
         /// <param name="exhibit">Exhibit to display</param>
         /// <param name="navigation">Instance of navigation</param>
         /// <param name="navigation">Instance of navigation</param>
-        public ExhibitGalleryViewModel(ExhibitDTO exhibit, INavigation navigation)
+        public ExhibitGalleryViewModel(ExhibitDTO exhibit, INavigation navigation) : base(navigation)
         {
-            Navigation = navigation;
             Exhibit = exhibit;
             Photos = new ObservableCollection<PhotoInfoDTO>();
-            NavigateToHomePageCommand = new Command(() => App.Current.MainPage = new NavigationPage(new HomePage()));
-            NavigateBackCommand = new Command(async () => await navigation.PopAsync());
         }
 
         #region Methods

@@ -2,11 +2,7 @@
 using GSU.Museum.Shared.Pages;
 using GSU.Museum.Shared.Resources;
 using GSU.Museum.Shared.Services;
-using System;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -16,56 +12,12 @@ namespace GSU.Museum.Shared.ViewModels
     public class StandPageViewModel : BaseViewModel
     {
         #region Fields
-        public INavigation Navigation;
         public Command GetExhibitsCommand { get; }
         public Command SelectExhibitCommand { get; }
-        public Command NavigateToHomePageCommand { get; }
-        public Command NavigateBackCommand { get; }
         public ObservableCollection<ExhibitDTO> Exhibits { get; }
 
-        // Indicates whether task was canceled by user
-        private bool _isCanceled = false;
-        private CancellationTokenSource _cancellationTokenSource;
         private string _hallId;
         private string _standId;
-
-        // Visibility of page content
-        private bool _contentVisibility = true;
-        public bool ContentVisibility
-        {
-            get
-            {
-                return _contentVisibility;
-            }
-
-            set
-            {
-                if (value != _contentVisibility)
-                {
-                    _contentVisibility = value;
-                }
-                OnPropertyChanged(nameof(ContentVisibility));
-            }
-        }
-
-        // Status of LoadingIndicator
-        private bool _isBusy;
-        public bool IsBusy
-        {
-            get
-            {
-                return _isBusy;
-            }
-
-            set
-            {
-                if (value != _isBusy)
-                {
-                    _isBusy = value;
-                }
-                OnPropertyChanged(nameof(IsBusy));
-            }
-        }
 
         // Title of the page
         private string _title;
@@ -86,175 +38,70 @@ namespace GSU.Museum.Shared.ViewModels
             }
         }
 
-        // Height of collection view
-        private double _collectionViewHeight;
-        public double CollectionViewHeight
-        {
-            get
-            {
-                return _collectionViewHeight;
-            }
-
-            set
-            {
-                if (value != _collectionViewHeight)
-                {
-                    _collectionViewHeight = value;
-                }
-                OnPropertyChanged(nameof(CollectionViewHeight));
-            }
-        }
         #endregion
 
-        public StandPageViewModel(string hallId, string standId, INavigation navigation)
+        public StandPageViewModel(string hallId, string standId, INavigation navigation) : base(navigation)
         {
             _hallId = hallId;
             _standId = standId;
-            Navigation = navigation;
             Exhibits = new ObservableCollection<ExhibitDTO>();
             GetExhibitsCommand = new Command(async () => await GetExhibitsAsync());
             SelectExhibitCommand = new Command(async id => await SelectExhibitAsync(id?.ToString()));
-            NavigateToHomePageCommand = new Command(() => App.Current.MainPage = new NavigationPage(new HomePage()));
-            NavigateBackCommand = new Command(async () => await navigation.PopAsync());
         }
 
         #region Methods
         public async Task GetExhibitsAsync()
         {
-            ContentVisibility = false;
-            IsBusy = true;
-            try
-            {
-                _cancellationTokenSource = new CancellationTokenSource();
-                var stand = await DependencyService.Get<ContentLoaderService>().LoadStandAsync(_hallId, _standId, _cancellationTokenSource.Token);
-                Title = $"{stand.Title} - {AppResources.StandPage_Title}";
-                Exhibits.Clear();
-                foreach (var exhibit in stand.Exhibits)
-                {
-                    if (string.IsNullOrEmpty(exhibit.Title))
-                    {
-                        continue;
-                    }
-                    Exhibits.Add(exhibit);
-                }
-                if (Exhibits.Count == 0)
-                {
-                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, AppResources.ErrorMessage_InProgress, AppResources.MessageBox_ButtonOk);
-                    await Navigation.PopAsync();
-                }
-                else
-                {
-                    SetHeight();
-                    ContentVisibility = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                if (ex is Error error)
-                {
-                    if (error.ErrorCode == CommonClassLibrary.Enums.Errors.Failed_Connection)
-                    {
-                        await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, error.Info, AppResources.MessageBox_ButtonOk);
-                    }
-                    else
-                    {
-                        await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, error.Info, AppResources.MessageBox_ButtonOk);
-                    }
-                    await Navigation.PopAsync();
-                }
-                else if (ex is HttpRequestException || ex is WebException)
-                {
-                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, AppResources.ErrorMessage_ServerIsNotResponse, AppResources.MessageBox_ButtonOk);
-                    await Navigation.PopAsync();
-                }
-                else if (ex is OperationCanceledException) 
-                {
-                    if (!_isCanceled)
-                    {
-                        await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, AppResources.ErrorMessage_ServerIsNotResponse, AppResources.MessageBox_ButtonOk);
-                        await Navigation.PopAsync();
-                    }
-                }
-                else
-                {
-                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, ex.Message, AppResources.MessageBox_ButtonOk);
-                    await Navigation.PopAsync();
-                }
-            }
-            finally
-            {
-                IsBusy = false;
-            }
+            await LoadAsync(LoadExhibitsAsync);
         }
 
-        /// <summary>
-        /// Set height of collection view based on items count
-        /// </summary>
-        public void SetHeight()
+        public async Task LoadExhibitsAsync()
         {
-            Style style = Application.Current.Resources["TransparentMenuItem"] as Style;
-            var height = style.Setters.FirstOrDefault(s => s.Property.PropertyName.Equals("HeightRequest")).Value;
-            Thickness padding = (Thickness)style.Setters.FirstOrDefault(s => s.Property.PropertyName.Equals("Padding")).Value;
-            CollectionViewHeight = Exhibits.Count * ((double)height + padding.VerticalThickness) + (Exhibits.Count - 1) * 20 + 2;
+            _cancellationTokenSource = new CancellationTokenSource();
+            var stand = await DependencyService.Get<ContentLoaderService>().LoadStandAsync(_hallId, _standId, _cancellationTokenSource.Token);
+            Title = $"{stand.Title} - {AppResources.StandPage_Title}";
+            Exhibits.Clear();
+            foreach (var exhibit in stand.Exhibits)
+            {
+                if (string.IsNullOrEmpty(exhibit.Title))
+                {
+                    continue;
+                }
+                Exhibits.Add(exhibit);
+            }
+            if (Exhibits.Count == 0)
+            {
+                await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, AppResources.ErrorMessage_InProgress, AppResources.MessageBox_ButtonOk);
+                await Navigation.PopAsync();
+            }
+            else
+            {
+                SetHeight(Exhibits.Count);
+                ContentVisibility = true;
+            }
         }
 
         public async Task SelectExhibitAsync(string id)
         {
-            if (!string.IsNullOrEmpty(id)) 
+            if (!string.IsNullOrEmpty(id))
             {
-                try
-                {
-                    _cancellationTokenSource = new CancellationTokenSource();
-                    IsBusy = true;
-                    var exhibit = await DependencyService.Get<ContentLoaderService>().LoadExhibitAsync(_hallId, _standId, id, _cancellationTokenSource.Token);
-                    if (exhibit.ExhibitType == CommonClassLibrary.Data.Enums.ExhibitType.Article)
-                    {
-                        await Navigation.PushAsync(new ExhibitsArticle(exhibit));
-                    }
-                    else
-                    {
-                        await Navigation.PushAsync(new ExhibitGallery(exhibit));
-                    }
-                }
-                catch (Exception ex)
-                {
-                    if (ex is Error error)
-                    {
-                        if (error.ErrorCode == CommonClassLibrary.Enums.Errors.Failed_Connection)
-                        {
-                            await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, error.Info, AppResources.MessageBox_ButtonOk);
-                        }
-                        else
-                        {
-                            await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, error.Info, AppResources.MessageBox_ButtonOk);
-                        }
-                    }
-                    else if (ex is HttpRequestException || ex is WebException)
-                    {
-                        await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, AppResources.ErrorMessage_ServerIsNotResponse, AppResources.MessageBox_ButtonOk);
-                    }
-                    else
-                    {
-                        await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, ex.Message, AppResources.MessageBox_ButtonOk);
-                    }
-                }
-                finally
-                {
-                    IsBusy = false;
-                }
+                await LoadAsync(() => LoadExhibitAsync(id));
             }
         }
 
-        /// <summary>
-        /// Cancel current token
-        /// </summary>
-        public void Cancel()
+        public async Task LoadExhibitAsync(string id)
         {
-            if (!_cancellationTokenSource.IsCancellationRequested && IsBusy)
+            _cancellationTokenSource = new CancellationTokenSource();
+            var exhibit = await DependencyService.Get<ContentLoaderService>().LoadExhibitAsync(_hallId, _standId, id, _cancellationTokenSource.Token);
+            if (exhibit.ExhibitType == CommonClassLibrary.Data.Enums.ExhibitType.Article)
             {
-                _isCanceled = true;
-                _cancellationTokenSource.Cancel();
+                await Navigation.PushAsync(new ExhibitsArticle(exhibit));
             }
+            else
+            {
+                await Navigation.PushAsync(new ExhibitGallery(exhibit));
+            }
+            ContentVisibility = true;
         }
         #endregion
     }

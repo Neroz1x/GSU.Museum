@@ -10,11 +10,8 @@ namespace GSU.Museum.Shared.ViewModels
     public class ExhibitsArticleViewModel : BaseViewModel
     {
         #region Fields
-        public INavigation Navigation;
-        public Command NavigateToHomePageCommand { get; }
-        public Command NavigateBackCommand { get; }
         public ObservableCollection<ImageSource> Photos { get; }
-        
+
         public ExhibitDTO Exhibit;
 
         // Visibility of photo
@@ -35,7 +32,7 @@ namespace GSU.Museum.Shared.ViewModels
                 OnPropertyChanged(nameof(CarouselVisibility));
             }
         }
-        
+
         // Visibility of IndivatorView
         private bool _indicatorVisibility = true;
         public bool IndicatorVisibility
@@ -100,30 +97,27 @@ namespace GSU.Museum.Shared.ViewModels
         /// <param name="navigation">Instance of navigation</param>
         /// <param name="hallId">Id of the hall</param>
         /// <param name="standId">Id of the stand</param>
-        public ExhibitsArticleViewModel(ExhibitDTO exhibit, INavigation navigation)
+        public ExhibitsArticleViewModel(ExhibitDTO exhibit, INavigation navigation) : base(navigation)
         {
-            Navigation = navigation;
             Exhibit = exhibit;
             Photos = new ObservableCollection<ImageSource>();
-            NavigateToHomePageCommand = new Command(() => App.Current.MainPage = new NavigationPage(new HomePage()));
-            NavigateBackCommand = new Command(async () => await navigation.PopAsync());
         }
 
         #region Methods
         public void FillPage()
         {
-            if(Exhibit.Photos?.Count != 0)
+            if (Exhibit.Photos?.Count != 0)
             {
                 Photos.Clear();
                 foreach (var photo in Exhibit.Photos)
                 {
-                    if(photo?.Photo != null)
+                    if (photo?.Photo != null)
                     {
                         Photos.Add(ImageSource.FromStream(() => new MemoryStream(photo.Photo)));
                     }
                 }
                 CarouselVisibility = true;
-                if(Photos.Count == 1)
+                if (Photos.Count == 1)
                 {
                     IndicatorVisibility = false;
                 }

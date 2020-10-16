@@ -13,7 +13,6 @@ namespace GSU.Museum.Shared.ViewModels
 {
     class OptionsPageViewModel : BaseViewModel
     {
-        public INavigation Navigation;
         public ContentView Popup;
         public StackLayout RadioGroup;
 
@@ -22,7 +21,6 @@ namespace GSU.Museum.Shared.ViewModels
         public Command OnLabelTapCommand { get; }
         public Command ClearCacheCommand { get; }
         public Command LoadCacheCommand { get; }
-        public Command NavigateBackCommand { get; }
         public Command ShowPopupCommand { get; }
         public Command CancelCommand { get; }
 
@@ -433,9 +431,8 @@ namespace GSU.Museum.Shared.ViewModels
 
         #endregion
 
-        public OptionsPageViewModel(INavigation navigation, ContentView popup, StackLayout radioGroup) 
+        public OptionsPageViewModel(INavigation navigation, ContentView popup, StackLayout radioGroup) : base(navigation)
         {
-            Navigation = navigation;
             Popup = popup;
             RadioGroup = radioGroup;
             Language = App.Settings.Language.LanguageName;
@@ -459,7 +456,6 @@ namespace GSU.Museum.Shared.ViewModels
             UseOnlyCacheIsSelected = App.Settings.UseOnlyCache;
             CheckForUpdatesIsSelected = App.Settings.CheckForUpdates;
             LocalizePage();
-            NavigateBackCommand = new Command(async () => await navigation.PopAsync());
             OnLabelTapCommand = new Command(labelId => OnLabelTap(int.Parse(labelId.ToString())));
             ClearCacheCommand = new Command(async() => await DependencyService.Get<CachingService>().ClearCache());
             LoadCacheCommand = new Command(async() => await LoadCacheAsync());

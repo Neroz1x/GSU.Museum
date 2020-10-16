@@ -8,16 +8,14 @@ namespace GSU.Museum.Shared.ViewModels
     public class HomePageViewModel : BaseViewModel
     {
         #region Fields
-        public INavigation Navigation;
 
         public ObservableCollection<ImageSource> Images { get; set; } = new ObservableCollection<ImageSource>();
         public Command NavigateToMainPageCommand { get; }
         public Command NavigateToOptionsPageCommand { get; }
 
         #endregion
-        public HomePageViewModel(INavigation navigation) 
+        public HomePageViewModel(INavigation navigation) : base(navigation)
         {
-            Navigation = navigation;
             NavigateToMainPageCommand = new Command(async () => await NavigateToMainPageAsync());
             NavigateToOptionsPageCommand = new Command(async () => await NavigateToOptionsPageAsync());
             Images.Add("Emblem.png");
