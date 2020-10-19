@@ -64,12 +64,12 @@
                             PositionChanged="CarouselView_PositionChanged"
                                 ItemsSource="{Binding Photos}"
                                 Margin="5, 0"
-                                Style="{StaticResource DefaultCarouselView}" >
+                                >
                         <CarouselView.ItemTemplate>
                             <DataTemplate>
                                 <StackLayout Orientation="Vertical">
                                     <Frame Padding="3" BackgroundColor="White" HorizontalOptions="Center">
-                                        <Image Aspect="AspectFit" BackgroundColor="Transparent" Source="{Binding Photo, Converter={StaticResource ByteArrayToImage}}">
+                                        <Image Style="{StaticResource CarouselViewImage}" Aspect="AspectFit" BackgroundColor="Transparent" Source="{Binding Photo, Converter={StaticResource ByteArrayToImage}}">
                                         </Image>
                                     </Frame>
                                     <Label Style="{StaticResource DefaultLabel}" HorizontalOptions="Center" Text="{Binding Description}"/>

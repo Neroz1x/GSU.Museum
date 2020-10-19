@@ -175,7 +175,13 @@
 
         <Style TargetType="CarouselView" x:Key="DefaultCarouselView">
             <Setter Property="HeightRequest">
-                <OnIdiom x:TypeArguments="x:Double" Phone="400" Tablet="600"></OnIdiom>
+                <OnIdiom x:TypeArguments="x:Double" Phone="300" Tablet="500"></OnIdiom>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Image" x:Key="CarouselViewImage">
+            <Setter Property="HeightRequest">
+                <OnIdiom x:TypeArguments="x:Double" Phone="300" Tablet="500"></OnIdiom>
             </Setter>
         </Style>
 
