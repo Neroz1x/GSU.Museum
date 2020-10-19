@@ -9,7 +9,7 @@
              Appearing="ContentPage_Appearing"
              Disappearing="ContentPage_Disappearing"
              xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
-             BackgroundImageSource="Background.jpg"
+             BackgroundImageSource="@mipmap/Background.jpg"
              >
     <NavigationPage.HasNavigationBar>false</NavigationPage.HasNavigationBar>
     <ContentPage.Content>
