@@ -175,7 +175,7 @@
     <value>Выберите, пожалуйста, холл</value>
   </data>
   <data name="MainPage_Title" xml:space="preserve">
-    <value>Выбор холла</value>
+    <value>Выбрать холл</value>
   </data>
   <data name="MainPage_ToolBar_Options" xml:space="preserve">
     <value>Настройки</value>
