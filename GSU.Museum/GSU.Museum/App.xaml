@@ -11,6 +11,12 @@
             <converters:ByteToImageSourceConverter x:Key="ByteArrayToImage" />
         </ResourceDictionary>
 
+        <Style TargetType="Image" x:Key="HomePageIcons">
+            <Setter Property="VerticalOptions" Value="Center"></Setter>
+            <Setter Property="WidthRequest" Value="14"></Setter>
+            <Setter Property="HeightRequest" Value="14"></Setter>
+        </Style>
+        
         <Style TargetType="RadioButton" x:Key="PopupRadioButton">
             <Setter Property="Margin" Value="10, 15"></Setter>
             <Setter Property="FontSize" Value="Medium"></Setter>
