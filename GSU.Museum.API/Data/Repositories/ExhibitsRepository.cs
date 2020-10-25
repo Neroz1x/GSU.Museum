@@ -51,7 +51,7 @@ namespace GSU.Museum.API.Data.Repositories
         public async Task<List<Exhibit>> GetAllAsync(string hallId, string standId)
         {
             var hall = await _halls.Find(h => h.Id.Equals(hallId)).FirstOrDefaultAsync();
-            var exhibits = hall.Stands.FirstOrDefault(s => s.Id.Equals(standId))?.Exhibits?.ToList();
+            var exhibits = hall?.Stands?.FirstOrDefault(s => s.Id.Equals(standId))?.Exhibits?.ToList();
             if (exhibits != null)
             {
                 foreach (var exhibit in exhibits)
