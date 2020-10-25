@@ -26,8 +26,8 @@ namespace GSU.Museum.API.Interfaces
         /// Add new record
         /// </summary>
         /// <param name="entity">New record to add</param>
-        /// <returns></returns>
-        Task CreateAsync(Hall entity);
+        /// <returns>Id of new record</returns>
+        Task<string> CreateAsync(Hall entity);
 
         /// <summary>
         /// Update existing record

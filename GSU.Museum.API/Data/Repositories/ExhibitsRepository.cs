@@ -23,11 +23,11 @@ namespace GSU.Museum.API.Data.Repositories
             _gridFS = new GridFSBucket(database);
         }
 
-        public async Task CreateAsync(string hallId, string standId, Exhibit entity)
+        public async Task<string> CreateAsync(string hallId, string standId, Exhibit exhibit)
         {
-            if (entity.Photos != null)
+            if (exhibit.Photos != null)
             {
-                foreach (var photo in entity.Photos)
+                foreach (var photo in exhibit.Photos)
                 {
                     ObjectId id = await _gridFS.UploadFromBytesAsync(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), photo?.Photo);
                     photo.Id = id.ToString();
@@ -36,15 +36,16 @@ namespace GSU.Museum.API.Data.Repositories
             }
             else
             {
-                entity.Photos = new List<PhotoInfo>();
+                exhibit.Photos = new List<PhotoInfo>();
             }
 
             var filter = Builders<Hall>.Filter.And(
             Builders<Hall>.Filter.Where(hall => hall.Id.Equals(hallId)),
             Builders<Hall>.Filter.Eq("Stands.Id", standId));
-            entity.Id = ObjectId.GenerateNewId().ToString();
-            var update = Builders<Hall>.Update.Push("Stands.$.Exhibits", entity);
+            exhibit.Id = ObjectId.GenerateNewId().ToString();
+            var update = Builders<Hall>.Update.Push("Stands.$.Exhibits", exhibit);
             await _halls.FindOneAndUpdateAsync(filter, update);
+            return exhibit.Id;
         }
 
         public async Task<List<Exhibit>> GetAllAsync(string hallId, string standId)
@@ -109,23 +110,23 @@ namespace GSU.Museum.API.Data.Repositories
                 .FindOneAndUpdateAsync(filter, update);
         }
 
-        public async Task UpdateAsync(string hallId, string standId, string id, Exhibit entity)
+        public async Task UpdateAsync(string hallId, string standId, string id, Exhibit exhibit)
         {
-            for (int i = 0; i < entity.Photos?.Count; i++)
+            for (int i = 0; i < exhibit.Photos?.Count; i++)
             {
-                if (!string.IsNullOrEmpty(entity.Photos[i]?.Id))
+                if (!string.IsNullOrEmpty(exhibit.Photos[i]?.Id))
                 {
-                    await _gridFS.DeleteAsync(ObjectId.Parse(entity.Photos[i].Id));
+                    await _gridFS.DeleteAsync(ObjectId.Parse(exhibit.Photos[i].Id));
                 }
-                if (entity.Photos[i]?.Photo != null)
+                if (exhibit.Photos[i]?.Photo != null)
                 {
-                    ObjectId photoId = await _gridFS.UploadFromBytesAsync(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), entity.Photos[i].Photo);
-                    entity.Photos[i].Id = photoId.ToString();
-                    entity.Photos[i].Photo = null;
+                    ObjectId photoId = await _gridFS.UploadFromBytesAsync(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), exhibit.Photos[i].Photo);
+                    exhibit.Photos[i].Id = photoId.ToString();
+                    exhibit.Photos[i].Photo = null;
                 }
                 else
                 {
-                    entity.Photos.RemoveAt(i--);
+                    exhibit.Photos.RemoveAt(i--);
                 }
             }
 
@@ -151,7 +152,7 @@ namespace GSU.Museum.API.Data.Repositories
 
             var arrayFilter = Builders<Hall>.Filter.Where(hall => hall.Id.Equals(hallId));
 
-            var update = Builders<Hall>.Update.Set($"Stands.{index1}.Exhibits.{index2}", entity);
+            var update = Builders<Hall>.Update.Set($"Stands.{index1}.Exhibits.{index2}", exhibit);
 
             await _halls.FindOneAndUpdateAsync(arrayFilter, update);
         }

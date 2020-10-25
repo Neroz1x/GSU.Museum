@@ -33,7 +33,7 @@ namespace GSU.Museum.API.Interfaces
         /// <param name="standId">Id of stand</param>
         /// <param name="entity">New record to add</param>
         /// <returns></returns>
-        Task CreateAsync(string hallId, string standId, Exhibit entity);
+        Task<string> CreateAsync(string hallId, string standId, Exhibit entity);
 
         /// <summary>
         /// Update existing record
@@ -42,7 +42,7 @@ namespace GSU.Museum.API.Interfaces
         /// <param name="standId">Id of stand</param>
         /// <param name="id">Record id</param>
         /// <param name="entity">New record to update</param>
-        /// <returns></returns>
+        /// <returns>Id of new record</returns>
         Task UpdateAsync(string hallId, string standId, string id, Exhibit entity);
 
         /// <summary>

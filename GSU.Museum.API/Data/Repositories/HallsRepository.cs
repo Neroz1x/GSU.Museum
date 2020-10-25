@@ -45,7 +45,7 @@ namespace GSU.Museum.API.Data.Repositories
             return hall;
         }
 
-        public async Task CreateAsync(Hall hall)
+        public async Task<string> CreateAsync(Hall hall)
         {
             if (hall.Photo?.Photo != null)
             {
@@ -54,7 +54,9 @@ namespace GSU.Museum.API.Data.Repositories
                 hall.Photo.Photo = null;
             }
 
+            hall.Id = ObjectId.GenerateNewId().ToString();
             await _halls.InsertOneAsync(hall);
+            return hall.Id;
         }
 
         public async Task UpdateAsync(string id, Hall hallIn)
