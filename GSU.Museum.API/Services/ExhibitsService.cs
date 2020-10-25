@@ -160,8 +160,9 @@ namespace GSU.Museum.API.Services
                         exhibitsDTO[i].Photos = null;
                     }
                 }
+                return exhibitsDTO;
             }
-            return exhibitsDTO;
+            return null;
         }
 
         public async Task<ExhibitDTO> GetAsync(HttpRequest request, string hallId, string standId, string id)

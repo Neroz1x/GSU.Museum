@@ -96,7 +96,7 @@ namespace GSU.Museum.API.Controllers
         /// Add record to database
         /// </summary>
         /// <param name="hall">Record to add</param>
-        /// <returns>Result of the operation</returns>
+        /// <returns>Id of new record</returns>
         /// POST: api/Hall
         /// <response code="200">Everything is correct. Item has been created</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -105,8 +105,8 @@ namespace GSU.Museum.API.Controllers
         {
             try
             {
-                await _hallsRepository.CreateAsync(hall);
-                return Ok();
+                var id = await _hallsRepository.CreateAsync(hall);
+                return Ok(id);
             }
             catch (Exception)
             {

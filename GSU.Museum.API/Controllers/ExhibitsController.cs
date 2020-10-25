@@ -37,14 +37,19 @@ namespace GSU.Museum.API.Controllers
         ///     GET: api/Exhibits
         /// </remarks>
         /// <returns>All exhibits</returns>
-        /// <response code="200">Everything is correct. Hash codes are different</response>
-        /// <response code="204">Everything is correct. Hash codes are the same</response>
+        /// <response code="200">Everything is correct</response>
+        /// <response code="404">Exhibits not found</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpGet]
-        public Task<List<ExhibitDTO>> GetAll(string hallId, string standId)
+        public IActionResult GetAll(string hallId, string standId)
         {
-            return _exhibitsService.GetAllAsync(Request, hallId, standId);
+            var exhibits = _exhibitsService.GetAllAsync(Request, hallId, standId).Result;
+            if(exhibits == null)
+            {
+                return NotFound();
+            }
+            return Ok(exhibits);
         }
 
 
@@ -95,7 +100,7 @@ namespace GSU.Museum.API.Controllers
         /// <param name="hallId">Id of the hall</param>
         /// <param name="standId">Id of the stand</param>
         /// <param name="exhibit">Record to add</param>
-        /// <returns>Result of the operation</returns>
+        /// <returns>Id of new record</returns>
         /// POST: api/Exhibits
         /// <response code="200">Everything is correct. Item has been created</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -104,8 +109,8 @@ namespace GSU.Museum.API.Controllers
         {
             try
             {
-                await _exhibitsRepository.CreateAsync(hallId, standId, exhibit);
-                return Ok();
+                var id = await _exhibitsRepository.CreateAsync(hallId, standId, exhibit);
+                return Ok(id);
             }
             catch (Exception)
             {

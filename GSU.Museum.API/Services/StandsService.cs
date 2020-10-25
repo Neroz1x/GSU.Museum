@@ -147,8 +147,9 @@ namespace GSU.Museum.API.Services
                     var photoInfoDTO = mapper.Map<PhotoInfoDTO>(stands[i].Photo);
                     standsDTO[i].Photo = photoInfoDTO;
                 }
+                return standsDTO;
             }
-            return standsDTO;
+            return null;
         }
 
         public async Task<StandDTO> GetAsync(HttpRequest request, string hallId, string id)
