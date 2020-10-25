@@ -126,7 +126,7 @@ namespace GSU.Museum.API.Tests.Services
             };
             mockRepo.Setup(repo =>
                 repo.GetAllAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync((string hallId, string standId)
-                => _halls.FirstOrDefault(h => h.Id.Equals(hallId)).Stands.FirstOrDefault(s => s.Id.Equals(standId)).Exhibits.ToList());
+                => _halls.FirstOrDefault(h => h.Id.Equals(hallId))?.Stands.FirstOrDefault(s => s.Id.Equals(standId))?.Exhibits.ToList());
 
             mockRepoEmpty.Setup(repo =>
                repo.GetAllAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync((string hallId, string standId)
@@ -155,6 +155,16 @@ namespace GSU.Museum.API.Tests.Services
 
             // Assert
             Assert.Equal(expected, list.Count);
+        }
+
+        [Fact]
+        public async void GetAll_RecordDoesNotFound_ShouldReturnNull()
+        {
+            // Act
+            var actual = await _service.GetAllAsync(httpRequest, "111111189012345678901313", "111111189012345678901313");
+
+            // Assert
+            Assert.Null(actual);
         }
 
         [Fact]

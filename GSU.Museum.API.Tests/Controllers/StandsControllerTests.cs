@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace GSU.Museum.API.Tests.Controllers
@@ -140,7 +141,7 @@ namespace GSU.Museum.API.Tests.Controllers
             };
             mockRepo.Setup(repo =>
                 repo.GetAllAsync(It.IsAny<string>())).ReturnsAsync((string hallId)
-                => _halls.FirstOrDefault(h => h.Id.Equals(hallId)).Stands.ToList());
+                => _halls.FirstOrDefault(h => h.Id.Equals(hallId))?.Stands.ToList());
 
             mockRepoEmpty.Setup(repo =>
                repo.GetAllAsync(It.IsAny<string>())).ReturnsAsync((string hallId)
@@ -205,26 +206,39 @@ namespace GSU.Museum.API.Tests.Controllers
         }
 
         [Fact]
-        public async void GetAll_RepositoryConsistsOf3Records_ShouldReturnListOf3Records()
+        public void GetAll_RepositoryConsistsOf3Records_ShouldReturnListOf3Records()
         {
             // Arrange
             const int expected = 3;
 
             // Act
-            var list = await _standsController.GetAll(HallId);
+            var list = _standsController.GetAll(HallId) as OkObjectResult;
 
             // Assert
-            Assert.Equal(expected, list.Count);
+            Assert.Equal(expected, (list.Value as List<StandDTO>).Count);
         }
 
         [Fact]
-        public async void GetAll_RepositoryIsEmpty_ShouldReturnEmptyList()
+        public void GetAll_RecordDoesNotFound_ShouldReturnNotFound()
         {
+            // Arrange
+            const int expectedStatusCode = StatusCodes.Status404NotFound;
+
             // Act
-            var list = await _standsController2.GetAll(HallId);
+            var actual = _standsController.GetAll("111111189012345678901313") as NotFoundResult;
 
             // Assert
-            Assert.Empty(list);
+            Assert.Equal(expectedStatusCode, actual.StatusCode);
+        }
+
+        [Fact]
+        public void GetAll_RepositoryIsEmpty_ShouldReturnEmptyList()
+        {
+            // Act
+            var list = _standsController2.GetAll(HallId) as OkObjectResult;
+
+            // Assert
+            Assert.Empty(list.Value as List<StandDTO>);
         }
 
         [Fact]
@@ -345,7 +359,7 @@ namespace GSU.Museum.API.Tests.Controllers
             };
 
             // Act
-            var actual = await _standsController.CreateAsync(HallId, expected) as StatusCodeResult;
+            var actual = await _standsController.CreateAsync(HallId, expected) as ObjectResult;
 
             // Assert
             Assert.Equal(StatusCodes.Status200OK, actual.StatusCode);

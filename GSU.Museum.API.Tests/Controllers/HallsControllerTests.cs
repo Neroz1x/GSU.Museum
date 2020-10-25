@@ -380,7 +380,7 @@ namespace GSU.Museum.API.Tests.Controllers
             };
 
             // Act
-            var actual = await _hallsController.CreateAsync(expected) as StatusCodeResult;
+            var actual = await _hallsController.CreateAsync(expected) as OkObjectResult;
 
             // Assert
             Assert.Equal(StatusCodes.Status200OK, actual.StatusCode);

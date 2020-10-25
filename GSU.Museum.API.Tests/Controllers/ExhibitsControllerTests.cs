@@ -129,7 +129,7 @@ namespace GSU.Museum.API.Tests.Controllers
             };
             mockRepo.Setup(repo =>
                 repo.GetAllAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync((string hallId, string standId)
-                => _halls.FirstOrDefault(h => h.Id.Equals(hallId)).Stands.FirstOrDefault(s => s.Id.Equals(standId)).Exhibits.ToList());
+                => _halls.FirstOrDefault(h => h.Id.Equals(hallId))?.Stands.FirstOrDefault(s => s.Id.Equals(standId))?.Exhibits.ToList());
 
             mockRepoEmpty.Setup(repo =>
                repo.GetAllAsync(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync((string hallId, string standId)
@@ -178,20 +178,33 @@ namespace GSU.Museum.API.Tests.Controllers
         }
 
         [Fact]
-        public async void GetAll_RepositoryConsistsOf2Records_ShouldReturnListOf2Records()
+        public void GetAll_RepositoryConsistsOf2Records_ShouldReturnListOf2Records()
         {
             // Arrange
             const int expected = 2;
 
             // Act
-            var list = await _exhibitsController.GetAll(HallId, StandId);
+            var list = _exhibitsController.GetAll(HallId, StandId) as OkObjectResult;
 
             // Assert
-            Assert.Equal(expected, list.Count);
+            Assert.Equal(expected, (list.Value as List<ExhibitDTO>).Count);
         }
 
         [Fact]
-        public async void GetAll_RecordDoesNotContainLocalizedTitle_ShouldReturnNotFounError()
+        public void GetAll_RecordDoesNotFound_ShouldReturnNotFound()
+        {
+            // Arrange
+            const int expectedStatusCode = StatusCodes.Status404NotFound;
+
+            // Act
+            var actual = _exhibitsController.GetAll(HallId, "111111189012345678901313") as NotFoundResult;
+
+            // Assert
+            Assert.Equal(expectedStatusCode, actual.StatusCode);
+        }
+
+        [Fact]
+        public void GetAll_RecordDoesNotContainLocalizedTitle_ShouldReturnNotFounError()
         {
             // Arrange
             const Errors errorCodeExpected = Errors.Not_found;
@@ -200,7 +213,7 @@ namespace GSU.Museum.API.Tests.Controllers
             // Act
             try
             {
-                var actual = await _exhibitsController.GetAll(HallId, "123456789012345678901112");
+                var actual = _exhibitsController.GetAll(HallId, "123456789012345678901112");
             }
             catch (Error err)
             {
@@ -211,13 +224,13 @@ namespace GSU.Museum.API.Tests.Controllers
         }
 
         [Fact]
-        public async void GetAll_RepositoryIsEmpty_ShouldReturnEmptyList()
+        public void GetAll_RepositoryIsEmpty_ShouldReturnNotFound()
         {
             // Act
-            var list = await _exhibitsController2.GetAll(HallId, StandId);
+            var list = _exhibitsController2.GetAll(HallId, StandId) as OkObjectResult;
 
             // Assert
-            Assert.Empty(list);
+            Assert.Empty(list.Value as List<ExhibitDTO>);
         }
 
         [Fact]
@@ -320,7 +333,7 @@ namespace GSU.Museum.API.Tests.Controllers
             };
 
             // Act
-            var actual = await _exhibitsController.CreateAsync(HallId, StandId, expected) as StatusCodeResult;
+            var actual = await _exhibitsController.CreateAsync(HallId, StandId, expected) as OkObjectResult;
 
             // Assert
             Assert.Equal(StatusCodes.Status200OK, actual.StatusCode);
