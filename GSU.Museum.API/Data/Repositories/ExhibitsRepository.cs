@@ -25,27 +25,34 @@ namespace GSU.Museum.API.Data.Repositories
 
         public async Task<string> CreateAsync(string hallId, string standId, Exhibit exhibit)
         {
-            if (exhibit.Photos != null)
+            var hall = await _halls.Find(hall => hall.Id.Equals(hallId)).FirstOrDefaultAsync();
+            var stand = hall?.Stands.FirstOrDefault(stand => stand.Id.Equals(standId));
+            
+            if (stand != null)
             {
-                foreach (var photo in exhibit.Photos)
+                if (exhibit.Photos != null)
                 {
-                    ObjectId id = await _gridFS.UploadFromBytesAsync(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), photo?.Photo);
-                    photo.Id = id.ToString();
-                    photo.Photo = null;
+                    foreach (var photo in exhibit.Photos)
+                    {
+                        ObjectId id = await _gridFS.UploadFromBytesAsync(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), photo?.Photo);
+                        photo.Id = id.ToString();
+                        photo.Photo = null;
+                    }
                 }
-            }
-            else
-            {
-                exhibit.Photos = new List<PhotoInfo>();
-            }
+                else
+                {
+                    exhibit.Photos = new List<PhotoInfo>();
+                }
 
-            var filter = Builders<Hall>.Filter.And(
-            Builders<Hall>.Filter.Where(hall => hall.Id.Equals(hallId)),
-            Builders<Hall>.Filter.Eq("Stands.Id", standId));
-            exhibit.Id = ObjectId.GenerateNewId().ToString();
-            var update = Builders<Hall>.Update.Push("Stands.$.Exhibits", exhibit);
-            await _halls.FindOneAndUpdateAsync(filter, update);
-            return exhibit.Id;
+                var filter = Builders<Hall>.Filter.And(
+                Builders<Hall>.Filter.Where(hall => hall.Id.Equals(hallId)),
+                Builders<Hall>.Filter.Eq("Stands.Id", standId));
+                exhibit.Id = ObjectId.GenerateNewId().ToString();
+                var update = Builders<Hall>.Update.Push("Stands.$.Exhibits", exhibit);
+                await _halls.FindOneAndUpdateAsync(filter, update);
+                return exhibit.Id;
+            }
+            return null;
         }
 
         public async Task<List<Exhibit>> GetAllAsync(string hallId, string standId)
@@ -134,7 +141,7 @@ namespace GSU.Museum.API.Data.Repositories
             var hall = await _halls.Find(hall => hall.Id.Equals(hallId)).FirstOrDefaultAsync();
             for (int i = 0; i < hall.Stands.Count; i++)
             {
-                if (hall.Stands[i].Id == standId)
+                if (hall?.Stands[i]?.Id == standId)
                 {
                     index1 = i;
                     break;
@@ -143,7 +150,7 @@ namespace GSU.Museum.API.Data.Repositories
 
             for (int i = 0; i < hall.Stands[index1].Exhibits.Count; i++)
             {
-                if (hall.Stands[index1].Exhibits[i].Id == id)
+                if (hall.Stands[index1]?.Exhibits[i]?.Id == id)
                 {
                     index2 = i;
                     break;

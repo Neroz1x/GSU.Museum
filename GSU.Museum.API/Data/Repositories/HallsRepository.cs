@@ -81,7 +81,7 @@ namespace GSU.Museum.API.Data.Repositories
 
         public async Task RemoveAsync(Hall hallIn)
         {
-            if (hallIn.Photo.Id != null)
+            if (hallIn?.Photo?.Id != null)
             {
                 await _gridFS.DeleteAsync(ObjectId.Parse(hallIn.Photo.Id));
             }

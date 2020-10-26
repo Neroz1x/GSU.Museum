@@ -108,6 +108,12 @@ namespace GSU.Museum.API.Controllers
             try
             {
                 var id = await _standsRepository.CreateAsync(hallId, stand);
+                
+                // If hall not found
+                if (string.IsNullOrEmpty(id))
+                {
+                    return NotFound();
+                }
                 return Ok(id);
             }
             catch (Exception)

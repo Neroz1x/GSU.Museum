@@ -25,18 +25,24 @@ namespace GSU.Museum.API.Data.Repositories
 
         public async Task<string> CreateAsync(string hallId, Stand stand)
         {
-            if (stand.Photo?.Photo != null)
-            {
-                ObjectId id = await _gridFS.UploadFromBytesAsync(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), stand.Photo.Photo);
-                stand.Photo.Id = id.ToString();
-                stand.Photo.Photo = null;
-            }
+            var hall = await _halls.Find(hall => hall.Id.Equals(hallId)).FirstOrDefaultAsync();
 
-            stand.Id = ObjectId.GenerateNewId().ToString();
-            var filter = Builders<Hall>.Filter.Eq("Id", hallId);
-            var update = Builders<Hall>.Update.Push("Stands", stand);
-            await _halls.UpdateOneAsync(filter, update);
-            return stand.Id;
+            if(hall != null)
+            {
+                if (stand.Photo?.Photo != null)
+                {
+                    ObjectId id = await _gridFS.UploadFromBytesAsync(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), stand.Photo.Photo);
+                    stand.Photo.Id = id.ToString();
+                    stand.Photo.Photo = null;
+                }
+
+                stand.Id = ObjectId.GenerateNewId().ToString();
+                var filter = Builders<Hall>.Filter.Eq("Id", hallId);
+                var update = Builders<Hall>.Update.Push("Stands", stand);
+                await _halls.UpdateOneAsync(filter, update);
+                return stand.Id;
+            }
+            return null;
         }
 
         public async Task<List<Stand>> GetAllAsync(string hallId)
@@ -72,7 +78,7 @@ namespace GSU.Museum.API.Data.Repositories
         public async Task RemoveAsync(string hallId, string id)
         {
             var stand = await GetAsync(hallId, id);
-            if (stand.Photo?.Id != null)
+            if (stand?.Photo?.Id != null)
             {
                 await _gridFS.DeleteAsync(ObjectId.Parse(stand.Photo.Id));
             }
@@ -88,7 +94,7 @@ namespace GSU.Museum.API.Data.Repositories
             {
                 await _gridFS.DeleteAsync(ObjectId.Parse(stand.Photo.Id));
             }
-            if (stand.Photo?.Photo != null)
+            if (stand?.Photo?.Photo != null)
             {
                 ObjectId photoId = await _gridFS.UploadFromBytesAsync(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fffffff"), stand.Photo.Photo);
                 stand.Photo.Id = photoId.ToString();

@@ -110,11 +110,17 @@ namespace GSU.Museum.API.Controllers
             try
             {
                 var id = await _exhibitsRepository.CreateAsync(hallId, standId, exhibit);
+                
+                // If hall or stand not found
+                if (string.IsNullOrEmpty(id))
+                {
+                    return NotFound();
+                }
                 return Ok(id);
             }
             catch (Exception)
             {
-                throw new Error(Errors.Create_error, $"Can not add record {exhibit}");
+                throw new Error(Errors.Create_error, $"Can not create record {exhibit}");
             }
         }
 
