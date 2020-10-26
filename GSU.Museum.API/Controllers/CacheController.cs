@@ -43,25 +43,25 @@ namespace GSU.Museum.API.Controllers
             return Ok();
         }
 
-        [HttpGet("GetDB")]
-        public async Task<IActionResult> GetDB(int? version)
-        {
-            //if(version != null)
-            //{
-            //    if(await _cacheService.IsUpToDate(version.Value, Request))
-            //    {
-            //        return NoContent();
-            //    }
-            //}
-            Stream stream = _cacheService.GetCahceDB(Request);
+        //[HttpGet("GetDB")]
+        //public async Task<IActionResult> GetDB(int? version)
+        //{
+        //    //if(version != null)
+        //    //{
+        //    //    if(await _cacheService.IsUpToDate(version.Value, Request))
+        //    //    {
+        //    //        return NoContent();
+        //    //    }
+        //    //}
+        //    Stream stream = _cacheService.GetCahceDB(Request);
 
-            if (stream == null)
-            {
-                return NotFound();
-            }
+        //    if (stream == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return File(stream, "application/octet-stream");
-        }
+        //    return File(stream, "application/octet-stream");
+        //}
 
         [HttpGet("GetDBSHM")]
         public IActionResult GetDBSHM()
