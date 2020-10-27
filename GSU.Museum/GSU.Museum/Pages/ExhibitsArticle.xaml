@@ -47,13 +47,13 @@
                 <StackLayout IsVisible="{Binding CarouselVisibility}">
                     <CarouselView
                         ItemsSource="{Binding Photos}"
-                                  Margin="5, 0"
-                                  IndicatorView="indicator"
-                                  Style="{StaticResource DefaultCarouselView}" >
+                        Margin="5, 0"
+                        IndicatorView="indicator"
+                        Style="{StaticResource DefaultCarouselView}" >
                         <CarouselView.ItemTemplate>
                             <DataTemplate>
-                                <ImageButton Aspect="AspectFit" BackgroundColor="Transparent" Source="{Binding }">
-                                </ImageButton>
+                                <Image Aspect="AspectFit" BackgroundColor="Transparent" Source="{Binding }">
+                                </Image>
                             </DataTemplate>
                         </CarouselView.ItemTemplate>
                     </CarouselView>

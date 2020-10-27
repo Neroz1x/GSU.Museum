@@ -19,11 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GSU.Museum.API.Tests", "GSU
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GSU.Museum.CommonClassLibrary", "GSU.Museum.CommonClassLibrary\GSU.Museum.CommonClassLibrary.csproj", "{13F369F3-A40B-40E1-8A4D-11DEAA286454}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "postman", "postman", "{8389DEBA-83F9-44C6-BB85-B3EF90B2B1EC}"
-	ProjectSection(SolutionItems) = preProject
-		C:\Users\ilyag\Desktop\GSU.Museum.API.postman_collection.json = C:\Users\ilyag\Desktop\GSU.Museum.API.postman_collection.json
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -142,7 +137,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{AD21A358-6AEA-4387-98E3-A82B7D74DC24} = {C35CD4CB-FD97-4DA8-96CF-5589E2D2CA70}
-		{8389DEBA-83F9-44C6-BB85-B3EF90B2B1EC} = {C35CD4CB-FD97-4DA8-96CF-5589E2D2CA70}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {67B26107-F819-44AA-B985-7AA3EA78D2B4}
