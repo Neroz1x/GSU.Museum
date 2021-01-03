@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GSU.Museum.Shared.Pages.ExhibitGallery"
+             Appearing="ContentPage_Appearing"
+             xmlns:resources="clr-namespace:GSU.Museum.Shared.Resources"
+             BackgroundImageSource="Background.jpg"
+             >
+    <NavigationPage.HasNavigationBar>false</NavigationPage.HasNavigationBar>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" BackgroundColor="Transparent" HorizontalOptions="FillAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.15*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="0.15*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="2"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Image Source="BackArrow.png" Style="{StaticResource LeftArrowImage}">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateBackCommand}"></TapGestureRecognizer>
+                </Image.GestureRecognizers>
+            </Image>
+            <Label Grid.Column="1" 
+                    VerticalOptions="Center" 
+                    Text="{Binding Title}"
+                    Style="{StaticResource PageTitle}"/>
+            <Image Source="HomeIcon.png" Style="{StaticResource HomeImage}">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToHomePageCommand}"></TapGestureRecognizer>
+                </Image.GestureRecognizers>
+            </Image>
+            <BoxView HeightRequest="2" BackgroundColor="White" Grid.Row="1" Grid.ColumnSpan="3"></BoxView>
+        </Grid>
+        <ScrollView VerticalScrollBarVisibility="Always" Grid.Row="1">
+            <StackLayout Orientation="Vertical" Margin="5">
+                <Grid Margin="0, 20, 0, 20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.2*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.2*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Image x:Name="LeftArrow" BackgroundColor="Transparent" Source="LeftArrow.png" Grid.Column="0" WidthRequest="20" HeightRequest="20">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="ShowPrevious"></TapGestureRecognizer>
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <Image x:Name="RightArrow" BackgroundColor="Transparent" Source="RightArrow.png" Grid.Column="2" WidthRequest="20" HeightRequest="20">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="ShowNext"></TapGestureRecognizer>
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <Label Grid.Column="1" HorizontalOptions="Center" FontSize="Large" TextColor="White" x:Name="NavigationLabel"></Label>
+                </Grid>
+                <StackLayout IsVisible="{Binding CarouselVisibility}">
+                    <CarouselView
+                            x:Name="Carousel"
+                            PositionChanged="CarouselView_PositionChanged"
+                                ItemsSource="{Binding Photos}"
+                                Margin="5, 0"
+                                >
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Orientation="Vertical">
+                                    <Frame Padding="3" BackgroundColor="White" HorizontalOptions="Center">
+                                        <Image Style="{StaticResource CarouselViewImage}" Aspect="AspectFit" BackgroundColor="Transparent" Source="{Binding Photo, Converter={StaticResource ByteArrayToImage}}">
+                                        </Image>
+                                    </Frame>
+                                    <Label Style="{StaticResource DefaultLabel}" HorizontalOptions="Center" Text="{Binding Description}"/>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

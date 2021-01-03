@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="GSU.Museum.Shared.Pages.OptionsPage"
+             Disappearing="ContentPage_Disappearing"
+             BackgroundImageSource="Background.jpg"
+             >
+    <NavigationPage.HasNavigationBar>false</NavigationPage.HasNavigationBar>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" BackgroundColor="Transparent" HorizontalOptions="FillAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.15*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="2"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Image Source="BackArrow.png" Style="{StaticResource LeftArrowImage}">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateBackCommand}"></TapGestureRecognizer>
+                </Image.GestureRecognizers>
+            </Image>
+            <Label Grid.Column="1" 
+                    VerticalOptions="Center" 
+                    Text="{Binding Title}" 
+                    Style="{StaticResource PageTitle}"/>
+            <BoxView HeightRequest="2" BackgroundColor="White" Grid.Row="1" Grid.ColumnSpan="2"></BoxView>
+        </Grid>
+        <ScrollView Grid.Row="1">
+            <StackLayout Orientation="Vertical" Padding="10, 0">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
+                    <Label Style="{StaticResource OptionsSectionLabelHeader}" Text="{Binding LanguageSectionTitle}"></Label>
+                    <BoxView Style="{StaticResource LineForOptions}"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical" Padding="10, 0, 0, 0">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
+                        <Label HorizontalOptions="StartAndExpand" Style="{StaticResource OptionsLabelHeader}" Text="{Binding LanguageLabel}"/>
+                        <StackLayout >
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ShowPopupCommand}"></TapGestureRecognizer>
+                            </StackLayout.GestureRecognizers>
+                            <Label FontSize="Large" 
+                                VerticalOptions="Center"
+                                HorizontalOptions="End" TextColor="White" Text="{Binding Language}">
+                            </Label>
+                            <BoxView Margin="0" HorizontalOptions="Fill" BackgroundColor="#1976D2" HeightRequest="2"></BoxView>
+                        </StackLayout>
+                    </StackLayout>
+                    <Label Style="{StaticResource OptionsLabelDescription}" Text="{Binding LanguageDescriptionLabel}"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
+                    <Label Style="{StaticResource OptionsSectionLabelHeader}" Text="{Binding UseCacheSectionTitle}"></Label>
+                    <BoxView Style="{StaticResource LineForOptions}"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical" Padding="10, 0, 0, 0">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                        <Label Style="{StaticResource OptionsLabelHeader}" Text="{Binding UseCacheLabel}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer  CommandParameter="0"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <CheckBox HorizontalOptions="Fill" 
+                                  VerticalOptions="Center"
+                                  IsChecked="{Binding UseCacheIsChecked}"
+                                  x:Name="UseCacheCheckBox" IsEnabled="True"
+                            />
+                    </StackLayout>
+                    <Label Style="{StaticResource OptionsLabelDescription}" Text="{Binding UseCacheDescriptionLabel}"/>
+                </StackLayout>
+
+                <!--IsVisible="{Binding Source={x:Reference UseCacheCheckBox}, Path=IsChecked}"-->
+                <StackLayout IsVisible="False" Orientation="Vertical" Padding="10, 0, 0, 0">
+                    <StackLayout Orientation="Vertical">
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                            <Label Style="{StaticResource OptionsLabelHeader}" Text="{Binding CheckForUpdatesLabel}">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer  CommandParameter="1"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <RadioButton HorizontalOptions="Fill" VerticalOptions="Center" 
+                                IsChecked="True"
+                                IsEnabled="False"
+                                GroupName="CacheStrategy"
+                            />
+                        </StackLayout>
+                        <Label Style="{StaticResource OptionsLabelDescription}" Text="{Binding CheckForUpdatesDescriptionLabel}"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical">
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                            <Label Style="{StaticResource OptionsLabelHeader}" Text="{Binding UseOnlyCacheLabel}">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer  CommandParameter="2"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <RadioButton HorizontalOptions="Fill" VerticalOptions="Center" 
+                                IsChecked="False" IsEnabled="False"
+                                GroupName="CacheStrategy"
+                            />
+                        </StackLayout>
+                        <Label Style="{StaticResource OptionsLabelDescription}" Text="{Binding UseOnlyCacheDescriptionLabel}"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical" IsVisible="False">
+                        <Button Style="{StaticResource DefaultButton}" Text="Load cache" Command="{Binding LoadCacheCommand}"></Button>
+                        <Button Style="{StaticResource DefaultButton}" Text="Clear cache" Command="{Binding ClearCacheCommand}"></Button>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+        <ContentView x:Name="Popup" 
+                     Grid.RowSpan="2"
+                     BackgroundColor="#55000000" 
+                     Padding="30, 0"
+                     Opacity="1"
+                     IsVisible="{Binding IsVisibleLanguageSelection}">
+            <StackLayout x:Name="RadioGroup" BackgroundColor="White" HorizontalOptions="Fill" VerticalOptions="Center">
+                <StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <RadioButton x:Name="EnRadioButton" 
+                                     IsChecked="{Binding IsSelectedEnglish}"
+                                     Style="{StaticResource PopupRadioButton}" 
+                                     Text="English"></RadioButton>
+                        <Image Style="{StaticResource FlagImage}" Source="FlagUK.png">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="EnFlag_Tapped"></TapGestureRecognizer>
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <RadioButton x:Name="RuRadioButton" 
+                                     IsChecked="{Binding IsSelectedRussian}"
+                                     Style="{StaticResource PopupRadioButton}" 
+                                     Text="Русский"></RadioButton>
+                        <Image Style="{StaticResource FlagImage}" Source="FlagRussia.png">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="RuFlag_Tapped"></TapGestureRecognizer>
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <RadioButton x:Name="BeRadioButton" 
+                                     IsChecked="{Binding IsSelectedBelorussian}"
+                                     Style="{StaticResource PopupRadioButton}" 
+                                     Text="Беларуская"></RadioButton>
+                        <Image Style="{StaticResource FlagImage}" Source="FlagBelarus.png">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="BeFlag_Tapped"></TapGestureRecognizer>
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </StackLayout>
+                </StackLayout>
+                <Button BackgroundColor="Transparent" 
+                        FontSize="Medium" 
+                        Text="{Binding CancelButton}" 
+                        Command="{Binding CancelCommand}" 
+                        TextColor="#1976D2" 
+                        HorizontalOptions="End" 
+                        VerticalOptions="End"></Button>
+            </StackLayout>
+        </ContentView>
+    </Grid>
+</ContentPage>

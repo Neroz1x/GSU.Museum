@@ -9,4 +9,6 @@ Please, ensure your pull request adheres to the following guidelines:
 * Keep descriptions short and simple, but descriptive.
 * Start the description with a capital and end with a full stop/period.
 * Check your spelling and grammar.
+
+
 Thank you for your suggestions!

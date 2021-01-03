@@ -16,6 +16,36 @@ a {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
+  line-height:1.2em;
+}
+
+.btn-warning{
+    color:white;
+}
+
+.btn-warning:hover {
+    color: white;
+}
+
+.btn-warning:active:focus{
+    color: white;
+    background-color:black;
+}
+
+.btn-warning:not(:disabled):not(.disabled):active,
+.btn-warning:not(:disabled):not(.disabled).active,
+.btn-warning:not(:disabled):not(.disabled):active:focus,
+.btn-warning:not(:disabled):not(.disabled).active:focus,
+.btn-warning:focus, .btn-warning.focus {
+    color: white;
+}
+
+.btn-small{
+    padding:0px;
+    min-height:1.2em;
+    min-width:1.2em;
+    height:1.2em;
+    width:1.2em;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
@@ -68,4 +98,293 @@ body {
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+}
+
+
+[data-toggle="collapse"] .fa:before {
+    content: "\f107";
+}
+
+[data-toggle="collapse"].collapsed .fa:before {
+    content: "\f105";
+}
+
+@media screen and (max-height: 450px) {
+    .sidebar {
+        padding-top: 120px;
+    }
+
+    #content {
+        margin-left: 120px;
+    }
+}
+
+@media screen and (max-height: 800px) {
+    .sidebar {
+        padding-top: 330px;
+    }
+
+    #content {
+        margin-left: 330px;
+    }
+}
+
+@media screen and (max-height: 1280px) {
+    .sidebar {
+        padding-top: 450px;
+    }
+
+    #content {
+        margin-left: 450px;
+    }
+}
+
+.sidebar {
+    height: calc(100% - 116px);
+    position: absolute;
+    top: 56px;
+    left: 0;
+    z-index: 1;
+    width: 350px;
+    background-color: #f8f8f8;
+    box-shadow: inset -7px 0 9px -7px rgba(0,0,0,0.1), inset 0 -7px 9px -7px rgba(0,0,0,0.1), inset 0 7px 9px -7px rgba(0,0,0,0.1);
+}
+
+.sidebarcontent {
+    height: 100%;
+    overflow-y: auto;
+    border-color: transparent; background-color:transparent;
+}
+
+#resizer {
+    background-color: transparent;
+    width: 8px;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    cursor: ew-resize;
+}
+
+#content{
+    margin-left:350px;
+    padding-left:50px;
+}
+
+.a-header-halls {
+    font-size: large;
+    font-weight: 500;
+    color: black;
+    text-decoration: none;
+    z-index: 0;
+}
+
+.a-header {
+    font-size: large;
+    font-weight: 500;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+    z-index:0;
+}
+
+.btn-arrow {
+    padding:2px;
+    font-size:large;
+    color: #7a7a7a;
+    cursor:pointer;
+}
+
+.btn-arrow:hover {
+    color: #5b5b5b;
+    cursor: pointer;
+}
+
+.a-btn {
+    font-size: medium;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.a-btn:hover {
+    font-size: medium;
+    color: black;
+    text-decoration: none;
+}
+
+.btn-add {
+    min-width: 1.3em;
+    min-height: 1.3em;
+    width: 1.3em;
+    height: 1.3em;
+    padding: 0px;
+    line-height: 1.3em;
+    margin-left: auto;
+    background-color: white;
+    color: #7a7a7a;
+}
+
+.menuItem {
+    cursor: pointer;
+    color: #7a7a7a;
+}
+
+.menuItem:hover {
+    cursor: pointer;
+    background-color: #e9e9e9;
+}
+
+.menuItem:first-child{
+    padding-right: 1.5em;
+}
+
+.menu-item-stand:first-child {
+    margin-top: 10px;
+    padding-left: 36px;
+}
+
+.menu-item-hall:first-child {
+    margin-top: 10px;
+    padding-left: 18px;
+}
+
+.btn-add-visible {
+    margin-top:10px;
+    background-color: #e9e9e9;
+    font-weight:500;
+    max-width: 180px;
+    line-height: 1.2em;
+    border-radius: 20px;
+    line-height: 1.2em;
+}
+
+.btn-add-visible:hover {
+    background-color: #d3d3d3;
+}
+
+.plus-svg{
+    padding-bottom:4px;
+}
+
+.img-small-loaded{
+    width: 100px;
+    height: 100px;
+}
+
+.textarea-static{
+    resize: none;
+}
+
+.btn-close {
+    background-color: ivory;
+    width: 20px;
+    height: 20px;
+    vertical-align: top;
+    margin-left: -10px;
+    margin-top:-10px;
+    border-radius: 5px;
+    box-shadow: none;
+    text-align: center;
+    border: 1px solid #6c757d;
+    line-height: 14px;
+    font: -webkit-control;
+}
+
+.btn-form{
+    width:180px;
+    height:40px;
+}
+
+.selected-item {
+}
+
+.selected-item a{
+    color:black !important;
+}
+
+.img-btn{
+    margin-left:4px;
+    margin-right: 4px;
+    margin-bottom: 2px;
+    margin-top: 2px;
+}
+
+.lds-facebook {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.lds-facebook div {
+display: inline-block;
+position: absolute;
+left: 8px;
+width: 16px;
+background: #1a1db9;
+animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+
+.lds-facebook div:nth-child(1) {
+    left: 8px;
+    animation-delay: -0.24s;
+}
+
+.lds-facebook div:nth-child(2) {
+    left: 32px;
+    animation-delay: -0.12s;
+}
+
+.lds-facebook div:nth-child(3) {
+    left: 56px;
+    animation-delay: 0;
+}
+
+@keyframes lds-facebook {
+    0% {
+        top: 8px;
+        height: 64px;
+    }
+
+    50%, 100% {
+        top: 24px;
+        height: 32px;
+    }
+}
+
+.field-validation-error {
+    margin-left: 10px;
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+#content{
+    margin-right: 10%;
+}
+
+.overflow {
+    text-overflow: clip;
+    white-space: nowrap;
+    overflow: hidden;
+    display:block;
 }

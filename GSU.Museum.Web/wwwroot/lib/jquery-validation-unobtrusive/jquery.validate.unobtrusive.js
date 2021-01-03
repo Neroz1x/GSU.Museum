@@ -149,7 +149,8 @@
                     success: function () {
                         onSuccess.apply(form, arguments);
                         execInContext("success", arguments);
-                    }
+                    },
+                    onfocusout: function (element) { $(element).valid(); }
                 },
                 attachValidation: function () {
                     $form

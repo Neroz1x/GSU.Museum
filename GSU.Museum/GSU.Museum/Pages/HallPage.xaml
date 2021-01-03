@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="GSU.Museum.Shared.Pages.HallPage"
+             Appearing="ContentPage_Appearing"
+             Disappearing="ContentPage_Disappearing"
+             xmlns:resources="clr-namespace:GSU.Museum.Shared.Resources"
+             BackgroundImageSource="Background.jpg">
+    <NavigationPage.HasNavigationBar>false</NavigationPage.HasNavigationBar>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" BackgroundColor="Transparent" HorizontalOptions="FillAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.15*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="0.15*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="2"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Image Source="BackArrow.png" Style="{StaticResource LeftArrowImage}">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateBackCommand}"></TapGestureRecognizer>
+                </Image.GestureRecognizers>
+            </Image>
+            <Label Grid.Column="1" 
+                    VerticalOptions="Center" 
+                    Text="{Binding Title}" 
+                    Style="{StaticResource PageTitle}"/>
+            <Image Source="HomeIcon.png" Style="{StaticResource HomeImage}">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToHomePageCommand}"></TapGestureRecognizer>
+                </Image.GestureRecognizers>
+            </Image>
+            <BoxView Margin="0" HeightRequest="2" BackgroundColor="White" Grid.Row="1" Grid.ColumnSpan="3"></BoxView>
+        </Grid>
+        <CollectionView x:Name="StandsCollectionView" Grid.Row="1" Style="{StaticResource DefaultCollectionView}"
+            IsVisible="{Binding ContentVisibility}"
+            ItemsSource="{Binding Stands}"
+            HeightRequest="{Binding CollectionViewHeight}"
+            SelectionChangedCommand="{Binding SelectStandCommand}"
+            SelectionChangedCommandParameter="{Binding SelectedItem.Id, Source={x:Reference StandsCollectionView}}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="20" Orientation="Vertical"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame 
+                            Style="{StaticResource TransparentMenuItem}">
+                        <Grid >
+                            <Image Source="Photo.png"></Image>
+                            <Image Style="{StaticResource MenuImage}"
+                                       Source="{Binding Photo.Photo, Converter={StaticResource ByteArrayToImage}}" />
+                            <StackLayout Style="{StaticResource TextBackground}"></StackLayout>
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label Style="{StaticResource WhiteTransparentMenuItemHeader}" Text="{Binding Title}"></Label>
+                                <Label Style="{StaticResource WhiteTransparentMenuItemBody}" Text="{Binding Description}"></Label>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <StackLayout 
+            Grid.RowSpan="2"
+            Style="{StaticResource LoaderBackground}" IsVisible="{Binding IsBusy}">
+            <ActivityIndicator  
+            Style="{StaticResource Loader}"/>
+        </StackLayout>
+    </Grid>
+</ContentPage>

@@ -2,10 +2,201 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:converters="clr-namespace:GSU.Museum.Shared.Converters"
              mc:Ignorable="d"
              x:Class="GSU.Museum.App">
     <Application.Resources>
+        <ResourceDictionary>
+            <converters:ByteToImageSourceConverter x:Key="ByteArrayToImage" />
+        </ResourceDictionary>
 
+        <Style TargetType="Image" x:Key="HomePageIcons">
+            <Setter Property="VerticalOptions" Value="Center"></Setter>
+            <Setter Property="WidthRequest" Value="14"></Setter>
+            <Setter Property="HeightRequest" Value="14"></Setter>
+        </Style>
+        
+        <Style TargetType="RadioButton" x:Key="PopupRadioButton">
+            <Setter Property="Margin" Value="10, 15"></Setter>
+            <Setter Property="FontSize" Value="Medium"></Setter>
+            <Setter Property="GroupName" Value="Languages"></Setter>
+        </Style>
+
+        <Style TargetType="Image" x:Key="FlagImage">
+            <Setter Property="WidthRequest" Value="50"></Setter>
+            <Setter Property="HeightRequest" Value="20"></Setter>
+        </Style>
+        
+        <Style TargetType="BoxView" x:Key="LineForOptions">
+            <Setter Property="BackgroundColor" Value="#ff2196f3"></Setter>
+            <Setter Property="HeightRequest" Value="2"></Setter>
+            <Setter Property="VerticalOptions" Value="Center"></Setter>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"></Setter>
+        </Style>
+
+        <Style TargetType="Label" x:Key="OptionsSectionLabelHeader">
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="TextColor" Value="#ff2196f3"/>
+        </Style>
+
+        <Style TargetType="Label" x:Key="OptionsLabelHeader">
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="VerticalOptions" Value="Center"></Setter>
+        </Style>
+        <Style TargetType="Label" x:Key="OptionsLabelDescription">
+            <Setter Property="FontSize" Value="Medium"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="Padding" Value="10, 0, 0, 0"/>
+        </Style>
+
+        <Style TargetType="Label" x:Key="PageTitle">
+            <Setter Property="FontSize" Value="Large"></Setter>
+            <Setter Property="TextColor" Value="White"></Setter>
+        </Style>
+
+        <Style TargetType="Image" x:Key="MenuImage">
+            <Setter Property="Aspect" Value="AspectFill"></Setter>
+            <Setter Property="BackgroundColor" Value="Transparent"></Setter>
+        </Style>
+
+        <Style TargetType="Image" x:Key="LeftArrowImage">
+            <Setter Property="Grid.Column" Value="0"></Setter>
+            <Setter Property="HorizontalOptions" Value="Center"></Setter>
+            <Setter Property="HeightRequest" Value="18"></Setter>
+            <Setter Property="WidthRequest" Value="18"></Setter>
+            <Setter Property="Margin" Value="10, 0, 5, 0"></Setter>
+            <Setter Property="Aspect" Value="AspectFit"></Setter>
+        </Style>
+
+        <Style TargetType="Image" x:Key="HomeImage">
+            <Setter Property="Grid.Column" Value="2"></Setter>
+            <Setter Property="HeightRequest" Value="22"></Setter>
+            <Setter Property="WidthRequest" Value="22"></Setter>
+            <Setter Property="HorizontalOptions" Value="Center"></Setter>
+            <Setter Property="Margin" Value="5, 0"></Setter>
+            <Setter Property="Aspect" Value="AspectFit"></Setter>
+        </Style>
+
+        <Style TargetType="Label" x:Key="LoaderBackground">
+            <Setter Property="HorizontalOptions" Value="Fill"/>
+            <Setter Property="VerticalOptions" Value="Fill"/>
+            <Setter Property="BackgroundColor" Value="#AA000000"/>
+        </Style>
+
+        <Style TargetType="ActivityIndicator" x:Key="Loader">
+            <Setter Property="IsRunning" Value="True"/>
+            <Setter Property="Color" Value="White"/>
+            <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+        </Style>
+
+        <Style TargetType="CollectionView" x:Key="DefaultCollectionView">
+            <Setter Property="SelectionMode" Value="Single"></Setter>
+            <Setter Property="VerticalOptions" Value="Center"></Setter>
+            <Setter Property="Margin" Value="20"></Setter>
+        </Style>
+        
+        <Style TargetType="Frame" x:Key="TransparentMenuItem">
+            <Setter Property="Visual" Value="Material"></Setter>
+            <Setter Property="Padding" Value="3"></Setter>
+            <Setter Property="BackgroundColor" Value="White"></Setter>
+            <Setter Property="HasShadow" Value="False"></Setter>
+            <Setter Property="IsClippedToBounds" Value="True"></Setter>
+            <Setter Property="CornerRadius" Value="10"></Setter>
+        </Style>
+        
+        <Style TargetType="Frame" x:Key="HomePageMenuItem">
+            <Setter Property="CornerRadius" Value="10"></Setter>
+            <Setter Property="Margin" Value="0, 10"></Setter>
+            <Setter Property="BackgroundColor" Value="#1976D2"></Setter>
+            <Setter Property="WidthRequest">
+                <OnIdiom x:TypeArguments="x:Double" Phone="300" Tablet="500"></OnIdiom>
+            </Setter>
+            <Setter Property="HorizontalOptions" Value="Center"></Setter>
+        </Style>
+
+        <Style TargetType="Label" x:Key="DefaultMenuItemHeader">
+            <Setter Property="HorizontalOptions" Value="Start"></Setter>
+            <Setter Property="HorizontalTextAlignment" Value="Center"></Setter>
+            <Setter Property="TextColor" Value="White"></Setter>
+            <Setter Property="VerticalOptions" Value="Start"></Setter>
+            <Setter Property="FontSize" Value="Large"></Setter>
+            <Setter Property="Padding" Value="10,0"></Setter>
+        </Style>
+
+        <Style TargetType="StackLayout" x:Key="TextBackground">
+            <Setter Property="BackgroundColor" Value="#7f000000"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+        </Style>
+        
+        <Style TargetType="Label" x:Key="WhiteTransparentMenuItemHeader">
+            <Setter Property="BackgroundColor" Value="##00000000"></Setter>
+            <Setter Property="HorizontalOptions" Value="Center"></Setter>
+            <Setter Property="HorizontalTextAlignment" Value="Center"></Setter>
+            <Setter Property="TextColor" Value="White"></Setter>
+            <Setter Property="VerticalOptions" Value="Center"></Setter>
+            <Setter Property="FontSize" Value="Large"></Setter>
+            <Setter Property="Margin" Value="0, 5, 0, 0"></Setter>
+            <Setter Property="Padding" Value="10,0"></Setter>
+        </Style>
+
+        <Style TargetType="Label" x:Key="DefaultMenuItemBody">
+            <Setter Property="HorizontalOptions" Value="Center"></Setter>
+            <Setter Property="HorizontalOptions" Value="Center"></Setter>
+            <Setter Property="TextColor" Value="White"></Setter>
+            <Setter Property="Margin" Value="15, 0"></Setter>
+            <Setter Property="Padding" Value="10, 0"></Setter>
+            <Setter Property="VerticalOptions" Value="Center"></Setter>
+            <Setter Property="FontSize" Value="Medium"></Setter>
+        </Style>
+
+        <Style TargetType="Label" x:Key="WhiteTransparentMenuItemBody">
+            <Setter Property="HorizontalOptions" Value="Center"></Setter>
+            <Setter Property="HorizontalTextAlignment" Value="Center"></Setter>
+            <Setter Property="BackgroundColor" Value="##00000000"></Setter>
+            <Setter Property="TextColor" Value="White"></Setter>
+            <Setter Property="Margin" Value="15, 0"></Setter>
+            <Setter Property="Padding" Value="10, 0"></Setter>
+            <Setter Property="VerticalOptions" Value="Center"></Setter>
+            <Setter Property="FontSize" Value="Medium"></Setter>
+            <Setter Property="Padding" Value="10,0"></Setter>
+        </Style>
+
+        <Style TargetType="Label" x:Key="DefaultLabel">
+            <Setter Property="FontSize">
+                <OnIdiom x:TypeArguments="x:Double" Phone="18" Tablet="22"></OnIdiom>
+            </Setter>
+            <Setter Property="Margin" Value="10"></Setter>
+            <Setter Property="TextColor" Value="White"></Setter>
+        </Style>
+
+        <Style TargetType="IndicatorView" x:Key="DefaultIndicator">
+            <Setter Property="IndicatorColor" Value="White"></Setter>
+            <Setter Property="HideSingle" Value="True"></Setter>
+            <Setter Property="SelectedIndicatorColor" Value="#1976D2"></Setter>
+            <Setter Property="HorizontalOptions" Value="Center"></Setter>
+            <Setter Property="IndicatorSize" Value="10"></Setter>
+        </Style>
+
+        <Style TargetType="CarouselView" x:Key="DefaultCarouselView">
+            <Setter Property="HeightRequest">
+                <OnIdiom x:TypeArguments="x:Double" Phone="300" Tablet="500"></OnIdiom>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Image" x:Key="CarouselViewImage">
+            <Setter Property="HeightRequest">
+                <OnIdiom x:TypeArguments="x:Double" Phone="300" Tablet="500"></OnIdiom>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button" x:Key="DefaultButton">
+            <Setter Property="Margin" Value="10, 10, 0, 0"></Setter>
+            <Setter Property="BackgroundColor" Value="#ff2196f3"></Setter>
+            <Setter Property="FontSize" Value="Medium"></Setter>
+            <Setter Property="HorizontalOptions" Value="Start"></Setter>
+            <Setter Property="TextColor" Value="White"></Setter>
+        </Style>
     </Application.Resources>
 </Application>

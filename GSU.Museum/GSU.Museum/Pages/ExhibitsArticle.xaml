@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:Controls="clr-namespace:GSU.Museum.Shared.Controls"
+             mc:Ignorable="d"
+             x:Class="GSU.Museum.Shared.Pages.ExhibitsArticle"
+             Appearing="ContentPage_Appearing"
+             xmlns:resources="clr-namespace:GSU.Museum.Shared.Resources"
+             BackgroundImageSource="Background.jpg"
+             >
+    <NavigationPage.HasNavigationBar>false</NavigationPage.HasNavigationBar>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" BackgroundColor="Transparent" HorizontalOptions="FillAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.15*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="0.15*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="2"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Image Source="BackArrow.png" Style="{StaticResource LeftArrowImage}">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateBackCommand}"></TapGestureRecognizer>
+                </Image.GestureRecognizers>
+            </Image>
+            <Label Grid.Column="1" 
+                    VerticalOptions="Center" 
+                    Text="{Binding Title}" 
+                    Style="{StaticResource PageTitle}"/>
+            <Image Source="HomeIcon.png" Style="{StaticResource HomeImage}">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToHomePageCommand}"></TapGestureRecognizer>
+                </Image.GestureRecognizers>
+            </Image>
+            <BoxView HeightRequest="2" BackgroundColor="White" Grid.Row="1" Grid.ColumnSpan="3"></BoxView>
+        </Grid>
+        <ScrollView VerticalScrollBarVisibility="Always" Grid.Row="1">
+            <StackLayout Orientation="Vertical" Margin="5">
+                <StackLayout IsVisible="{Binding CarouselVisibility}">
+                    <CarouselView
+                        ItemsSource="{Binding Photos}"
+                        Margin="5, 0"
+                        IndicatorView="indicator"
+                        Style="{StaticResource DefaultCarouselView}" >
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate>
+                                <Image Aspect="AspectFit" BackgroundColor="Transparent" Source="{Binding }">
+                                </Image>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                    <IndicatorView
+                        IsVisible="{Binding IndicatorVisibility}"
+                        x:Name="indicator"
+                        Style="{StaticResource DefaultIndicator}" IndicatorsShape="Square">
+                    </IndicatorView>
+                </StackLayout>
+
+                <Controls:JustifiedLabel Text="{Binding Text}" 
+                                         Style="{StaticResource DefaultLabel}"/>
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

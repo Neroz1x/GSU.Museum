@@ -1,0 +1,137 @@
+﻿@model GSU.Museum.Web.Models.ExhibitViewModel
+@{
+    <div class="d-flex flex-row">
+        <div>
+            <h3>@Model.TitleRu</h3>
+        </div>
+
+        <div style="margin-left:auto;" class="d-flex flex-row">
+            <button style="line-height:1.2em;margin-right:5px;" type="button" class="btn btn-warning btn-form" onclick="LoadViewFromMenu(null, '/Exhibits/Edit/@Model.Id?hallId=@ViewBag.HallId&standId=@ViewBag.StandId', false, false, event)">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                </svg>Редактировать
+            </button>
+            <button style="line-height:1.2em;" type="button" class="btn btn-danger btn-form" onclick="DeleteItem('/Exhibits/Delete/@Model.Id?hallId=@ViewBag.HallId&standId=@ViewBag.StandId', '@Model.Id', true)">
+                <svg width="1.2em" height="1.2em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z" />
+                </svg>Удалить
+            </button>
+        </div>
+    </div>
+    @if (Model.ExhibitType == GSU.Museum.CommonClassLibrary.Data.Enums.ExhibitType.Article)
+    {
+        <div class="flex-column ml-3">
+            <div class="form-group">
+                <h5>Название (BY)</h5>
+                <p class="ml-3">@Model.TitleBe</p>
+            </div>
+            <div class="form-group">
+                <h5>Название (RY)</h5>
+                <p class="ml-3">@Model.TitleRu</p>
+            </div>
+            <div class="form-group">
+                <h5>Название (EN)</h5>
+                <p class="ml-3">@Model.TitleEn</p>
+            </div>
+            <div class="form-group">
+                <h5>Описание экспоната (BY)</h5>
+                <p class="ml-3">@Model.DescriptionBe</p>
+            </div>
+            <div class="form-group">
+                <h5>Описание экспоната (RU)</h5>
+                <p class="ml-3">@Model.DescriptionRu</p>
+            </div>
+            <div class="form-group">
+                <h5>Описание экспоната (EN)</h5>
+                <p class="ml-3">@Model.DescriptionEn</p>
+            </div>
+            <div class="form-group">
+                <h5>Текст к экспонату (BY)</h5>
+                <p class="ml-3">@Model.TextBe</p>
+            </div>
+            <div class="form-group">
+                <h5>Текст к экспонату (RU)</h5>
+                <p class="ml-3">@Model.TextRu</p>
+            </div>
+            <div class="form-group">
+                <h5>Текст к экспонату (EN)</h5>
+                <p class="ml-3">@Model.TextEn</p>
+            </div>
+            <div class="form-group">
+                <h5>Фото</h5>
+                @if (Model.Photos != null && Model.Photos.Count > 0)
+                {
+                    <div id="image" class="flex-row flex-wrap ml-3">
+                        @for (int i = 0; i < Model.Photos.Count; i++)
+                        {
+                            var base64 = Convert.ToBase64String(Model.Photos[i].Photo);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                            <img class='img-thumbnail small-image img-small-loaded' src="@imgSrc" />
+                        }
+                    </div>
+                }
+                else
+                {
+                    <label class="ml-3">Нет фото</label>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="ml-3">
+            <div class="form-group">
+                <h5>Название (BY)</h5>
+                <p class="ml-3">@Model.TitleBe</p>
+            </div>
+            <div class="form-group">
+                <h5>Название (RU)</h5>
+                <p class="ml-3">@Model.TitleRu</p>
+            </div>
+            <div class="form-group">
+                <h5>Название (EN)</h5>
+                <p class="ml-3">@Model.TitleEn</p>
+            </div>
+            <div id="myCarousel" class="carousel slide ml-3" data-ride="carousel" data-interval="false" style="width:450px;">
+                <div class="carousel-inner">
+                    @foreach (var photo in Model.Photos)
+                    {
+
+                        <div class="carousel-item @(photo == Model.Photos.First() ? "active" : "")">
+
+                            <img class="d-block w-100" src="data:image/jpg;base64,@Convert.ToBase64String(photo.Photo)" />
+                            <div class="carousel-caption">
+                                <div class="form-group">
+                                    <h5>Описание фото (BY)</h5>
+                                    <p>@photo.DescriptionBe</p>
+                                </div>
+                                <div class="form-group">
+                                    <h5>Описание фото (RU)</h5>
+                                    <p>@photo.DescriptionRu</p>
+                                </div>
+                                <div class="form-group">
+                                    <h5>Описание фото (EN)</h5>
+                                    <p>@photo.DescriptionEn</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+
+                <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Предыдущий</span>
+                </a>
+                <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Следующий</span>
+                </a>
+            </div>
+        </div>
+    }
+}
+
+

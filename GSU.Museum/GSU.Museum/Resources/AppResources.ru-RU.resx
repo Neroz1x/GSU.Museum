@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Button_ExhibitSelectionPage" xml:space="preserve">
+    <value>Страницы выбора экспоната</value>
+  </data>
+  <data name="Button_HallSelectionPage" xml:space="preserve">
+    <value>Страница выбора холла</value>
+  </data>
+  <data name="Button_HomePage" xml:space="preserve">
+    <value>Домашняя страница</value>
+  </data>
+  <data name="Button_StandSelectionPage" xml:space="preserve">
+    <value>Страница выбора стенда</value>
+  </data>
+  <data name="ErrorMessage_CacheIsUpToDate" xml:space="preserve">
+    <value>Вы используете последнюю версию кеша</value>
+  </data>
+  <data name="ErrorMessage_CanNotLoadCache" xml:space="preserve">
+    <value>Не удалось загрузить кеш. Попробуйте, пожалуйста, позже</value>
+  </data>
+  <data name="ErrorMessage_InProgress" xml:space="preserve">
+    <value>Данная страница недоступна сейчас. Попробуйте, пожалуйста, позже</value>
+  </data>
+  <data name="ErrorMessage_LoadingFaild" xml:space="preserve">
+    <value>Не удалось загрузить страницу. Проверьте подключение к интернету и настройки кеширования</value>
+  </data>
+  <data name="ErrorMessage_NotFoundInCache" xml:space="preserve">
+    <value>Не удалось загрузить данные из кеша. Установите пункт "Проверять обновления" в настройках, чтобы разрешить скачивание</value>
+  </data>
+  <data name="ErrorMessage_PageNotFound" xml:space="preserve">
+    <value>Страница недоступна. Попробуйте, пожалуйста, позже</value>
+  </data>
+  <data name="ErrorMessage_ServerIsNotResponse" xml:space="preserve">
+    <value>Не удалось подключиться к серверу</value>
+  </data>
+  <data name="HallPage_MenuDescription" xml:space="preserve">
+    <value>Выберите, пожалуйста, стенд</value>
+  </data>
+  <data name="HallPage_Title" xml:space="preserve">
+    <value>выбор стенда</value>
+  </data>
+  <data name="HomePage_MainText" xml:space="preserve">
+    <value>Приложение обеспечивает виртуальный тур в музей ГГУ им. Ф. Скорины. В нем рассказывается история университета от основания до наших дней. Все данные сопровождаются историческими фотографиями и документами.</value>
+  </data>
+  <data name="HomePage_MenuItem_MainPage" xml:space="preserve">
+    <value>Выберите холл</value>
+  </data>
+  <data name="HomePage_MenuItem_Options" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="HomePage_PageTitle" xml:space="preserve">
+    <value>GSU Museum</value>
+  </data>
+  <data name="HomePage_Title" xml:space="preserve">
+    <value>Добро пожаловать в музей ГГУ им. Ф. Скорины</value>
+  </data>
+  <data name="MainPage_MenuDescription" xml:space="preserve">
+    <value>Выберите, пожалуйста, холл</value>
+  </data>
+  <data name="MainPage_Title" xml:space="preserve">
+    <value>Выбрать холл</value>
+  </data>
+  <data name="MainPage_ToolBar_Options" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="MessageBox_ButtonOk" xml:space="preserve">
+    <value>Ок</value>
+  </data>
+  <data name="MessageBox_TitleAlert" xml:space="preserve">
+    <value>Внимание</value>
+  </data>
+  <data name="MessageBox_TitleError" xml:space="preserve">
+    <value>Ошибка</value>
+  </data>
+  <data name="MessageBox_TitleInfo" xml:space="preserve">
+    <value>Информация</value>
+  </data>
+  <data name="OptionsPage_CacheSectionTitle" xml:space="preserve">
+    <value>Настройки кеширования</value>
+  </data>
+  <data name="OptionsPage_CancelButton" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="OptionsPage_CheckForUpdatesDescriptionLabel" xml:space="preserve">
+    <value>Интерент используется для проверки обнавлений сохраненных данных. Если найдены различия, то будет скачана новая версия. Интернет также используется для загрузки новых данных. Необходимо подключение к интернету</value>
+  </data>
+  <data name="OptionsPage_CheckForUpdatesLabel" xml:space="preserve">
+    <value>Проверять обновления</value>
+  </data>
+  <data name="OptionsPage_Language" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="OptionsPage_LanguageDescription" xml:space="preserve">
+    <value>Текущий язык интерфейса</value>
+  </data>
+  <data name="OptionsPage_LanguageSectionTitle" xml:space="preserve">
+    <value>Настройки языка</value>
+  </data>
+  <data name="OptionsPage_Title" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="OptionsPage_UseCacheDescriptionLabel" xml:space="preserve">
+    <value>Кеш сохраняется на устройстве. Это позволит уменьшить использование трафика</value>
+  </data>
+  <data name="OptionsPage_UseCacheLabel" xml:space="preserve">
+    <value>Использовать кеширование</value>
+  </data>
+  <data name="OptionsPage_UseOnlyCacheDescriptionLabel" xml:space="preserve">
+    <value>Будут отображаться только сохраненные данные. Не требуется подключение к интернету</value>
+  </data>
+  <data name="OptionsPage_UseOnlyCacheLabel" xml:space="preserve">
+    <value>Использовать только кеш</value>
+  </data>
+  <data name="StandPage_MenuDescription" xml:space="preserve">
+    <value>Выберите, пожалуйста, экспонат</value>
+  </data>
+  <data name="StandPage_Title" xml:space="preserve">
+    <value>выбор экспоната</value>
+  </data>
+</root>
