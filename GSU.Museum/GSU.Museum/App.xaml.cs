@@ -6,7 +6,7 @@ namespace GSU.Museum
 {
     public partial class App : Application
     {
-        public const string UriBase = "gsumuseumapiservice.azurewebsites.net";
+        public const string UriBase = "gsumuseumapi.azurewebsites.net";
 
         public static Settings Settings { get; set; }
 
