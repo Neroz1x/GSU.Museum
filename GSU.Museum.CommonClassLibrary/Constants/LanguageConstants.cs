@@ -2,15 +2,15 @@
 {
     public static class LanguageConstants
     {
-        public static string LanguageRu = "ru";
-        public static string LanguageEn = "en";
-        public static string LanguageBy = "be";
+        public const string LanguageRu = "ru";
+        public const string LanguageEn = "en";
+        public const string LanguageBy = "be";
         
-        public static string LanguageFullRu = "ru-RU";
-        public static string LanguageFullEn = "en-US";
-        public static string LanguageFullBy = "be-BY";
+        public const string LanguageFullRu = "ru-RU";
+        public const string LanguageFullEn = "en-US";
+        public const string LanguageFullBy = "be-BY";
         
-        public static string LanguageDefault = "en";
-        public static string LanguageFullDefault = "en-US";
+        public const string LanguageDefault = "en";
+        public const string LanguageFullDefault = "en-US";
     }
 }
