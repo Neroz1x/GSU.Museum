@@ -97,6 +97,24 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downloading photos.
+        /// </summary>
+        public static string DownloadingText_DownloadingPhotos {
+            get {
+                return ResourceManager.GetString("DownloadingText_DownloadingPhotos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloading text.
+        /// </summary>
+        public static string DownloadingText_DownloadingText {
+            get {
+                return ResourceManager.GetString("DownloadingText_DownloadingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cache is up-to-date.
         /// </summary>
         public static string ErrorMessage_CacheIsUpToDate {
@@ -241,11 +259,38 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you want to delete cache?.
+        /// </summary>
+        public static string MessageBox_AskRemoveCache {
+            get {
+                return ResourceManager.GetString("MessageBox_AskRemoveCache", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ok.
         /// </summary>
         public static string MessageBox_ButtonOk {
             get {
                 return ResourceManager.GetString("MessageBox_ButtonOk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string MessageBox_NoButton {
+            get {
+                return ResourceManager.GetString("MessageBox_NoButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select at least one language.
+        /// </summary>
+        public static string MessageBox_NoSelectedLanguages {
+            get {
+                return ResourceManager.GetString("MessageBox_NoSelectedLanguages", resourceCulture);
             }
         }
         
@@ -273,6 +318,15 @@ namespace GSU.Museum.Shared.Resources {
         public static string MessageBox_TitleInfo {
             get {
                 return ResourceManager.GetString("MessageBox_TitleInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string MessageBox_YesButton {
+            get {
+                return ResourceManager.GetString("MessageBox_YesButton", resourceCulture);
             }
         }
         
@@ -313,6 +367,24 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove cache.
+        /// </summary>
+        public static string OptionsPage_ClearCacheButton {
+            get {
+                return ResourceManager.GetString("OptionsPage_ClearCacheButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download.
+        /// </summary>
+        public static string OptionsPage_DownloadButton {
+            get {
+                return ResourceManager.GetString("OptionsPage_DownloadButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string OptionsPage_Language {
@@ -336,6 +408,24 @@ namespace GSU.Museum.Shared.Resources {
         public static string OptionsPage_LanguageSectionTitle {
             get {
                 return ResourceManager.GetString("OptionsPage_LanguageSectionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download cache.
+        /// </summary>
+        public static string OptionsPage_SelectCacheLanguageButton {
+            get {
+                return ResourceManager.GetString("OptionsPage_SelectCacheLanguageButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please, select language(-s) to download.
+        /// </summary>
+        public static string OptionsPage_SelectCacheLanguageLabel {
+            get {
+                return ResourceManager.GetString("OptionsPage_SelectCacheLanguageLabel", resourceCulture);
             }
         }
         

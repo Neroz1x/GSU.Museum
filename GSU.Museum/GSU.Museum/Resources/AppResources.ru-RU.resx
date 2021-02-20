@@ -129,6 +129,12 @@
   <data name="Button_StandSelectionPage" xml:space="preserve">
     <value>Страница выбора стенда</value>
   </data>
+  <data name="DownloadingText_DownloadingPhotos" xml:space="preserve">
+    <value>Загрузка фото</value>
+  </data>
+  <data name="DownloadingText_DownloadingText" xml:space="preserve">
+    <value>Загрузка текста</value>
+  </data>
   <data name="ErrorMessage_CacheIsUpToDate" xml:space="preserve">
     <value>Вы используете последнюю версию кеша</value>
   </data>
@@ -180,8 +186,17 @@
   <data name="MainPage_ToolBar_Options" xml:space="preserve">
     <value>Настройки</value>
   </data>
+  <data name="MessageBox_AskRemoveCache" xml:space="preserve">
+    <value>Вы действительно хотите удалить кеш?</value>
+  </data>
   <data name="MessageBox_ButtonOk" xml:space="preserve">
     <value>Ок</value>
+  </data>
+  <data name="MessageBox_NoButton" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="MessageBox_NoSelectedLanguages" xml:space="preserve">
+    <value>Выберите как минимум один язык</value>
   </data>
   <data name="MessageBox_TitleAlert" xml:space="preserve">
     <value>Внимание</value>
@@ -191,6 +206,9 @@
   </data>
   <data name="MessageBox_TitleInfo" xml:space="preserve">
     <value>Информация</value>
+  </data>
+  <data name="MessageBox_YesButton" xml:space="preserve">
+    <value>Да</value>
   </data>
   <data name="OptionsPage_CacheSectionTitle" xml:space="preserve">
     <value>Настройки кеширования</value>
@@ -204,6 +222,12 @@
   <data name="OptionsPage_CheckForUpdatesLabel" xml:space="preserve">
     <value>Проверять обновления</value>
   </data>
+  <data name="OptionsPage_ClearCacheButton" xml:space="preserve">
+    <value>Очистить кеш</value>
+  </data>
+  <data name="OptionsPage_DownloadButton" xml:space="preserve">
+    <value>Загрузить</value>
+  </data>
   <data name="OptionsPage_Language" xml:space="preserve">
     <value>Язык</value>
   </data>
@@ -212,6 +236,12 @@
   </data>
   <data name="OptionsPage_LanguageSectionTitle" xml:space="preserve">
     <value>Настройки языка</value>
+  </data>
+  <data name="OptionsPage_SelectCacheLanguageButton" xml:space="preserve">
+    <value>Загрузить кеш</value>
+  </data>
+  <data name="OptionsPage_SelectCacheLanguageLabel" xml:space="preserve">
+    <value>Пожалуйста, выберите язык(-и) для скачивания</value>
   </data>
   <data name="OptionsPage_Title" xml:space="preserve">
     <value>Настройки</value>

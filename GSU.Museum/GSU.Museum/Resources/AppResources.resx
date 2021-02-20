@@ -129,6 +129,12 @@
   <data name="Button_StandSelectionPage" xml:space="preserve">
     <value>Stand selection page</value>
   </data>
+  <data name="DownloadingText_DownloadingPhotos" xml:space="preserve">
+    <value>Downloading photos</value>
+  </data>
+  <data name="DownloadingText_DownloadingText" xml:space="preserve">
+    <value>Downloading text</value>
+  </data>
   <data name="ErrorMessage_CacheIsUpToDate" xml:space="preserve">
     <value>Cache is up-to-date</value>
   </data>
@@ -177,8 +183,17 @@
   <data name="MainPage_Title" xml:space="preserve">
     <value>Hall selection</value>
   </data>
+  <data name="MessageBox_AskRemoveCache" xml:space="preserve">
+    <value>Do you want to delete cache?</value>
+  </data>
   <data name="MessageBox_ButtonOk" xml:space="preserve">
     <value>Ok</value>
+  </data>
+  <data name="MessageBox_NoButton" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="MessageBox_NoSelectedLanguages" xml:space="preserve">
+    <value>Select at least one language</value>
   </data>
   <data name="MessageBox_TitleAlert" xml:space="preserve">
     <value>Alert</value>
@@ -188,6 +203,9 @@
   </data>
   <data name="MessageBox_TitleInfo" xml:space="preserve">
     <value>Info</value>
+  </data>
+  <data name="MessageBox_YesButton" xml:space="preserve">
+    <value>Yes</value>
   </data>
   <data name="OptionsPage_CacheSectionTitle" xml:space="preserve">
     <value>Cache settings</value>
@@ -201,6 +219,12 @@
   <data name="OptionsPage_CheckForUpdatesLabel" xml:space="preserve">
     <value>Check for updates</value>
   </data>
+  <data name="OptionsPage_ClearCacheButton" xml:space="preserve">
+    <value>Remove cache</value>
+  </data>
+  <data name="OptionsPage_DownloadButton" xml:space="preserve">
+    <value>Download</value>
+  </data>
   <data name="OptionsPage_Language" xml:space="preserve">
     <value>Language</value>
   </data>
@@ -209,6 +233,12 @@
   </data>
   <data name="OptionsPage_LanguageSectionTitle" xml:space="preserve">
     <value>Language settings</value>
+  </data>
+  <data name="OptionsPage_SelectCacheLanguageButton" xml:space="preserve">
+    <value>Download cache</value>
+  </data>
+  <data name="OptionsPage_SelectCacheLanguageLabel" xml:space="preserve">
+    <value>Please, select language(-s) to download</value>
   </data>
   <data name="OptionsPage_Title" xml:space="preserve">
     <value>Settings</value>
