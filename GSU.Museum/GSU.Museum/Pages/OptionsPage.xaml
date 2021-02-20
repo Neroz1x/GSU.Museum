@@ -45,7 +45,7 @@
                         <Label HorizontalOptions="StartAndExpand" Style="{StaticResource OptionsLabelHeader}" Text="{Binding LanguageLabel}"/>
                         <StackLayout >
                             <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding ShowPopupCommand}"></TapGestureRecognizer>
+                                <TapGestureRecognizer Command="{Binding ShowLanguagePopupCommand}"></TapGestureRecognizer>
                             </StackLayout.GestureRecognizers>
                             <Label FontSize="Large" 
                                 VerticalOptions="Center"
@@ -64,7 +64,7 @@
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
                         <Label Style="{StaticResource OptionsLabelHeader}" Text="{Binding UseCacheLabel}">
                             <Label.GestureRecognizers>
-                                <TapGestureRecognizer  CommandParameter="0"/>
+                                <TapGestureRecognizer Command="{Binding OnLabelTapCommand}" CommandParameter="0"/>
                             </Label.GestureRecognizers>
                         </Label>
                         <CheckBox HorizontalOptions="Fill" 
@@ -77,17 +77,17 @@
                 </StackLayout>
 
                 <!--IsVisible="{Binding Source={x:Reference UseCacheCheckBox}, Path=IsChecked}"-->
-                <StackLayout IsVisible="False" Orientation="Vertical" Padding="10, 0, 0, 0">
+                <StackLayout IsVisible="{Binding Source={x:Reference UseCacheCheckBox}, Path=IsChecked}" 
+                             Orientation="Vertical" Padding="10, 0, 0, 0">
                     <StackLayout Orientation="Vertical">
                         <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
                             <Label Style="{StaticResource OptionsLabelHeader}" Text="{Binding CheckForUpdatesLabel}">
                                 <Label.GestureRecognizers>
-                                    <TapGestureRecognizer  CommandParameter="1"/>
+                                    <TapGestureRecognizer Command="{Binding OnLabelTapCommand}" CommandParameter="1"/>
                                 </Label.GestureRecognizers>
                             </Label>
                             <RadioButton HorizontalOptions="Fill" VerticalOptions="Center" 
-                                IsChecked="True"
-                                IsEnabled="False"
+                                IsChecked="{Binding CheckForUpdatesIsSelected}"
                                 GroupName="CacheStrategy"
                             />
                         </StackLayout>
@@ -97,19 +97,19 @@
                         <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
                             <Label Style="{StaticResource OptionsLabelHeader}" Text="{Binding UseOnlyCacheLabel}">
                                 <Label.GestureRecognizers>
-                                    <TapGestureRecognizer  CommandParameter="2"/>
+                                    <TapGestureRecognizer Command="{Binding OnLabelTapCommand}" CommandParameter="2"/>
                                 </Label.GestureRecognizers>
                             </Label>
                             <RadioButton HorizontalOptions="Fill" VerticalOptions="Center" 
-                                IsChecked="False" IsEnabled="False"
+                                IsChecked="{Binding UseOnlyCacheIsSelected}"
                                 GroupName="CacheStrategy"
                             />
                         </StackLayout>
                         <Label Style="{StaticResource OptionsLabelDescription}" Text="{Binding UseOnlyCacheDescriptionLabel}"/>
                     </StackLayout>
-                    <StackLayout Orientation="Vertical" IsVisible="False">
-                        <Button Style="{StaticResource DefaultButton}" Text="Load cache" Command="{Binding LoadCacheCommand}"></Button>
-                        <Button Style="{StaticResource DefaultButton}" Text="Clear cache" Command="{Binding ClearCacheCommand}"></Button>
+                    <StackLayout Orientation="Horizontal" Margin="0, 20" IsVisible="True">
+                        <Button Style="{StaticResource DefaultButton}" Text="{Binding SelectCacheButton}" Command="{Binding ShowCachePopupCommand}"></Button>
+                        <Button Style="{StaticResource DefaultButton}" Text="{Binding ClearCacheButton}" Command="{Binding ClearCacheCommand}"></Button>
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
@@ -159,11 +159,84 @@
                 <Button BackgroundColor="Transparent" 
                         FontSize="Medium" 
                         Text="{Binding CancelButton}" 
-                        Command="{Binding CancelCommand}" 
+                        Command="{Binding CancelLanguageSelectionCommand}" 
                         TextColor="#1976D2" 
                         HorizontalOptions="End" 
                         VerticalOptions="End"></Button>
             </StackLayout>
         </ContentView>
+        <ContentView x:Name="Popup2" 
+                     Grid.RowSpan="2"
+                     BackgroundColor="#55000000" 
+                     Padding="30, 0"
+                     Opacity="1"
+                     IsVisible="{Binding IsVisibleCacheSelection}">
+            <StackLayout x:Name="CacheGroup" BackgroundColor="White" HorizontalOptions="Fill" VerticalOptions="Center">
+                <StackLayout>
+                    <Label 
+                        Margin="10, 5"
+                        HorizontalOptions="Center"
+                           FontSize="Medium"
+                           Text="{Binding SelectCacheLabel}"></Label>
+                    <StackLayout Orientation="Horizontal">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="EnCache_Tapped"></TapGestureRecognizer>
+                        </StackLayout.GestureRecognizers>
+                        <CheckBox x:Name="EnCheckBox"
+                                     IsChecked="{Binding IsSelectedEnglishCache}"
+                                     Style="{StaticResource PopupCheckBox}" 
+                                     ></CheckBox>
+                        <Label FontSize="Medium" VerticalOptions="Center" Text="English"/>
+                        <Image Style="{StaticResource FlagImage}" Source="FlagUK.png"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="RuCache_Tapped"></TapGestureRecognizer>
+                        </StackLayout.GestureRecognizers>
+                        <CheckBox x:Name="RuCheckBox" 
+                                     IsChecked="{Binding IsSelectedRussianCache}"
+                                     Style="{StaticResource PopupCheckBox}"></CheckBox>
+                        <Label FontSize="Medium" VerticalOptions="Center" Text="Русский"/>
+                        <Image Style="{StaticResource FlagImage}" Source="FlagRussia.png"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="BeCache_Tapped"></TapGestureRecognizer>
+                        </StackLayout.GestureRecognizers>
+                        <CheckBox x:Name="BeCheckBox" 
+                                     IsChecked="{Binding IsSelectedBelorussianCache}"
+                                     Style="{StaticResource PopupCheckBox}"/>
+
+                        <Label FontSize="Medium" VerticalOptions="Center" Text="Беларуская"/>
+                        <Image Style="{StaticResource FlagImage}" Source="FlagBelarus.png"/>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Button BackgroundColor="Transparent" 
+                        FontSize="Medium" 
+                        Text="{Binding CancelButton}" 
+                        Command="{Binding CancelCacheSelectionCommand}" 
+                        TextColor="#1976D2" 
+                        HorizontalOptions="Start" 
+                        VerticalOptions="End"></Button>
+                    <Button BackgroundColor="Transparent" 
+                        FontSize="Medium" 
+                        Text="{Binding DownloadButton}" 
+                        Command="{Binding LoadCacheCommand}" 
+                        TextColor="#1976D2" 
+                        HorizontalOptions="End" 
+                        VerticalOptions="End"></Button>
+                </StackLayout>
+            </StackLayout>
+        </ContentView>
+        <StackLayout 
+            Grid.RowSpan="2"
+            Style="{StaticResource LoaderBackground}" IsVisible="{Binding IsBusy}">
+            <StackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+                <Label FontSize="Medium" HorizontalOptions="Center" TextColor="White" Text="{Binding StatusText}"/>
+                <ActivityIndicator  Style="{StaticResource Loader}"/>
+                <Label FontSize="Medium" HorizontalOptions="Center" TextColor="White" Text="{Binding DownloadingStatus}"/>
+            </StackLayout>
+        </StackLayout>
     </Grid>
 </ContentPage>

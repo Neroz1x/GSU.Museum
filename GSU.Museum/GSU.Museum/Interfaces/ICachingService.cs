@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using GSU.Museum.CommonClassLibrary.Models;
 using GSU.Museum.Shared.Data.Models;
-using System.IO;
 
 namespace GSU.Museum.Shared.Interfaces
 {
@@ -75,16 +74,28 @@ namespace GSU.Museum.Shared.Interfaces
         Task WriteSettings();
 
         /// <summary>
-        /// Write files from stream to path
+        /// Write key value pairs
         /// </summary>
-        /// <param name="stream">Data to write</param>
-        /// <param name="path">Path to write</param>
-        void WriteCache(Stream stream, string path);
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        Task WriteCache(string key, object value);
+        
+        /// <summary>
+        /// Read cache
+        /// </summary>
+        /// <param name="key"></param>
+        Task<uint> ReadCache(string key);
 
         /// <summary>
         /// Remove all cache
         /// </summary>
         /// <returns></returns>
         Task ClearCache();
+
+        /// <summary>
+        /// Clear data from cache which keys contains specific substring
+        /// </summary>
+        /// <returns></returns>
+        Task ClearCache(string substring);
     }
 }

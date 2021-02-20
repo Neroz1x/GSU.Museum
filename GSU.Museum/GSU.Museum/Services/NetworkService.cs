@@ -1,4 +1,5 @@
-﻿using GSU.Museum.CommonClassLibrary.Enums;
+﻿using GSU.Museum.CommonClassLibrary.Constants;
+using GSU.Museum.CommonClassLibrary.Enums;
 using GSU.Museum.CommonClassLibrary.Models;
 using GSU.Museum.Shared.Interfaces;
 using GSU.Museum.Shared.Resources;
@@ -44,17 +45,17 @@ namespace GSU.Museum.Shared.Services
             string language;
             switch (Thread.CurrentThread.CurrentUICulture.Name)
             {
-                case "ru-RU":
-                    language = "ru";
+                case LanguageConstants.LanguageFullRu:
+                    language = LanguageConstants.LanguageRu;
                     break;
-                case "en-US":
-                    language = "en";
+                case LanguageConstants.LanguageFullEn:
+                    language = LanguageConstants.LanguageEn;
                     break;
-                case "be-BY":
-                    language = "be";
+                case LanguageConstants.LanguageFullBy:
+                    language = LanguageConstants.LanguageBy;
                     break;
                 default:
-                    language = "en";
+                    language = LanguageConstants.LanguageEn;
                     break;
             }
             HttpClient httpClient;
@@ -80,16 +81,17 @@ namespace GSU.Museum.Shared.Services
             _logger.Info($"Send request to {uri}");
             try
             {
-                HttpResponseMessage response = await GetHttpClient().GetAsync(uri);
+                HttpResponseMessage response = await GetHttpClient().GetAsync(uri, HttpCompletionOption.ResponseHeadersRead);
                 _logger.Info($"Response's status code is {response.StatusCode}");
                 
+                if(response.StatusCode == HttpStatusCode.NoContent)
+                {
+                    return null;
+                }
+
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStreamAsync();
-                    if(content.Length == 0)
-                    {
-                        throw new Error() { Info = AppResources.ErrorMessage_CacheIsUpToDate, ErrorCode = Errors.Info };
-                    }
                     return content;
                 }
                 // if server-side exception
@@ -165,7 +167,7 @@ namespace GSU.Museum.Shared.Services
         {
             if (CheckConnection())
             {
-                string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Exhibits/{hallId}/{standId}/{id}"), cancellationToken);
+                string content = await LoadAsync(new Uri($"{App.UriBase}/api/Exhibits/{hallId}/{standId}/{id}"), cancellationToken);
                 ExhibitDTO exhibit = JsonConvert.DeserializeObject<ExhibitDTO>(content);
                 await DependencyService.Get<CachingService>().WriteExhibitAsync(exhibit);
                 return exhibit;
@@ -179,7 +181,7 @@ namespace GSU.Museum.Shared.Services
             {
                 try
                 {
-                    string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Exhibits/{hallId}/{standId}/{id}?hash={exhibitCached.GetHashCode()}"), cancellationToken);
+                    string content = await LoadAsync(new Uri($"{App.UriBase}/api/Exhibits/{hallId}/{standId}/{id}?hash={exhibitCached.GetHashCode()}"), cancellationToken);
                     if (string.IsNullOrEmpty(content))
                     {
                         return exhibitCached;
@@ -207,7 +209,7 @@ namespace GSU.Museum.Shared.Services
         {
             if (CheckConnection())
             {
-                string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Halls/{id}"), cancellationToken);
+                string content = await LoadAsync(new Uri($"{App.UriBase}/api/Halls/{id}"), cancellationToken);
                 HallDTO hall = JsonConvert.DeserializeObject<HallDTO>(content);
                 await DependencyService.Get<CachingService>().WriteHallAsync(hall);
                 return hall;
@@ -221,7 +223,7 @@ namespace GSU.Museum.Shared.Services
             {
                 try
                 {
-                    string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Halls/{id}?hash={hallCached.GetHashCode()}"), cancellationToken);
+                    string content = await LoadAsync(new Uri($"{App.UriBase}/api/Halls/{id}?hash={hallCached.GetHashCode()}"), cancellationToken);
                     if (string.IsNullOrEmpty(content))
                     {
                         return hallCached;
@@ -249,7 +251,7 @@ namespace GSU.Museum.Shared.Services
         {
             if (CheckConnection())
             {
-                string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Halls"), cancellationToken);
+                string content = await LoadAsync(new Uri($"{App.UriBase}/api/Halls"), cancellationToken);
                 List<HallDTO> halls = JsonConvert.DeserializeObject<List<HallDTO>>(content);
                 await DependencyService.Get<CachingService>().WriteHallsAsync(halls);
                 return halls;
@@ -263,7 +265,7 @@ namespace GSU.Museum.Shared.Services
             {
                 try
                 {
-                    string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Halls?hash={GetHash(hallsCached)}"), cancellationToken);
+                    string content = await LoadAsync(new Uri($"{App.UriBase}/api/Halls?hash={GetHash(hallsCached)}"), cancellationToken);
                     if (string.IsNullOrEmpty(content))
                     {
                         return hallsCached;
@@ -291,7 +293,7 @@ namespace GSU.Museum.Shared.Services
         {
             if (CheckConnection())
             {
-                string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Stands/{hallId}/{id}"), cancellationToken);
+                string content = await LoadAsync(new Uri($"{App.UriBase}/api/Stands/{hallId}/{id}"), cancellationToken);
                 StandDTO stand = JsonConvert.DeserializeObject<StandDTO>(content);
                 await DependencyService.Get<CachingService>().WriteStandAsync(stand);
                 return stand;
@@ -305,7 +307,7 @@ namespace GSU.Museum.Shared.Services
             {
                 try
                 {
-                    string content = await LoadAsync(new Uri($"https://{App.UriBase}/api/Stands/{hallId}/{id}?hash={standCached.GetHashCode()}"), cancellationToken);
+                    string content = await LoadAsync(new Uri($"{App.UriBase}/api/Stands/{hallId}/{id}?hash={standCached.GetHashCode()}"), cancellationToken);
                     if (string.IsNullOrEmpty(content))
                     {
                         return standCached;
@@ -341,20 +343,6 @@ namespace GSU.Museum.Shared.Services
                 }
                 return hash;
             }
-        }
-
-        public async Task LoadCacheAsync()
-        {
-            if (CheckConnection())
-            {
-                var path = "/data/user/0/com.companyname.gsu.museum/cache";
-                DependencyService.Get<CachingService>().WriteCache(await LoadStreamAsync(new Uri($"https://{App.UriBase}/api/Cache/GetDB")), path + "/blobs.db");
-                DependencyService.Get<CachingService>().WriteCache(await LoadStreamAsync(new Uri($"https://{App.UriBase}/api/Cache/GetDBSHM")), path + "/blobs.db-shm");
-                DependencyService.Get<CachingService>().WriteCache(await LoadStreamAsync(new Uri($"https://{App.UriBase}/api/Cache/GetDBWAL")), path + "/blobs.db-wal");
-                await DependencyService.Get<CachingService>().WriteSettings();
-                return;
-            }
-            throw new Error() { ErrorCode = Errors.Failed_Connection, Info = AppResources.ErrorMessage_LoadingFaild };
         }
     }
 }

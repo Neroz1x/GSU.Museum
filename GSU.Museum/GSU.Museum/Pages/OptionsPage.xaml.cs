@@ -12,7 +12,7 @@ namespace GSU.Museum.Shared.Pages
         public OptionsPage()
         {
             InitializeComponent();
-            BindingContext = new OptionsPageViewModel(Navigation, Popup, RadioGroup);
+            BindingContext = new OptionsPageViewModel(Navigation, RadioGroup, CacheGroup);
         }
 
         private async void ContentPage_Disappearing(object sender, System.EventArgs e)
@@ -39,6 +39,21 @@ namespace GSU.Museum.Shared.Pages
         private void BeFlag_Tapped(object sender, System.EventArgs e)
         {
             BeRadioButton.IsChecked = true;
+        }
+
+        private void RuCache_Tapped(object sender, System.EventArgs e)
+        {
+            RuCheckBox.IsChecked = !RuCheckBox.IsChecked;
+        }
+
+        private void EnCache_Tapped(object sender, System.EventArgs e)
+        {
+            EnCheckBox.IsChecked = !EnCheckBox.IsChecked;
+        }
+
+        private void BeCache_Tapped(object sender, System.EventArgs e)
+        {
+            BeCheckBox.IsChecked = !BeCheckBox.IsChecked;
         }
     }
 }

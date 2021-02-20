@@ -1,4 +1,5 @@
-﻿using GSU.Museum.CommonClassLibrary.Enums;
+﻿using GSU.Museum.CommonClassLibrary.Constants;
+using GSU.Museum.CommonClassLibrary.Enums;
 using GSU.Museum.CommonClassLibrary.Models;
 using GSU.Museum.Shared.Data.Models;
 using GSU.Museum.Shared.Resources;
@@ -13,16 +14,18 @@ namespace GSU.Museum.Shared.ViewModels
 {
     class OptionsPageViewModel : BaseViewModel
     {
-        public ContentView Popup;
         public StackLayout RadioGroup;
+        public StackLayout CacheGroup;
 
         #region Commands
 
         public Command OnLabelTapCommand { get; }
         public Command ClearCacheCommand { get; }
         public Command LoadCacheCommand { get; }
-        public Command ShowPopupCommand { get; }
-        public Command CancelCommand { get; }
+        public Command ShowLanguagePopupCommand { get; }
+        public Command ShowCachePopupCommand { get; }
+        public Command CancelLanguageSelectionCommand { get; }
+        public Command CancelCacheSelectionCommand { get; }
 
         #endregion
 
@@ -47,7 +50,7 @@ namespace GSU.Museum.Shared.ViewModels
             }
         }
 
-        // Cancel button on language picker
+        // Cancel button
         private string _cancelButton;
         public string CancelButton
         {
@@ -63,6 +66,82 @@ namespace GSU.Museum.Shared.ViewModels
                     _cancelButton = value;
                 }
                 OnPropertyChanged(nameof(CancelButton));
+            }
+        }
+
+        // Select cache language button
+        private string _selectCacheButton;
+        public string SelectCacheButton
+        {
+            get
+            {
+                return _selectCacheButton;
+            }
+
+            set
+            {
+                if (value != _selectCacheButton)
+                {
+                    _selectCacheButton = value;
+                }
+                OnPropertyChanged(nameof(SelectCacheButton));
+            }
+        }
+        
+        // Select cache language label
+        private string _selectCacheLabel;
+        public string SelectCacheLabel
+        {
+            get
+            {
+                return _selectCacheLabel;
+            }
+
+            set
+            {
+                if (value != _selectCacheLabel)
+                {
+                    _selectCacheLabel = value;
+                }
+                OnPropertyChanged(nameof(SelectCacheLabel));
+            }
+        }
+
+        // Clear cache button
+        private string _clearCacheButton;
+        public string ClearCacheButton
+        {
+            get
+            {
+                return _clearCacheButton;
+            }
+
+            set
+            {
+                if (value != _clearCacheButton)
+                {
+                    _clearCacheButton = value;
+                }
+                OnPropertyChanged(nameof(ClearCacheButton));
+            }
+        }
+
+        // Download button on cache picker
+        private string _downloadButton;
+        public string DownloadButton
+        {
+            get
+            {
+                return _downloadButton;
+            }
+
+            set
+            {
+                if (value != _downloadButton)
+                {
+                    _downloadButton = value;
+                }
+                OnPropertyChanged(nameof(DownloadButton));
             }
         }
 
@@ -138,6 +217,63 @@ namespace GSU.Museum.Shared.ViewModels
             }
         }
 
+        // Is selected english language
+        private bool _isSelectedEnglishCache;
+        public bool IsSelectedEnglishCache
+        {
+            get
+            {
+                return _isSelectedEnglishCache;
+            }
+
+            set
+            {
+                if (value != _isSelectedEnglishCache)
+                {
+                    _isSelectedEnglishCache = value;
+                }
+                OnPropertyChanged(nameof(IsSelectedEnglishCache));
+            }
+        }
+
+        // Is selected russian language
+        private bool _isSelectedRussianCache;
+        public bool IsSelectedRussianCache
+        {
+            get
+            {
+                return _isSelectedRussianCache;
+            }
+
+            set
+            {
+                if (value != _isSelectedRussianCache)
+                {
+                    _isSelectedRussianCache = value;
+                }
+                OnPropertyChanged(nameof(IsSelectedRussianCache));
+            }
+        }
+
+        // Is selected belorussian language
+        private bool _isSelectedBelorussianCache;
+        public bool IsSelectedBelorussianCache
+        {
+            get
+            {
+                return _isSelectedBelorussianCache;
+            }
+
+            set
+            {
+                if (value != _isSelectedBelorussianCache)
+                {
+                    _isSelectedBelorussianCache = value;
+                }
+                OnPropertyChanged(nameof(IsSelectedBelorussianCache));
+            }
+        }
+
         // Is visible language selection popup
         private bool _isVisibleLanguageSelection = false;
         public bool IsVisibleLanguageSelection
@@ -154,6 +290,25 @@ namespace GSU.Museum.Shared.ViewModels
                     _isVisibleLanguageSelection = value;
                 }
                 OnPropertyChanged(nameof(IsVisibleLanguageSelection));
+            }
+        }
+
+        // Is visible language selection popup
+        private bool _isVisibleCacheSelection = false;
+        public bool IsVisibleCacheSelection
+        {
+            get
+            {
+                return _isVisibleCacheSelection;
+            }
+
+            set
+            {
+                if (value != _isVisibleCacheSelection)
+                {
+                    _isVisibleCacheSelection = value;
+                }
+                OnPropertyChanged(nameof(IsVisibleCacheSelection));
             }
         }
 
@@ -347,6 +502,44 @@ namespace GSU.Museum.Shared.ViewModels
             }
         }
 
+        // Downloading status
+        private string _statusText;
+        public string StatusText
+        {
+            get
+            {
+                return _statusText;
+            }
+
+            set
+            {
+                if (value != _statusText)
+                {
+                    _statusText = value;
+                }
+                OnPropertyChanged(nameof(StatusText));
+            }
+        }
+
+        // Downloading status
+        private string _downloadingStatus;
+        public string DownloadingStatus
+        {
+            get
+            {
+                return _downloadingStatus;
+            }
+
+            set
+            {
+                if (value != _downloadingStatus)
+                {
+                    _downloadingStatus = value;
+                }
+                OnPropertyChanged(nameof(DownloadingStatus));
+            }
+        }
+
         // Use cache is chekced
         private bool _useCacheIsChecked;
         public bool UseCacheIsChecked
@@ -431,10 +624,11 @@ namespace GSU.Museum.Shared.ViewModels
 
         #endregion
 
-        public OptionsPageViewModel(INavigation navigation, ContentView popup, StackLayout radioGroup) : base(navigation)
+        public OptionsPageViewModel(INavigation navigation, StackLayout radioGroup, StackLayout cacheGroup) 
+            : base(navigation)
         {
-            Popup = popup;
             RadioGroup = radioGroup;
+            CacheGroup = cacheGroup;
             Language = App.Settings.Language.LanguageName;
             switch (App.Settings.Language.LanguageName)
             {
@@ -459,13 +653,15 @@ namespace GSU.Museum.Shared.ViewModels
             OnLabelTapCommand = new Command(labelId => OnLabelTap(int.Parse(labelId.ToString())));
             ClearCacheCommand = new Command(async() => await DependencyService.Get<CachingService>().ClearCache());
             LoadCacheCommand = new Command(async() => await LoadCacheAsync());
-            ShowPopupCommand = new Command(() => ShowPopup());
-            CancelCommand = new Command(() => IsVisibleLanguageSelection = false);
+            ShowLanguagePopupCommand = new Command(() => ShowLanguageSelectionPopup());
+            ShowCachePopupCommand = new Command(() => ShowCachePopup());
+            CancelLanguageSelectionCommand = new Command(() => IsVisibleLanguageSelection = false);
+            CancelCacheSelectionCommand = new Command(() => IsVisibleCacheSelection = false);
         }
 
         #region Methods
 
-        public void ShowPopup() 
+        public void ShowLanguageSelectionPopup() 
         {
             IsVisibleLanguageSelection = true;
             RadioGroup.AnchorX = 0.5;
@@ -485,6 +681,28 @@ namespace GSU.Museum.Shared.ViewModels
 
             scaleAnimation.Commit(RadioGroup, "radioGroupScaleAnimation", length : 250, rate : 8);
             fadeAnimation.Commit(RadioGroup, "radioGroupFadeAnimation", length : 100, rate : 8);
+        }
+
+        public void ShowCachePopup()
+        {
+            IsVisibleCacheSelection = true;
+            CacheGroup.AnchorX = 0.5;
+            CacheGroup.AnchorY = 0.5;
+
+            Animation scaleAnimation = new Animation(
+                f => CacheGroup.Scale = f,
+                0.7,
+                1,
+                Easing.SinInOut);
+
+            Animation fadeAnimation = new Animation(
+                f => CacheGroup.Opacity = f,
+                0.9,
+                1,
+                Easing.SinInOut);
+
+            scaleAnimation.Commit(CacheGroup, "radioGroupScaleAnimation", length: 250, rate: 8);
+            fadeAnimation.Commit(CacheGroup, "radioGroupFadeAnimation", length: 100, rate: 8);
         }
 
         /// <summary>
@@ -515,6 +733,10 @@ namespace GSU.Museum.Shared.ViewModels
             UseCacheSectionTitle = AppResources.OptionsPage_CacheSectionTitle;
             LanguageSectionTitle = AppResources.OptionsPage_LanguageSectionTitle;
             CancelButton = AppResources.OptionsPage_CancelButton;
+            ClearCacheButton = AppResources.OptionsPage_ClearCacheButton;
+            DownloadButton = AppResources.OptionsPage_DownloadButton;
+            SelectCacheButton = AppResources.OptionsPage_SelectCacheLanguageButton;
+            SelectCacheLabel = AppResources.OptionsPage_SelectCacheLanguageLabel;
         }
 
         /// <summary>
@@ -551,7 +773,37 @@ namespace GSU.Museum.Shared.ViewModels
         {
             try
             {
-                await DependencyService.Get<NetworkService>().LoadCacheAsync();
+                // Setting selected languages count
+                int languagesCount = BoolToInt(IsSelectedBelorussianCache) + BoolToInt(IsSelectedEnglishCache) + BoolToInt(IsSelectedEnglishCache);
+                
+                if(languagesCount == 0)
+                {
+                    await App.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, AppResources.MessageBox_NoSelectedLanguages,
+                        AppResources.MessageBox_ButtonOk);
+                    return;
+                }
+
+                // Hidding cache language selection
+                IsVisibleCacheSelection = false;
+
+                IsBusy = true;
+                StatusText = AppResources.DownloadingText_DownloadingPhotos;
+                await DependencyService.Get<CacheLoadingService>().LoadPhotosCacheAsync(DownloadingStatus);
+                if (IsSelectedBelorussianCache)
+                {
+                    StatusText = AppResources.DownloadingText_DownloadingText;
+                    await DependencyService.Get<CacheLoadingService>().LoadLanguageCacheAsync(LanguageConstants.LanguageBy, DownloadingStatus);
+                }
+                if (IsSelectedEnglishCache)
+                {
+                    StatusText = AppResources.DownloadingText_DownloadingText;
+                    await DependencyService.Get<CacheLoadingService>().LoadLanguageCacheAsync(LanguageConstants.LanguageEn, DownloadingStatus);
+                }
+                if (IsSelectedRussianCache)
+                {
+                    StatusText = AppResources.DownloadingText_DownloadingText;
+                    await DependencyService.Get<CacheLoadingService>().LoadLanguageCacheAsync(LanguageConstants.LanguageRu, DownloadingStatus);
+                }
             }
             catch(Exception ex)
             {
@@ -575,7 +827,23 @@ namespace GSU.Museum.Shared.ViewModels
                     await App.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, ex.Message, AppResources.MessageBox_ButtonOk);
                 }
             }
+            finally
+            {
+                StatusText = string.Empty;
+                DownloadingStatus = string.Empty;
+                IsBusy = false;
+            }
         }
+
+        private int BoolToInt(bool param)
+        {
+            if (param)
+            {
+                return 1;
+            }
+            return 0;
+        }
+
         #endregion
     }
 }
