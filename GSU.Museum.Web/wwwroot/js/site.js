@@ -12,73 +12,75 @@ document.addEventListener('DOMContentLoaded', function () {
     const sidebar = document.getElementsByClassName('sidebar')[0];
     const content = document.getElementById('content');
 
-    // The current position of mouse
-    let x = 0;
-    let sidebarWidth = 0;
+    if (resizer != null) {
+        // The current position of mouse
+        let x = 0;
+        let sidebarWidth = 0;
 
-    // Handle the mousedown event that's triggered when user drags the resizer
-    const mouseDownHandler = function (e) {
+        // Handle the mousedown event that's triggered when user drags the resizer
+        const mouseDownHandler = function (e) {
 
-        // Get the current mouse position
-        x = e.clientX;
-        sidebarWidth = sidebar.getBoundingClientRect().width;
+            // Get the current mouse position
+            x = e.clientX;
+            sidebarWidth = sidebar.getBoundingClientRect().width;
 
-        // Attach the listeners to `document`
-        document.addEventListener('mousemove', mouseMoveHandler);
-        document.addEventListener('mouseup', mouseUpHandler);
-    };
+            // Attach the listeners to `document`
+            document.addEventListener('mousemove', mouseMoveHandler);
+            document.addEventListener('mouseup', mouseUpHandler);
+        };
 
-    const mouseMoveHandler = function (e) {
+        const mouseMoveHandler = function (e) {
 
-        // Set maximum and minimum width of sidebar in percent
-        const minWidth = 15;
-        const maxWidth = 50;
+            // Set maximum and minimum width of sidebar in percent
+            const minWidth = 15;
+            const maxWidth = 50;
 
-        // Mouse movement distance
-        const dx = e.clientX - x;
+            // Mouse movement distance
+            const dx = e.clientX - x;
 
-        newSidebarWidth = (sidebarWidth + dx) * 100 / document.getElementsByClassName('container-page')[0].getBoundingClientRect().width;
+            newSidebarWidth = (sidebarWidth + dx) * 100 / document.getElementsByClassName('container-page')[0].getBoundingClientRect().width;
 
-        if (newSidebarWidth > maxWidth) {
-            newSidebarWidth = maxWidth;
-        }
+            if (newSidebarWidth > maxWidth) {
+                newSidebarWidth = maxWidth;
+            }
 
-        if (newSidebarWidth < minWidth) {
-            newSidebarWidth = minWidth;
-        }
+            if (newSidebarWidth < minWidth) {
+                newSidebarWidth = minWidth;
+            }
 
-        sidebar.style.width = `${newSidebarWidth}%`;
-        content.style.marginLeft = `${newSidebarWidth}%`;
+            sidebar.style.width = `${newSidebarWidth}%`;
+            content.style.marginLeft = `${newSidebarWidth}%`;
 
-        html = document.getElementsByTagName('html')[0];
+            html = document.getElementsByTagName('html')[0];
 
-        // Set resize cursor and disable selection
-        html.style.cursor = 'ew-resize';
-        html.style.userSelect = 'none';
-        html.style.pointerEvents = 'none';
-    };
+            // Set resize cursor and disable selection
+            html.style.cursor = 'ew-resize';
+            html.style.userSelect = 'none';
+            html.style.pointerEvents = 'none';
+        };
 
-    const mouseUpHandler = function () {
+        const mouseUpHandler = function () {
 
-        // Set cookie to save current sidebar width
-        var date = new Date();
-        date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toGMTString();
-        document.cookie = encodeURIComponent("MenuWidth") + "=" + encodeURIComponent(newSidebarWidth + "%") + expires + "; path=/";
+            // Set cookie to save current sidebar width
+            var date = new Date();
+            date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toGMTString();
+            document.cookie = encodeURIComponent("MenuWidth") + "=" + encodeURIComponent(newSidebarWidth + "%") + expires + "; path=/";
 
-        // Set normal cursor and enable selection
-        html = document.getElementsByTagName('html')[0];
-        html.style.removeProperty('cursor');
-        html.style.removeProperty('user-select');
-        html.style.removeProperty('pointer-events');
+            // Set normal cursor and enable selection
+            html = document.getElementsByTagName('html')[0];
+            html.style.removeProperty('cursor');
+            html.style.removeProperty('user-select');
+            html.style.removeProperty('pointer-events');
 
-        // Remove the handlers of `mousemove` and `mouseup`
-        document.removeEventListener('mousemove', mouseMoveHandler);
-        document.removeEventListener('mouseup', mouseUpHandler);
-    };
+            // Remove the handlers of `mousemove` and `mouseup`
+            document.removeEventListener('mousemove', mouseMoveHandler);
+            document.removeEventListener('mouseup', mouseUpHandler);
+        };
 
-    // Attach the handler
-    resizer.addEventListener('mousedown', mouseDownHandler);
+        // Attach the handler
+        resizer.addEventListener('mousedown', mouseDownHandler);
+    }
 });
 
 // Validate image input
@@ -656,4 +658,33 @@ function ValidateInputUnits() {
         return true;
     }
     return false;
+}
+
+function CreateCache() {
+    if ($('#ruText').prop("checked") == false && $('#enText').prop("checked") == false
+        && $('#beText').prop("checked") == false && $('#photos').prop("checked") == false) {
+        Alert("Выберите хотя бы одну опцию!");
+        return;
+    }
+    $.ajax({
+        url: '/Home/CreateCache?isRussianChecked=' + $('#ruText').prop("checked") + '&isEnglishChecked=' + $('#enText').prop("checked")
+            + '&isBelarussianChecked=' + $('#beText').prop("checked") + '&isPhotosChecked=' + $('#photos').prop("checked") ,
+        type: 'POST',
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+            $('#loader').css('visibility', 'visible');
+        },
+        success: function () {
+            $('#loader').css('visibility', 'collapse');
+            var getUrl = window.location;
+            var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+            Alert("Кеш успешно сохранен!");
+            window.location.replace(baseUrl);
+        },
+        error: function () {
+            $('#loader').css('visibility', 'collapse');
+            Alert("Что-то пошло не так...");
+        }
+    });
 }
