@@ -148,6 +148,9 @@
   <data name="ErrorMessage_LoadingFaild" xml:space="preserve">
     <value>Не атрымалася загрузіць старонку. Праверце падлучэнне да інтэрнэту і налады кэшавання</value>
   </data>
+  <data name="ErrorMessage_NoNetworkConnection" xml:space="preserve">
+    <value>Няма далучэння да сетки</value>
+  </data>
   <data name="ErrorMessage_NotFoundInCache" xml:space="preserve">
     <value>Не атрымалася загрузіць дадзеныя з кэшу. Усталюйце пункт "Правяраць абнаўленнi" у наладах, каб дазволіць запампоўка</value>
   </data>

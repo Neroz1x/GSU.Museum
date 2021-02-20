@@ -151,6 +151,15 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No network connection.
+        /// </summary>
+        public static string ErrorMessage_NoNetworkConnection {
+            get {
+                return ResourceManager.GetString("ErrorMessage_NoNetworkConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Can not found data in cache. Set &quot;Сheck for updates&quot; field in settings to allow downloading data.
         /// </summary>
         public static string ErrorMessage_NotFoundInCache {

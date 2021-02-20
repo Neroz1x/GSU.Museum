@@ -147,6 +147,9 @@
   <data name="ErrorMessage_LoadingFaild" xml:space="preserve">
     <value>Не удалось загрузить страницу. Проверьте подключение к интернету и настройки кеширования</value>
   </data>
+  <data name="ErrorMessage_NoNetworkConnection" xml:space="preserve">
+    <value>Нет подключения к интернету</value>
+  </data>
   <data name="ErrorMessage_NotFoundInCache" xml:space="preserve">
     <value>Не удалось загрузить данные из кеша. Установите пункт "Проверять обновления" в настройках, чтобы разрешить скачивание</value>
   </data>

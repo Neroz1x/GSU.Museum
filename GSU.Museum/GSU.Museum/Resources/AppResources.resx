@@ -147,6 +147,9 @@
   <data name="ErrorMessage_LoadingFaild" xml:space="preserve">
     <value>Can not load page. Check Internet connection and caching settings</value>
   </data>
+  <data name="ErrorMessage_NoNetworkConnection" xml:space="preserve">
+    <value>No network connection</value>
+  </data>
   <data name="ErrorMessage_NotFoundInCache" xml:space="preserve">
     <value>Can not found data in cache. Set "Сheck for updates" field in settings to allow downloading data</value>
   </data>

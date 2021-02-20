@@ -78,6 +78,10 @@ namespace GSU.Museum.Shared.Services
 
         public async Task<Stream> LoadStreamAsync(Uri uri)
         {
+            if (!CheckConnection())
+            {
+                throw new Error() { ErrorCode = Errors.Failed_Connection, Info = AppResources.ErrorMessage_NoNetworkConnection };
+            }
             _logger.Info($"Send request to {uri}");
             try
             {

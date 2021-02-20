@@ -774,7 +774,7 @@ namespace GSU.Museum.Shared.ViewModels
             try
             {
                 // Setting selected languages count
-                int languagesCount = BoolToInt(IsSelectedBelorussianCache) + BoolToInt(IsSelectedEnglishCache) + BoolToInt(IsSelectedEnglishCache);
+                int languagesCount = BoolToInt(IsSelectedBelorussianCache) + BoolToInt(IsSelectedEnglishCache) + BoolToInt(IsSelectedRussianCache);
                 
                 if(languagesCount == 0)
                 {
