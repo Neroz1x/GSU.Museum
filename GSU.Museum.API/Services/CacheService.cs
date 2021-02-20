@@ -1,14 +1,10 @@
-﻿using Akavache.Sqlite3;
-using GSU.Museum.API.Interfaces;
+﻿using GSU.Museum.API.Interfaces;
 using GSU.Museum.CommonClassLibrary.Models;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
-using SQLitePCL;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reactive.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -19,9 +15,7 @@ namespace GSU.Museum.API.Services
         private readonly IHallsService _hallsService;
         private readonly IStandsService _standsService;
         private readonly IExhibitsService _exhibitsService;
-        private StringValues _language;
-        private SqlRawPersistentBlobCache _blobCache;
-        private const string VersionKey = "version";
+        private bool _isPhotosSaved;
 
         public CacheService(IHallsService hallsService, IStandsService standsService, IExhibitsService exhibitsService)
         {
@@ -30,150 +24,194 @@ namespace GSU.Museum.API.Services
             _exhibitsService = exhibitsService;
         }
 
-        public FileStream GetCahceDB(HttpRequest httpRequest)
+        public async Task CreateCache(HttpRequest httpRequest, IEnumerable<string> languageList, bool savePhotos = true)
         {
-            SetLanguage(httpRequest);
+            _isPhotosSaved = !savePhotos;
 
-            var path = Assembly.GetExecutingAssembly().Location;
-            path = path.Substring(0, path.LastIndexOf("\\"));
-            path += "\\cache";
-            path += $"\\{_language}";
-            if (Directory.Exists(path))
+            foreach(var language in languageList)
             {
-                return File.OpenRead(path + "\\blobs.db");
+                SetLanguage(httpRequest, language);
+                await WriteCahce(httpRequest);
             }
-            return null;
         }
 
-        public async Task CreateCache(HttpRequest httpRequest)
+        private void SetLanguage(HttpRequest httpRequest, string language)
         {
-            CreateBlob(httpRequest);
-            
-            var keys = await _blobCache.GetAllKeys();
-            uint version = 1;
-            if (keys.Contains(VersionKey))
-            {
-                version = await _blobCache.GetObject<uint>(VersionKey);
-                version++;
-            }
+            httpRequest.Headers.Remove("Accept-Language");
+            httpRequest.Headers.Add("Accept-Language", language);
+        }
 
-            await _blobCache.InsertObject<uint>(VersionKey, version);
+        public async Task WriteCahce(HttpRequest httpRequest)
+        {
+            // Create dictionaries for saving
+            var cacheText = new Dictionary<string, object>();
+            var cachePhotos = new Dictionary<string, object>();
             
+            var language = httpRequest.Headers["Accept-Language"];
+
+            // Getting path for cahce saving
+            var path = GetPathToTextCache(language);
+            var photosCachePath = GetPathToPhotosCache();
+
             var halls = await _hallsService.GetAllAsync(httpRequest);
-            await WriteHallsAsync(halls);
-            foreach(var hall in halls)
+            WriteHallsAsync(halls, cacheText, cachePhotos, language);
+            foreach (var hall in halls)
             {
                 var hallFromDB = await _hallsService.GetAsync(httpRequest, hall.Id);
-                await WriteHallAsync(hallFromDB);
-                foreach(var stand in hallFromDB.Stands)
+                WriteHallAsync(hallFromDB, cacheText, cachePhotos, language);
+                foreach (var stand in hallFromDB.Stands)
                 {
                     var standFromDB = await _standsService.GetAsync(httpRequest, hallFromDB.Id, stand.Id);
-                    await WriteStandAsync(standFromDB);
-                    foreach(var exhibit in standFromDB.Exhibits)
+                    WriteStandAsync(standFromDB, cacheText, cachePhotos, language);
+                    foreach (var exhibit in standFromDB.Exhibits)
                     {
                         var exhibitFromDB = await _exhibitsService.GetAsync(httpRequest, hallFromDB.Id, stand.Id, exhibit.Id);
-                        await WriteExhibitAsync(exhibitFromDB);
+                        WriteExhibitAsync(exhibitFromDB, cacheText, cachePhotos, language);
                     }
                 }
             }
-            await _blobCache.Flush();
+            var json = $"version:{GetVersion(path) + 1}{Environment.NewLine}";
+            json += JsonConvert.SerializeObject(cacheText, Formatting.Indented);
+            using (TextWriter tw = new StreamWriter(path))
+            {
+                tw.WriteLine(json);
+            };
+
+            if (!_isPhotosSaved)
+            {
+                json = $"version:{GetVersion(photosCachePath) + 1}{Environment.NewLine}";
+                json += JsonConvert.SerializeObject(cachePhotos, Formatting.Indented);
+                using (TextWriter tw = new StreamWriter(photosCachePath))
+                {
+                    tw.WriteLine(json);
+                };
+                _isPhotosSaved = true;
+            }
         }
 
-        public async Task WriteExhibitAsync(ExhibitDTO exhibit)
+        public Stream GetCache(string language, uint version = 0)
         {
-            await _blobCache.InsertObject(exhibit.Id, exhibit.Photos);
-            List<PhotoInfoDTO> photos = exhibit.Photos;
+            var path = GetPathToTextCache(language);
+            if (!File.Exists(path))
+            {
+                throw new Error(CommonClassLibrary.Enums.Errors.Not_found, $"{language} cache not found");
+            }
+
+            if (GetVersion(path) != version)
+            {
+                return File.OpenRead(path);
+            }
+            return null;
+        }
+
+        public Stream GetCache(uint version)
+        {
+            var path = GetPathToPhotosCache();
+            if (!File.Exists(path))
+            {
+                throw new Error(CommonClassLibrary.Enums.Errors.Not_found, "Photos cache not found");
+            }
+
+            if (GetVersion(path) != version)
+            {
+                return File.OpenRead(path);
+            }
+            return null;
+        }
+
+        public void WriteExhibitAsync(ExhibitDTO exhibit, Dictionary<string, object> cache, Dictionary<string, object> cachePhotos, string language)
+        {
+            // Copy bytes
+            var photosBytes = new List<byte[]>();
+            foreach (var photo in exhibit.Photos)
+            {
+                photosBytes.Add(photo.Photo);
+                photo.Photo = null;
+            }
+
+            if (!_isPhotosSaved)
+            {
+                // Save images themselves
+                cachePhotos.Add($"photo{exhibit.Id}", photosBytes);
+            }
+
+            // Save images description
+            cache.Add($"{language}{exhibit.Id}description", exhibit.Photos);
             exhibit.Photos = null;
-            await _blobCache.InsertObject($"{_language}{exhibit.Id}", exhibit);
-            exhibit.Photos = photos;
+
+            // Save exhibit description
+            cache.Add($"{language}{exhibit.Id}", exhibit);
         }
 
-        public async Task WriteHallAsync(HallDTO hall)
+        public void WriteHallAsync(HallDTO hall, Dictionary<string, object> cache, Dictionary<string, object> cachePhotos, string language)
         {
-            await _blobCache.InsertObject(hall.Id, hall.Photo);
-            PhotoInfoDTO photo = hall.Photo;
-            hall.Photo = null;
-            await _blobCache.InsertObject($"{_language}{hall.Id}", hall);
-            hall.Photo = photo;
-        }
-
-        public async Task WriteHallsAsync(List<HallDTO> halls)
-        {
-            await _blobCache.InsertObject($"{_language}halls", halls);
-        }
-
-        public async Task WriteStandAsync(StandDTO stand)
-        {
-            await _blobCache.InsertObject(stand.Id, stand.Photo);
-            PhotoInfoDTO photo = stand.Photo;
-            stand.Photo = null;
-            await _blobCache.InsertObject($"{_language}{stand.Id}", stand);
-            stand.Photo = photo;
-        }
-
-        private void SetLanguage(HttpRequest httpRequest)
-        {
-            if (httpRequest != null)
+            // Copy bytes
+            var photosBytes = new List<byte[]>();
+            foreach (var stand in hall.Stands)
             {
-                if (!httpRequest.Headers.TryGetValue("Accept-Language", out _language))
+                photosBytes.Add(stand.Photo.Photo);
+                stand.Photo.Photo = null;
+            }
+
+            if (!_isPhotosSaved)
+            {
+                // Write photo
+                cachePhotos.Add($"photo{hall.Id}", photosBytes);
+            }
+
+            // Write text
+            cache.Add($"{language}{hall.Id}", hall);
+        }
+
+        public void WriteHallsAsync(List<HallDTO> halls, Dictionary<string, object> cache, Dictionary<string, object> cachePhotos, string language)
+        {
+            List<PhotoInfoDTO> photos = new List<PhotoInfoDTO>();
+
+            foreach (var hall in halls)
+            {
+                photos.Add(hall.Photo);
+                hall.Photo = null;
+            }
+
+            if (!_isPhotosSaved)
+            {
+                // Write photo
+                cachePhotos.Add("photohalls", photos);
+            }
+
+            // Write hall text
+            cache.Add($"{language}halls", halls);
+        }
+
+        public void WriteStandAsync(StandDTO stand, Dictionary<string, object> cache, Dictionary<string, object> cachePhotos, string language)
+        {
+            // Save photos
+            List<byte[]> photosBytes = new List<byte[]>();
+            foreach (var exhibit in stand.Exhibits)
+            {
+                if (exhibit.Photos?.Count == 0 || exhibit.Photos == null)
                 {
-                    _language = "en-US";
+                    photosBytes.Add(null);
+                }
+                else
+                {
+                    photosBytes.Add(exhibit.Photos[0]?.Photo);
+                    exhibit.Photos[0].Photo = null;
                 }
             }
-            else
+
+            if (!_isPhotosSaved)
             {
-                _language = "en-US";
+                // Write photos
+                cachePhotos.Add($"photo{stand.Id}", photosBytes);
             }
-            switch (_language)
-            {
-                case "ru":
-                    _language = "ru-RU";
-                    break;
-                case "en":
-                    _language = "en-US";
-                    break;
-                case "be":
-                    _language = "be-BY";
-                    break;
-                default:
-                    _language = "en-US";
-                    break;
-            }
+
+            // Write text
+            cache.Add($"{language}{stand.Id}", stand);
         }
 
-        public FileStream GetCahceDBSHM(HttpRequest httpRequest)
+        private string GetPathToTextCache(string language)
         {
-            SetLanguage(httpRequest);
-
-            var path = Assembly.GetExecutingAssembly().Location;
-            path = path.Substring(0, path.LastIndexOf("\\"));
-            path += "\\cache";
-            path += $"\\{_language}";
-            if (Directory.Exists(path))
-            {
-                return File.OpenRead(path + "\\blobs.db-shm");
-            }
-            return null;
-        }
-
-        public FileStream GetCahceDBWAL(HttpRequest httpRequest)
-        {
-            SetLanguage(httpRequest);
-
-            var path = Assembly.GetExecutingAssembly().Location;
-            path = path.Substring(0, path.LastIndexOf("\\"));
-            path += "\\cache";
-            path += $"\\{_language}";
-            if (Directory.Exists(path))
-            {
-                return File.OpenRead(path + "\\blobs.db-wal");
-            }
-            return null;
-        }
-
-        private void CreateBlob(HttpRequest httpRequest)
-        {
-            SetLanguage(httpRequest);
             var path = Assembly.GetExecutingAssembly().Location;
             path = path.Substring(0, path.LastIndexOf("\\"));
             path += "\\cache";
@@ -181,32 +219,41 @@ namespace GSU.Museum.API.Services
             {
                 Directory.CreateDirectory(path);
             }
-            path += $"\\{_language}";
+            path += $"\\{language}";
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
-            _blobCache = new SqlRawPersistentBlobCache(path + "\\blobs.db");
+            path += "\\cache.json";
+            return path;
         }
 
-        public async Task<bool> IsUpToDate(int version, HttpRequest httpRequest)
+        private string GetPathToPhotosCache()
         {
-            CreateBlob(httpRequest);
+            var path = Assembly.GetExecutingAssembly().Location;
+            path = path.Substring(0, path.LastIndexOf("\\"));
+            path += "\\cache";
+            path += "\\cache.json";
+            return path;
+        }
 
-            var keys = await _blobCache.GetAllKeys();
-            uint currentVersion = 0;
-            if (keys.Contains(VersionKey))
+        public uint GetVersion(string path)
+        {
+            uint currentVersion = 1;
+            if (File.Exists(path))
             {
-                currentVersion = await _blobCache.GetObject<uint>(VersionKey);
-                
-                keys = await _blobCache.GetAllKeys();
-                if (currentVersion == version)
+                using (StreamReader sr = new StreamReader(path))
                 {
-                    return true;
+                    var versionLine = sr.ReadLine();
+                    if (versionLine != null)
+                    {
+                        var versionFromFileString = versionLine.Substring(versionLine.IndexOf(':') + 1);
+                        uint.TryParse(versionFromFileString, out currentVersion);
+                    }
+                    sr.Close();
                 }
-                return false;
             }
-            return false;
+            return currentVersion;
         }
     }
 }
