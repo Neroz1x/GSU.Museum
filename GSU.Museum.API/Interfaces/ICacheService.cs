@@ -77,5 +77,19 @@ namespace GSU.Museum.API.Interfaces
         /// <param name="path">Path to cache</param>
         /// <returns></returns>
         public uint GetVersion(string path);
+
+        /// <summary>
+        /// Check language to be correct
+        /// </summary>
+        /// <param name="language">Language to check</param>
+        /// <returns></returns>
+        public bool IsCoorectLanguage(string language);
+
+        /// <summary>
+        /// Check list of language to be correct
+        /// </summary>
+        /// <param name="languages">List of languages to check</param>
+        /// <returns></returns>
+        public bool IsCoorectLanguage(List<string> languages); 
     }
 }

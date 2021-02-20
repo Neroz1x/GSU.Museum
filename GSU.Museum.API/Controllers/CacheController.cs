@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using GSU.Museum.API.Filters;
 using GSU.Museum.API.Interfaces;
@@ -40,6 +41,11 @@ namespace GSU.Museum.API.Controllers
         {
             try
             {
+                if (!_cacheService.IsCoorectLanguage(languageList.ToList()))
+                {
+                    return BadRequest();
+                }
+
                 if (savePhotos.HasValue)
                 {
                     await _cacheService.CreateCache(Request, languageList ??
@@ -76,6 +82,11 @@ namespace GSU.Museum.API.Controllers
         {
             try
             {
+                if (!_cacheService.IsCoorectLanguage(language))
+                {
+                    return BadRequest();
+                }
+
                 Stream stream = null;
                 if (version.HasValue)
                 {

@@ -1,4 +1,5 @@
 ﻿using GSU.Museum.API.Interfaces;
+using GSU.Museum.CommonClassLibrary.Constants;
 using GSU.Museum.CommonClassLibrary.Models;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
@@ -254,6 +255,35 @@ namespace GSU.Museum.API.Services
                 }
             }
             return currentVersion;
+        }
+
+        public bool IsCoorectLanguage(string language)
+        {
+            if (language.Equals(LanguageConstants.LanguageEn))
+            {
+                return true;
+            }
+            if (language.Equals(LanguageConstants.LanguageRu))
+            {
+                return true;
+            }
+            if (language.Equals(LanguageConstants.LanguageBy))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool IsCoorectLanguage(List<string> languages)
+        {
+            foreach(var language in languages)
+            {
+                if (!IsCoorectLanguage(language))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
