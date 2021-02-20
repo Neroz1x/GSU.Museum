@@ -23,6 +23,11 @@
             <Setter Property="GroupName" Value="Languages"></Setter>
         </Style>
 
+        <Style TargetType="CheckBox" x:Key="PopupCheckBox">
+            <Setter Property="Margin" Value="10, 15"></Setter>
+            <Setter Property="VerticalOptions" Value="Center"></Setter>
+        </Style>
+
         <Style TargetType="Image" x:Key="FlagImage">
             <Setter Property="WidthRequest" Value="50"></Setter>
             <Setter Property="HeightRequest" Value="20"></Setter>
