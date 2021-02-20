@@ -20,7 +20,7 @@
                     <RowDefinition Height="0.35*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <StackLayout VerticalOptions="Center" Spacing="10">
-                    <cards:CarouselView IsCyclical="True" ItemsSource="{Binding Images}" x:Name="Carousel" HeightRequest="100">
+                    <cards:CarouselView IsCyclical="True" IsPanInteractionEnabled="False" IsEnabled="False" ItemsSource="{Binding Images}" x:Name="Carousel" HeightRequest="100">
                         <cards:CarouselView.ItemTemplate>
                             <DataTemplate>
                                 <Image WidthRequest="300" Source="{Binding .}"></Image>

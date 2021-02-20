@@ -129,6 +129,12 @@
   <data name="Button_StandSelectionPage" xml:space="preserve">
     <value>Старонка выбару стэнда</value>
   </data>
+  <data name="DownloadingText_DownloadingPhotos" xml:space="preserve">
+    <value>Спампаванне фота</value>
+  </data>
+  <data name="DownloadingText_DownloadingText" xml:space="preserve">
+    <value>Спампаванне тэксту</value>
+  </data>
   <data name="ErrorMessage_CacheIsUpToDate" xml:space="preserve">
     <value>Вы выкарыстоўвеце апошнюю версію кэша</value>
   </data>
@@ -178,8 +184,17 @@
   <data name="MainPage_Title" xml:space="preserve">
     <value>Выбар холу</value>
   </data>
+  <data name="MessageBox_AskRemoveCache" xml:space="preserve">
+    <value>Вы жадаеце выдалiць кэш?</value>
+  </data>
   <data name="MessageBox_ButtonOk" xml:space="preserve">
     <value>Так</value>
+  </data>
+  <data name="MessageBox_NoButton" xml:space="preserve">
+    <value>Не</value>
+  </data>
+  <data name="MessageBox_NoSelectedLanguages" xml:space="preserve">
+    <value>Выберыце як мінімум адну мову</value>
   </data>
   <data name="MessageBox_TitleAlert" xml:space="preserve">
     <value>Увага</value>
@@ -189,6 +204,9 @@
   </data>
   <data name="MessageBox_TitleInfo" xml:space="preserve">
     <value>Iнфармацыя</value>
+  </data>
+  <data name="MessageBox_YesButton" xml:space="preserve">
+    <value>Так</value>
   </data>
   <data name="OptionsPage_CacheSectionTitle" xml:space="preserve">
     <value>Налады кэшавання</value>
@@ -202,6 +220,12 @@
   <data name="OptionsPage_CheckForUpdatesLabel" xml:space="preserve">
     <value>Правяраць абнаўленнi</value>
   </data>
+  <data name="OptionsPage_ClearCacheButton" xml:space="preserve">
+    <value>Удалiць кэш</value>
+  </data>
+  <data name="OptionsPage_DownloadButton" xml:space="preserve">
+    <value>Загрузiць</value>
+  </data>
   <data name="OptionsPage_Language" xml:space="preserve">
     <value>Мова</value>
   </data>
@@ -210,6 +234,12 @@
   </data>
   <data name="OptionsPage_LanguageSectionTitle" xml:space="preserve">
     <value>Налады мовы</value>
+  </data>
+  <data name="OptionsPage_SelectCacheLanguageButton" xml:space="preserve">
+    <value>Спампаваць кэш</value>
+  </data>
+  <data name="OptionsPage_SelectCacheLanguageLabel" xml:space="preserve">
+    <value>Калi ласка, выбярыце мову(-ы) для спампавання</value>
   </data>
   <data name="OptionsPage_Title" xml:space="preserve">
     <value>Налады</value>

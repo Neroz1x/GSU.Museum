@@ -1,9 +1,7 @@
-﻿using Akavache.Sqlite3;
-using GSU.Museum.CommonClassLibrary.Models;
+﻿using GSU.Museum.CommonClassLibrary.Models;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace GSU.Museum.API.Interfaces
@@ -17,60 +15,81 @@ namespace GSU.Museum.API.Interfaces
         /// Write hall to cache
         /// </summary>
         /// <param name="hall">HallDTO to cache</param>
-        Task WriteHallAsync(HallDTO hall);
+        /// <param name="cache"></param>
+        /// <param name="cachePhotos"></param>
+        /// <param name="language"></param>
+        void WriteHallAsync(HallDTO hall, Dictionary<string, object> cache, Dictionary<string, object> cachePhotos, string language);
 
         /// <summary>
         /// Write list of halls
         /// </summary>
         /// <param name="halls">Hals to cache</param>
-        Task WriteHallsAsync(List<HallDTO> halls);
+        /// <param name="cache"></param>
+        /// <param name="cachePhotos"></param>
+        /// <param name="language"></param>
+        void WriteHallsAsync(List<HallDTO> halls, Dictionary<string, object> cache, Dictionary<string, object> cachePhotos, string language);
 
         /// <summary>
         /// Write stand to cache
         /// </summary>
         /// <param name="stand">StandDTO to cache</param>
-        Task WriteStandAsync(StandDTO stand);
+        /// <param name="cache"></param>
+        /// <param name="cachePhotos"></param>
+        /// <param name="language"></param>
+        void WriteStandAsync(StandDTO stand, Dictionary<string, object> cache, Dictionary<string, object> cachePhotos, string language);
 
         /// <summary>
         /// Write exhibit to cache
         /// </summary>
         /// <param name="exhibit">ExhibitDTO to cache</param>
-        Task WriteExhibitAsync(ExhibitDTO exhibit);
+        /// <param name="cache"></param>
+        /// <param name="cachePhotos"></param>
+        /// <param name="language"></param>
+        void WriteExhibitAsync(ExhibitDTO exhibit, Dictionary<string, object> cache, Dictionary<string, object> cachePhotos, string language);
 
         /// <summary>
         /// Create cache with specific language
         /// </summary>
-        /// <param name="httpRequest">Request with Accept-Language header</param>
+        /// <param name="httpRequest"></param>
+        /// <param name="languageList">List of languages to create cache</param>
+        /// <param name="savePhotos">Is photos have to be cached</param>
         /// <returns></returns>
-        Task CreateCache(HttpRequest httpRequest);
+        Task CreateCache(HttpRequest httpRequest, IEnumerable<string> languageList, bool savePhotos = true);
 
         /// <summary>
-        /// Return db file
+        /// Get cached text of specified text
         /// </summary>
-        /// <param name="httpRequest">Request with Accept-Language header</param>
+        /// <param name="language">Language of cache</param>
+        /// <param name="version">Version of previous cache</param>
         /// <returns></returns>
-        public FileStream GetCahceDB(HttpRequest httpRequest);
+        Stream GetCache(string language, uint version = 0);
 
         /// <summary>
-        /// Retrun db-shm file
+        /// Get cached photos
         /// </summary>
-        /// <param name="httpRequest">Request with Accept-Language header</param>
+        /// <param name="version">Version of previous cache</param>
         /// <returns></returns>
-        public FileStream GetCahceDBSHM(HttpRequest httpRequest);
+        public Stream GetCache(uint version = 0);
 
         /// <summary>
-        /// Retrun db-wal file
+        /// Get cache version
         /// </summary>
-        /// <param name="httpRequest">Request with Accept-Language header</param>
+        /// <param name="path">Path to cache</param>
         /// <returns></returns>
-        public FileStream GetCahceDBWAL(HttpRequest httpRequest);
+        public uint GetVersion(string path);
 
         /// <summary>
-        /// Check cache version
+        /// Check language to be correct
         /// </summary>
-        /// <param name="version">Version of client's cache</param>
-        /// <param name="httpRequest">Http request with language header</param>
-        /// <returns>True if equals; otherwise - false</returns>
-        public Task<bool> IsUpToDate(int version, HttpRequest httpRequest);
+        /// <param name="language">Language to check</param>
+        /// <returns></returns>
+        public bool IsCoorectLanguage(string language);
+
+        /// <summary>
+        /// Check list of language to be correct
+        /// </summary>
+        /// <param name="languages">List of languages to check</param>
+        /// <returns></returns>
+        public bool IsCoorectLanguage(List<string> languages); 
     }
 }

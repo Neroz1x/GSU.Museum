@@ -100,12 +100,6 @@ namespace GSU.Museum.Shared.Interfaces
         Task<ExhibitDTO> LoadExhibitAsync(string hallId, string standId, string id, ExhibitDTO exhibitCached, CancellationToken cancelationToken);
 
         /// <summary>
-        /// Load cache
-        /// </summary>
-        /// <returns></returns>
-        Task LoadCacheAsync();
-
-        /// <summary>
         /// Perform request and return content as Stream (use for cache downloading)
         /// </summary>
         /// <param name="uri">Uri to perform request</param>

@@ -10,7 +10,7 @@ using System.Threading;
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using GSU.Museum.CommonClassLibrary.Models;
-using System.IO;
+using GSU.Museum.Shared.Resources;
 
 [assembly: Dependency(typeof(CachingService))]
 namespace GSU.Museum.Shared.Services
@@ -26,7 +26,7 @@ namespace GSU.Museum.Shared.Services
                 return null; 
             }
             
-            string language = Thread.CurrentThread.CurrentUICulture.Name;
+            string language = Thread.CurrentThread.CurrentUICulture.Name.Substring(0, 2);
             var keys = await BlobCache.LocalMachine.GetAllKeys();
             if (keys.Contains($"{language}{id}"))
             {
@@ -39,7 +39,7 @@ namespace GSU.Museum.Shared.Services
                 exhibit.Photos = await BlobCache.LocalMachine.GetObject<List<PhotoInfoDTO>>($"{language}{id}description");
 
                 // Read photos
-                var photosBytes = await BlobCache.LocalMachine.GetObject<List<byte[]>>(id);
+                var photosBytes = await BlobCache.LocalMachine.GetObject<List<byte[]>>($"photo{id}");
                 int index = 0;
                 foreach(var photo in photosBytes)
                 {
@@ -57,7 +57,7 @@ namespace GSU.Museum.Shared.Services
                 return null;
             }
 
-            string language = Thread.CurrentThread.CurrentUICulture.Name;
+            string language = Thread.CurrentThread.CurrentUICulture.Name.Substring(0, 2);
             var keys = await BlobCache.LocalMachine.GetAllKeys();
             if (keys.Contains($"{language}{id}"))
             {
@@ -67,7 +67,7 @@ namespace GSU.Museum.Shared.Services
                 HallDTO hall = await BlobCache.LocalMachine.GetObject<HallDTO>($"{language}{id}");
 
                 // Read photo
-                var photos = await BlobCache.LocalMachine.GetObject<List<byte[]>>(id);
+                var photos = await BlobCache.LocalMachine.GetObject<List<byte[]>>($"photo{id}");
                 for(int i = 0; i < hall.Stands.Count; i++)
                 {
                     hall.Stands[i].Photo.Photo = photos[i];
@@ -84,7 +84,7 @@ namespace GSU.Museum.Shared.Services
                 return null;
             }
 
-            string language = Thread.CurrentThread.CurrentUICulture.Name;
+            string language = Thread.CurrentThread.CurrentUICulture.Name.Substring(0, 2);
             var keys = await BlobCache.LocalMachine.GetAllKeys();
             if (keys.Contains($"{language}halls"))
             {
@@ -94,7 +94,7 @@ namespace GSU.Museum.Shared.Services
                 List<HallDTO> halls = await BlobCache.LocalMachine.GetObject<List<HallDTO>>($"{language}halls");
                 
                 // Read photos
-                List<PhotoInfoDTO> photos = await BlobCache.LocalMachine.GetObject<List<PhotoInfoDTO>>($"{language}halls-photo");
+                List<PhotoInfoDTO> photos = await BlobCache.LocalMachine.GetObject<List<PhotoInfoDTO>>("photohalls");
                 for(int i = 0; i < halls.Count; i++)
                 {
                     halls[i].Photo = photos[i];
@@ -123,7 +123,7 @@ namespace GSU.Museum.Shared.Services
                 return null;
             }
 
-            string language = Thread.CurrentThread.CurrentUICulture.Name;
+            string language = Thread.CurrentThread.CurrentUICulture.Name.Substring(0, 2);
             var keys = await BlobCache.LocalMachine.GetAllKeys();
             if (keys.Contains($"{language}{id}"))
             {
@@ -131,7 +131,7 @@ namespace GSU.Museum.Shared.Services
                 // Read stand
                 StandDTO stand = await BlobCache.LocalMachine.GetObject<StandDTO>($"{language}{id}");
                 // Read photo
-                var photosBytes = await BlobCache.LocalMachine.GetObject<List<byte[]>>(id);
+                var photosBytes = await BlobCache.LocalMachine.GetObject<List<byte[]>>($"photo{id}");
                 for (int i = 0; i < photosBytes.Count; i++)
                 {
                     if (stand.Exhibits[i].Photos != null)
@@ -151,7 +151,7 @@ namespace GSU.Museum.Shared.Services
                 return;
             }
 
-            string language = Thread.CurrentThread.CurrentUICulture.Name;
+            string language = Thread.CurrentThread.CurrentUICulture.Name.Substring(0, 2);
 
             _logger.Info($"Write exhibit {language}-{exhibit.Id} to cache");
 
@@ -167,7 +167,7 @@ namespace GSU.Museum.Shared.Services
             }
 
             // Save images themselves
-            await BlobCache.LocalMachine.InsertObject(exhibit.Id, photosBytes);
+            await BlobCache.LocalMachine.InsertObject($"photo{exhibit.Id}", photosBytes);
             
             // Save images description
             await BlobCache.LocalMachine.InsertObject($"{language}{exhibit.Id}description", exhibit.Photos);
@@ -190,7 +190,7 @@ namespace GSU.Museum.Shared.Services
                 return;
             }
 
-            string language = Thread.CurrentThread.CurrentUICulture.Name;
+            string language = Thread.CurrentThread.CurrentUICulture.Name.Substring(0, 2);
 
             _logger.Info($"Write hall {language}-{hall.Id} to cache");
 
@@ -203,7 +203,7 @@ namespace GSU.Museum.Shared.Services
             }
 
             // Write photo
-            await BlobCache.LocalMachine.InsertObject(hall.Id, photosBytes);
+            await BlobCache.LocalMachine.InsertObject($"photo{hall.Id}", photosBytes);
             
             // Write text
             await BlobCache.LocalMachine.InsertObject($"{language}{hall.Id}", hall);
@@ -221,7 +221,7 @@ namespace GSU.Museum.Shared.Services
                 return;
             }
 
-            string language = Thread.CurrentThread.CurrentUICulture.Name;
+            string language = Thread.CurrentThread.CurrentUICulture.Name.Substring(0, 2);
 
             _logger.Info($"Write halls to cache");
 
@@ -234,7 +234,7 @@ namespace GSU.Museum.Shared.Services
             }
 
             // Write photo
-            await BlobCache.LocalMachine.InsertObject($"{language}halls-photo", photos);
+            await BlobCache.LocalMachine.InsertObject($"photohalls", photos);
             
             // Write hall text
             await BlobCache.LocalMachine.InsertObject($"{language}halls", halls);
@@ -258,7 +258,7 @@ namespace GSU.Museum.Shared.Services
                 return;
             }
 
-            string language = Thread.CurrentThread.CurrentUICulture.Name;
+            string language = Thread.CurrentThread.CurrentUICulture.Name.Substring(0, 2);
 
             _logger.Info($"Write stand {language}-{stand.Id} to cache");
 
@@ -278,7 +278,7 @@ namespace GSU.Museum.Shared.Services
             }
 
             // Write photos
-            await BlobCache.LocalMachine.InsertObject(stand.Id, photosBytes);
+            await BlobCache.LocalMachine.InsertObject($"photo{stand.Id}", photosBytes);
             
             // Write text
             await BlobCache.LocalMachine.InsertObject($"{language}{stand.Id}", stand);
@@ -292,20 +292,39 @@ namespace GSU.Museum.Shared.Services
             }
         }
 
-        // TODO: Find out another way to replace cahce
-        public void WriteCache(Stream stream, string path)
+        public async Task WriteCache(string key, object value)
         {
-            File.Delete(path);
-            using (FileStream outputFileStream = new FileStream(path, FileMode.CreateNew))
+            await BlobCache.LocalMachine.InsertObject(key, value);
+        }
+
+        public async Task<uint> ReadCache(string key)
+        {
+            var keys = await BlobCache.LocalMachine.GetAllKeys();
+            if (keys.Contains(key))
             {
-                stream.CopyTo(outputFileStream);
+                return await BlobCache.LocalMachine.GetObject<uint>(key);
             }
+            return 0;
         }
 
         public async Task ClearCache()
         {
-            await BlobCache.LocalMachine.InvalidateAll();
-            await WriteSettings();
+            if(await App.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, AppResources.MessageBox_AskRemoveCache,
+                AppResources.MessageBox_ButtonOk, AppResources.MessageBox_NoButton))
+            {
+                await BlobCache.LocalMachine.InvalidateAll();
+                await WriteSettings();
+            }
+        }
+
+        public async Task ClearCache(string substring)
+        {
+            var keys = await BlobCache.LocalMachine.GetAllKeys();
+            keys = keys.Where(k => k.StartsWith(substring));
+            foreach(var key in keys)
+            {
+                await BlobCache.LocalMachine.Invalidate(key);
+            }
         }
     }
 }
