@@ -677,14 +677,29 @@ function CreateCache() {
         },
         success: function () {
             $('#loader').css('visibility', 'collapse');
-            var getUrl = window.location;
-            var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
             Alert("Кеш успешно сохранен!");
-            window.location.replace(baseUrl);
+            // wait for user to close alert pop up
+            WaitingToRedirect();
         },
         error: function () {
             $('#loader').css('visibility', 'collapse');
             Alert("Что-то пошло не так...");
         }
     });
+}
+
+function WaitingToRedirect() {
+    var timer = setTimeout(function () {
+        if (!($('#alert').hasClass("show"))) {
+            if (timer) {
+                clearTimeout(timer);
+            }
+            var getUrl = window.location;
+            var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+            window.location.replace(baseUrl);
+        }
+        else {
+            SetLoop();
+        }
+    }, 500);
 }
