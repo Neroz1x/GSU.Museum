@@ -348,5 +348,13 @@ namespace GSU.Museum.Shared.Services
                 return hash;
             }
         }
+
+        public WebClient GetWebClient()
+        {
+            WebClient client = new WebClient();
+            client.Headers.Add("Accept-Language", "en");
+            client.Headers.Add("X-API-KEY", "U3VwZXJTZWNyZXRBcGlLZXkxMjM");
+            return client;
+        }
     }
 }

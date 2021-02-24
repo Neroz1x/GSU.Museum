@@ -135,6 +135,9 @@
   <data name="DownloadingText_DownloadingText" xml:space="preserve">
     <value>Загрузка текста</value>
   </data>
+  <data name="DownloadingText_Saving" xml:space="preserve">
+    <value>Сохранение данных</value>
+  </data>
   <data name="ErrorMessage_CacheIsUpToDate" xml:space="preserve">
     <value>Вы используете последнюю версию кеша</value>
   </data>

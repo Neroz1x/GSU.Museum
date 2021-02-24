@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,6 +27,12 @@ namespace GSU.Museum.Shared.Interfaces
         /// </summary>
         /// <returns>HttpClient</returns>
         HttpClient GetHttpClient();
+        
+        /// <summary>
+        /// Create WebClient with essential headders
+        /// </summary>
+        /// <returns>WebClient</returns>
+        WebClient GetWebClient();
 
         /// <summary>
         /// Load list of halls

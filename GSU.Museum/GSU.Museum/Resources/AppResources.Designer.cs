@@ -115,6 +115,15 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Saving data.
+        /// </summary>
+        public static string DownloadingText_Saving {
+            get {
+                return ResourceManager.GetString("DownloadingText_Saving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cache is up-to-date.
         /// </summary>
         public static string ErrorMessage_CacheIsUpToDate {

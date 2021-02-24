@@ -4,9 +4,14 @@ using GSU.Museum.CommonClassLibrary.Models;
 using GSU.Museum.Shared.Data.Models;
 using GSU.Museum.Shared.Resources;
 using GSU.Museum.Shared.Services;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -788,21 +793,46 @@ namespace GSU.Museum.Shared.ViewModels
 
                 IsBusy = true;
                 StatusText = AppResources.DownloadingText_DownloadingPhotos;
-                await DependencyService.Get<CacheLoadingService>().LoadPhotosCacheAsync(DownloadingStatus);
+
+                var networkService = DependencyService.Get<NetworkService>();
+
+                var client = networkService.GetWebClient();
+                client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(
+                    (sender, @event)=>
+                    {
+                        DownloadingStatus = $"{@event.ProgressPercentage} %";
+                    });
+
+                var versionKey = "v_photos";
+                var stream = new MemoryStream(await client.DownloadDataTaskAsync(
+                    await DependencyService.Get<CacheLoadingService>().GetUrlAsync()));
+                DownloadingStatus = AppResources.DownloadingText_Saving;
+                await DependencyService.Get<CacheLoadingService>().WriteCacheAsync(stream, versionKey, "photo");
                 if (IsSelectedBelorussianCache)
                 {
+                    versionKey = $"v_{LanguageConstants.LanguageBy}";
                     StatusText = AppResources.DownloadingText_DownloadingText;
-                    await DependencyService.Get<CacheLoadingService>().LoadLanguageCacheAsync(LanguageConstants.LanguageBy, DownloadingStatus);
+                    stream = new MemoryStream(await client.DownloadDataTaskAsync(
+                        await DependencyService.Get<CacheLoadingService>().GetUrlAsync(LanguageConstants.LanguageBy)));
+                    await DependencyService.Get<CacheLoadingService>().WriteCacheAsync(stream, versionKey, LanguageConstants.LanguageBy);
                 }
                 if (IsSelectedEnglishCache)
                 {
+                    versionKey = $"v_{LanguageConstants.LanguageEn}";
                     StatusText = AppResources.DownloadingText_DownloadingText;
-                    await DependencyService.Get<CacheLoadingService>().LoadLanguageCacheAsync(LanguageConstants.LanguageEn, DownloadingStatus);
+                    stream = new MemoryStream(await client.DownloadDataTaskAsync(
+                        await DependencyService.Get<CacheLoadingService>().GetUrlAsync(LanguageConstants.LanguageEn)));
+                    DownloadingStatus = AppResources.DownloadingText_Saving;
+                    await DependencyService.Get<CacheLoadingService>().WriteCacheAsync(stream, versionKey, LanguageConstants.LanguageEn);
                 }
                 if (IsSelectedRussianCache)
                 {
+                    versionKey = $"v_{LanguageConstants.LanguageRu}";
                     StatusText = AppResources.DownloadingText_DownloadingText;
-                    await DependencyService.Get<CacheLoadingService>().LoadLanguageCacheAsync(LanguageConstants.LanguageRu, DownloadingStatus);
+                    stream = new MemoryStream(await client.DownloadDataTaskAsync(
+                        await DependencyService.Get<CacheLoadingService>().GetUrlAsync(LanguageConstants.LanguageRu)));
+                    DownloadingStatus = AppResources.DownloadingText_Saving;
+                    await DependencyService.Get<CacheLoadingService>().WriteCacheAsync(stream, versionKey, LanguageConstants.LanguageRu);
                 }
             }
             catch(Exception ex)

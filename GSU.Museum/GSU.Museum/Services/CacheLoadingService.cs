@@ -13,29 +13,44 @@ namespace GSU.Museum.Shared.Services
 {
     public class CacheLoadingService : ICacheLoadingService
     {
-        public async Task LoadLanguageCacheAsync(string language, string status)
+        public async Task<Uri> GetUrlAsync(string language)
         {
             var cachingService = DependencyService.Get<CachingService>();
 
             var versionKey = $"v_{language}";
             var version = await cachingService.ReadCache(versionKey);
             
-            var url = new Uri($"{App.UriBase}/api/Cache/{language}{ (version == 0 ? string.Empty : $"?version={version}")}");
-            var stream = await DependencyService.Get<NetworkService>().LoadStreamAsync(url);
+            return new Uri($"{App.UriBase}/api/Cache/{language}{ (version == 0 ? string.Empty : $"?version={version}")}");
+        }
 
-            if (stream is null)
+        public async Task<Uri> GetUrlAsync()
+        {
+            var cachingService = DependencyService.Get<CachingService>();
+
+            var versionKey = $"v_photos";
+            var version = await cachingService.ReadCache(versionKey);
+
+            return new Uri($"{App.UriBase}/api/Cache{ (version == 0 ? string.Empty : $"?version={version}")}");  
+        }
+
+        public async Task WriteCacheAsync(Stream stream, string versionKey, string keyAlias)
+        {
+            if(stream is null || stream?.Length == 0)
             {
                 return;
             }
+            var cachingService = DependencyService.Get<CachingService>();
 
-            await cachingService.ClearCache($"v_{language}");
-            await cachingService.ClearCache(language);
+            await cachingService.ClearCache(versionKey);
+            await cachingService.ClearCache(keyAlias);
+
             using (var reader = new StreamReader(stream, Encoding.UTF8))
             {
                 string versionString = await reader.ReadLineAsync();
                 await cachingService.WriteCache(versionKey, GetVersion(versionString));
 
                 string data = await reader.ReadToEndAsync();
+
                 var dictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(data);
                 foreach (var item in dictionary)
                 {
@@ -44,43 +59,11 @@ namespace GSU.Museum.Shared.Services
             }
         }
 
-        public async Task LoadPhotosCacheAsync(string status)
-        {
-            var cachingService = DependencyService.Get<CachingService>();
-
-            var versionKey = $"v_photos";
-            var version = await cachingService.ReadCache(versionKey);
-
-            var url = new Uri($"{App.UriBase}/api/Cache{ (version == 0 ? string.Empty : $"?version={version}")}");
-            var stream = await DependencyService.Get<NetworkService>().LoadStreamAsync(url);
-            
-            if(stream is null)
-            {
-                return;
-            }
-
-            await cachingService.ClearCache($"v_photo");
-            await cachingService.ClearCache("photo");
-
-            using (var reader = new StreamReader(stream, Encoding.UTF8))
-            {                
-                string versionString = await reader.ReadLineAsync();
-                await cachingService.WriteCache(versionKey, GetVersion(versionString));
-                
-                string data = await reader.ReadToEndAsync();
-                
-                var dictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(data);
-                foreach(var item in dictionary)
-                {
-                    await cachingService.WriteCache(item.Key, item.Value);
-                }
-            }
-        }
-
         private uint GetVersion(string versionString)
         {
+            uint currentVersion = 0;
             var versionFromFileString = versionString.Substring(versionString.IndexOf(':') + 1) ?? string.Empty;
-            uint.TryParse(versionFromFileString, out uint currentVersion);
+            uint.TryParse(versionFromFileString, out currentVersion);
             return currentVersion;
         }
     }
