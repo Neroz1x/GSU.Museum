@@ -127,6 +127,7 @@ namespace GSU.Museum.Shared.ViewModels
                     else
                     {
                         await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, error.Info, AppResources.MessageBox_ButtonOk);
+                        await App.Current.MainPage.Navigation.PopAsync();
                     }
                 }
                 else if (ex is HttpRequestException || ex is WebException)
