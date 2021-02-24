@@ -852,6 +852,9 @@ namespace GSU.Museum.Shared.ViewModels
                         await App.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, er.Info, AppResources.MessageBox_ButtonOk);
                     }
                 }
+                else if(ex is OperationCanceledException)
+                {
+                }
                 else
                 {
                     await App.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, ex.Message, AppResources.MessageBox_ButtonOk);
