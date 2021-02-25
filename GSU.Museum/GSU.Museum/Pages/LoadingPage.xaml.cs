@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -30,7 +30,8 @@ namespace GSU.Museum.Shared.Pages
 
             // Edit menu item style depending on screen width
             Style style = Application.Current.Resources["TransparentMenuItem"] as Style;
-            var width = Math.Round(App.Current.MainPage.Width - (0.1 * App.Current.MainPage.Width));
+            var screenWidth = DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density;
+            var width = Math.Round(screenWidth - (0.1 * screenWidth));
             style.Setters.Add(new Setter() { Property = HeightRequestProperty, Value = width / 2 });
             style.Setters.Add(new Setter() { Property = WidthRequestProperty, Value = width });
             Application.Current.Resources.Remove("TransparentMenuItem");
