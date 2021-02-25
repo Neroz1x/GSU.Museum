@@ -38,8 +38,8 @@
             </Image>
             <BoxView HeightRequest="2" BackgroundColor="White" Grid.Row="1" Grid.ColumnSpan="3"></BoxView>
         </Grid>
-        <ScrollView VerticalScrollBarVisibility="Always" Grid.Row="1">
-            <StackLayout Orientation="Vertical" Margin="5">
+        <ScrollView VerticalScrollBarVisibility="Always" Grid.Row="1" VerticalOptions="Center">
+            <StackLayout Orientation="Vertical" Margin="5" BackgroundColor="Yellow">
                 <Grid Margin="0, 20, 0, 20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.2*"></ColumnDefinition>
@@ -59,7 +59,8 @@
                     <Label Grid.Column="1" HorizontalOptions="Center" FontSize="Large" TextColor="White" x:Name="NavigationLabel"></Label>
                 </Grid>
                 <StackLayout IsVisible="{Binding CarouselVisibility}">
-                    <CarouselView
+                    <CarouselView BackgroundColor="red"
+                            VerticalOptions="Start"
                             x:Name="Carousel"
                             PositionChanged="CarouselView_PositionChanged"
                                 ItemsSource="{Binding Photos}"

@@ -36,6 +36,12 @@ namespace GSU.Museum.Shared.Pages
             style.Setters.Add(new Setter() { Property = WidthRequestProperty, Value = width });
             Application.Current.Resources.Remove("TransparentMenuItem");
             Application.Current.Resources.Add("TransparentMenuItem", style);
+            
+            style = Application.Current.Resources["CarouselViewImage"] as Style;
+            width = Math.Round(screenWidth - (0.35 * screenWidth));
+            style.Setters.Add(new Setter() { Property = HeightRequestProperty, Value = width });
+            Application.Current.Resources.Remove("CarouselViewImage");
+            Application.Current.Resources.Add("CarouselViewImage", style);
 
             App.Current.MainPage = new NavigationPage(new HomePage());
         }

@@ -191,8 +191,9 @@
         </Style>
 
         <Style TargetType="Image" x:Key="CarouselViewImage">
+            <Setter Property="Aspect" Value="AspectFit"></Setter>
             <Setter Property="HeightRequest">
-                <OnIdiom x:TypeArguments="x:Double" Phone="300" Tablet="500"></OnIdiom>
+                <OnIdiom x:TypeArguments="x:Double" Phone="200" Tablet="400"></OnIdiom>
             </Setter>
         </Style>
 
