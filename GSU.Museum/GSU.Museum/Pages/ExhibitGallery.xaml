@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="GSU.Museum.Shared.Pages.ExhibitGallery"
              Appearing="ContentPage_Appearing"
-             xmlns:resources="clr-namespace:GSU.Museum.Shared.Resources"
              BackgroundImageSource="Background.jpg"
              >
     <NavigationPage.HasNavigationBar>false</NavigationPage.HasNavigationBar>
@@ -38,48 +37,46 @@
             </Image>
             <BoxView HeightRequest="2" BackgroundColor="White" Grid.Row="1" Grid.ColumnSpan="3"></BoxView>
         </Grid>
-        <ScrollView VerticalScrollBarVisibility="Always" Grid.Row="1" VerticalOptions="Center">
-            <StackLayout Orientation="Vertical" Margin="5" BackgroundColor="Yellow">
-                <Grid Margin="0, 20, 0, 20">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.2*"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="0.2*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Image x:Name="LeftArrow" BackgroundColor="Transparent" Source="LeftArrow.png" Grid.Column="0" WidthRequest="20" HeightRequest="20">
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="ShowPrevious"></TapGestureRecognizer>
-                        </Image.GestureRecognizers>
-                    </Image>
-                    <Image x:Name="RightArrow" BackgroundColor="Transparent" Source="RightArrow.png" Grid.Column="2" WidthRequest="20" HeightRequest="20">
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="ShowNext"></TapGestureRecognizer>
-                        </Image.GestureRecognizers>
-                    </Image>
-                    <Label Grid.Column="1" HorizontalOptions="Center" FontSize="Large" TextColor="White" x:Name="NavigationLabel"></Label>
-                </Grid>
-                <StackLayout IsVisible="{Binding CarouselVisibility}">
-                    <CarouselView BackgroundColor="red"
-                            VerticalOptions="Start"
-                            x:Name="Carousel"
-                            PositionChanged="CarouselView_PositionChanged"
-                                ItemsSource="{Binding Photos}"
-                                Margin="5, 0"
-                                >
-                        <CarouselView.ItemTemplate>
-                            <DataTemplate>
-                                <StackLayout Orientation="Vertical">
-                                    <Frame Padding="3" BackgroundColor="White" HorizontalOptions="Center">
-                                        <Image Style="{StaticResource CarouselViewImage}" Aspect="AspectFit" BackgroundColor="Transparent" Source="{Binding Photo, Converter={StaticResource ByteArrayToImage}}">
-                                        </Image>
-                                    </Frame>
-                                    <Label Style="{StaticResource DefaultLabel}" HorizontalOptions="Center" Text="{Binding Description}"/>
-                                </StackLayout>
-                            </DataTemplate>
-                        </CarouselView.ItemTemplate>
-                    </CarouselView>
-                </StackLayout>
+        <StackLayout Orientation="Vertical" Grid.Row="1" VerticalOptions="Start" Margin="5">
+            <Grid Margin="0, 20, 0, 20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="0.2*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Image x:Name="LeftArrow" BackgroundColor="Transparent" Source="LeftArrow.png" Grid.Column="0" WidthRequest="20" HeightRequest="20">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="ShowPrevious"></TapGestureRecognizer>
+                    </Image.GestureRecognizers>
+                </Image>
+                <Image x:Name="RightArrow" BackgroundColor="Transparent" Source="RightArrow.png" Grid.Column="2" WidthRequest="20" HeightRequest="20">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="ShowNext"></TapGestureRecognizer>
+                    </Image.GestureRecognizers>
+                </Image>
+                <Label Grid.Column="1" HorizontalOptions="Center" HeightRequest="32" FontSize="Large" TextColor="White" x:Name="NavigationLabel"></Label>
+            </Grid>
+            <StackLayout IsVisible="{Binding CarouselVisibility}">
+                <CarouselView
+                        VerticalOptions="Start"
+                        x:Name="Carousel"
+                        PositionChanged="CarouselView_PositionChanged"
+                            ItemsSource="{Binding Photos}"
+                            Margin="5, 0"
+                            >
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Orientation="Vertical">
+                                <Frame Padding="3" BackgroundColor="White" HorizontalOptions="Center">
+                                    <Image Style="{StaticResource CarouselViewImage}" Aspect="AspectFit" BackgroundColor="Transparent" Source="{Binding Photo, Converter={StaticResource ByteArrayToImage}}">
+                                    </Image>
+                                </Frame>
+                                <Label Style="{StaticResource DefaultLabel}" HorizontalOptions="Center" Text="{Binding Description}"/>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
             </StackLayout>
-        </ScrollView>
+        </StackLayout>
     </Grid>
 </ContentPage>
