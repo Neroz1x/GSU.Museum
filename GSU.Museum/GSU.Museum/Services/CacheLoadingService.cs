@@ -13,6 +13,8 @@ namespace GSU.Museum.Shared.Services
 {
     public class CacheLoadingService : ICacheLoadingService
     {
+        private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
+
         public async Task<Uri> GetUrlAsync(string language)
         {
             var cachingService = DependencyService.Get<CachingService>();
@@ -39,6 +41,8 @@ namespace GSU.Museum.Shared.Services
             {
                 return;
             }
+            _logger.Info($"Removing previous version: {versionKey}");
+
             var cachingService = DependencyService.Get<CachingService>();
 
             await cachingService.ClearCache(versionKey);
@@ -47,7 +51,10 @@ namespace GSU.Museum.Shared.Services
             using (var reader = new StreamReader(stream, Encoding.UTF8))
             {
                 string versionString = await reader.ReadLineAsync();
-                await cachingService.WriteCache(versionKey, GetVersion(versionString));
+                var version = GetVersion(versionString);
+                await cachingService.WriteCache(versionKey, version);
+
+                _logger.Info($"Writting new version version: {version} with {versionKey}");
 
                 string data = await reader.ReadToEndAsync();
 

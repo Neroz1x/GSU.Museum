@@ -72,53 +72,6 @@ namespace GSU.Museum.Shared.Services
             return httpClient;
         }
 
-        public async Task<Stream> LoadStreamAsync(Uri uri)
-        {
-            if (!CheckConnection())
-            {
-                throw new Error() { ErrorCode = Errors.Failed_Connection, Info = AppResources.ErrorMessage_NoNetworkConnection };
-            }
-            _logger.Info($"Send request to {uri}");
-            try
-            {
-                HttpResponseMessage response = await GetHttpClient().GetAsync(uri, HttpCompletionOption.ResponseHeadersRead);
-                _logger.Info($"Response's status code is {response.StatusCode}");
-                
-                if(response.StatusCode == HttpStatusCode.NoContent)
-                {
-                    return null;
-                }
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = await response.Content.ReadAsStreamAsync();
-                    return content;
-                }
-                // if server-side exception
-                else if (response.StatusCode == HttpStatusCode.InternalServerError || response.StatusCode == HttpStatusCode.Unauthorized)
-                {
-                    var error = JsonConvert.DeserializeObject<Error>(await response.Content.ReadAsStringAsync());
-                    _logger.Error($"Error in response: {error}");
-                    throw new Error() { Info = error.Info, ErrorCode = error.ErrorCode };
-                }
-                else if(response.StatusCode == HttpStatusCode.NotFound)
-                {
-                    throw new Error() { Info = AppResources.ErrorMessage_CanNotLoadCache, ErrorCode = Errors.Not_found };
-                }
-                // if unhandled server-side exception
-                else
-                {
-                    _logger.Fatal("Unhandled exception");
-                    throw new Exception($"response status code: {response.StatusCode};");
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.Error($"Error while sending request: {ex.Message}");
-                throw ex;
-            }
-        }
-
         public async Task<string> LoadAsync(Uri uri, CancellationToken cancellationToken)
         {
             _logger.Info($"Send request to {uri}");

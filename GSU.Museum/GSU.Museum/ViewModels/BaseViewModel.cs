@@ -129,6 +129,7 @@ namespace GSU.Museum.Shared.ViewModels
                     }
                     else
                     {
+                        _logger.Error($"Exception of type Error was thrown: {error}");
                         await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, error.Info, AppResources.MessageBox_ButtonOk);
                     }
                 }

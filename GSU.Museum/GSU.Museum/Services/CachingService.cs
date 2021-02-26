@@ -88,7 +88,7 @@ namespace GSU.Museum.Shared.Services
             var keys = await BlobCache.LocalMachine.GetAllKeys();
             if (keys.Contains($"{language}halls"))
             {
-                _logger.Info($"Read halls from");
+                _logger.Info($"Read {language}halls from cache");
 
                 // Read halls
                 List<HallDTO> halls = await BlobCache.LocalMachine.GetObject<List<HallDTO>>($"{language}halls");
@@ -109,8 +109,8 @@ namespace GSU.Museum.Shared.Services
             var keys = await BlobCache.LocalMachine.GetAllKeys();
             if (keys.Contains("settings"))
             {
-                _logger.Info($"Read settings from cache");
                 Settings settings = await BlobCache.LocalMachine.GetObject<Settings>("settings");
+                _logger.Info($"Read settings from cache {settings}");
                 return settings;
             }
             return new Settings();
@@ -223,7 +223,7 @@ namespace GSU.Museum.Shared.Services
 
             string language = Thread.CurrentThread.CurrentUICulture.Name.Substring(0, 2);
 
-            _logger.Info($"Write halls to cache");
+            _logger.Info($"Write {language}halls to cache");
 
             List<PhotoInfoDTO> photos = new List<PhotoInfoDTO>();
 
@@ -247,7 +247,7 @@ namespace GSU.Museum.Shared.Services
 
         public async Task WriteSettings()
         {
-            _logger.Info($"Write settings to cache");
+            _logger.Info($"Write settings {App.Settings} to cache");
             await BlobCache.LocalMachine.InsertObject("settings", App.Settings);
         }
 
@@ -312,6 +312,7 @@ namespace GSU.Museum.Shared.Services
             if(await App.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, AppResources.MessageBox_AskRemoveCache,
                 AppResources.MessageBox_ButtonOk, AppResources.MessageBox_NoButton))
             {
+                _logger.Info("Clearing cache");
                 await BlobCache.LocalMachine.InvalidateAll();
                 await WriteSettings();
             }
@@ -319,6 +320,7 @@ namespace GSU.Museum.Shared.Services
 
         public async Task ClearCache(string substring)
         {
+            _logger.Info($"Clearing cache for {substring}");
             var keys = await BlobCache.LocalMachine.GetAllKeys();
             keys = keys.Where(k => k.StartsWith(substring));
             foreach(var key in keys)
