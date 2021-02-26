@@ -112,5 +112,11 @@ namespace GSU.Museum.Shared.Interfaces
         /// <param name="uri">Uri to perform request</param>
         /// <returns></returns>
         Task<Stream> LoadStreamAsync(Uri uri);
+
+        /// <summary>
+        /// Check Internet connection
+        /// </summary>
+        /// <returns></returns>
+        bool CheckConnection();
     }
 }

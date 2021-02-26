@@ -196,6 +196,15 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Something went wrong....
+        /// </summary>
+        public static string ErrorMessage_SomethingWentWrong {
+            get {
+                return ResourceManager.GetString("ErrorMessage_SomethingWentWrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select a stand, please.
         /// </summary>
         public static string HallPage_MenuDescription {
@@ -430,6 +439,15 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reports.
+        /// </summary>
+        public static string OptionsPage_ReportsSectionLabel {
+            get {
+                return ResourceManager.GetString("OptionsPage_ReportsSectionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download cache.
         /// </summary>
         public static string OptionsPage_SelectCacheLanguageButton {
@@ -444,6 +462,24 @@ namespace GSU.Museum.Shared.Resources {
         public static string OptionsPage_SelectCacheLanguageLabel {
             get {
                 return ResourceManager.GetString("OptionsPage_SelectCacheLanguageLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send anonymous reports about errors to help improve application.
+        /// </summary>
+        public static string OptionsPage_SendReportsDescriptionLabel {
+            get {
+                return ResourceManager.GetString("OptionsPage_SendReportsDescriptionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send error reports.
+        /// </summary>
+        public static string OptionsPage_SendReportsLabel {
+            get {
+                return ResourceManager.GetString("OptionsPage_SendReportsLabel", resourceCulture);
             }
         }
         

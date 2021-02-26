@@ -4,14 +4,9 @@ using GSU.Museum.CommonClassLibrary.Models;
 using GSU.Museum.Shared.Data.Models;
 using GSU.Museum.Shared.Resources;
 using GSU.Museum.Shared.Services;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -607,6 +602,83 @@ namespace GSU.Museum.Shared.ViewModels
             }
         }
 
+        // Reports section title
+        private string _reportsSectionTitle;
+        public string ReportsSectionTitle
+        {
+            get
+            {
+                return _reportsSectionTitle;
+            }
+
+            set
+            {
+                if (value != _reportsSectionTitle)
+                {
+                    _reportsSectionTitle = value;
+                }
+                OnPropertyChanged(nameof(ReportsSectionTitle));
+            }
+        }
+
+        // Send reports label
+        private string _sendReportsLabel;
+        public string SendReportsLabel
+        {
+            get
+            {
+                return _sendReportsLabel;
+            }
+
+            set
+            {
+                if (value != _sendReportsLabel)
+                {
+                    _sendReportsLabel = value;
+                }
+                OnPropertyChanged(nameof(SendReportsLabel));
+            }
+        }
+
+        // Send reports description label
+        private string _sendReportsDescriptionLabel;
+        public string SendReportsDescriptionLabel
+        {
+            get
+            {
+                return _sendReportsDescriptionLabel;
+            }
+
+            set
+            {
+                if (value != _sendReportsDescriptionLabel)
+                {
+                    _sendReportsDescriptionLabel = value;
+                }
+                OnPropertyChanged(nameof(SendReportsDescriptionLabel));
+            }
+        }
+
+        // Send reports description label
+        private bool _sendReportsIsChecked;
+        public bool SendReportsIsChecked
+        {
+            get
+            {
+                return _sendReportsIsChecked;
+            }
+
+            set
+            {
+                if (value != _sendReportsIsChecked)
+                {
+                    _sendReportsIsChecked = value;
+                    App.Settings.SendReports = value;
+                }
+                OnPropertyChanged(nameof(SendReportsIsChecked));
+            }
+        }
+
         // Title of the page
         private string _language;
         public string Language
@@ -654,6 +726,7 @@ namespace GSU.Museum.Shared.ViewModels
             UseCacheIsChecked = App.Settings.UseCache;
             UseOnlyCacheIsSelected = App.Settings.UseOnlyCache;
             CheckForUpdatesIsSelected = App.Settings.CheckForUpdates;
+            SendReportsIsChecked = App.Settings.SendReports;
             LocalizePage();
             OnLabelTapCommand = new Command(labelId => OnLabelTap(int.Parse(labelId.ToString())));
             ClearCacheCommand = new Command(async() => await DependencyService.Get<CachingService>().ClearCache());
@@ -742,6 +815,9 @@ namespace GSU.Museum.Shared.ViewModels
             DownloadButton = AppResources.OptionsPage_DownloadButton;
             SelectCacheButton = AppResources.OptionsPage_SelectCacheLanguageButton;
             SelectCacheLabel = AppResources.OptionsPage_SelectCacheLanguageLabel;
+            SendReportsDescriptionLabel = AppResources.OptionsPage_SendReportsDescriptionLabel;
+            SendReportsLabel = AppResources.OptionsPage_SendReportsLabel;
+            ReportsSectionTitle = AppResources.OptionsPage_ReportsSectionLabel;
         }
 
         /// <summary>
@@ -766,6 +842,9 @@ namespace GSU.Museum.Shared.ViewModels
                     {
                         UseOnlyCacheIsSelected = true;
                     }
+                    break;
+                case 3:
+                    SendReportsIsChecked = !SendReportsIsChecked;
                     break;
             }
         }
@@ -792,47 +871,35 @@ namespace GSU.Museum.Shared.ViewModels
                 IsVisibleCacheSelection = false;
 
                 IsBusy = true;
-                StatusText = AppResources.DownloadingText_DownloadingPhotos;
-
-                var networkService = DependencyService.Get<NetworkService>();
-
-                var client = networkService.GetWebClient();
+                
+                // Setting up web client
+                var client = DependencyService.Get<NetworkService>().GetWebClient();
                 client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(
                     (sender, @event)=>
                     {
                         DownloadingStatus = $"{@event.ProgressPercentage} %";
                     });
 
+                // Downloading and saving photos
+                StatusText = AppResources.DownloadingText_DownloadingPhotos;
                 var versionKey = "v_photos";
                 var stream = new MemoryStream(await client.DownloadDataTaskAsync(
                     await DependencyService.Get<CacheLoadingService>().GetUrlAsync()));
                 DownloadingStatus = AppResources.DownloadingText_Saving;
                 await DependencyService.Get<CacheLoadingService>().WriteCacheAsync(stream, versionKey, "photo");
+                
+                // Downloading and saving languages
                 if (IsSelectedBelorussianCache)
                 {
-                    versionKey = $"v_{LanguageConstants.LanguageBy}";
-                    StatusText = AppResources.DownloadingText_DownloadingText;
-                    stream = new MemoryStream(await client.DownloadDataTaskAsync(
-                        await DependencyService.Get<CacheLoadingService>().GetUrlAsync(LanguageConstants.LanguageBy)));
-                    await DependencyService.Get<CacheLoadingService>().WriteCacheAsync(stream, versionKey, LanguageConstants.LanguageBy);
+                    await LoadLanguageCache(LanguageConstants.LanguageBy, client);
                 }
                 if (IsSelectedEnglishCache)
                 {
-                    versionKey = $"v_{LanguageConstants.LanguageEn}";
-                    StatusText = AppResources.DownloadingText_DownloadingText;
-                    stream = new MemoryStream(await client.DownloadDataTaskAsync(
-                        await DependencyService.Get<CacheLoadingService>().GetUrlAsync(LanguageConstants.LanguageEn)));
-                    DownloadingStatus = AppResources.DownloadingText_Saving;
-                    await DependencyService.Get<CacheLoadingService>().WriteCacheAsync(stream, versionKey, LanguageConstants.LanguageEn);
+                    await LoadLanguageCache(LanguageConstants.LanguageEn, client);
                 }
                 if (IsSelectedRussianCache)
                 {
-                    versionKey = $"v_{LanguageConstants.LanguageRu}";
-                    StatusText = AppResources.DownloadingText_DownloadingText;
-                    stream = new MemoryStream(await client.DownloadDataTaskAsync(
-                        await DependencyService.Get<CacheLoadingService>().GetUrlAsync(LanguageConstants.LanguageRu)));
-                    DownloadingStatus = AppResources.DownloadingText_Saving;
-                    await DependencyService.Get<CacheLoadingService>().WriteCacheAsync(stream, versionKey, LanguageConstants.LanguageRu);
+                    await LoadLanguageCache(LanguageConstants.LanguageRu, client);
                 }
             }
             catch(Exception ex)
@@ -866,6 +933,15 @@ namespace GSU.Museum.Shared.ViewModels
                 DownloadingStatus = string.Empty;
                 IsBusy = false;
             }
+        }
+
+        private async Task LoadLanguageCache(string language, WebClient client)
+        {
+            var versionKey = $"v_{language}";
+            StatusText = AppResources.DownloadingText_DownloadingText;
+            var stream = new MemoryStream(await client.DownloadDataTaskAsync(
+                await DependencyService.Get<CacheLoadingService>().GetUrlAsync(language)));
+            await DependencyService.Get<CacheLoadingService>().WriteCacheAsync(stream, versionKey, language);
         }
 
         private int BoolToInt(bool param)

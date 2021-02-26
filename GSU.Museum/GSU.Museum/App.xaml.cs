@@ -31,7 +31,6 @@ namespace GSU.Museum
         protected override void OnSleep()
         {
             _logger.Info("Application is shut down");
-            NLog.LogManager.Shutdown();
         }
 
         protected override void OnResume()

@@ -162,6 +162,9 @@
   <data name="ErrorMessage_ServerIsNotResponse" xml:space="preserve">
     <value>Can not connect to the server</value>
   </data>
+  <data name="ErrorMessage_SomethingWentWrong" xml:space="preserve">
+    <value>Something went wrong...</value>
+  </data>
   <data name="HallPage_MenuDescription" xml:space="preserve">
     <value>Select a stand, please</value>
   </data>
@@ -240,11 +243,20 @@
   <data name="OptionsPage_LanguageSectionTitle" xml:space="preserve">
     <value>Language settings</value>
   </data>
+  <data name="OptionsPage_ReportsSectionLabel" xml:space="preserve">
+    <value>Reports</value>
+  </data>
   <data name="OptionsPage_SelectCacheLanguageButton" xml:space="preserve">
     <value>Download cache</value>
   </data>
   <data name="OptionsPage_SelectCacheLanguageLabel" xml:space="preserve">
     <value>Please, select language(-s) to download</value>
+  </data>
+  <data name="OptionsPage_SendReportsDescriptionLabel" xml:space="preserve">
+    <value>Send anonymous reports about errors to help improve application</value>
+  </data>
+  <data name="OptionsPage_SendReportsLabel" xml:space="preserve">
+    <value>Send error reports</value>
   </data>
   <data name="OptionsPage_Title" xml:space="preserve">
     <value>Settings</value>

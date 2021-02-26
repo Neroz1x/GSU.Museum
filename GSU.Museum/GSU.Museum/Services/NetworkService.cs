@@ -24,11 +24,7 @@ namespace GSU.Museum.Shared.Services
     {
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
         
-        /// <summary>
-        /// Check Internet connection
-        /// </summary>
-        /// <returns></returns>
-        private bool CheckConnection()
+        public bool CheckConnection()
         {
             if (Connectivity.NetworkAccess == NetworkAccess.ConstrainedInternet || Connectivity.NetworkAccess == NetworkAccess.Internet)
             {

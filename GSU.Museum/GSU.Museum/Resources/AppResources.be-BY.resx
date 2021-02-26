@@ -163,6 +163,9 @@
   <data name="ErrorMessage_ServerIsNotResponse" xml:space="preserve">
     <value>Не атрымалася падлучыцца да сервера</value>
   </data>
+  <data name="ErrorMessage_SomethingWentWrong" xml:space="preserve">
+    <value>Здарылася нешта нечаканае...</value>
+  </data>
   <data name="HallPage_MenuDescription" xml:space="preserve">
     <value>Выберыце, калі ласка, стэнд</value>
   </data>
@@ -241,11 +244,20 @@
   <data name="OptionsPage_LanguageSectionTitle" xml:space="preserve">
     <value>Налады мовы</value>
   </data>
+  <data name="OptionsPage_ReportsSectionLabel" xml:space="preserve">
+    <value>Паведамленнi</value>
+  </data>
   <data name="OptionsPage_SelectCacheLanguageButton" xml:space="preserve">
     <value>Спампаваць кэш</value>
   </data>
   <data name="OptionsPage_SelectCacheLanguageLabel" xml:space="preserve">
     <value>Калi ласка, выбярыце мову(-ы) для спампавання</value>
+  </data>
+  <data name="OptionsPage_SendReportsDescriptionLabel" xml:space="preserve">
+    <value>Пасылаць ананiмныя паведаммленнi аб памылках, каб дапамагчы выправiць iх</value>
+  </data>
+  <data name="OptionsPage_SendReportsLabel" xml:space="preserve">
+    <value>Пасылаць паведамленни</value>
   </data>
   <data name="OptionsPage_Title" xml:space="preserve">
     <value>Налады</value>
