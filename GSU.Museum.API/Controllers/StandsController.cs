@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using GSU.Museum.API.Filters;
 using GSU.Museum.API.Interfaces;
 using GSU.Museum.CommonClassLibrary.Enums;
 using GSU.Museum.CommonClassLibrary.Models;
+using GSU.Museum.CommonClassLibrary.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -67,22 +67,23 @@ namespace GSU.Museum.API.Controllers
         /// <response code="200">Everything is correct. Hash codes are different</response>
         /// <response code="204">Everything is correct. Hash codes are the same</response>
         /// <response code="404">Item not found</response>
+        /// <response code="400">Incorrect id</response>
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpGet("{hallId}/{id}")]
         public async Task<IActionResult> GetAsync(string hallId, string id, int? hash)
         {
-            if (id.Length < 24)
-            {
-                throw new Error(Errors.Invalid_input, "Incorrect id length");
-            }
+            hallId.ValidateId();
+            id.ValidateId();
 
             var stand = await _standsService.GetAsync(Request, hallId, id);
             if (stand == null)
             {
                 return NotFound();
             }
+
             if (hash != null)
             {
                 if (_compareService.IsEquals(hash.GetValueOrDefault(), stand))
@@ -101,12 +102,16 @@ namespace GSU.Museum.API.Controllers
         /// <returns>Id of new record</returns>
         /// POST: api/Stands
         /// <response code="200">Everything is correct. Item has been created</response>
+        /// <response code="404">Parent itme not found</response>
+        /// <response code="400">Incorrect id</response>
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPost]
         public async Task<IActionResult> CreateAsync(string hallId, Stand stand)
         {
             try
             {
+                hallId.ValidateId();
                 var id = await _standsRepository.CreateAsync(hallId, stand);
                 
                 // If hall not found
@@ -131,15 +136,15 @@ namespace GSU.Museum.API.Controllers
         /// PUT: api/Stands/5
         /// <response code="204">Everything is correct</response>
         /// <response code="404">Item not found</response>
+        /// <response code="400">Incorrect id</response>
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpPut]
         public async Task<IActionResult> UpdateAsync(string hallId, Stand standIn)
         {
-            if (standIn.Id.Length < 24)
-            {
-                throw new Error(Errors.Invalid_input, "Incorrect id length");
-            }
+            standIn.Id.ValidateId();
+            hallId.ValidateId();
 
             var stand = await _standsRepository.GetAsync(hallId, standIn.Id);
 
@@ -168,15 +173,15 @@ namespace GSU.Museum.API.Controllers
         /// DELETE: api/Stands/5
         /// <response code="204">Everything is correct</response>
         /// <response code="404">Item not found</response>
+        /// /// <response code="400">Incorrect id</response>
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(string hallId, string id)
         {
-            if (id.Length < 24)
-            {
-                throw new Error(Errors.Invalid_input, "Incorrect id length");
-            }
+            hallId.ValidateId();
+            id.ValidateId();
 
             var stand = await _standsRepository.GetAsync(hallId, id);
 
