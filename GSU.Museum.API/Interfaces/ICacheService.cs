@@ -83,13 +83,13 @@ namespace GSU.Museum.API.Interfaces
         /// </summary>
         /// <param name="language">Language to check</param>
         /// <returns></returns>
-        public bool IsCoorectLanguage(string language);
+        public bool IsCorrectLanguage(string language);
 
         /// <summary>
         /// Check list of language to be correct
         /// </summary>
         /// <param name="languages">List of languages to check</param>
         /// <returns></returns>
-        public bool IsCoorectLanguage(List<string> languages); 
+        public bool IsCorrectLanguage(List<string> languages); 
     }
 }
