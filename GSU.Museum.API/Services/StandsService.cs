@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GSU.Museum.API.AutoMapper.MappingConfigurations;
 using GSU.Museum.API.Interfaces;
 using GSU.Museum.CommonClassLibrary.Constants;
 using GSU.Museum.CommonClassLibrary.Models;
@@ -34,101 +35,21 @@ namespace GSU.Museum.API.Services
                 // Create mapping depending on language
                 switch (language)
                 {
-                    case "ru":
-                        mapperConfiguration = new MapperConfiguration(cfg => 
-                        {
-                            cfg.CreateMap<Stand, StandDTO>()
-                            .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                                    source => source.TitleRu))
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionRu))
-                            .ForMember(destination => destination.Exhibits,
-                                map => map.Ignore())
-                            .ForMember(destination => destination.Photo,
-                                map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
-                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionRu));
-                        });
+                    case LanguageConstants.LanguageRu:
+                        mapperConfiguration = StandsMappingConfigurations.GetAllRuConfiguration;
+                        mapperConfigurationPhoto = StandsMappingConfigurations.GetAllRuPhotoConfiguration;
                         break;
-                    case "en":
-                        mapperConfiguration = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<Stand, StandDTO>()
-                            .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                            source => source.TitleEn))
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionEn))
-                            .ForMember(destination => destination.Exhibits,
-                                map => map.Ignore())
-                            .ForMember(destination => destination.Photo,
-                                map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
-                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionEn));
-                        });
+                    case LanguageConstants.LanguageEn:
+                        mapperConfiguration = StandsMappingConfigurations.GetAllEnConfiguration;
+                        mapperConfigurationPhoto = StandsMappingConfigurations.GetAllEnPhotoConfiguration;
                         break;
-                    case "be":
-                        mapperConfiguration = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<Stand, StandDTO>()
-                            .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                                    source => source.TitleBe))
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionBe))
-                            .ForMember(destination => destination.Exhibits,
-                                map => map.Ignore())
-                            .ForMember(destination => destination.Photo,
-                                map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
-                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionBe));
-                        });
+                    case LanguageConstants.LanguageBy:
+                        mapperConfiguration = StandsMappingConfigurations.GetAllByConfiguration;
+                        mapperConfigurationPhoto = StandsMappingConfigurations.GetAllByPhotoConfiguration;
                         break;
                     default:
-                        mapperConfiguration = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<Stand, StandDTO>()
-                            .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                                    source => source.TitleEn))
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionEn))
-                            .ForMember(destination => destination.Exhibits,
-                                map => map.Ignore())
-                            .ForMember(destination => destination.Photo,
-                                map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
-                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionEn));
-                        });
+                        mapperConfiguration = StandsMappingConfigurations.GetAllEnConfiguration;
+                        mapperConfigurationPhoto = StandsMappingConfigurations.GetAllEnPhotoConfiguration;
                         break;
                 }
                 var mapper = new Mapper(mapperConfiguration);
@@ -158,73 +79,17 @@ namespace GSU.Museum.API.Services
                 // Create mapping depending on language
                 switch (language)
                 {
-                    case "ru":
-                        mapperConfiguration = new MapperConfiguration(cfg => 
-                        {
-                            cfg.CreateMap<Stand, StandDTO>()
-                            .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                                    source => source.TitleRu))
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionRu))
-                            .ForMember(destination => destination.Exhibits,
-                                map => map.Ignore())
-                            .ForMember(destination => destination.Photo,
-                                map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
+                    case LanguageConstants.LanguageRu:
+                        mapperConfiguration = StandsMappingConfigurations.GetRuConfiguration;
                         break;
-                    case "en":
-                        mapperConfiguration = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<Stand, StandDTO>()
-                            .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                                    source => source.TitleEn))
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionEn))
-                            .ForMember(destination => destination.Exhibits,
-                                map => map.Ignore())
-                            .ForMember(destination => destination.Photo,
-                                map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
+                    case LanguageConstants.LanguageEn:
+                        mapperConfiguration = StandsMappingConfigurations.GetEnConfiguration;
                         break;
-                    case "be":
-                        mapperConfiguration = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<Stand, StandDTO>()
-                            .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                                    source => source.TitleBe))
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionBe))
-                            .ForMember(destination => destination.Exhibits,
-                                map => map.Ignore())
-                            .ForMember(destination => destination.Photo,
-                                map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
+                    case LanguageConstants.LanguageBy:
+                        mapperConfiguration = StandsMappingConfigurations.GetByConfiguration;
                         break;
                     default:
-                        mapperConfiguration = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<Stand, StandDTO>()
-                            .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                                    source => source.TitleEn))
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionEn))
-                            .ForMember(destination => destination.Exhibits,
-                                map => map.Ignore())
-                            .ForMember(destination => destination.Photo,
-                                map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
+                        mapperConfiguration = StandsMappingConfigurations.GetEnConfiguration;
                         break;
                 }
                 var mapper = new Mapper(mapperConfiguration);
