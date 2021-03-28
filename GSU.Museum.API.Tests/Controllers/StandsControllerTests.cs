@@ -155,7 +155,8 @@ namespace GSU.Museum.API.Tests.Controllers
             .Callback((string hallId, Stand stand) =>
             {
                 _halls.FirstOrDefault(h => h.Id.Equals(hallId)).Stands.Add(stand);
-            });
+            })
+            .ReturnsAsync(() => "123456782032345347406865");
 
             mockRepo.Setup(repo => repo.UpdateAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Stand>()))
             .Callback((string hallId, string id, Stand standIn) =>
