@@ -1,4 +1,5 @@
 ﻿using GSU.Museum.API.Interfaces;
+using GSU.Museum.CommonClassLibrary.Interfaces;
 using GSU.Museum.CommonClassLibrary.Models;
 using System.Collections.Generic;
 
@@ -6,19 +7,9 @@ namespace GSU.Museum.API.Services
 {
     public class CompareService : ICompareService
     {
-        public bool IsEquals(int hashCode, HallDTO hall)
+        public bool IsEquals(int hashCode, IMuseumItemDTO item)
         {
-            return hashCode == hall.GetHashCode();
-        }
-
-        public bool IsEquals(int hashCode, StandDTO stand)
-        {
-            return hashCode == stand.GetHashCode();
-        }
-
-        public bool IsEquals(int hashCode, ExhibitDTO exhibit)
-        {
-            return hashCode == exhibit.GetHashCode();
+            return hashCode == item.GetHashCode();
         }
 
         public bool IsListEquals(int hashCode, List<HallDTO> halls)
