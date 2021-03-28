@@ -1,9 +1,10 @@
 ﻿using GSU.Museum.CommonClassLibrary.Data.Enums;
+using GSU.Museum.CommonClassLibrary.Data.Models;
 using System.Collections.Generic;
 
 namespace GSU.Museum.CommonClassLibrary.Models
 {
-    public class ExhibitDTO
+    public class ExhibitDTO : MuseumItemDTO
     {
         public string Id { get; set; }
         public string Title { get; set; }
@@ -16,49 +17,24 @@ namespace GSU.Museum.CommonClassLibrary.Models
         {
             unchecked
             {
-                int hash = (int)2166136261;
-                hash = (hash * 16777619) ^ GetStringHashCode(Id);
-                hash = (hash * 16777619) ^ GetStringHashCode(Title);
-                hash = (hash * 16777619) ^ GetStringHashCode(Description);
-                hash = (hash * 16777619) ^ GetStringHashCode(Text);
-                hash = (hash * 16777619) ^ (int)ExhibitType;
+                int hash = (int)InitialHash;
+                hash = (hash * Multiplier) ^ GetStringHashCode(Id);
+                hash = (hash * Multiplier) ^ GetStringHashCode(Title);
+                hash = (hash * Multiplier) ^ GetStringHashCode(Description);
+                hash = (hash * Multiplier) ^ GetStringHashCode(Text);
+                hash = (hash * Multiplier) ^ (int)ExhibitType;
                 if (Photos != null)
                 {
                     foreach (var photo in Photos)
                     {
                         if (photo != null)
                         {
-                            hash = (hash * 16777619) ^ photo.GetHashCode();
+                            hash = (hash * Multiplier) ^ photo.GetHashCode();
                         }
                     }
                 }
                 return hash;
             }
-        }
-
-        private int GetStringHashCode(string str)
-        {
-            if (str != null)
-            {
-                unchecked
-                {
-                    int hash1 = (5381 << 16) + 5381;
-                    int hash2 = hash1;
-
-                    for (int i = 0; i < str.Length; i += 2)
-                    {
-                        hash1 = ((hash1 << 5) + hash1) ^ str[i];
-                        if (i == str.Length - 1)
-                        {
-                            break;
-                        }
-                        hash2 = ((hash2 << 5) + hash2) ^ str[i + 1];
-                    }
-
-                    return hash1 + (hash2 * 1566083941);
-                }
-            }
-            return 1;
         }
     }
 }

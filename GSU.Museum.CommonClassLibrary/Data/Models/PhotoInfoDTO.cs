@@ -1,9 +1,10 @@
-﻿using MongoDB.Bson;
+﻿using GSU.Museum.CommonClassLibrary.Data.Models;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace GSU.Museum.CommonClassLibrary.Models
 {
-    public class PhotoInfoDTO
+    public class PhotoInfoDTO : MuseumItemDTO
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
@@ -17,11 +18,12 @@ namespace GSU.Museum.CommonClassLibrary.Models
             {
                 unchecked
                 {
-                    const int p = 16777619;
-                    int hash = (int)2166136261;
+                    int hash = (int)InitialHash;
 
                     for (int i = 0; i < Photo.Length; i++)
-                        hash = (hash ^ Photo[i]) * p;
+                    {
+                        hash = (hash ^ Photo[i]) * Multiplier;
+                    }
 
                     hash += hash << 13;
                     hash ^= hash >> 7;
@@ -31,7 +33,7 @@ namespace GSU.Museum.CommonClassLibrary.Models
                     return hash;
                 }
             }
-            return 1;
+            return DefaultHashValue;
         }
     }
 }
