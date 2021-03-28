@@ -29,13 +29,23 @@ namespace GSU.Museum.API.Extensions
                         if (contextFeature.Error.GetType() == typeof(Error))
                         {
                             Error error = contextFeature.Error as Error;
+                            switch (error.ErrorCode)
+                            {
+                                case Errors.Invalid_input:
+                                    context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                                    break;
+                            }
                             Log.Error($"Exception: {contextFeature.Error}");
                             await context.Response.WriteAsync(JsonConvert.SerializeObject(error));
                         }
                         else
                         {
                             Log.Fatal($"Exception: {contextFeature.Error}");
-                            await context.Response.WriteAsync(new Error() { ErrorCode = Errors.Unhandled_exception, Info = contextFeature.Error.Message }.ToString());
+                            await context.Response.WriteAsync(new Error() 
+                            { 
+                                ErrorCode = Errors.Unhandled_exception, 
+                                Info = contextFeature.Error.Message 
+                            }.ToString());
                         }
                     }
                 });
