@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GSU.Museum.API.Interfaces;
+using GSU.Museum.CommonClassLibrary.Constants;
 using GSU.Museum.CommonClassLibrary.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
@@ -21,18 +22,9 @@ namespace GSU.Museum.API.Services
         public async Task<List<HallDTO>> GetAllAsync(HttpRequest request)
         {
             // Get language from header
-            StringValues language = "";
-            if (request != null)
-            {
-                if (!request.Headers.TryGetValue("Accept-Language", out language))
-                {
-                    language = "en";
-                }
-            }
-            else
-            {
-                language = "en";
-            }
+            StringValues language = LanguageConstants.LanguageDefault;
+            request?.Headers?.TryGetValue("Accept-Language", out language);
+
             var halls = await _hallsRepository.GetAllAsync();
             MapperConfiguration mapperConfiguration = null;
             MapperConfiguration mapperConfigurationPhoto = null;
@@ -144,18 +136,9 @@ namespace GSU.Museum.API.Services
         public async Task<HallDTO> GetAsync(HttpRequest request, string id)
         {
             // Get language from header
-            StringValues language = "";
-            if (request != null)
-            {
-                if (!request.Headers.TryGetValue("Accept-Language", out language))
-                {
-                    language = "en";
-                }
-            }
-            else
-            {
-                language = "en";
-            }
+            StringValues language = LanguageConstants.LanguageDefault;
+            request?.Headers?.TryGetValue("Accept-Language", out language);
+
             var hall = await _hallsRepository.GetAsync(id);
             MapperConfiguration mapperConfiguration = null;
             HallDTO hallDTO = null;

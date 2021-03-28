@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GSU.Museum.API.Interfaces;
+using GSU.Museum.CommonClassLibrary.Constants;
 using GSU.Museum.CommonClassLibrary.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
@@ -20,18 +21,9 @@ namespace GSU.Museum.API.Services
         public async Task<List<ExhibitDTO>> GetAllAsync(HttpRequest request, string hallId, string standId)
         {
             // Get language from header
-            StringValues language = "";
-            if(request != null)
-            {
-                if (!request.Headers.TryGetValue("Accept-Language", out language))
-                {
-                    language = "en";
-                }
-            }
-            else
-            {
-                language = "en";
-            }
+            StringValues language = LanguageConstants.LanguageDefault;
+            request?.Headers?.TryGetValue("Accept-Language", out language);
+
             var exhibits = await _exhibitsRepository.GetAllAsync(hallId, standId);
             MapperConfiguration mapperConfiguration = null;
             MapperConfiguration mapperConfigurationPhoto = null;
@@ -168,18 +160,9 @@ namespace GSU.Museum.API.Services
         public async Task<ExhibitDTO> GetAsync(HttpRequest request, string hallId, string standId, string id)
         {
             // Get language from header
-            StringValues language = "";
-            if (request != null)
-            {
-                if (!request.Headers.TryGetValue("Accept-Language", out language))
-                {
-                    language = "en";
-                }
-            }
-            else
-            {
-                language = "en";
-            }
+            StringValues language = LanguageConstants.LanguageDefault;
+            request?.Headers?.TryGetValue("Accept-Language", out language);
+
             var exhibit = await _exhibitsRepository.GetAsync(hallId, standId, id);
             MapperConfiguration mapperConfiguration = null;
             MapperConfiguration mapperConfigurationPhoto = null;
