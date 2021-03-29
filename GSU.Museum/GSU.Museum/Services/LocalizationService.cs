@@ -1,4 +1,5 @@
-﻿using GSU.Museum.Shared.Interfaces;
+﻿using GSU.Museum.CommonClassLibrary.Constants;
+using GSU.Museum.Shared.Interfaces;
 using GSU.Museum.Shared.Services;
 using System.Globalization;
 using System.Threading;
@@ -13,40 +14,40 @@ namespace GSU.Museum.Shared.Services
         {
             switch (App.Settings.Language.CultureInfo.Name)
             {
-                case "ru-RU":
-                    if (!Thread.CurrentThread.CurrentUICulture.Name.Equals("ru-RU"))
+                case LanguageConstants.LanguageFullRu:
+                    if (!Thread.CurrentThread.CurrentUICulture.Name.Equals(LanguageConstants.LanguageFullRu))
                     {
-                        CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("ru-RU");
-                        CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("ru-RU");
-                        Thread.CurrentThread.CurrentCulture = new CultureInfo("ru-RU");
-                        Thread.CurrentThread.CurrentUICulture = new CultureInfo("ru-RU");
+                        CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(LanguageConstants.LanguageFullRu);
+                        CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(LanguageConstants.LanguageFullRu);
+                        Thread.CurrentThread.CurrentCulture = new CultureInfo(LanguageConstants.LanguageFullRu);
+                        Thread.CurrentThread.CurrentUICulture = new CultureInfo(LanguageConstants.LanguageFullRu);
                     }
                     break;
-                case "en-US":
-                    if (!Thread.CurrentThread.CurrentUICulture.Name.Equals("en-US"))
+                case LanguageConstants.LanguageFullEn:
+                    if (!Thread.CurrentThread.CurrentUICulture.Name.Equals(LanguageConstants.LanguageFullEn))
                     {
-                        CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
-                        CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US");
-                        Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-                        Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+                        CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(LanguageConstants.LanguageFullEn);
+                        CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(LanguageConstants.LanguageFullEn);
+                        Thread.CurrentThread.CurrentCulture = new CultureInfo(LanguageConstants.LanguageFullEn);
+                        Thread.CurrentThread.CurrentUICulture = new CultureInfo(LanguageConstants.LanguageFullEn);
                     }
                     break;
-                case "be-BY":
-                    if (!Thread.CurrentThread.CurrentUICulture.Name.Equals("be-BY"))
+                case LanguageConstants.LanguageFullBy:
+                    if (!Thread.CurrentThread.CurrentUICulture.Name.Equals(LanguageConstants.LanguageFullBy))
                     {
-                        CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("be-BY");
-                        CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("be-BY");
-                        Thread.CurrentThread.CurrentCulture = new CultureInfo("be-BY");
-                        Thread.CurrentThread.CurrentUICulture = new CultureInfo("be-BY");
+                        CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(LanguageConstants.LanguageFullBy);
+                        CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(LanguageConstants.LanguageFullBy);
+                        Thread.CurrentThread.CurrentCulture = new CultureInfo(LanguageConstants.LanguageFullBy);
+                        Thread.CurrentThread.CurrentUICulture = new CultureInfo(LanguageConstants.LanguageFullBy);
                     }
                     break;
                 default:
-                    if (!Thread.CurrentThread.CurrentUICulture.Name.Equals("en-US"))
+                    if (!Thread.CurrentThread.CurrentUICulture.Name.Equals(LanguageConstants.LanguageFullEn))
                     {
-                        CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
-                        CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US");
-                        Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-                        Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
+                        CultureInfo.DefaultThreadCurrentCulture = new CultureInfo(LanguageConstants.LanguageFullEn);
+                        CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo(LanguageConstants.LanguageFullEn);
+                        Thread.CurrentThread.CurrentCulture = new CultureInfo(LanguageConstants.LanguageFullEn);
+                        Thread.CurrentThread.CurrentUICulture = new CultureInfo(LanguageConstants.LanguageFullEn);
                     }
                     break;
             }
