@@ -15,9 +15,9 @@ on:
   push:
     branches: [ master ]
     paths-ignore:
-      - '**/GSU.Museum/GSU.Museum.Android/*.csproj'
-      - '**/GSU.Museum/GSU.Museum.iOS/*.csproj'
-      - '**/GSU.Museum/GSU.Museum.API.Tests/*.csproj'
+      - '**/GSU.Museum.Android/**'
+      - '**/GSU.Museum.iOS/**'
+      - '**/GSU.Museum.API.Tests/**'
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ master ]
