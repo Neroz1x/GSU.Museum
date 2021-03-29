@@ -135,6 +135,9 @@
   <data name="DownloadingText_DownloadingText" xml:space="preserve">
     <value>Downloading text</value>
   </data>
+  <data name="DownloadingText_Saving" xml:space="preserve">
+    <value>Saving data</value>
+  </data>
   <data name="ErrorMessage_CacheIsUpToDate" xml:space="preserve">
     <value>Cache is up-to-date</value>
   </data>
@@ -147,6 +150,9 @@
   <data name="ErrorMessage_LoadingFaild" xml:space="preserve">
     <value>Can not load page. Check Internet connection and caching settings</value>
   </data>
+  <data name="ErrorMessage_NoNetworkConnection" xml:space="preserve">
+    <value>No network connection</value>
+  </data>
   <data name="ErrorMessage_NotFoundInCache" xml:space="preserve">
     <value>Can not found data in cache. Set "Сheck for updates" field in settings to allow downloading data</value>
   </data>
@@ -155,6 +161,9 @@
   </data>
   <data name="ErrorMessage_ServerIsNotResponse" xml:space="preserve">
     <value>Can not connect to the server</value>
+  </data>
+  <data name="ErrorMessage_SomethingWentWrong" xml:space="preserve">
+    <value>Something went wrong...</value>
   </data>
   <data name="HallPage_MenuDescription" xml:space="preserve">
     <value>Select a stand, please</value>
@@ -234,11 +243,20 @@
   <data name="OptionsPage_LanguageSectionTitle" xml:space="preserve">
     <value>Language settings</value>
   </data>
+  <data name="OptionsPage_ReportsSectionLabel" xml:space="preserve">
+    <value>Reports</value>
+  </data>
   <data name="OptionsPage_SelectCacheLanguageButton" xml:space="preserve">
     <value>Download cache</value>
   </data>
   <data name="OptionsPage_SelectCacheLanguageLabel" xml:space="preserve">
     <value>Please, select language(-s) to download</value>
+  </data>
+  <data name="OptionsPage_SendReportsDescriptionLabel" xml:space="preserve">
+    <value>Send anonymous reports about errors to help improve application</value>
+  </data>
+  <data name="OptionsPage_SendReportsLabel" xml:space="preserve">
+    <value>Send error reports</value>
   </data>
   <data name="OptionsPage_Title" xml:space="preserve">
     <value>Settings</value>

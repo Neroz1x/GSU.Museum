@@ -35,7 +35,7 @@
             <BoxView HeightRequest="2" BackgroundColor="White" Grid.Row="1" Grid.ColumnSpan="2"></BoxView>
         </Grid>
         <ScrollView Grid.Row="1">
-            <StackLayout Orientation="Vertical" Padding="10, 0">
+            <StackLayout Orientation="Vertical" Padding="10, 0, 10, 10">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
                     <Label Style="{StaticResource OptionsSectionLabelHeader}" Text="{Binding LanguageSectionTitle}"></Label>
                     <BoxView Style="{StaticResource LineForOptions}"/>
@@ -111,6 +111,25 @@
                         <Button Style="{StaticResource DefaultButton}" Text="{Binding SelectCacheButton}" Command="{Binding ShowCachePopupCommand}"></Button>
                         <Button Style="{StaticResource DefaultButton}" Text="{Binding ClearCacheButton}" Command="{Binding ClearCacheCommand}"></Button>
                     </StackLayout>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
+                    <Label Style="{StaticResource OptionsSectionLabelHeader}" Text="{Binding ReportsSectionTitle}"></Label>
+                    <BoxView Style="{StaticResource LineForOptions}"/>
+                </StackLayout>
+                <StackLayout Orientation="Vertical" Padding="10, 0, 0, 0">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Start">
+                        <Label Style="{StaticResource OptionsLabelHeader}" Text="{Binding SendReportsLabel}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OnLabelTapCommand}" CommandParameter="3"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <CheckBox HorizontalOptions="Fill" 
+                                  VerticalOptions="Center"
+                                  IsChecked="{Binding SendReportsIsChecked}"
+                                  x:Name="SendReportsCheckBox" IsEnabled="True"
+                            />
+                    </StackLayout>
+                    <Label Style="{StaticResource OptionsLabelDescription}" Text="{Binding SendReportsDescriptionLabel}"/>
                 </StackLayout>
             </StackLayout>
         </ScrollView>

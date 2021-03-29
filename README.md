@@ -15,8 +15,15 @@
 * [Project description](#project-description)
   * [Features](#features)
   * [Components and technologies](#components-and-technologies)
-  * [Short description](#short-description)
+  * [Description](#short-description)
 * [Getting started](#getting-started)
+  * [Project structure](#Project-structure)
+    * [GSU.Museum.Shared](#GSU.Museum.Shared)
+    * [GSU.Museum.Android and GSU.Museum.iOS](#GSU.Museum.Android-and-GSU.Museum.iOS)
+    * [GSU.Museum.CommonClassLibrary](#GSU.Museum.CommonClassLibrary)
+    * [GSU.Museum.API](#GSU.Museum.API)
+    * [GSU.Museum.API.Tests](#GSU.Museum.API.Tests)
+    * [GSU.Museum.Web](#GSU.Museum.Web)
   * [Requirements](#requirements)
   * [Setting up](#setting-up)
   * [Usage](#usage)
@@ -30,41 +37,83 @@
 
 ### Features
 
-* Cross-platform development
-* RESTful API
-* Client-side caching
+* Cross-platform development on Xamarin
+* Client-side data caching
+* Localization
+* Deep link
 * Logging
+* RESTful API
+* Swagger
 * NoSQL database
 * Localization ([available languages](#available-languages))
 * API-Key authentication
+* JWT
 
 
 ### Components and technologies
 
 - REST API (backend) - ASP.NET Core
 - Mobile client (frontend) - Xamarin.Forms
-- Web database manager - ASP.NET Core MVC
+- Web site for database management - ASP.NET Core MVC
 - Database - NoSQL MongoDB
 
 
-### Short description
+### Description
 
 An application powered by Xamarin, Xamarin.Forms, and a ASP.NET Core backend with 100% shared C# code across iOS, Android. A web site developed by ASP.NET Core MVC.
 
 
-Mobile appliaction provides users with information about the GSU Museum's exhibits. All data are stored in databse. Mobile app send request to the server, which authenticate it, retrieve requested data from the database and send it back to the client.
+Mobile appliaction provides users with information about the GSU Museum's exhibits. All data is stored in databse. Mobile app send request to the server, which authenticate it, retrieve requested data from and send it back to the client.
 
 
-The web site for managing database. It allows to view all the records, add new, edit and delete them.
+The web site is used for database managing. It allows admin to add new exhibits, view existing, update and delete them.
 
 
 ## Getting started
 
 
+### Project structure
+
+#### GSU.Museum.Shared
+
+
+This project contains shared code like page markup and business logic for Android and iOS applications.
+
+
+#### GSU.Museum.Android and GSU.Museum.iOS
+
+
+All platform specific logic is located in this projects.
+
+
+#### GSU.Museum.CommonClassLibrary
+
+
+This project contains data models and classes, that used all over the solution.
+
+
+#### GSU.Museum.API
+
+
+This is a backend project. It contains all endpoint, that can be accessed by mobile app.
+
+
+#### GSU.Museum.API.Tests
+
+
+Unit-tests for backend are located in this project.
+
+
+#### GSU.Museum.Web
+
+
+This project contains all logic related to museum management site.
+
+
 ### Requirements
 
 - [Install Visual Studio 2019](https://visualstudio.microsoft.com/en/downloads/)
-- Android 10.0 API 29 SDK and Android 9.0 API 28 SDK [Instruction](https://docs.microsoft.com/en-us/xamarin/android/get-started/installation/android-sdk?tabs=windows)
+- Android 9.0 API 28 SDK or higher [Instruction](https://docs.microsoft.com/en-us/xamarin/android/get-started/installation/android-sdk?tabs=windows)
 - [.NET Core 3.1 SDK or later](https://dotnet.microsoft.com/download/dotnet-core/3.1)
 - [MongoDB database](https://www.mongodb.com/try/download/community)
 
@@ -103,4 +152,4 @@ If you want to add a huge update in the project, make an issure before where we 
 
 ## License
 
-The ([MIT](https://choosealicense.com/licenses/mit/)) License Copyright (c) 2020
+The ([MIT](https://choosealicense.com/licenses/mit/)) License Copyright (c) 2021

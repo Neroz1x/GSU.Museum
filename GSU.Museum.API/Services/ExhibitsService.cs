@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using GSU.Museum.API.Interfaces;
+using GSU.Museum.CommonClassLibrary.Constants;
 using GSU.Museum.CommonClassLibrary.Models;
+using GSU.Museum.API.AutoMapper.MappingConfigurations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using System.Collections.Generic;
@@ -20,18 +22,9 @@ namespace GSU.Museum.API.Services
         public async Task<List<ExhibitDTO>> GetAllAsync(HttpRequest request, string hallId, string standId)
         {
             // Get language from header
-            StringValues language = "";
-            if(request != null)
-            {
-                if (!request.Headers.TryGetValue("Accept-Language", out language))
-                {
-                    language = "en";
-                }
-            }
-            else
-            {
-                language = "en";
-            }
+            StringValues language = LanguageConstants.LanguageDefault;
+            request?.Headers?.TryGetValue("Accept-Language", out language);
+
             var exhibits = await _exhibitsRepository.GetAllAsync(hallId, standId);
             MapperConfiguration mapperConfiguration = null;
             MapperConfiguration mapperConfigurationPhoto = null;
@@ -42,105 +35,21 @@ namespace GSU.Museum.API.Services
                 // Create mapping depending on language
                 switch (language)
                 {
-                    case "ru":
-                        mapperConfiguration = new MapperConfiguration(cfg => 
-                        {
-                            cfg.CreateMap<Exhibit, ExhibitDTO>()
-                            .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                            source => source.TitleRu))
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                            source => source.DescriptionRu))
-                            .ForMember(destination => destination.Text,
-                               map => map.MapFrom(
-                                   source => source.TextRu))
-                            .ForMember(destination => destination.Photos,
-                            map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
-                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionRu));
-                        });
+                    case LanguageConstants.LanguageRu:
+                        mapperConfiguration = ExhibitsMappingConfigurations.GetAllRuConfiguration;
+                        mapperConfigurationPhoto = ExhibitsMappingConfigurations.GetAllRuPhotoConfiguration;
                         break;
-                    case "en":
-                        mapperConfiguration = new MapperConfiguration(cfg => 
-                        {
-                            cfg.CreateMap<Exhibit, ExhibitDTO>()
-                            .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                            source => source.TitleEn))
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                            source => source.DescriptionEn))
-                            .ForMember(destination => destination.Text,
-                               map => map.MapFrom(
-                                   source => source.TextEn))
-                            .ForMember(destination => destination.Photos,
-                            map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
-                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionEn));
-                        });
+                    case LanguageConstants.LanguageEn:
+                        mapperConfiguration = ExhibitsMappingConfigurations.GetAllEnConfiguration;
+                        mapperConfigurationPhoto = ExhibitsMappingConfigurations.GetAllEnPhotoConfiguration;
                         break;
-                    case "be":
-                        mapperConfiguration = new MapperConfiguration(cfg => 
-                        {
-                            cfg.CreateMap<Exhibit, ExhibitDTO>()
-                            .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                            source => source.TitleBe))
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                            source => source.DescriptionBe))
-                            .ForMember(destination => destination.Text,
-                               map => map.MapFrom(
-                                   source => source.TextBe))
-                            .ForMember(destination => destination.Photos,
-                            map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
-                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionBe));
-                        });
+                    case LanguageConstants.LanguageBy:
+                        mapperConfiguration = ExhibitsMappingConfigurations.GetAllByConfiguration;
+                        mapperConfigurationPhoto = ExhibitsMappingConfigurations.GetAllByPhotoConfiguration;
                         break;
                     default:
-                        mapperConfiguration = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<Exhibit, ExhibitDTO>()
-                            .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                            source => source.TitleEn))
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                            source => source.DescriptionEn))
-                            .ForMember(destination => destination.Text,
-                               map => map.MapFrom(
-                                   source => source.TextEn))
-                            .ForMember(destination => destination.Photos,
-                            map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
-                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionEn));
-                        });
+                        mapperConfiguration = ExhibitsMappingConfigurations.GetAllEnConfiguration;
+                        mapperConfigurationPhoto = ExhibitsMappingConfigurations.GetAllEnPhotoConfiguration;
                         break;
                 }
                 var mapper = new Mapper(mapperConfiguration);
@@ -168,18 +77,9 @@ namespace GSU.Museum.API.Services
         public async Task<ExhibitDTO> GetAsync(HttpRequest request, string hallId, string standId, string id)
         {
             // Get language from header
-            StringValues language = "";
-            if (request != null)
-            {
-                if (!request.Headers.TryGetValue("Accept-Language", out language))
-                {
-                    language = "en";
-                }
-            }
-            else
-            {
-                language = "en";
-            }
+            StringValues language = LanguageConstants.LanguageDefault;
+            request?.Headers?.TryGetValue("Accept-Language", out language);
+
             var exhibit = await _exhibitsRepository.GetAsync(hallId, standId, id);
             MapperConfiguration mapperConfiguration = null;
             MapperConfiguration mapperConfigurationPhoto = null;
@@ -190,117 +90,21 @@ namespace GSU.Museum.API.Services
                 // Create mapping depending on language
                 switch (language)
                 {
-                    case "ru":
-                        mapperConfiguration = new MapperConfiguration(cfg => 
-                        {
-                            cfg.CreateMap<Exhibit, ExhibitDTO>()
-                            .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                                    source => source.TitleRu))
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                            source => source.DescriptionRu))
-                            .ForMember(destination => destination.Text,
-                                map => map.MapFrom(
-                                    source => source.TextRu))
-                            .ForMember(destination => destination.ExhibitType,
-                                map => map.MapFrom(
-                                    source => source.ExhibitType))
-                            .ForMember(destenation => destenation.Photos,
-                                map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
-                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionRu));
-                        });
+                    case LanguageConstants.LanguageRu:
+                        mapperConfiguration = ExhibitsMappingConfigurations.GetRuConfiguration;
+                        mapperConfigurationPhoto = ExhibitsMappingConfigurations.GetRuPhotoConfiguration;
                         break;
-                    case "en":
-                        mapperConfiguration = new MapperConfiguration(cfg => 
-                        {
-                            cfg.CreateMap<Exhibit, ExhibitDTO>()
-                           .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                                    source => source.TitleEn))
-                           .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                            source => source.DescriptionEn))
-                           .ForMember(destination => destination.Text,
-                                map => map.MapFrom(
-                                    source => source.TextEn))
-                           .ForMember(destination => destination.ExhibitType,
-                                map => map.MapFrom(
-                                    source => source.ExhibitType))
-                           .ForMember(destenation => destenation.Photos,
-                                map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
-                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionEn));
-                        });
+                    case LanguageConstants.LanguageEn:
+                        mapperConfiguration = ExhibitsMappingConfigurations.GetEnConfiguration;
+                        mapperConfigurationPhoto = ExhibitsMappingConfigurations.GetEnPhotoConfiguration;
                         break;
-                    case "be":
-                        mapperConfiguration = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<Exhibit, ExhibitDTO>()
-                            .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                                    source => source.TitleBe))
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                            source => source.DescriptionBe))
-                            .ForMember(destination => destination.Text,
-                                map => map.MapFrom(
-                                    source => source.TextBe))
-                            .ForMember(destination => destination.ExhibitType,
-                                map => map.MapFrom(
-                                    source => source.ExhibitType))
-                            .ForMember(destenation => destenation.Photos,
-                                map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
-                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionBe));
-                        });
+                    case LanguageConstants.LanguageBy:
+                        mapperConfiguration = ExhibitsMappingConfigurations.GetByConfiguration;
+                        mapperConfigurationPhoto = ExhibitsMappingConfigurations.GetByPhotoConfiguration;
                         break;
                     default:
-                        mapperConfiguration = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<Exhibit, ExhibitDTO>()
-                           .ForMember(destination => destination.Title,
-                                map => map.MapFrom(
-                                    source => source.TitleEn))
-                           .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                            source => source.DescriptionEn))
-                           .ForMember(destination => destination.Text,
-                                map => map.MapFrom(
-                                    source => source.TextEn))
-                           .ForMember(destination => destination.ExhibitType,
-                                map => map.MapFrom(
-                                    source => source.ExhibitType))
-                           .ForMember(destenation => destenation.Photos,
-                                map => map.Ignore());
-                            cfg.AllowNullCollections = true;
-                        });
-                        mapperConfigurationPhoto = new MapperConfiguration(cfg =>
-                        {
-                            cfg.CreateMap<PhotoInfo, PhotoInfoDTO>()
-                            .ForMember(destination => destination.Description,
-                                map => map.MapFrom(
-                                    source => source.DescriptionEn));
-                        });
+                        mapperConfiguration = ExhibitsMappingConfigurations.GetEnConfiguration;
+                        mapperConfigurationPhoto = ExhibitsMappingConfigurations.GetEnPhotoConfiguration;
                         break;
                 }
                 var mapper = new Mapper(mapperConfiguration);

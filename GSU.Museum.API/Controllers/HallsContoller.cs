@@ -4,6 +4,7 @@ using GSU.Museum.API.Filters;
 using GSU.Museum.API.Interfaces;
 using GSU.Museum.CommonClassLibrary.Enums;
 using GSU.Museum.CommonClassLibrary.Models;
+using GSU.Museum.CommonClassLibrary.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -66,22 +67,22 @@ namespace GSU.Museum.API.Controllers
         /// <response code="200">Everything is correct. Hash codes are different</response>
         /// <response code="204">Everything is correct. Hash codes are the same</response>
         /// <response code="404">Item not found</response>
+        /// <response code="400">Incorrect id</response>
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(string id, int? hash)
         {
-            if (id.Length < 24)
-            {
-                throw new Error(Errors.Invalid_input, "Incorrect id length");
-            }
+            id.ValidateId();
 
             var hall = await _hallsService.GetAsync(Request, id);
             if (hall == null)
             {
                 return NotFound();
             }
+
             if (hash != null)
             {
                 if (_compareService.IsEquals(hash.GetValueOrDefault(), hall))
@@ -122,15 +123,14 @@ namespace GSU.Museum.API.Controllers
         /// PUT: api/Halls/5
         /// <response code="204">Everything is correct</response>
         /// <response code="404">Item not found</response>
+        /// <response code="400">Incorrect id</response>
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPut]
         public async Task<IActionResult> UpdateAsync(Hall hallIn)
         {
-            if (hallIn.Id.Length < 24)
-            {
-                throw new Error(Errors.Invalid_input, "Incorrect id length");
-            }
+            hallIn.Id.ValidateId();
 
             var hall = await _hallsRepository.GetAsync(hallIn.Id);
 
@@ -158,15 +158,14 @@ namespace GSU.Museum.API.Controllers
         /// DELETE: api/Halls/123456789987654321123456
         /// <response code="204">Everything is correct</response>
         /// <response code="404">Item not found</response>
+        /// <response code="400">Incorrect id</response>
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(string id)
         {
-            if (id.Length < 24)
-            {
-                throw new Error(Errors.Invalid_input, "Incorrect id length");
-            }
+            id.ValidateId();
 
             var hall = await _hallsRepository.GetAsync(id);
 

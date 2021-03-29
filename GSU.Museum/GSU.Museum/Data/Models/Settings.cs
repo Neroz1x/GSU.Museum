@@ -1,5 +1,4 @@
-﻿using System.Dynamic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Threading;
 
 namespace GSU.Museum.Shared.Data.Models
@@ -10,6 +9,7 @@ namespace GSU.Museum.Shared.Data.Models
         public bool UseCache { get; set; }
         public bool CheckForUpdates { get; set; }
         public bool UseOnlyCache { get; set; }
+        public bool SendReports { get; set; }
         public Settings()
         {
             string language;
@@ -38,6 +38,7 @@ namespace GSU.Museum.Shared.Data.Models
             Language = new Language() { CultureInfo = cultureInfo, LanguageName = language};
             UseCache = true;
             CheckForUpdates = true;
+            SendReports = false;
         }
     }
 }

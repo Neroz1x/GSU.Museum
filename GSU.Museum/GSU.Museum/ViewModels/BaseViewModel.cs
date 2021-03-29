@@ -1,6 +1,7 @@
 ﻿using GSU.Museum.CommonClassLibrary.Models;
 using GSU.Museum.Shared.Pages;
 using GSU.Museum.Shared.Resources;
+using GSU.Museum.Shared.Services;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace GSU.Museum.Shared.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
+        private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
+
         public Command NavigateToHomePageCommand { get; }
         public Command NavigateBackCommand { get; }
 
@@ -126,26 +129,33 @@ namespace GSU.Museum.Shared.ViewModels
                     }
                     else
                     {
+                        _logger.Error($"Exception of type Error was thrown: {error}");
                         await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, error.Info, AppResources.MessageBox_ButtonOk);
                     }
                 }
                 else if (ex is HttpRequestException || ex is WebException)
                 {
+                    _logger.Error($"Exception of type HttpRequestException || WebException was thrown: {ex}");
+                    await DependencyService.Get<ReportSender>().SendReport();
                     await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, AppResources.ErrorMessage_ServerIsNotResponse, AppResources.MessageBox_ButtonOk);
                 }
                 else if (ex is OperationCanceledException)
                 {
                     if (!_isCanceled)
                     {
+                        _logger.Error($"Exception of type OperationCanceledException was thrown: {ex}");
+                        await DependencyService.Get<ReportSender>().SendReport();
                         await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, AppResources.ErrorMessage_ServerIsNotResponse, AppResources.MessageBox_ButtonOk);
-                        await App.Current.MainPage.Navigation.PopAsync();
                     }
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, ex.Message, AppResources.MessageBox_ButtonOk);
+                    _logger.Error($"Exception: {ex}");
+                    await DependencyService.Get<ReportSender>().SendReport();
+                    await Application.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, AppResources.ErrorMessage_SomethingWentWrong, AppResources.MessageBox_ButtonOk);
                 }
                 ContentVisibility = false;
+                await App.Current.MainPage.Navigation.PopAsync();
             }
             finally
             {

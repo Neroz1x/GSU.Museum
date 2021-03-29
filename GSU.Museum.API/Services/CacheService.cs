@@ -257,7 +257,7 @@ namespace GSU.Museum.API.Services
             return currentVersion;
         }
 
-        public bool IsCoorectLanguage(string language)
+        public bool IsCorrectLanguage(string language)
         {
             if (language.Equals(LanguageConstants.LanguageEn))
             {
@@ -274,11 +274,16 @@ namespace GSU.Museum.API.Services
             return false;
         }
 
-        public bool IsCoorectLanguage(List<string> languages)
+        public bool IsCorrectLanguage(List<string> languages)
         {
+            if(languages is null)
+            {
+                return false;
+            }
+
             foreach(var language in languages)
             {
-                if (!IsCoorectLanguage(language))
+                if (!IsCorrectLanguage(language))
                 {
                     return false;
                 }

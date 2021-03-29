@@ -135,6 +135,9 @@
   <data name="DownloadingText_DownloadingText" xml:space="preserve">
     <value>Загрузка текста</value>
   </data>
+  <data name="DownloadingText_Saving" xml:space="preserve">
+    <value>Сохранение данных</value>
+  </data>
   <data name="ErrorMessage_CacheIsUpToDate" xml:space="preserve">
     <value>Вы используете последнюю версию кеша</value>
   </data>
@@ -147,6 +150,9 @@
   <data name="ErrorMessage_LoadingFaild" xml:space="preserve">
     <value>Не удалось загрузить страницу. Проверьте подключение к интернету и настройки кеширования</value>
   </data>
+  <data name="ErrorMessage_NoNetworkConnection" xml:space="preserve">
+    <value>Нет подключения к интернету</value>
+  </data>
   <data name="ErrorMessage_NotFoundInCache" xml:space="preserve">
     <value>Не удалось загрузить данные из кеша. Установите пункт "Проверять обновления" в настройках, чтобы разрешить скачивание</value>
   </data>
@@ -155,6 +161,9 @@
   </data>
   <data name="ErrorMessage_ServerIsNotResponse" xml:space="preserve">
     <value>Не удалось подключиться к серверу</value>
+  </data>
+  <data name="ErrorMessage_SomethingWentWrong" xml:space="preserve">
+    <value>Что-то пошло не так...</value>
   </data>
   <data name="HallPage_MenuDescription" xml:space="preserve">
     <value>Выберите, пожалуйста, стенд</value>
@@ -237,11 +246,20 @@
   <data name="OptionsPage_LanguageSectionTitle" xml:space="preserve">
     <value>Настройки языка</value>
   </data>
+  <data name="OptionsPage_ReportsSectionLabel" xml:space="preserve">
+    <value>Отчеты</value>
+  </data>
   <data name="OptionsPage_SelectCacheLanguageButton" xml:space="preserve">
     <value>Загрузить кеш</value>
   </data>
   <data name="OptionsPage_SelectCacheLanguageLabel" xml:space="preserve">
     <value>Пожалуйста, выберите язык(-и) для скачивания</value>
+  </data>
+  <data name="OptionsPage_SendReportsDescriptionLabel" xml:space="preserve">
+    <value>Будут отправляться анонимные отчеты об ошибках, чтобы помочь устранить их</value>
+  </data>
+  <data name="OptionsPage_SendReportsLabel" xml:space="preserve">
+    <value>Отправлять отчеты об ошибках</value>
   </data>
   <data name="OptionsPage_Title" xml:space="preserve">
     <value>Настройки</value>

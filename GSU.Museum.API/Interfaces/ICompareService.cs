@@ -1,4 +1,5 @@
-﻿using GSU.Museum.CommonClassLibrary.Models;
+﻿using GSU.Museum.CommonClassLibrary.Interfaces;
+using GSU.Museum.CommonClassLibrary.Models;
 using System.Collections.Generic;
 
 namespace GSU.Museum.API.Interfaces
@@ -9,28 +10,12 @@ namespace GSU.Museum.API.Interfaces
     public interface ICompareService
     {
         /// <summary>
-        /// Compares hall from database and mobile cache
+        /// Compares item from database and mobile cache
         /// </summary>
         /// <param name="hashCode">HashCode from mobile</param>
-        /// <param name="hall">Hall from database</param>
+        /// <param name="item">Item from database</param>
         /// <returns>True if equals; else - false</returns>
-        public bool IsEquals(int hashCode, HallDTO hall);
-
-        /// <summary>
-        /// Compares stand from database and mobile cache
-        /// </summary>
-        /// <param name="hashCode">HashCode from mobile</param>
-        /// <param name="stand">Stand from database</param>
-        /// <returns>True if equals; else - false</returns>
-        public bool IsEquals(int hashCode, StandDTO stand);
-
-        /// <summary>
-        /// Compares exhibit from database and mobile cache
-        /// </summary>
-        /// <param name="hashCode">HashCode from mobile</param>
-        /// <param name="exhibit">Exhibit from database</param>
-        /// <returns>True if equals; else - false</returns>
-        public bool IsEquals(int hashCode, ExhibitDTO exhibit);
+        public bool IsEquals(int hashCode, IMuseumItemDTO item);
 
         /// <summary>
         /// Compares list of halls from database and mobile cache

@@ -20,6 +20,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="MuseumManagement">Управление музеем</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="CacheManagement">Управление кешем</a>
+                        </li>
                         @if ((Context.Items["User"] as User) == null)
                         {
                             <li class="nav-item ml-auto">

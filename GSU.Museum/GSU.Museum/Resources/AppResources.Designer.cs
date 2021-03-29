@@ -115,6 +115,15 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Saving data.
+        /// </summary>
+        public static string DownloadingText_Saving {
+            get {
+                return ResourceManager.GetString("DownloadingText_Saving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cache is up-to-date.
         /// </summary>
         public static string ErrorMessage_CacheIsUpToDate {
@@ -151,6 +160,15 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No network connection.
+        /// </summary>
+        public static string ErrorMessage_NoNetworkConnection {
+            get {
+                return ResourceManager.GetString("ErrorMessage_NoNetworkConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Can not found data in cache. Set &quot;Сheck for updates&quot; field in settings to allow downloading data.
         /// </summary>
         public static string ErrorMessage_NotFoundInCache {
@@ -174,6 +192,15 @@ namespace GSU.Museum.Shared.Resources {
         public static string ErrorMessage_ServerIsNotResponse {
             get {
                 return ResourceManager.GetString("ErrorMessage_ServerIsNotResponse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something went wrong....
+        /// </summary>
+        public static string ErrorMessage_SomethingWentWrong {
+            get {
+                return ResourceManager.GetString("ErrorMessage_SomethingWentWrong", resourceCulture);
             }
         }
         
@@ -412,6 +439,15 @@ namespace GSU.Museum.Shared.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reports.
+        /// </summary>
+        public static string OptionsPage_ReportsSectionLabel {
+            get {
+                return ResourceManager.GetString("OptionsPage_ReportsSectionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download cache.
         /// </summary>
         public static string OptionsPage_SelectCacheLanguageButton {
@@ -426,6 +462,24 @@ namespace GSU.Museum.Shared.Resources {
         public static string OptionsPage_SelectCacheLanguageLabel {
             get {
                 return ResourceManager.GetString("OptionsPage_SelectCacheLanguageLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send anonymous reports about errors to help improve application.
+        /// </summary>
+        public static string OptionsPage_SendReportsDescriptionLabel {
+            get {
+                return ResourceManager.GetString("OptionsPage_SendReportsDescriptionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Send error reports.
+        /// </summary>
+        public static string OptionsPage_SendReportsLabel {
+            get {
+                return ResourceManager.GetString("OptionsPage_SendReportsLabel", resourceCulture);
             }
         }
         

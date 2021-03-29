@@ -5,8 +5,8 @@ using GSU.Museum.Shared.Data.Models;
 using GSU.Museum.Shared.Resources;
 using GSU.Museum.Shared.Services;
 using System;
-using System.Collections.ObjectModel;
-using System.Linq;
+using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -602,6 +602,83 @@ namespace GSU.Museum.Shared.ViewModels
             }
         }
 
+        // Reports section title
+        private string _reportsSectionTitle;
+        public string ReportsSectionTitle
+        {
+            get
+            {
+                return _reportsSectionTitle;
+            }
+
+            set
+            {
+                if (value != _reportsSectionTitle)
+                {
+                    _reportsSectionTitle = value;
+                }
+                OnPropertyChanged(nameof(ReportsSectionTitle));
+            }
+        }
+
+        // Send reports label
+        private string _sendReportsLabel;
+        public string SendReportsLabel
+        {
+            get
+            {
+                return _sendReportsLabel;
+            }
+
+            set
+            {
+                if (value != _sendReportsLabel)
+                {
+                    _sendReportsLabel = value;
+                }
+                OnPropertyChanged(nameof(SendReportsLabel));
+            }
+        }
+
+        // Send reports description label
+        private string _sendReportsDescriptionLabel;
+        public string SendReportsDescriptionLabel
+        {
+            get
+            {
+                return _sendReportsDescriptionLabel;
+            }
+
+            set
+            {
+                if (value != _sendReportsDescriptionLabel)
+                {
+                    _sendReportsDescriptionLabel = value;
+                }
+                OnPropertyChanged(nameof(SendReportsDescriptionLabel));
+            }
+        }
+
+        // Send reports description label
+        private bool _sendReportsIsChecked;
+        public bool SendReportsIsChecked
+        {
+            get
+            {
+                return _sendReportsIsChecked;
+            }
+
+            set
+            {
+                if (value != _sendReportsIsChecked)
+                {
+                    _sendReportsIsChecked = value;
+                    App.Settings.SendReports = value;
+                }
+                OnPropertyChanged(nameof(SendReportsIsChecked));
+            }
+        }
+
         // Title of the page
         private string _language;
         public string Language
@@ -649,6 +726,7 @@ namespace GSU.Museum.Shared.ViewModels
             UseCacheIsChecked = App.Settings.UseCache;
             UseOnlyCacheIsSelected = App.Settings.UseOnlyCache;
             CheckForUpdatesIsSelected = App.Settings.CheckForUpdates;
+            SendReportsIsChecked = App.Settings.SendReports;
             LocalizePage();
             OnLabelTapCommand = new Command(labelId => OnLabelTap(int.Parse(labelId.ToString())));
             ClearCacheCommand = new Command(async() => await DependencyService.Get<CachingService>().ClearCache());
@@ -737,6 +815,9 @@ namespace GSU.Museum.Shared.ViewModels
             DownloadButton = AppResources.OptionsPage_DownloadButton;
             SelectCacheButton = AppResources.OptionsPage_SelectCacheLanguageButton;
             SelectCacheLabel = AppResources.OptionsPage_SelectCacheLanguageLabel;
+            SendReportsDescriptionLabel = AppResources.OptionsPage_SendReportsDescriptionLabel;
+            SendReportsLabel = AppResources.OptionsPage_SendReportsLabel;
+            ReportsSectionTitle = AppResources.OptionsPage_ReportsSectionLabel;
         }
 
         /// <summary>
@@ -762,6 +843,9 @@ namespace GSU.Museum.Shared.ViewModels
                         UseOnlyCacheIsSelected = true;
                     }
                     break;
+                case 3:
+                    SendReportsIsChecked = !SendReportsIsChecked;
+                    break;
             }
         }
 
@@ -774,7 +858,7 @@ namespace GSU.Museum.Shared.ViewModels
             try
             {
                 // Setting selected languages count
-                int languagesCount = BoolToInt(IsSelectedBelorussianCache) + BoolToInt(IsSelectedEnglishCache) + BoolToInt(IsSelectedEnglishCache);
+                int languagesCount = BoolToInt(IsSelectedBelorussianCache) + BoolToInt(IsSelectedEnglishCache) + BoolToInt(IsSelectedRussianCache);
                 
                 if(languagesCount == 0)
                 {
@@ -787,22 +871,35 @@ namespace GSU.Museum.Shared.ViewModels
                 IsVisibleCacheSelection = false;
 
                 IsBusy = true;
+                
+                // Setting up web client
+                var client = DependencyService.Get<NetworkService>().GetWebClient();
+                client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(
+                    (sender, @event)=>
+                    {
+                        DownloadingStatus = $"{@event.ProgressPercentage} %";
+                    });
+
+                // Downloading and saving photos
                 StatusText = AppResources.DownloadingText_DownloadingPhotos;
-                await DependencyService.Get<CacheLoadingService>().LoadPhotosCacheAsync(DownloadingStatus);
+                var versionKey = "v_photos";
+                var stream = new MemoryStream(await client.DownloadDataTaskAsync(
+                    await DependencyService.Get<CacheLoadingService>().GetUrlAsync()));
+                DownloadingStatus = AppResources.DownloadingText_Saving;
+                await DependencyService.Get<CacheLoadingService>().WriteCacheAsync(stream, versionKey, "photo");
+                
+                // Downloading and saving languages
                 if (IsSelectedBelorussianCache)
                 {
-                    StatusText = AppResources.DownloadingText_DownloadingText;
-                    await DependencyService.Get<CacheLoadingService>().LoadLanguageCacheAsync(LanguageConstants.LanguageBy, DownloadingStatus);
+                    await LoadLanguageCache(LanguageConstants.LanguageBy, client);
                 }
                 if (IsSelectedEnglishCache)
                 {
-                    StatusText = AppResources.DownloadingText_DownloadingText;
-                    await DependencyService.Get<CacheLoadingService>().LoadLanguageCacheAsync(LanguageConstants.LanguageEn, DownloadingStatus);
+                    await LoadLanguageCache(LanguageConstants.LanguageEn, client);
                 }
                 if (IsSelectedRussianCache)
                 {
-                    StatusText = AppResources.DownloadingText_DownloadingText;
-                    await DependencyService.Get<CacheLoadingService>().LoadLanguageCacheAsync(LanguageConstants.LanguageRu, DownloadingStatus);
+                    await LoadLanguageCache(LanguageConstants.LanguageRu, client);
                 }
             }
             catch(Exception ex)
@@ -822,6 +919,9 @@ namespace GSU.Museum.Shared.ViewModels
                         await App.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleAlert, er.Info, AppResources.MessageBox_ButtonOk);
                     }
                 }
+                else if(ex is OperationCanceledException)
+                {
+                }
                 else
                 {
                     await App.Current.MainPage.DisplayAlert(AppResources.MessageBox_TitleError, ex.Message, AppResources.MessageBox_ButtonOk);
@@ -833,6 +933,15 @@ namespace GSU.Museum.Shared.ViewModels
                 DownloadingStatus = string.Empty;
                 IsBusy = false;
             }
+        }
+
+        private async Task LoadLanguageCache(string language, WebClient client)
+        {
+            var versionKey = $"v_{language}";
+            StatusText = AppResources.DownloadingText_DownloadingText;
+            var stream = new MemoryStream(await client.DownloadDataTaskAsync(
+                await DependencyService.Get<CacheLoadingService>().GetUrlAsync(language)));
+            await DependencyService.Get<CacheLoadingService>().WriteCacheAsync(stream, versionKey, language);
         }
 
         private int BoolToInt(bool param)
