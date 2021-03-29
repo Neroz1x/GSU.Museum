@@ -1,11 +1,15 @@
 ﻿using GSU.Museum.CommonClassLibrary.Interfaces;
+using Newtonsoft.Json;
 
 namespace GSU.Museum.CommonClassLibrary.Data.Models
 {
     public class MuseumItemDTO : IMuseumItemDTO
     {
+        [JsonIgnore]
         public readonly uint InitialHash = 2166136261;
+        [JsonIgnore]
         public readonly int Multiplier = 16777619;
+        [JsonIgnore]
         public readonly int DefaultHashValue = 1;
 
         public int GetStringHashCode(string str)
