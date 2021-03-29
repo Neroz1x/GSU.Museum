@@ -16,6 +16,10 @@
   * [Features](#features)
   * [Components and technologies](#components-and-technologies)
   * [Description](#short-description)
+  * [Examples of mobile application](#Examples-of-mobile-application)
+    * [Navigation](#Navigation)
+    * [Localization](#Localization)
+    * [Cache downloading](#Cache-downloading)
 * [Getting started](#getting-started)
   * [Project structure](#Project-structure)
     * [GSU.Museum.Shared](#GSU.Museum.Shared)
@@ -67,6 +71,26 @@ Mobile appliaction provides users with information about the GSU Museum's exhibi
 
 
 The web site is used for database managing. It allows admin to add new exhibits, view existing, update and delete them.
+
+### Examples of mobile application
+
+
+#### Navigation
+
+
+![Navigation](https://github.com/Neroz1x/GSU.Museum/blob/master/.github/gifs/Work.gif)
+
+
+#### Localization
+
+
+![Localization](https://github.com/Neroz1x/GSU.Museum/blob/master/.github/gifs/Localization.gif)
+
+
+#### Cache downloading
+
+
+![Navigation](https://github.com/Neroz1x/GSU.Museum/blob/master/.github/gifs/CacheDownloading.gif)
 
 
 ## Getting started
