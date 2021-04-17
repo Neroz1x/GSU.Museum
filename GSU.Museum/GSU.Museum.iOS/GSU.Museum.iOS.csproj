@@ -62,6 +62,9 @@
     <CodesignKey>iPhone Developer</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
@@ -69,7 +72,7 @@
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <BundleResource Include="NLog.config" />
+    <EmbeddedResource Include="NLog.config" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -137,5 +140,56 @@
       <Project>{DEFE9FEC-E8F8-40E2-85DE-87DA5A9D364B}</Project>
       <Name>GSU.Museum.Shared</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\BackArrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Emblem.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Flag.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\FlagBelarus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\FlagRussia.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\FlagUK.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Hall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Home.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\HomeIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\LeftArrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Photo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\RightArrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Shield.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Background%402x.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Background%403x.jpg" />
   </ItemGroup>
 </Project>
