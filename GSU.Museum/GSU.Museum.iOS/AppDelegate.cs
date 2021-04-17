@@ -3,6 +3,7 @@ using Foundation;
 using GSU.Museum.Shared.Services;
 using PanCardView.iOS;
 using UIKit;
+using Xamarin.Forms;
 
 namespace GSU.Museum.iOS
 {
@@ -21,6 +22,9 @@ namespace GSU.Museum.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            Forms.SetFlags("RadioButton_Experimental");
+            Forms.SetFlags("IndicatorView_Experimental");
+
             global::Xamarin.Forms.Forms.Init();
 
             CardsViewRenderer.Preserve();
