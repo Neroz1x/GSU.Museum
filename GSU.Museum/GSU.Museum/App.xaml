@@ -180,7 +180,8 @@
             <Setter Property="IndicatorColor" Value="White"></Setter>
             <Setter Property="HideSingle" Value="True"></Setter>
             <Setter Property="SelectedIndicatorColor" Value="#1976D2"></Setter>
-            <Setter Property="HorizontalOptions" Value="Center"></Setter>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"></Setter>
+            <Setter Property="VerticalOptions" Value="FillAndExpand"></Setter>
             <Setter Property="IndicatorSize" Value="10"></Setter>
         </Style>
 
@@ -199,6 +200,7 @@
 
         <Style TargetType="Button" x:Key="DefaultButton">
             <Setter Property="Margin" Value="10, 10, 0, 0"></Setter>
+            <Setter Property="Padding" Value="5, 0"></Setter>
             <Setter Property="BackgroundColor" Value="#ff2196f3"></Setter>
             <Setter Property="FontSize" Value="Medium"></Setter>
             <Setter Property="HorizontalOptions" Value="Start"></Setter>

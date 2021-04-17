@@ -76,7 +76,6 @@
                     <Label Style="{StaticResource OptionsLabelDescription}" Text="{Binding UseCacheDescriptionLabel}"/>
                 </StackLayout>
 
-                <!--IsVisible="{Binding Source={x:Reference UseCacheCheckBox}, Path=IsChecked}"-->
                 <StackLayout IsVisible="{Binding Source={x:Reference UseCacheCheckBox}, Path=IsChecked}" 
                              Orientation="Vertical" Padding="10, 0, 0, 0">
                     <StackLayout Orientation="Vertical">
@@ -145,7 +144,7 @@
                         <RadioButton x:Name="EnRadioButton" 
                                      IsChecked="{Binding IsSelectedEnglish}"
                                      Style="{StaticResource PopupRadioButton}" 
-                                     Text="English"></RadioButton>
+                                     Content="English"></RadioButton>
                         <Image Style="{StaticResource FlagImage}" Source="FlagUK.png">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="EnFlag_Tapped"></TapGestureRecognizer>
@@ -156,7 +155,7 @@
                         <RadioButton x:Name="RuRadioButton" 
                                      IsChecked="{Binding IsSelectedRussian}"
                                      Style="{StaticResource PopupRadioButton}" 
-                                     Text="Русский"></RadioButton>
+                                     Content="Русский"></RadioButton>
                         <Image Style="{StaticResource FlagImage}" Source="FlagRussia.png">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="RuFlag_Tapped"></TapGestureRecognizer>
@@ -167,7 +166,7 @@
                         <RadioButton x:Name="BeRadioButton" 
                                      IsChecked="{Binding IsSelectedBelorussian}"
                                      Style="{StaticResource PopupRadioButton}" 
-                                     Text="Беларуская"></RadioButton>
+                                     Content="Беларуская"></RadioButton>
                         <Image Style="{StaticResource FlagImage}" Source="FlagBelarus.png">
                             <Image.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="BeFlag_Tapped"></TapGestureRecognizer>
