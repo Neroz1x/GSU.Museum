@@ -22,8 +22,8 @@ namespace GSU.Museum.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            Forms.SetFlags("RadioButton_Experimental");
             Forms.SetFlags("IndicatorView_Experimental");
+            Forms.SetFlags("RadioButton_Experimental");
 
             global::Xamarin.Forms.Forms.Init();
 
