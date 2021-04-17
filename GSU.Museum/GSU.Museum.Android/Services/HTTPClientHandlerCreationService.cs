@@ -19,7 +19,10 @@ namespace GSU.Museum.Droid.Services
 
     internal class IgnoreSSLClientHandler : AndroidClientHandler
     {
+        [System.Obsolete]
+#pragma warning disable CS0809 // Obsolete member overrides non-obsolete member
         protected override SSLSocketFactory ConfigureCustomSSLSocketFactory(HttpsURLConnection connection)
+#pragma warning restore CS0809 // Obsolete member overrides non-obsolete member
         {
             return SSLCertificateSocketFactory.GetInsecure(1000, null);
         }
