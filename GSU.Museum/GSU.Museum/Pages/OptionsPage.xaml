@@ -135,6 +135,7 @@
             </StackLayout>
         </ScrollView>
         <ContentView x:Name="Popup" 
+                     Margin="-100"
                      Grid.RowSpan="2"
                      BackgroundColor="#55000000" 
                      Padding="30, 0"
@@ -186,6 +187,7 @@
             </StackLayout>
         </ContentView>
         <ContentView x:Name="Popup2" 
+                     Margin="-100"
                      Grid.RowSpan="2"
                      BackgroundColor="#55000000" 
                      Padding="30, 0"
