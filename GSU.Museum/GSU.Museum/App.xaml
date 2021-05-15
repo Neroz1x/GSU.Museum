@@ -5,11 +5,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:converters="clr-namespace:GSU.Museum.Shared.Converters"
              mc:Ignorable="d"
-             x:Class="GSU.Museum.App">
+             x:Class="GSU.Museum.App"
+             xmlns:iOSSpecific="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             >
     <Application.Resources>
         <ResourceDictionary>
             <converters:ByteToImageSourceConverter x:Key="ByteArrayToImage" />
         </ResourceDictionary>
+
+        <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+            <Setter Property="iOSSpecific:Page.UseSafeArea" Value="True"/>
+        </Style>
 
         <Style TargetType="Image" x:Key="HomePageIcons">
             <Setter Property="VerticalOptions" Value="Center"></Setter>
@@ -87,6 +93,7 @@
         <Style TargetType="Label" x:Key="LoaderBackground">
             <Setter Property="HorizontalOptions" Value="Fill"/>
             <Setter Property="VerticalOptions" Value="Fill"/>
+            <Setter Property="Margin" Value="-100"/>
             <Setter Property="BackgroundColor" Value="#AA000000"/>
         </Style>
 
